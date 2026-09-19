@@ -1,0 +1,4 @@
+sentence-transformers>=3.4,<6
+transformers>=4.48,<5
+huggingface-hub>=0.28,<1
+numpy>=1.26,<3
