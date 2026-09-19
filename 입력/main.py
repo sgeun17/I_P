@@ -110,7 +110,13 @@ async def process_file(file: UploadFile) -> dict:
 
     # 5. 보관 + 목록 기록
     evidence_id = await register(tmp_path, ext, name, size, sha.hexdigest())
-    return {"filename": name, "status": "ok", "evidence_id": evidence_id, "size": size}
+    return {
+        "filename": name,
+        "status": "ok",
+        "evidence_id": evidence_id,
+        "ext": ext,
+        "size": size,
+    }
 
 
 @app.post("/evidence/upload")
@@ -173,7 +179,7 @@ PAGE = r"""
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f4f6fa;font-family:'Malgun Gothic',sans-serif;color:#1f2937}
-.wrap{max-width:860px;margin:40px auto;padding:0 16px}
+.wrap{max-width:900px;margin:40px auto;padding:0 16px}
 h1{font-size:22px;margin:0 0 4px}
 h2{font-size:16px;margin:0 0 12px}
 .sub{color:#6b7280;font-size:14px;margin-bottom:20px}
@@ -198,6 +204,7 @@ th,td{text-align:left;padding:10px 6px;border-bottom:1px solid #eef0f4;vertical-
 th{color:#6b7280;font-weight:600}
 .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
 .badge.ok{background:#dcfce7;color:#166534}.badge.bad{background:#fee2e2;color:#991b1b}
+.type{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600;background:#e0e7ff;color:#3730a3}
 .err{color:#991b1b}.code{color:#9ca3af;font-size:12px}.muted{color:#6b7280;font-size:14px}
 .stored{max-height:320px;overflow-y:auto}
 </style></head>
@@ -236,6 +243,9 @@ function fmt(n){
 function esc(s){
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+function type(ext){
+  return '<span class="type">' + esc(ext).toUpperCase() + '</span>';
+}
 function add(fl){
   for (const f of fl){
     if (!files.some(x => x.name === f.name && x.size === f.size)) files.push(f);
@@ -262,7 +272,7 @@ list.onclick = e => {
 function showResult(d){
   const rows = d.results.map(r => r.status === 'ok'
     ? '<tr><td><span class="badge ok">성공</span></td><td>' + esc(r.filename) + '</td><td>' +
-      esc(r.evidence_id) + ' · ' + fmt(r.size) + '</td></tr>'
+      type(r.ext) + ' ' + esc(r.evidence_id) + ' · ' + fmt(r.size) + '</td></tr>'
     : '<tr><td><span class="badge bad">실패</span></td><td>' + esc(r.filename) + '</td><td class="err">' +
       esc(r.message) + ' <span class="code">' + esc(r.error) + '</span></td></tr>').join('');
   result.innerHTML =
@@ -301,11 +311,12 @@ async function loadStored(){
   go.textContent = d.total ? d.total + '개 증적 분석 시작' : '분석 시작';
   stored.innerHTML = d.total === 0
     ? '<div class="muted">아직 보관된 증적이 없습니다.</div>'
-    : '<table><tr><th>ID</th><th>파일명</th><th>크기</th><th>업로드 시간</th><th></th></tr>' +
+    : '<table><tr><th>ID</th><th>종류</th><th>파일명</th><th>크기</th><th>업로드 시간</th><th></th></tr>' +
       d.items.map(i =>
-        '<tr><td>' + esc(i.evidence_id) + '</td><td>' + esc(i.filename) + '</td><td>' + fmt(i.size) +
-        '</td><td>' + esc(i.uploaded_at) + '</td><td><button class="x" data-id="' + esc(i.evidence_id) +
-        '">✕</button></td></tr>').join('') + '</table>';
+        '<tr><td>' + esc(i.evidence_id) + '</td><td>' + type(i.ext) + '</td><td>' + esc(i.filename) +
+        '</td><td>' + fmt(i.size) + '</td><td>' + esc(i.uploaded_at) +
+        '</td><td><button class="x" data-id="' + esc(i.evidence_id) + '">✕</button></td></tr>').join('') +
+      '</table>';
 }
 
 stored.onclick = async e => {
