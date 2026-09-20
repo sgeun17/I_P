@@ -19,7 +19,6 @@ PDF 파일을 위에서 아래로 읽어서 **제목·문단·표를 순서대�
 cd C:\pdf_part
 python -m pip install -r requirements.txt
 
-python test_pdf_parser.py                    # "✅ 34개 통과, ❌ 0개 실패" 나오면 정상
 python pdf_parser.py samples/01_normal.pdf   # 결과 JSON 직접 보기
 ```
 
