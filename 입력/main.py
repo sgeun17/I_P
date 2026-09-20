@@ -1,13 +1,26 @@
 import asyncio
-import hashlib
-import json
+import sys
+import uuid
 from datetime import datetime
 from pathlib import Path
-import uuid
 
 import filetype
 from fastapi import FastAPI, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse
+
+# database 폴더의 코드가 "from config import ..." 식으로 서로를 불러오므로 경로를 추가한다
+sys.path.insert(0, str(Path(__file__).resolve().parent / "database"))
+
+from db import get_connection  # noqa: E402
+from evidence_store import (  # noqa: E402
+    EvidenceError,
+    compute_hash,
+    delete_evidence,
+    get_evidence,
+    list_evidence,
+    replace_evidence,
+    save_evidence,
+)
 
 app = FastAPI()
 
@@ -16,59 +29,67 @@ MAX_MB = 20                        # 파일 1개당 최대 용량
 MAX_BYTES = MAX_MB * 1024 * 1024
 MAX_FILES = 1000                   # 한 번에 올릴 수 있는 파일 수
 
-BASE_DIR = Path("uploads")
-TMP_DIR = BASE_DIR / "tmp"         # 검사 중인 임시 파일
-STORE_DIR = BASE_DIR / "files"     # 검사 통과 후 보관되는 파일
-INDEX_FILE = BASE_DIR / "index.json"   # 보관된 증적 목록 (B 파트의 DB 연결 전 임시 장부)
+TMP_DIR = Path("uploads/tmp")      # 검사 중인 임시 파일 (통과하면 B 코드가 정식 폴더로 이동)
 TMP_DIR.mkdir(parents=True, exist_ok=True)
-STORE_DIR.mkdir(parents=True, exist_ok=True)
 
-lock = asyncio.Lock()
+lock = asyncio.Lock()              # 번호 발급이 겹치지 않도록 저장은 한 번에 하나씩
+
+ERROR_STATUS = {
+    "EVIDENCE_NOT_FOUND": 404,
+    "FILE_NOT_FOUND": 404,
+    "INVALID_FILE_TYPE": 415,
+}
 
 
 def error(status, code, message):
+    """팀 규격 오류 응답"""
     return JSONResponse(
         status_code=status,
-        content={"error": code, "message": message},
+        content={"success": False, "error": {"code": code, "message": message}},
     )
 
 
-def load_index() -> list:
-    if INDEX_FILE.exists():
-        return json.loads(INDEX_FILE.read_text(encoding="utf-8"))
-    return []
+@app.exception_handler(EvidenceError)
+async def evidence_error_handler(request, exc: EvidenceError):
+    return error(ERROR_STATUS.get(exc.code, 400), exc.code, exc.message)
 
 
-def save_index(items: list) -> None:
-    INDEX_FILE.write_text(
-        json.dumps(items, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+@app.exception_handler(Exception)
+async def unexpected_error_handler(request, exc: Exception):
+    return error(500, "SERVER_ERROR", "서버 오류가 발생했습니다. 서버 터미널의 오류 내용을 확인하세요.")
 
 
-async def register(tmp_path: Path, ext: str, name: str, size: int, sha256: str) -> str:
-    """검사 통과한 파일을 보관 폴더로 옮기고 목록에 기록한다. (B 파트가 DB 저장으로 대체할 부분)"""
-    async with lock:
-        items = load_index()
-        n = max((int(i["evidence_id"][1:]) for i in items), default=0) + 1
-        evidence_id = f"E{n:04d}"
-        tmp_path.replace(STORE_DIR / f"{evidence_id}.{ext}")
-        items.append({
-            "evidence_id": evidence_id,
-            "filename": name,
-            "ext": ext,
-            "size": size,
-            "sha256": sha256,
-            "uploaded_at": datetime.now().isoformat(timespec="seconds"),
-        })
-        save_index(items)
-    return evidence_id
+def find_current_by_name(name):
+    """같은 파일명의 현재 증적을 찾는다. 없으면 None"""
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT evidence_id, version, file_hash FROM evidence "
+                "WHERE file_name = %s ORDER BY uploaded_at DESC LIMIT 1",
+                (name,),
+            )
+            return cur.fetchone()
+    finally:
+        conn.close()
+
+
+def all_evidence():
+    """저장된 증적 전체 (list_evidence가 한 번에 100개까지라 나눠서 가져온다)"""
+    items, page = [], 1
+    while True:
+        d = list_evidence(page=page, size=100)
+        items += d["items"]
+        if not d["items"] or len(items) >= d["total"]:
+            return items
+        page += 1
 
 
 async def process_file(file: UploadFile) -> dict:
     name = file.filename
 
     def fail(code, message):
-        return {"filename": name, "status": "error", "error": code, "message": message}
+        return {"file_name": name, "status": "error", "error_code": code, "error_message": message}
 
     # 1. 확장자 검사
     ext = Path(name or "").suffix.lower().lstrip(".")
@@ -87,11 +108,9 @@ async def process_file(file: UploadFile) -> dict:
     if kind is None or kind.extension != ext:
         return fail("CONTENT_MISMATCH", "파일 내용이 확장자와 일치하지 않습니다.")
 
-    # 4. 크기 검사 + 임시 저장 + 해시 계산
+    # 4. 크기 검사 + 임시 저장
     tmp_path = TMP_DIR / f"{uuid.uuid4().hex}.{ext}"
     size = len(head)
-    sha = hashlib.sha256()
-    sha.update(head)
     too_large = False
 
     with open(tmp_path, "wb") as f:
@@ -102,20 +121,57 @@ async def process_file(file: UploadFile) -> dict:
                 too_large = True
                 break
             f.write(chunk)
-            sha.update(chunk)
 
     if too_large:
         tmp_path.unlink(missing_ok=True)
         return fail("FILE_TOO_LARGE", f"파일 크기가 {MAX_MB}MB를 초과합니다.")
 
-    # 5. 보관 + 목록 기록
-    evidence_id = await register(tmp_path, ext, name, size, sha.hexdigest())
+    # 5. 저장 (B 파트): 신규 등록 / 버전 갱신 / 변경 없음
+    async with lock:
+        try:
+            existing = await asyncio.to_thread(find_current_by_name, name)
+
+            if existing is None:
+                saved = await asyncio.to_thread(save_evidence, str(tmp_path), name, ext)
+                action = "created"
+            else:
+                new_hash = await asyncio.to_thread(compute_hash, str(tmp_path))
+                if new_hash == existing["file_hash"]:
+                    tmp_path.unlink(missing_ok=True)
+                    return {
+                        "file_name": name,
+                        "status": "ok",
+                        "action": "unchanged",
+                        "evidence_id": existing["evidence_id"],
+                        "version": existing["version"],
+                        "file_type": ext,
+                        "file_size": size,
+                        "is_duplicate": False,
+                        "duplicate_of": None,
+                    }
+                saved = await asyncio.to_thread(
+                    replace_evidence, existing["evidence_id"], str(tmp_path), name, ext
+                )
+                action = "replaced"
+
+        except EvidenceError as e:
+            tmp_path.unlink(missing_ok=True)
+            return fail(e.code, e.message)
+        except Exception as e:
+            tmp_path.unlink(missing_ok=True)
+            print("저장 중 오류:", repr(e))
+            return fail("DB_ERROR", "저장 중 오류가 발생했습니다. DB 연결과 서버 터미널을 확인하세요.")
+
     return {
-        "filename": name,
+        "file_name": name,
         "status": "ok",
-        "evidence_id": evidence_id,
-        "ext": ext,
-        "size": size,
+        "action": action,
+        "evidence_id": saved["evidence_id"],
+        "version": saved["version"],
+        "file_type": saved["file_type"],
+        "file_size": saved["file_size"],
+        "is_duplicate": saved.get("is_duplicate", False),
+        "duplicate_of": saved.get("duplicate_of"),
     }
 
 
@@ -137,27 +193,25 @@ async def upload(files: list[UploadFile]):
 
 
 @app.get("/evidence")
-async def list_evidence():
-    items = load_index()
-    return {"total": len(items), "items": items}
+def list_api(status: str | None = None, page: int = 1, size: int = 100):
+    return list_evidence(status=status, page=page, size=size)
+
+
+@app.get("/evidence/{evidence_id}")
+def get_api(evidence_id: str):
+    return get_evidence(evidence_id)
 
 
 @app.delete("/evidence/{evidence_id}")
-async def delete_evidence(evidence_id: str):
-    async with lock:
-        items = load_index()
-        target = next((i for i in items if i["evidence_id"] == evidence_id), None)
-        if target is None:
-            return error(404, "NOT_FOUND", "해당 증적을 찾을 수 없습니다.")
-        (STORE_DIR / f"{evidence_id}.{target['ext']}").unlink(missing_ok=True)
-        save_index([i for i in items if i["evidence_id"] != evidence_id])
+def delete_api(evidence_id: str):
+    delete_evidence(evidence_id)
     return {"deleted": evidence_id}
 
 
 @app.post("/analysis/start")
-async def start_analysis():
-    """보관된 증적 전체를 분석 대상으로 확정한다. (Phase 2 분석 모듈이 연결될 자리)"""
-    items = load_index()
+def start_analysis():
+    """저장된 증적 전체를 분석 대상으로 확정한다. (Phase 2 분석 모듈이 연결될 자리)"""
+    items = all_evidence()
     if not items:
         return error(400, "NO_EVIDENCE", "분석할 증적이 없습니다. 먼저 파일을 업로드하세요.")
 
@@ -179,7 +233,7 @@ PAGE = r"""
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f4f6fa;font-family:'Malgun Gothic',sans-serif;color:#1f2937}
-.wrap{max-width:900px;margin:40px auto;padding:0 16px}
+.wrap{max-width:980px;margin:40px auto;padding:0 16px}
 h1{font-size:22px;margin:0 0 4px}
 h2{font-size:16px;margin:0 0 12px}
 .sub{color:#6b7280;font-size:14px;margin-bottom:20px}
@@ -202,15 +256,16 @@ button.go{background:#16a34a}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:left;padding:10px 6px;border-bottom:1px solid #eef0f4;vertical-align:top}
 th{color:#6b7280;font-weight:600}
-.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
 .badge.ok{background:#dcfce7;color:#166534}.badge.bad{background:#fee2e2;color:#991b1b}
+.badge.new2{background:#fef3c7;color:#92400e}.badge.same{background:#e5e7eb;color:#374151}
 .type{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600;background:#e0e7ff;color:#3730a3}
 .err{color:#991b1b}.code{color:#9ca3af;font-size:12px}.muted{color:#6b7280;font-size:14px}
-.stored{max-height:320px;overflow-y:auto}
+.stored{max-height:340px;overflow-y:auto}
 </style></head>
 <body><div class="wrap">
 <h1>증적 파일 업로드</h1>
-<div class="sub">PDF, DOCX, XLSX, PPTX, PNG, JPG / 파일당 20MB / 한 번에 1000개까지 / 여러 번 나눠 올려도 됩니다</div>
+<div class="sub">PDF, DOCX, XLSX, PPTX, PNG, JPG / 파일당 20MB / 한 번에 1000개까지 / 같은 파일명은 새 버전으로 저장됩니다</div>
 
 <div class="card">
   <h2>1. 파일 업로드</h2>
@@ -240,11 +295,22 @@ const stored = $('stored'), count = $('count'), go = $('go'), analysis = $('anal
 function fmt(n){
   return (n / 1024).toLocaleString('ko-KR', {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' KB';
 }
+function fmtTime(s){
+  return s ? String(s).replace('T', ' ').slice(0, 19) : '';
+}
 function esc(s){
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 function type(ext){
   return '<span class="type">' + esc(ext).toUpperCase() + '</span>';
+}
+function errMsg(d){
+  return (d && d.error && d.error.message) || JSON.stringify(d);
+}
+function actionBadge(r){
+  if (r.action === 'replaced') return '<span class="badge new2">버전 갱신 v' + (r.version - 1) + ' → v' + r.version + '</span>';
+  if (r.action === 'unchanged') return '<span class="badge same">변경 없음</span>';
+  return '<span class="badge ok">신규 등록</span>';
 }
 function add(fl){
   for (const f of fl){
@@ -271,10 +337,11 @@ list.onclick = e => {
 
 function showResult(d){
   const rows = d.results.map(r => r.status === 'ok'
-    ? '<tr><td><span class="badge ok">성공</span></td><td>' + esc(r.filename) + '</td><td>' +
-      type(r.ext) + ' ' + esc(r.evidence_id) + ' · ' + fmt(r.size) + '</td></tr>'
-    : '<tr><td><span class="badge bad">실패</span></td><td>' + esc(r.filename) + '</td><td class="err">' +
-      esc(r.message) + ' <span class="code">' + esc(r.error) + '</span></td></tr>').join('');
+    ? '<tr><td>' + actionBadge(r) + '</td><td>' + esc(r.file_name) + '</td><td>' +
+      type(r.file_type) + ' ' + esc(r.evidence_id) + ' · v' + r.version + ' · ' + fmt(r.file_size) +
+      (r.is_duplicate ? ' · <span class="code">동일 내용: ' + esc(r.duplicate_of) + '</span>' : '') + '</td></tr>'
+    : '<tr><td><span class="badge bad">실패</span></td><td>' + esc(r.file_name) + '</td><td class="err">' +
+      esc(r.error_message) + ' <span class="code">' + esc(r.error_code) + '</span></td></tr>').join('');
   result.innerHTML =
     '<div class="sum"><div class="box"><b>' + d.total + '</b>전체</div>' +
     '<div class="box ok"><b>' + d.success + '</b>성공</div>' +
@@ -294,7 +361,7 @@ btn.onclick = async () => {
     files.forEach(f => fd.append('files', f));
     const res = await fetch('/evidence/upload', {method: 'POST', body: fd});
     const data = await res.json();
-    if (!res.ok) showError(data.message || JSON.stringify(data));
+    if (!res.ok) showError(errMsg(data));
     else { showResult(data); files = []; }
   } catch (e) {
     showError('서버에 연결할 수 없습니다.');
@@ -304,25 +371,31 @@ btn.onclick = async () => {
 };
 
 async function loadStored(){
-  const res = await fetch('/evidence');
-  const d = await res.json();
-  count.textContent = '(' + d.total + '개)';
-  go.disabled = d.total === 0;
-  go.textContent = d.total ? d.total + '개 증적 분석 시작' : '분석 시작';
-  stored.innerHTML = d.total === 0
-    ? '<div class="muted">아직 보관된 증적이 없습니다.</div>'
-    : '<table><tr><th>ID</th><th>종류</th><th>파일명</th><th>크기</th><th>업로드 시간</th><th></th></tr>' +
-      d.items.map(i =>
-        '<tr><td>' + esc(i.evidence_id) + '</td><td>' + type(i.ext) + '</td><td>' + esc(i.filename) +
-        '</td><td>' + fmt(i.size) + '</td><td>' + esc(i.uploaded_at) +
-        '</td><td><button class="x" data-id="' + esc(i.evidence_id) + '">✕</button></td></tr>').join('') +
-      '</table>';
+  try {
+    const res = await fetch('/evidence?size=100');
+    const d = await res.json();
+    if (!res.ok) throw new Error(errMsg(d));
+    count.textContent = '(' + d.total + '개' + (d.total > d.items.length ? ', 최근 ' + d.items.length + '개만 표시' : '') + ')';
+    go.disabled = d.total === 0;
+    go.textContent = d.total ? d.total + '개 증적 분석 시작' : '분석 시작';
+    stored.innerHTML = d.total === 0
+      ? '<div class="muted">아직 보관된 증적이 없습니다.</div>'
+      : '<table><tr><th>ID</th><th>종류</th><th>파일명</th><th>버전</th><th>크기</th><th>업로드 시간</th><th>상태</th><th></th></tr>' +
+        d.items.map(i =>
+          '<tr><td>' + esc(i.evidence_id) + '</td><td>' + type(i.file_type) + '</td><td>' + esc(i.file_name) +
+          '</td><td>v' + i.version + '</td><td>' + fmt(i.file_size) + '</td><td>' + esc(fmtTime(i.uploaded_at)) +
+          '</td><td class="muted">' + esc(i.status) +
+          '</td><td><button class="x" data-id="' + esc(i.evidence_id) + '">✕</button></td></tr>').join('') +
+        '</table>';
+  } catch (e) {
+    stored.innerHTML = '<div class="err">목록을 불러오지 못했습니다. DB 연결을 확인하세요. (' + esc(e.message) + ')</div>';
+  }
 }
 
 stored.onclick = async e => {
   const id = e.target.dataset.id;
   if (!id) return;
-  if (!confirm(id + ' 증적을 삭제할까요?')) return;
+  if (!confirm(id + ' 증적을 삭제할까요? (모든 버전이 삭제됩니다)')) return;
   await fetch('/evidence/' + encodeURIComponent(id), {method: 'DELETE'});
   loadStored();
 };
@@ -336,7 +409,7 @@ go.onclick = async () => {
       ? '<h2>분석 요청 완료</h2><div>분석 ID: <b>' + esc(d.analysis_id) + '</b></div>' +
         '<div>상태: ' + esc(d.status) + '</div><div>분석 대상: ' + d.total + '개 증적</div>' +
         '<div class="muted" style="margin-top:8px">' + esc(d.evidence_ids.join(', ')) + '</div>'
-      : '<div class="err">' + esc(d.message || JSON.stringify(d)) + '</div>';
+      : '<div class="err">' + esc(errMsg(d)) + '</div>';
   } catch (e) {
     analysis.innerHTML = '<div class="err">서버에 연결할 수 없습니다.</div>';
   }
