@@ -19,7 +19,6 @@ PDF·DOCX·XLSX 와 **똑같은 형식(팀 규칙 v2)** 으로 결과를 냅니�
 cd C:\pptx_part
 python -m pip install -r requirements.txt
 
-python test_pptx_parser.py                     # "✅ 36개 통과, ❌ 0개 실패" 나오면 정상
 python pptx_parser.py samples/01_normal.pptx   # 결과 JSON 직접 보기
 ```
 파일 이름에 띄어쓰기가 있으면 `"따옴표"` 로 감싸세요.
