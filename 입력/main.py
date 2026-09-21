@@ -24,7 +24,7 @@ from evidence_store import (  # noqa: E402
 
 app = FastAPI()
 
-ALLOWED = {"pdf", "docx", "xlsx", "pptx", "png", "jpg"}
+ALLOWED = {"pdf", "docx", "xlsx", "pptx", "png", "jpg", "txt", "csv"}
 MAX_MB = 20                        # 파일 1개당 최대 용량
 MAX_BYTES = MAX_MB * 1024 * 1024
 MAX_FILES = 1000                   # 한 번에 올릴 수 있는 파일 수
