@@ -1,5 +1,9 @@
 # ISMS-P 증적 검색 첫 버전
 
+## 9/21 추가: ChromaDB 샘플 구동 확인
+
+`03_check_chroma.cmd`를 실행하면 실제 BGE-M3로 샘플 10개를 ChromaDB에 저장하고 검색·프로세스 재시작 후 데이터 유지를 검사합니다. 자세한 절차는 [ChromaDB 실행 안내](ChromaDB_실행안내.md), 성공 결과는 `reports/chroma_sample_result.md`에서 확인합니다. 아래의 기존 `02_search.cmd` 검색은 벡터 파일 직접 비교 방식입니다.
+
 증적 내용을 한 줄 입력하면 관련 통제항목 5개를 보여줍니다.
 `controls.json`의 이름, 요구사항, 키워드, 증거자료 예시를 합쳐 BGE-M3로 비교합니다.
 

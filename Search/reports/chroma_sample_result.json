@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-21T20:52:42.632010+09:00",
+  "chromadb_version": "1.5.9",
+  "python_version": "3.12.14",
+  "model_id": "BAAI/bge-m3",
+  "model_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "db_path": "C:\\Users\\USER\\Desktop\\ISMS-P 인증 증적 사전점검 도구 개발\\개발\\I_P\\Search\\data\\chroma_sample",
+  "collection": "isms_p_sample_10",
+  "count": 10,
+  "dimension": 1024,
+  "sample_ids": [
+    "2.5.1",
+    "2.5.2",
+    "2.5.3",
+    "2.5.4",
+    "2.5.5",
+    "2.5.6",
+    "2.6.1",
+    "2.6.2",
+    "2.6.6",
+    "2.9.3"
+  ],
+  "query": "퇴사자의 사용자 계정을 삭제하고 승인자와 처리 일자를 계정 관리대장에 기록했다.",
+  "results": [
+    {
+      "rank": 1,
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "distance": 0.4166666269302368,
+      "similarity_score": 0.5833333730697632
+    },
+    {
+      "rank": 2,
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토",
+      "distance": 0.4719533324241638,
+      "similarity_score": 0.5280466675758362
+    },
+    {
+      "rank": 3,
+      "control_id": "2.5.2",
+      "control_name": "사용자 식별",
+      "distance": 0.4746708869934082,
+      "similarity_score": 0.5253291130065918
+    },
+    {
+      "rank": 4,
+      "control_id": "2.5.5",
+      "control_name": "특수 계정 및 권한 관리",
+      "distance": 0.49114590883255005,
+      "similarity_score": 0.50885409116745
+    },
+    {
+      "rank": 5,
+      "control_id": "2.9.3",
+      "control_name": "백업 및 복구관리",
+      "distance": 0.5012015700340271,
+      "similarity_score": 0.4987984299659729
+    }
+  ],
+  "checks": {
+    "stored_count_and_ids": true,
+    "documents_and_metadata": true,
+    "vectors_after_process_restart": true,
+    "same_search_after_restart": true,
+    "matches_direct_cosine": true
+  },
+  "scope": "샘플 10개 로컬 저장·검색·재시작 검증. 전체 101개 검색 품질 평가는 아님."
+}
