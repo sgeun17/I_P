@@ -43,9 +43,7 @@ ID_DIGITS = 6
 
 # 받을 수 있는 파일 형식 (소문자, 점 없이)
 # A파트(업로드 검사) 기준 목록. A파트와 연결하면 A파트도 이 목록을 같이 쓰게 하면 됩니다.
-# ※ txt, csv 는 A 파트의 "실제 파일 종류 검사(매직 넘버)"로 판별이 안 돼서 지금은 뺐습니다.
-# ※ png, jpg 는 전처리에 OCR이 필요합니다. 이번 주에 전처리 담당이 처리할지 팀 확인 필요.
-ALLOWED_FILE_TYPES = {"pdf", "docx", "xlsx", "pptx", "png", "jpg"}
+ALLOWED_FILE_TYPES = {"pdf", "docx", "xlsx", "pptx", "png", "jpg", "txt", "csv"}
 
 # 팀이 확정한 상태값 8개. 이 목록에 없는 값은 DB에 들어가지 못하게 막습니다.
 VALID_STATUSES = {
