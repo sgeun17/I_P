@@ -1,0 +1,145 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-22T17:20:23.985983+09:00",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54",
+  "model": {
+    "model_id": "BAAI/bge-m3",
+    "revision": "5617a9f61b028005a4858fdac845db406aefb181"
+  },
+  "chromadb_version": "1.5.9",
+  "db_path": "C:\\Users\\USER\\Desktop\\ISMS-P 인증 증적 사전점검 도구 개발\\개발\\I_P\\Search\\data\\chroma_kb",
+  "collection": "isms_p_controls",
+  "count": 101,
+  "dimension": 1024,
+  "checks": {
+    "hnsw_files_persisted": true,
+    "all_records_after_restart": true,
+    "repeat_upsert_count": 101,
+    "self_vector_top1_matches": 101,
+    "query_top5_matches_direct_cosine": 3
+  },
+  "queries": [
+    {
+      "text": "퇴사자의 사용자 계정을 삭제하고 승인자와 처리 일자를 계정 관리대장에 기록했다.",
+      "candidates": [
+        {
+          "rank": 1,
+          "control_id": "2.5.1",
+          "control_name": "사용자 계정 관리",
+          "distance": 0.4166666269302368,
+          "similarity_score": 0.5833333730697632
+        },
+        {
+          "rank": 2,
+          "control_id": "2.2.5",
+          "control_name": "퇴직 및 직무변경 관리",
+          "distance": 0.4419971704483032,
+          "similarity_score": 0.5580028295516968
+        },
+        {
+          "rank": 3,
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "distance": 0.47195345163345337,
+          "similarity_score": 0.5280465483665466
+        },
+        {
+          "rank": 4,
+          "control_id": "2.5.2",
+          "control_name": "사용자 식별",
+          "distance": 0.474670946598053,
+          "similarity_score": 0.525329053401947
+        },
+        {
+          "rank": 5,
+          "control_id": "2.9.4",
+          "control_name": "로그 및 접속기록 관리",
+          "distance": 0.48953020572662354,
+          "similarity_score": 0.5104697942733765
+        }
+      ]
+    },
+    {
+      "text": "백업 데이터를 정기적으로 복구하여 정상 복원되는지 시험하고 결과를 기록했다.",
+      "candidates": [
+        {
+          "rank": 1,
+          "control_id": "2.9.3",
+          "control_name": "백업 및 복구관리",
+          "distance": 0.37614262104034424,
+          "similarity_score": 0.6238573789596558
+        },
+        {
+          "rank": 2,
+          "control_id": "2.11.2",
+          "control_name": "취약점 점검 및 조치",
+          "distance": 0.45556819438934326,
+          "similarity_score": 0.5444318056106567
+        },
+        {
+          "rank": 3,
+          "control_id": "2.9.5",
+          "control_name": "로그 및 접속기록 점검",
+          "distance": 0.4564165472984314,
+          "similarity_score": 0.5435834527015686
+        },
+        {
+          "rank": 4,
+          "control_id": "2.12.2",
+          "control_name": "재해 복구 시험 및 개선",
+          "distance": 0.4666464924812317,
+          "similarity_score": 0.5333535075187683
+        },
+        {
+          "rank": 5,
+          "control_id": "2.9.2",
+          "control_name": "성능 및 장애관리",
+          "distance": 0.46669185161590576,
+          "similarity_score": 0.5333081483840942
+        }
+      ]
+    },
+    {
+      "text": "보유기간이 만료된 개인정보를 파기하고 파기 일자와 담당자를 대장에 기록했다.",
+      "candidates": [
+        {
+          "rank": 1,
+          "control_id": "3.4.1",
+          "control_name": "개인정보 파기",
+          "distance": 0.3774726390838623,
+          "similarity_score": 0.6225273609161377
+        },
+        {
+          "rank": 2,
+          "control_id": "2.3.4",
+          "control_name": "외부자 계약 변경 및 만료 시 보안",
+          "distance": 0.4385493993759155,
+          "similarity_score": 0.5614506006240845
+        },
+        {
+          "rank": 3,
+          "control_id": "3.4.2",
+          "control_name": "처리목적 달성 후 보유 시 조치",
+          "distance": 0.44376975297927856,
+          "similarity_score": 0.5562302470207214
+        },
+        {
+          "rank": 4,
+          "control_id": "3.2.1",
+          "control_name": "개인정보 현황관리",
+          "distance": 0.44787681102752686,
+          "similarity_score": 0.5521231889724731
+        },
+        {
+          "rank": 5,
+          "control_id": "2.2.1",
+          "control_name": "주요 직무자 지정 및 관리",
+          "distance": 0.48172539472579956,
+          "similarity_score": 0.5182746052742004
+        }
+      ]
+    }
+  ],
+  "scope": "101개 KB 색인·저장·검색 동작 검증. 실제 증적 정답률 평가와 KB 최종 버전 고정은 별도."
+}

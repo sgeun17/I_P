@@ -1,5 +1,9 @@
 # ISMS-P 증적 검색 첫 버전
 
+## 9/22 추가: 전체 101개 ChromaDB 색인
+
+`04_index_chroma.cmd`를 더블클릭하면 현재 KB 101개를 `data/chroma_kb`의 `isms_p_controls` 컬렉션에 저장·색인하고 검증합니다. 실행 절차와 재색인 방법은 [전체 KB 색인 안내](ChromaDB_전체색인_안내.md)에 있습니다. 결과는 `reports/chroma_index_result.md`, DB에서 조회한 전체 벡터 사본은 `data/chroma_kb_vectors_view.json`입니다. KB 최종 버전 고정과 검색 품질 평가는 별도 작업입니다.
+
 ## 9/21 추가: ChromaDB 샘플 구동 확인
 
 `03_check_chroma.cmd`를 실행하면 실제 BGE-M3로 샘플 10개를 ChromaDB에 저장하고 검색·프로세스 재시작 후 데이터 유지를 검사합니다. 자세한 절차는 [ChromaDB 실행 안내](ChromaDB_실행안내.md), 성공 결과는 `reports/chroma_sample_result.md`에서 확인합니다. 아래의 기존 `02_search.cmd` 검색은 벡터 파일 직접 비교 방식입니다.
