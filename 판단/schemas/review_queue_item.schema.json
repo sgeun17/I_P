@@ -1,0 +1,112 @@
+{
+  "$defs": {
+    "MatchStatus": {
+      "description": "증적 하나에 대한 최종 매핑 결과 상태.",
+      "enum": [
+        "MATCHED",
+        "NO_MATCH"
+      ],
+      "title": "MatchStatus",
+      "type": "string"
+    },
+    "ProcessingStatus": {
+      "description": "판단 파이프라인의 기계적 처리 상태.",
+      "enum": [
+        "PENDING",
+        "PROCESSING",
+        "COMPLETED",
+        "FAILED"
+      ],
+      "title": "ProcessingStatus",
+      "type": "string"
+    },
+    "ReviewReason": {
+      "description": "Human Review로 보내는 사유.",
+      "enum": [
+        "R101",
+        "R102",
+        "R103",
+        "R104",
+        "R105",
+        "R106",
+        "R107",
+        "R108",
+        "R109",
+        "R201",
+        "R202",
+        "R203",
+        "R204",
+        "R205",
+        "R206",
+        "R207",
+        "R208"
+      ],
+      "title": "ReviewReason",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "검토 대기열에 보이는 한 줄.\n\n화면에 필요한 것만 담는다. 전체 판단 결과는 evidence_id로 따로 읽는다.",
+  "properties": {
+    "evidence_id": {
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "version": {
+      "title": "Version",
+      "type": "integer"
+    },
+    "source_file": {
+      "title": "Source File",
+      "type": "string"
+    },
+    "match_status": {
+      "$ref": "#/$defs/MatchStatus"
+    },
+    "processing_status": {
+      "$ref": "#/$defs/ProcessingStatus"
+    },
+    "control_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Control Ids",
+      "type": "array"
+    },
+    "reasons": {
+      "items": {
+        "$ref": "#/$defs/ReviewReason"
+      },
+      "title": "Reasons",
+      "type": "array"
+    },
+    "priority": {
+      "description": "작을수록 급하다",
+      "minimum": 0,
+      "title": "Priority",
+      "type": "integer"
+    },
+    "has_blocking_reason": {
+      "title": "Has Blocking Reason",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "version",
+    "source_file",
+    "match_status",
+    "processing_status",
+    "priority",
+    "has_blocking_reason",
+    "created_at"
+  ],
+  "title": "ReviewQueueItem",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

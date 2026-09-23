@@ -1,0 +1,576 @@
+{
+  "$defs": {
+    "CandidateDecision": {
+      "additionalProperties": false,
+      "description": "후보 하나에 대한 LLM의 판단. Top-K 후보 전부에 대해 하나씩 나온다.",
+      "properties": {
+        "control_id": {
+          "title": "Control Id",
+          "type": "string"
+        },
+        "decision": {
+          "$ref": "#/$defs/Decision"
+        },
+        "llm_confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Llm Confidence",
+          "type": "number"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "citations": {
+          "items": {
+            "$ref": "#/$defs/Citation"
+          },
+          "title": "Citations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "control_id",
+        "decision",
+        "llm_confidence",
+        "reason"
+      ],
+      "title": "CandidateDecision",
+      "type": "object"
+    },
+    "Citation": {
+      "additionalProperties": false,
+      "description": "판단 근거가 되는 원문 인용.",
+      "properties": {
+        "chunk_id": {
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "quote": {
+          "description": "청크 text 그대로. 요약·의역 금지",
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "quote"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "Decision": {
+      "description": "Top-K 후보 하나에 대한 LLM의 판단값.",
+      "enum": [
+        "RELATED",
+        "NOT_RELATED",
+        "UNCERTAIN"
+      ],
+      "title": "Decision",
+      "type": "string"
+    },
+    "ErrorCode": {
+      "description": "판단 파트에서 발생하는 오류.\n\n코드 체계\n  E1xx  LLM 호출 실패\n  E2xx  출력 형식 오류\n  E3xx  통제항목 ID 오류\n  E4xx  Citation 오류\n  E5xx  판단 규칙 위반",
+      "enum": [
+        "E101",
+        "E102",
+        "E103",
+        "E104",
+        "E105",
+        "E106",
+        "E201",
+        "E202",
+        "E203",
+        "E204",
+        "E205",
+        "E301",
+        "E302",
+        "E303",
+        "E304",
+        "E401",
+        "E402",
+        "E403",
+        "E404",
+        "E405",
+        "E406",
+        "E501",
+        "E502",
+        "E503",
+        "E504",
+        "E505",
+        "E506",
+        "E507"
+      ],
+      "title": "ErrorCode",
+      "type": "string"
+    },
+    "HumanReview": {
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/ReviewStatus",
+          "default": "NOT_REQUIRED"
+        },
+        "reasons": {
+          "items": {
+            "$ref": "#/$defs/ReviewReason"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "threshold_profile": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Threshold Profile"
+        },
+        "reviewer_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewer Id"
+        },
+        "reviewed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed At"
+        },
+        "review_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Review Note"
+        }
+      },
+      "required": [
+        "required"
+      ],
+      "title": "HumanReview",
+      "type": "object"
+    },
+    "MappedControl": {
+      "additionalProperties": false,
+      "description": "검증을 통과한 최종 매핑. 검색 점수가 함께 붙는다.\n\n점수는 네 가지를 절대 섞지 않는다.\n  similarity_score       검색팀의 코사인 유사도\n  llm_confidence         LLM이 스스로 매긴 신뢰도. 정확도가 아니다\n  validation.passed      기계적 검증 통과 여부\n  human_review.required  사람이 봐야 하는가",
+      "properties": {
+        "control_id": {
+          "title": "Control Id",
+          "type": "string"
+        },
+        "control_name": {
+          "title": "Control Name",
+          "type": "string"
+        },
+        "relation": {
+          "$ref": "#/$defs/Relation"
+        },
+        "llm_confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Llm Confidence",
+          "type": "number"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "citations": {
+          "items": {
+            "$ref": "#/$defs/Citation"
+          },
+          "title": "Citations",
+          "type": "array"
+        },
+        "similarity_score": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": -1.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Similarity Score"
+        }
+      },
+      "required": [
+        "control_id",
+        "control_name",
+        "relation",
+        "llm_confidence",
+        "reason"
+      ],
+      "title": "MappedControl",
+      "type": "object"
+    },
+    "MatchStatus": {
+      "description": "증적 하나에 대한 최종 매핑 결과 상태.",
+      "enum": [
+        "MATCHED",
+        "NO_MATCH"
+      ],
+      "title": "MatchStatus",
+      "type": "string"
+    },
+    "ProcessingStatus": {
+      "description": "판단 파이프라인의 기계적 처리 상태.",
+      "enum": [
+        "PENDING",
+        "PROCESSING",
+        "COMPLETED",
+        "FAILED"
+      ],
+      "title": "ProcessingStatus",
+      "type": "string"
+    },
+    "Relation": {
+      "description": "매핑된 통제항목 하나가 증적과 맺는 관계.",
+      "enum": [
+        "PRIMARY",
+        "RELATED"
+      ],
+      "title": "Relation",
+      "type": "string"
+    },
+    "ReviewReason": {
+      "description": "Human Review로 보내는 사유.",
+      "enum": [
+        "R101",
+        "R102",
+        "R103",
+        "R104",
+        "R105",
+        "R106",
+        "R107",
+        "R108",
+        "R109",
+        "R201",
+        "R202",
+        "R203",
+        "R204",
+        "R205",
+        "R206",
+        "R207",
+        "R208"
+      ],
+      "title": "ReviewReason",
+      "type": "string"
+    },
+    "ReviewStatus": {
+      "description": "사람의 검토 상태.",
+      "enum": [
+        "NOT_REQUIRED",
+        "PENDING",
+        "APPROVED",
+        "MODIFIED",
+        "REJECTED"
+      ],
+      "title": "ReviewStatus",
+      "type": "string"
+    },
+    "ValidationIssue": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/ErrorCode"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "control_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Control Id"
+        },
+        "chunk_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chunk Id"
+        },
+        "field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "ValidationIssue",
+      "type": "object"
+    },
+    "ValidationResult": {
+      "additionalProperties": false,
+      "description": "검증 결과.\n\n`issues`와 `warnings`는 성격이 다르다.\n\n| | 뜻 | passed에 반영 | 검토 전환 |\n|---|---|---|---|\n| `issues` | 결과가 **틀렸다** | 반영 | 대부분 보낸다 |\n| `warnings` | 결과는 맞는데 **근거가 부실하다** | 반영 안 함 | 보내지 않는다 |\n\n근거가 짧다고 사람을 부르면 검토량만 늘고 정확도는 안 오른다.\n`warnings`는 프롬프트를 고칠 자료로 모은다.",
+      "properties": {
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "schema_valid": {
+          "title": "Schema Valid",
+          "type": "boolean"
+        },
+        "control_ids_valid": {
+          "title": "Control Ids Valid",
+          "type": "boolean"
+        },
+        "citations_valid": {
+          "title": "Citations Valid",
+          "type": "boolean"
+        },
+        "rules_valid": {
+          "title": "Rules Valid",
+          "type": "boolean"
+        },
+        "issues": {
+          "items": {
+            "$ref": "#/$defs/ValidationIssue"
+          },
+          "title": "Issues",
+          "type": "array"
+        },
+        "warnings": {
+          "items": {
+            "$ref": "#/$defs/ValidationIssue"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "passed",
+        "schema_valid",
+        "control_ids_valid",
+        "citations_valid",
+        "rules_valid"
+      ],
+      "title": "ValidationResult",
+      "type": "object"
+    },
+    "VersionInfo": {
+      "additionalProperties": false,
+      "description": "결과를 재현하기 위해 반드시 같이 저장한다.",
+      "properties": {
+        "schema_version": {
+          "default": "0.3.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "prompt_version": {
+          "title": "Prompt Version",
+          "type": "string"
+        },
+        "model_name": {
+          "title": "Model Name",
+          "type": "string"
+        },
+        "ruleset_version": {
+          "description": "판단 규칙 문서 버전",
+          "title": "Ruleset Version",
+          "type": "string"
+        },
+        "kb_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "검색팀 메타데이터의 KB 해시",
+          "title": "Kb Sha256"
+        },
+        "embedding_model_revision": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Embedding Model Revision"
+        }
+      },
+      "required": [
+        "prompt_version",
+        "model_name",
+        "ruleset_version"
+      ],
+      "title": "VersionInfo",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "저장되고 Phase 2로 전달되는 최종 결과.",
+  "properties": {
+    "evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "version": {
+      "description": "증적 버전. 재업로드하면 올라간다",
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "processing_status": {
+      "$ref": "#/$defs/ProcessingStatus"
+    },
+    "match_status": {
+      "$ref": "#/$defs/MatchStatus"
+    },
+    "mapped_controls": {
+      "items": {
+        "$ref": "#/$defs/MappedControl"
+      },
+      "title": "Mapped Controls",
+      "type": "array"
+    },
+    "candidate_decisions": {
+      "items": {
+        "$ref": "#/$defs/CandidateDecision"
+      },
+      "title": "Candidate Decisions",
+      "type": "array"
+    },
+    "validation": {
+      "$ref": "#/$defs/ValidationResult"
+    },
+    "human_review": {
+      "$ref": "#/$defs/HumanReview"
+    },
+    "versions": {
+      "$ref": "#/$defs/VersionInfo"
+    },
+    "llm_raw_response_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Llm Raw Response Ref"
+    },
+    "trace_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Trace Id"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "processing_time_ms": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Processing Time Ms"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "version",
+    "processing_status",
+    "match_status",
+    "validation",
+    "human_review",
+    "versions"
+  ],
+  "title": "Phase1MappingResult",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
