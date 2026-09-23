@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-23T21:25:52.848096+09:00",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "count": 101,
+  "domains": {
+    "1": 16,
+    "2": 64,
+    "3": 21
+  },
+  "duplicate_ids": [],
+  "missing_ids": [],
+  "extra_ids": [],
+  "field_counts": {
+    "keyword": 1438,
+    "evidence_examples": 399
+  },
+  "reference": {
+    "file": "controls_review.md",
+    "sha256": "8298063cc432518bc175b78fb22ba0d1e8037f138205538ef5a282057c1474a1",
+    "source_pdf_sha256": "72ed9bbb8deee2b57e7e8ba3e19315f46a8d63be2db334ae2fbe82956fcd344e",
+    "status": "기존 원문 대조 기록에서 추출. 전체 수동 검수 완료 아님"
+  },
+  "errors": [],
+  "warnings": [
+    "원문 대조 기록 작성 시 키워드 781개, 현재 1438개. ID·명칭 대조에만 기록의 기준 목록을 사용했으며 최신 키워드의 의미 검수는 별도입니다."
+  ],
+  "scope": "현재 KB 구조와 독립 원문 대조 기록의 ID·명칭 일치 검사. 원문 전체 수동 검수나 최종 KB 버전 고정은 아님."
+}

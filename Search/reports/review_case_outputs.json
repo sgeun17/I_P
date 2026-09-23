@@ -1,0 +1,3662 @@
+[
+  {
+    "case_id": "S01",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S01",
+      "version": 1,
+      "source_file": "review_S01.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S01",
+          "version": 1,
+          "source_file": "review_S01.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S01_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "9월 사용자 계정 신청 및 처리 대장. 입사자 김가람의 업무용 계정은 팀장의 결재 후 발급했으며, 부서 이동자는 필요한 권한만 변경했다. 퇴사자 이나래의 계정은 퇴사일에 삭제했고 담당자가 처리 결과를 확인했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.5.1",
+            "control_name": "사용자 계정 관리",
+            "similarity_score": 0.600898,
+            "best_chunk_id": "review_S01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.2.5",
+            "control_name": "퇴직 및 직무변경 관리",
+            "similarity_score": 0.583003,
+            "best_chunk_id": "review_S01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.3.4",
+            "control_name": "외부자 계약 변경 및 만료 시 보안",
+            "similarity_score": 0.564136,
+            "best_chunk_id": "review_S01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.5.2",
+            "control_name": "사용자 식별",
+            "similarity_score": 0.558018,
+            "best_chunk_id": "review_S01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.557942,
+            "best_chunk_id": "review_S01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S01_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S01_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.5.1",
+                "control_name": "사용자 계정 관리",
+                "similarity_score": 0.600898
+              },
+              {
+                "rank": 2,
+                "control_id": "2.2.5",
+                "control_name": "퇴직 및 직무변경 관리",
+                "similarity_score": 0.583003
+              },
+              {
+                "rank": 3,
+                "control_id": "2.3.4",
+                "control_name": "외부자 계약 변경 및 만료 시 보안",
+                "similarity_score": 0.564136
+              },
+              {
+                "rank": 4,
+                "control_id": "2.5.2",
+                "control_name": "사용자 식별",
+                "similarity_score": 0.558018
+              },
+              {
+                "rank": 5,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.557942
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.5.1",
+          "control_name": "사용자 계정 관리",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "matched_chunk_ids": [
+            "review_S01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.2.5",
+          "control_name": "퇴직 및 직무변경 관리",
+          "requirement": "퇴직 및 직무변경 시 인사·정보보호·개인정보보호·IT 등 관련 부서별 이행하여야 할 자산반납, 계정 및 접근권한 회수·조정, 결과확인 등의 절차를 수립·관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.3.4",
+          "control_name": "외부자 계약 변경 및 만료 시 보안",
+          "requirement": "외부자 계약만료, 업무종료, 담당자 변경 시에는 제공한 정보자산 반납, 정보시스템 접근계정 삭제, 중요정보 파기, 업무 수행 중 취득정보의 비밀유지 확약서 징구 등의 보호대책을 이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.2",
+          "control_name": "사용자 식별",
+          "requirement": "사용자 계정은 사용자별로 유일하게 구분할 수 있도록 식별자를 할당하고 추측 가능한 식별자 사용을 제한하여야 하며, 동일한 식별자를 공유하여 사용하는 경우 그 사유와 타당성을 검토하여 책임자의 승인 및 책임추적성 확보 등 보완대책을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S01_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:34.012110+09:00"
+    }
+  },
+  {
+    "case_id": "S02",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S02",
+      "version": 1,
+      "source_file": "review_S02.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S02",
+          "version": 1,
+          "source_file": "review_S02.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S02_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "시스템 최고관리자 계정 관리 기록. root 및 Administrator 계정은 지정된 운영자 두 명만 사용하도록 제한했다. 공용 관리자 계정의 사용은 별도로 승인하고 사용자를 식별할 수 있도록 이력을 남긴다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.5.5",
+            "control_name": "특수 계정 및 권한 관리",
+            "similarity_score": 0.682263,
+            "best_chunk_id": "review_S02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.5.2",
+            "control_name": "사용자 식별",
+            "similarity_score": 0.651234,
+            "best_chunk_id": "review_S02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.5.1",
+            "control_name": "사용자 계정 관리",
+            "similarity_score": 0.614455,
+            "best_chunk_id": "review_S02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.9.4",
+            "control_name": "로그 및 접속기록 관리",
+            "similarity_score": 0.59267,
+            "best_chunk_id": "review_S02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.582843,
+            "best_chunk_id": "review_S02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S02_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S02_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.5.5",
+                "control_name": "특수 계정 및 권한 관리",
+                "similarity_score": 0.682263
+              },
+              {
+                "rank": 2,
+                "control_id": "2.5.2",
+                "control_name": "사용자 식별",
+                "similarity_score": 0.651234
+              },
+              {
+                "rank": 3,
+                "control_id": "2.5.1",
+                "control_name": "사용자 계정 관리",
+                "similarity_score": 0.614455
+              },
+              {
+                "rank": 4,
+                "control_id": "2.9.4",
+                "control_name": "로그 및 접속기록 관리",
+                "similarity_score": 0.59267
+              },
+              {
+                "rank": 5,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.582843
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.5.5",
+          "control_name": "특수 계정 및 권한 관리",
+          "requirement": "정보시스템 관리, 개인정보 및 중요정보 관리 등 특수 목적을 위하여 사용하는 계정 및 권한은 최소한으로 부여하고 별도로 식별하여 통제하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.2",
+          "control_name": "사용자 식별",
+          "requirement": "사용자 계정은 사용자별로 유일하게 구분할 수 있도록 식별자를 할당하고 추측 가능한 식별자 사용을 제한하여야 하며, 동일한 식별자를 공유하여 사용하는 경우 그 사유와 타당성을 검토하여 책임자의 승인 및 책임추적성 확보 등 보완대책을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.1",
+          "control_name": "사용자 계정 관리",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "matched_chunk_ids": [
+            "review_S02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.4",
+          "control_name": "로그 및 접속기록 관리",
+          "requirement": "서버, 응용프로그램, 보안시스템, 네트워크시스템 등 정보시스템에 대한 사용자 접속기록, 시스템로그, 권한부여 내역 등의 로그유형, 보존기간, 보존방법 등을 정하고 위·변조, 도난, 분실되지 않도록 안전하게 보존·관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S02_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:34.321232+09:00"
+    }
+  },
+  {
+    "case_id": "S03",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S03",
+      "version": 1,
+      "source_file": "review_S03.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S03",
+          "version": 1,
+          "source_file": "review_S03.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S03_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "3분기 접근권한 검토 결과서. 부서장은 모든 사용자의 현재 업무와 시스템 권한을 대조했다. 업무와 관계없는 과다 권한 3건을 발견해 회수했고 변경 이력과 조치 확인 서명을 첨부했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.656926,
+            "best_chunk_id": "review_S03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.6.3",
+            "control_name": "응용프로그램 접근",
+            "similarity_score": 0.622092,
+            "best_chunk_id": "review_S03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.2.2",
+            "control_name": "직무 분리",
+            "similarity_score": 0.600626,
+            "best_chunk_id": "review_S03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.5.1",
+            "control_name": "사용자 계정 관리",
+            "similarity_score": 0.594194,
+            "best_chunk_id": "review_S03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.591904,
+            "best_chunk_id": "review_S03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S03_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S03_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.656926
+              },
+              {
+                "rank": 2,
+                "control_id": "2.6.3",
+                "control_name": "응용프로그램 접근",
+                "similarity_score": 0.622092
+              },
+              {
+                "rank": 3,
+                "control_id": "2.2.2",
+                "control_name": "직무 분리",
+                "similarity_score": 0.600626
+              },
+              {
+                "rank": 4,
+                "control_id": "2.5.1",
+                "control_name": "사용자 계정 관리",
+                "similarity_score": 0.594194
+              },
+              {
+                "rank": 5,
+                "control_id": "2.9.5",
+                "control_name": "로그 및 접속기록 점검",
+                "similarity_score": 0.591904
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.6.3",
+          "control_name": "응용프로그램 접근",
+          "requirement": "사용자별 업무 및 접근 정보의 중요도 등에 따라 응용프로그램 접근권한을 제한하고, 불필요한 정보 또는 중요정보 노출을 최소화할 수 있도록 기준을 수립하여 적용하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.2.2",
+          "control_name": "직무 분리",
+          "requirement": "권한 오·남용 등으로 인한 잠재적인 피해 예방을 위하여 직무 분리 기준을 수립하고 적용하여야 한다. 다만 불가피하게 직무 분리가 어려운 경우 별도의 보완대책을 마련하여 이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.1",
+          "control_name": "사용자 계정 관리",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "matched_chunk_ids": [
+            "review_S03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.5",
+          "control_name": "로그 및 접속기록 점검",
+          "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S03_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:34.615098+09:00"
+    }
+  },
+  {
+    "case_id": "S04",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S04",
+      "version": 1,
+      "source_file": "review_S04.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S04",
+          "version": 1,
+          "source_file": "review_S04.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S04_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "재택근무 원격접속 승인서. 외부에서 내부 업무망으로 접속할 직원의 사유와 이용 기간을 승인했다. 등록된 노트북에서만 VPN과 추가 인증을 거쳐 접속하며 통신은 암호화한다. 승인 기간이 끝나면 원격접속 권한을 회수한다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.6.6",
+            "control_name": "원격접근 통제",
+            "similarity_score": 0.758995,
+            "best_chunk_id": "review_S04_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S04_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.5.3",
+            "control_name": "사용자 인증",
+            "similarity_score": 0.613938,
+            "best_chunk_id": "review_S04_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S04_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.10.6",
+            "control_name": "업무용 단말기기 보안",
+            "similarity_score": 0.604865,
+            "best_chunk_id": "review_S04_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S04_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.6.7",
+            "control_name": "인터넷 접속 통제",
+            "similarity_score": 0.59857,
+            "best_chunk_id": "review_S04_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S04_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.6.1",
+            "control_name": "네트워크 접근",
+            "similarity_score": 0.594639,
+            "best_chunk_id": "review_S04_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S04_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S04_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.6.6",
+                "control_name": "원격접근 통제",
+                "similarity_score": 0.758995
+              },
+              {
+                "rank": 2,
+                "control_id": "2.5.3",
+                "control_name": "사용자 인증",
+                "similarity_score": 0.613938
+              },
+              {
+                "rank": 3,
+                "control_id": "2.10.6",
+                "control_name": "업무용 단말기기 보안",
+                "similarity_score": 0.604865
+              },
+              {
+                "rank": 4,
+                "control_id": "2.6.7",
+                "control_name": "인터넷 접속 통제",
+                "similarity_score": 0.59857
+              },
+              {
+                "rank": 5,
+                "control_id": "2.6.1",
+                "control_name": "네트워크 접근",
+                "similarity_score": 0.594639
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.6.6",
+          "control_name": "원격접근 통제",
+          "requirement": "보호구역 이외 장소에서의 정보시스템 관리 및 개인정보 처리는 원칙적으로 금지하고, 재택근무·장애대응·원격협업 등 불가피한 사유로 원격접근을 허용하는 경우 책임자 승인, 접근 단말 지정, 접근 허용범위 및 기간 설정, 강화된 인증, 구간 암호화, 접속단말 보안 (백신, 패치 등) 등 보호대책을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S04_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.3",
+          "control_name": "사용자 인증",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 사용자의 접근은 안전한 인증절차와 필요에 따라 강화된 인증방식을 적용하여야 한다. 또한 로그인 횟수 제한, 불법 로그인 시도 경고 등 비인가자 접근 통제방안을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S04_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.10.6",
+          "control_name": "업무용 단말기기 보안",
+          "requirement": "PC, 모바일 기기 등 단말기기를 업무 목적으로 네트워크에 연결할 경우 기기 인증 및 승인, 접근 범위, 기기 보안설정 등의 접근통제 대책을 수립하고 주기적으로 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S04_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.6.7",
+          "control_name": "인터넷 접속 통제",
+          "requirement": "인터넷을 통한 정보 유출, 악성코드 감염, 내부망 침투 등을 예방하기 위하여 주요 정보시스템, 주요 직무 수행 및 개인정보 취급 단말기 등에 대한 인터넷 접속 또는 서비스 (P2P, 웹하드, 메신저 등)를 제한하는 등 인터넷 접속 통제 정책을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S04_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.6.1",
+          "control_name": "네트워크 접근",
+          "requirement": "네트워크에 대한 비인가 접근을 통제하기 위하여 IP관리, 단말인증 등 관리절차를 수립· 이행하고, 업무목적 및 중요도에 따라 네트워크 분리(DMZ, 서버팜, DB존, 개발존 등)와 접근통제를 적용하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S04_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:34.970054+09:00"
+    }
+  },
+  {
+    "case_id": "S05",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S05",
+      "version": 1,
+      "source_file": "review_S05.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S05",
+          "version": 1,
+          "source_file": "review_S05.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S05_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "운영 데이터 백업 점검표. 고객 업무 데이터베이스는 매일 증분 백업하고 주말에는 전체 백업한다. 백업본은 별도 장소에 보관하며 담당자가 작업 성공 여부와 실패 시 재수행 결과를 기록한다. 복구 절차와 보유 기간을 정했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.3",
+            "control_name": "백업 및 복구관리",
+            "similarity_score": 0.689362,
+            "best_chunk_id": "review_S05_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S05_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "1.3.3",
+            "control_name": "운영현황 관리",
+            "similarity_score": 0.609054,
+            "best_chunk_id": "review_S05_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S05_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "1.4.2",
+            "control_name": "관리체계 점검",
+            "similarity_score": 0.589769,
+            "best_chunk_id": "review_S05_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S05_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "3.2.1",
+            "control_name": "개인정보 현황관리",
+            "similarity_score": 0.582267,
+            "best_chunk_id": "review_S05_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S05_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.9.4",
+            "control_name": "로그 및 접속기록 관리",
+            "similarity_score": 0.580644,
+            "best_chunk_id": "review_S05_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S05_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S05_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.9.3",
+                "control_name": "백업 및 복구관리",
+                "similarity_score": 0.689362
+              },
+              {
+                "rank": 2,
+                "control_id": "1.3.3",
+                "control_name": "운영현황 관리",
+                "similarity_score": 0.609054
+              },
+              {
+                "rank": 3,
+                "control_id": "1.4.2",
+                "control_name": "관리체계 점검",
+                "similarity_score": 0.589769
+              },
+              {
+                "rank": 4,
+                "control_id": "3.2.1",
+                "control_name": "개인정보 현황관리",
+                "similarity_score": 0.582267
+              },
+              {
+                "rank": 5,
+                "control_id": "2.9.4",
+                "control_name": "로그 및 접속기록 관리",
+                "similarity_score": 0.580644
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.9.3",
+          "control_name": "백업 및 복구관리",
+          "requirement": "정보시스템의 가용성과 데이터 무결성을 유지하기 위하여 백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다. 아울러 사고 발생 시 적시에 복구할 수 있도록 관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S05_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "1.3.3",
+          "control_name": "운영현황 관리",
+          "requirement": "조직이 수립한 관리체계에 따라 상시적 또는 주기적으로 수행하여야 하는 운영활동 및 수행 내역은 식별 및 추적이 가능하도록 기록하여 관리하고, 경영진은 주기적으로 운영활동의 효과성을 확인하여 관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S05_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "1.4.2",
+          "control_name": "관리체계 점검",
+          "requirement": "관리체계가 내부 정책 및 법적 요구사항에 따라 효과적으로 운영되고 있는지 독립성과 전문성이 확보된 인력을 구성하여 연 1회 이상 점검하고, 발견된 문제점을 경영진에게 보고하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S05_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "3.2.1",
+          "control_name": "개인정보 현황관리",
+          "requirement": "수집·보유하는 개인정보의 항목, 보유량, 처리 목적 및 방법, 보유기간 등 현황을 정기적으로 관리하여야 하며, 공공기관의 경우 이를 법률에서 정한 관계기관의 장에게 등록하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S05_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.4",
+          "control_name": "로그 및 접속기록 관리",
+          "requirement": "서버, 응용프로그램, 보안시스템, 네트워크시스템 등 정보시스템에 대한 사용자 접속기록, 시스템로그, 권한부여 내역 등의 로그유형, 보존기간, 보존방법 등을 정하고 위·변조, 도난, 분실되지 않도록 안전하게 보존·관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S05_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:35.284783+09:00"
+    }
+  },
+  {
+    "case_id": "S06",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S06",
+      "version": 1,
+      "source_file": "review_S06.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S06",
+          "version": 1,
+          "source_file": "review_S06.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S06_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "운영 서버 접속기록 보관 설정 점검. 사용자 식별자, 접속 시각, 수행 작업, 접속 주소를 기록한다. 로그는 정해진 보유 기간 동안 중앙 저장소에 보관하며 수정과 삭제 권한을 제한하고 위변조를 방지하도록 보호한다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.4",
+            "control_name": "로그 및 접속기록 관리",
+            "similarity_score": 0.786998,
+            "best_chunk_id": "review_S06_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S06_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.714177,
+            "best_chunk_id": "review_S06_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S06_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.5.1",
+            "control_name": "사용자 계정 관리",
+            "similarity_score": 0.66042,
+            "best_chunk_id": "review_S06_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S06_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.659641,
+            "best_chunk_id": "review_S06_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S06_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "1.3.3",
+            "control_name": "운영현황 관리",
+            "similarity_score": 0.63632,
+            "best_chunk_id": "review_S06_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S06_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S06_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.9.4",
+                "control_name": "로그 및 접속기록 관리",
+                "similarity_score": 0.786998
+              },
+              {
+                "rank": 2,
+                "control_id": "2.9.5",
+                "control_name": "로그 및 접속기록 점검",
+                "similarity_score": 0.714177
+              },
+              {
+                "rank": 3,
+                "control_id": "2.5.1",
+                "control_name": "사용자 계정 관리",
+                "similarity_score": 0.66042
+              },
+              {
+                "rank": 4,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.659641
+              },
+              {
+                "rank": 5,
+                "control_id": "1.3.3",
+                "control_name": "운영현황 관리",
+                "similarity_score": 0.63632
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.9.4",
+          "control_name": "로그 및 접속기록 관리",
+          "requirement": "서버, 응용프로그램, 보안시스템, 네트워크시스템 등 정보시스템에 대한 사용자 접속기록, 시스템로그, 권한부여 내역 등의 로그유형, 보존기간, 보존방법 등을 정하고 위·변조, 도난, 분실되지 않도록 안전하게 보존·관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S06_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.5",
+          "control_name": "로그 및 접속기록 점검",
+          "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S06_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.1",
+          "control_name": "사용자 계정 관리",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "matched_chunk_ids": [
+            "review_S06_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S06_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "1.3.3",
+          "control_name": "운영현황 관리",
+          "requirement": "조직이 수립한 관리체계에 따라 상시적 또는 주기적으로 수행하여야 하는 운영활동 및 수행 내역은 식별 및 추적이 가능하도록 기록하여 관리하고, 경영진은 주기적으로 운영활동의 효과성을 확인하여 관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S06_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:35.588968+09:00"
+    }
+  },
+  {
+    "case_id": "S07",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S07",
+      "version": 1,
+      "source_file": "review_S07.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S07",
+          "version": 1,
+          "source_file": "review_S07.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S07_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "주간 로그 검토 보고서. 보안 담당자는 비인가 접속, 비정상 시간대 로그인 및 대량 조회가 발생했는지 접속기록을 분석했다. 이상 징후 2건에 대해 사용자에게 사유를 확인하고 조치 결과를 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.737891,
+            "best_chunk_id": "review_S07_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S07_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.5.3",
+            "control_name": "사용자 인증",
+            "similarity_score": 0.653508,
+            "best_chunk_id": "review_S07_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S07_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.622647,
+            "best_chunk_id": "review_S07_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S07_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.9.4",
+            "control_name": "로그 및 접속기록 관리",
+            "similarity_score": 0.620275,
+            "best_chunk_id": "review_S07_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S07_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.5.1",
+            "control_name": "사용자 계정 관리",
+            "similarity_score": 0.615558,
+            "best_chunk_id": "review_S07_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S07_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S07_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.9.5",
+                "control_name": "로그 및 접속기록 점검",
+                "similarity_score": 0.737891
+              },
+              {
+                "rank": 2,
+                "control_id": "2.5.3",
+                "control_name": "사용자 인증",
+                "similarity_score": 0.653508
+              },
+              {
+                "rank": 3,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.622647
+              },
+              {
+                "rank": 4,
+                "control_id": "2.9.4",
+                "control_name": "로그 및 접속기록 관리",
+                "similarity_score": 0.620275
+              },
+              {
+                "rank": 5,
+                "control_id": "2.5.1",
+                "control_name": "사용자 계정 관리",
+                "similarity_score": 0.615558
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.9.5",
+          "control_name": "로그 및 접속기록 점검",
+          "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S07_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.3",
+          "control_name": "사용자 인증",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 사용자의 접근은 안전한 인증절차와 필요에 따라 강화된 인증방식을 적용하여야 한다. 또한 로그인 횟수 제한, 불법 로그인 시도 경고 등 비인가자 접근 통제방안을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S07_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S07_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.4",
+          "control_name": "로그 및 접속기록 관리",
+          "requirement": "서버, 응용프로그램, 보안시스템, 네트워크시스템 등 정보시스템에 대한 사용자 접속기록, 시스템로그, 권한부여 내역 등의 로그유형, 보존기간, 보존방법 등을 정하고 위·변조, 도난, 분실되지 않도록 안전하게 보존·관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S07_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.1",
+          "control_name": "사용자 계정 관리",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "matched_chunk_ids": [
+            "review_S07_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:35.879978+09:00"
+    }
+  },
+  {
+    "case_id": "S08",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S08",
+      "version": 1,
+      "source_file": "review_S08.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S08",
+          "version": 1,
+          "source_file": "review_S08.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S08_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "임직원 정보보호 교육 실적. 연간 교육계획에 따라 신규 입사자와 재직자를 대상으로 보안 및 개인정보보호 교육을 실시했다. 참석 명단, 미이수자 보충교육 결과와 교육 이해도 평가를 보관한다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.2.4",
+            "control_name": "인식제고 및 교육훈련",
+            "similarity_score": 0.719647,
+            "best_chunk_id": "review_S08_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S08_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.2.3",
+            "control_name": "보안 서약",
+            "similarity_score": 0.652977,
+            "best_chunk_id": "review_S08_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S08_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.641915,
+            "best_chunk_id": "review_S08_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S08_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.1.2",
+            "control_name": "조직의 유지관리",
+            "similarity_score": 0.628839,
+            "best_chunk_id": "review_S08_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S08_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.2.6",
+            "control_name": "보안 위반 시 조치",
+            "similarity_score": 0.628752,
+            "best_chunk_id": "review_S08_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S08_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S08_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.2.4",
+                "control_name": "인식제고 및 교육훈련",
+                "similarity_score": 0.719647
+              },
+              {
+                "rank": 2,
+                "control_id": "2.2.3",
+                "control_name": "보안 서약",
+                "similarity_score": 0.652977
+              },
+              {
+                "rank": 3,
+                "control_id": "2.1.1",
+                "control_name": "정책의 유지관리",
+                "similarity_score": 0.641915
+              },
+              {
+                "rank": 4,
+                "control_id": "2.1.2",
+                "control_name": "조직의 유지관리",
+                "similarity_score": 0.628839
+              },
+              {
+                "rank": 5,
+                "control_id": "2.2.6",
+                "control_name": "보안 위반 시 조치",
+                "similarity_score": 0.628752
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.2.4",
+          "control_name": "인식제고 및 교육훈련",
+          "requirement": "임직원 및 관련 외부자가 조직의 관리체계와 정책을 이해하고 직무별 전문성을 확보할 수 있도록 연간 인식제고 활동 및 교육훈련 계획을 수립·운영하고, 그 결과에 따른 효과성을 평가하여 다음 계획에 반영하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S08_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.2.3",
+          "control_name": "보안 서약",
+          "requirement": "정보자산을 취급하거나 접근권한이 부여된 임직원·임시직원·외부자 등이 내부 정책 및 관련 법규, 비밀유지 의무 등 준수사항을 명확히 인지할 수 있도록 업무 특성에 따른 정보보호 서약을 받아야 한다.",
+          "matched_chunk_ids": [
+            "review_S08_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.1.1",
+          "control_name": "정책의 유지관리",
+          "requirement": "정보보호 및 개인정보보호 관련 정책과 시행문서는 법령 및 규제, 상위 조직 및 관련 기관 정책과의 연계성, 조직의 대내외 환경변화 등에 따라 주기적으로 검토하여 필요한 경우 제·개정하고 그 내역을 이력관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S08_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.1.2",
+          "control_name": "조직의 유지관리",
+          "requirement": "조직의 각 구성원에게 정보보호와 개인정보보호 관련 역할 및 책임을 할당하고, 그 활동을 평가할 수 있는 체계와 조직 및 조직의 구성원 간 상호 의사소통할 수 있는 체계를 수립하여 운영하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S08_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.2.6",
+          "control_name": "보안 위반 시 조치",
+          "requirement": "임직원 및 관련 외부자가 법령, 규제 및 내부정책을 위반한 경우 이에 따른 조치 절차를 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S08_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:36.165028+09:00"
+    }
+  },
+  {
+    "case_id": "S09",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S09",
+      "version": 1,
+      "source_file": "review_S09.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S09",
+          "version": 1,
+          "source_file": "review_S09.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S09_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "서버와 웹서비스의 정기 취약점 진단 결과. 진단 도구 및 수동 점검으로 보안 취약점을 식별하고 위험도별 개선 기한과 담당자를 지정했다. 설정 변경과 보안 업데이트를 적용한 뒤 재점검으로 해결 여부를 확인했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.11.2",
+            "control_name": "취약점 점검 및 조치",
+            "similarity_score": 0.769868,
+            "best_chunk_id": "review_S09_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S09_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.647672,
+            "best_chunk_id": "review_S09_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S09_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.9.2",
+            "control_name": "성능 및 장애관리",
+            "similarity_score": 0.636584,
+            "best_chunk_id": "review_S09_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S09_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.62988,
+            "best_chunk_id": "review_S09_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S09_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.10.8",
+            "control_name": "패치관리",
+            "similarity_score": 0.61981,
+            "best_chunk_id": "review_S09_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S09_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S09_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.11.2",
+                "control_name": "취약점 점검 및 조치",
+                "similarity_score": 0.769868
+              },
+              {
+                "rank": 2,
+                "control_id": "2.9.5",
+                "control_name": "로그 및 접속기록 점검",
+                "similarity_score": 0.647672
+              },
+              {
+                "rank": 3,
+                "control_id": "2.9.2",
+                "control_name": "성능 및 장애관리",
+                "similarity_score": 0.636584
+              },
+              {
+                "rank": 4,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.62988
+              },
+              {
+                "rank": 5,
+                "control_id": "2.10.8",
+                "control_name": "패치관리",
+                "similarity_score": 0.61981
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.11.2",
+          "control_name": "취약점 점검 및 조치",
+          "requirement": "정보시스템의 취약점이 노출되어 있는지를 확인하기 위하여 정기적으로 취약점 점검을 수행하고, 발견된 취약점에 대해서는 신속하게 조치하여야 한다. 또한 최신 보안취약점의 발생 여부를 지속적으로 파악하고, 정보시스템에 미치는 영향을 분석하여 조치하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S09_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.5",
+          "control_name": "로그 및 접속기록 점검",
+          "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S09_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.2",
+          "control_name": "성능 및 장애관리",
+          "requirement": "정보시스템의 가용성 보장을 위하여 성능 및 용량 요구사항을 정의하고 현황을 지속적으로 모니터링하여야 하며, 장애 발생 시 효과적으로 대응하기 위한 탐지·기록·분석·복구·보고 등의 절차를 수립·관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S09_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S09_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.10.8",
+          "control_name": "패치관리",
+          "requirement": "소프트웨어, 운영체제, 보안시스템 등의 취약점으로 인한 침해사고를 예방하기 위하여 최신 패치를 적용하여야 한다. 다만 서비스 영향을 검토하여 최신 패치 적용이 어려울 경우 별도의 보완대책을 마련하여 이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S09_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:36.446294+09:00"
+    }
+  },
+  {
+    "case_id": "S10",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S10",
+      "version": 1,
+      "source_file": "review_S10.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S10",
+          "version": 1,
+          "source_file": "review_S10.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S10_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "재해복구 모의훈련 결과 보고서. 주 전산센터 중단을 가정해 대체 센터로 전환하고 서비스를 복원했다. 정해진 복구 목표 시간과 복구 목표 시점 충족 여부를 측정했으며, 훈련에서 발견된 연락체계 문제를 복구계획에 반영했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.11.4",
+            "control_name": "사고 대응 훈련 및 개선",
+            "similarity_score": 0.630583,
+            "best_chunk_id": "review_S10_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S10_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.12.1",
+            "control_name": "재해·재난 대비 안전조치",
+            "similarity_score": 0.61866,
+            "best_chunk_id": "review_S10_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S10_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.12.2",
+            "control_name": "재해 복구 시험 및 개선",
+            "similarity_score": 0.614539,
+            "best_chunk_id": "review_S10_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S10_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.9.3",
+            "control_name": "백업 및 복구관리",
+            "similarity_score": 0.573803,
+            "best_chunk_id": "review_S10_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S10_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.11.5",
+            "control_name": "사고 대응 및 복구",
+            "similarity_score": 0.538977,
+            "best_chunk_id": "review_S10_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S10_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S10_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.11.4",
+                "control_name": "사고 대응 훈련 및 개선",
+                "similarity_score": 0.630583
+              },
+              {
+                "rank": 2,
+                "control_id": "2.12.1",
+                "control_name": "재해·재난 대비 안전조치",
+                "similarity_score": 0.61866
+              },
+              {
+                "rank": 3,
+                "control_id": "2.12.2",
+                "control_name": "재해 복구 시험 및 개선",
+                "similarity_score": 0.614539
+              },
+              {
+                "rank": 4,
+                "control_id": "2.9.3",
+                "control_name": "백업 및 복구관리",
+                "similarity_score": 0.573803
+              },
+              {
+                "rank": 5,
+                "control_id": "2.11.5",
+                "control_name": "사고 대응 및 복구",
+                "similarity_score": 0.538977
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.11.4",
+          "control_name": "사고 대응 훈련 및 개선",
+          "requirement": "침해사고 및 개인정보 유출사고 대응 절차를 임직원과 이해관계자가 숙지하도록 시나리오에 따른 모의훈련을 연 1회 이상 실시하고 훈련결과를 반영하여 대응체계를 개선하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S10_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.12.1",
+          "control_name": "재해·재난 대비 안전조치",
+          "requirement": "자연재해, 통신·전력 장애, 해킹 등 조직의 핵심 서비스 및 시스템의 운영 연속성을 위협할 수 있는 재해 유형을 식별하고, 유형별 예상 피해규모 및 영향을 분석하여야 한다. 또한 복구 목표시간, 복구 목표시점을 정의하고 복구 전략 및 대책, 비상시 복구 조직, 비상연락체계, 복구 절차 등 재해 복구체계를 구축하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S10_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.12.2",
+          "control_name": "재해 복구 시험 및 개선",
+          "requirement": "재해 복구 전략 및 대책의 적정성을 정기적으로 시험하여 시험결과, 정보시스템 환경변화, 법규 등에 따른 변화를 반영하여 복구전략 및 대책을 보완하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S10_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.3",
+          "control_name": "백업 및 복구관리",
+          "requirement": "정보시스템의 가용성과 데이터 무결성을 유지하기 위하여 백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다. 아울러 사고 발생 시 적시에 복구할 수 있도록 관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S10_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.11.5",
+          "control_name": "사고 대응 및 복구",
+          "requirement": "침해사고 및 개인정보 유출 징후나 발생을 인지한 때에는 법적 통지 및 신고 의무를 준수하여야 하며, 절차에 따라 신속하게 대응 및 복구하고 사고분석 후 재발방지 대책을 수립하여 대응체계에 반영하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S10_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:36.756717+09:00"
+    }
+  },
+  {
+    "case_id": "S11",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S11",
+      "version": 1,
+      "source_file": "review_S11.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S11",
+          "version": 1,
+          "source_file": "review_S11.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S11_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "보유기간 만료 개인정보 파기 대장. 이용 목적을 달성하고 보유기간이 끝난 고객정보를 선별했다. 전자 파일은 복구할 수 없도록 삭제하고 종이 출력물은 분쇄했다. 파기 대상, 일시, 방법 및 책임자의 확인을 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.4.1",
+            "control_name": "개인정보 파기",
+            "similarity_score": 0.743348,
+            "best_chunk_id": "review_S11_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S11_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "3.4.2",
+            "control_name": "처리목적 달성 후 보유 시 조치",
+            "similarity_score": 0.674288,
+            "best_chunk_id": "review_S11_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S11_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.3.4",
+            "control_name": "외부자 계약 변경 및 만료 시 보안",
+            "similarity_score": 0.62685,
+            "best_chunk_id": "review_S11_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S11_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.9.7",
+            "control_name": "정보자산의 재사용 및 폐기",
+            "similarity_score": 0.613412,
+            "best_chunk_id": "review_S11_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S11_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "3.2.1",
+            "control_name": "개인정보 현황관리",
+            "similarity_score": 0.609472,
+            "best_chunk_id": "review_S11_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S11_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S11_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "3.4.1",
+                "control_name": "개인정보 파기",
+                "similarity_score": 0.743348
+              },
+              {
+                "rank": 2,
+                "control_id": "3.4.2",
+                "control_name": "처리목적 달성 후 보유 시 조치",
+                "similarity_score": 0.674288
+              },
+              {
+                "rank": 3,
+                "control_id": "2.3.4",
+                "control_name": "외부자 계약 변경 및 만료 시 보안",
+                "similarity_score": 0.62685
+              },
+              {
+                "rank": 4,
+                "control_id": "2.9.7",
+                "control_name": "정보자산의 재사용 및 폐기",
+                "similarity_score": 0.613412
+              },
+              {
+                "rank": 5,
+                "control_id": "3.2.1",
+                "control_name": "개인정보 현황관리",
+                "similarity_score": 0.609472
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "3.4.1",
+          "control_name": "개인정보 파기",
+          "requirement": "개인정보의 보유기간 및 파기 관련 내부 정책을 수립하고 개인정보의 보유기간 경과, 처리목적 달성 등 파기 시점이 도달한 때에는 파기의 안전성 및 완전성이 보장될 수 있는 방법으로 지체 없이 파기하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S11_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "3.4.2",
+          "control_name": "처리목적 달성 후 보유 시 조치",
+          "requirement": "개인정보의 보유기간 경과 또는 처리목적 달성 후에도 관련 법령 등에 따라 파기하지 않고 보존하는 경우에는 해당 목적에 필요한 최소한의 항목으로 제한하고 다른 개인정보와 분리하여 저장·관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S11_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.3.4",
+          "control_name": "외부자 계약 변경 및 만료 시 보안",
+          "requirement": "외부자 계약만료, 업무종료, 담당자 변경 시에는 제공한 정보자산 반납, 정보시스템 접근계정 삭제, 중요정보 파기, 업무 수행 중 취득정보의 비밀유지 확약서 징구 등의 보호대책을 이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S11_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.7",
+          "control_name": "정보자산의 재사용 및 폐기",
+          "requirement": "정보자산의 재사용과 폐기 과정에서 개인정보 및 중요정보가 복구·재생되지 않도록 안전한 재사용 및 폐기 절차를 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S11_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "3.2.1",
+          "control_name": "개인정보 현황관리",
+          "requirement": "수집·보유하는 개인정보의 항목, 보유량, 처리 목적 및 방법, 보유기간 등 현황을 정기적으로 관리하여야 하며, 공공기관의 경우 이를 법률에서 정한 관계기관의 장에게 등록하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S11_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:37.056889+09:00"
+    }
+  },
+  {
+    "case_id": "S12",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_S12",
+      "version": 1,
+      "source_file": "review_S12.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_S12",
+          "version": 1,
+          "source_file": "review_S12.txt",
+          "file_type": "txt",
+          "chunk_id": "review_S12_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "클라우드 서비스 보안 점검표. 이용 중인 클라우드 서비스의 보안 책임 범위와 제공자의 보안 요구사항을 확인했다. 관리 콘솔 접근을 제한하고 스토리지 공개 설정 및 가상 네트워크 보안 설정을 점검했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.10.2",
+            "control_name": "클라우드 보안",
+            "similarity_score": 0.736945,
+            "best_chunk_id": "review_S12_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S12_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.3.1",
+            "control_name": "외부자 현황 관리",
+            "similarity_score": 0.664562,
+            "best_chunk_id": "review_S12_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S12_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.11.2",
+            "control_name": "취약점 점검 및 조치",
+            "similarity_score": 0.634239,
+            "best_chunk_id": "review_S12_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S12_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.5.1",
+            "control_name": "사용자 계정 관리",
+            "similarity_score": 0.614488,
+            "best_chunk_id": "review_S12_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S12_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.10.3",
+            "control_name": "공개서버 보안",
+            "similarity_score": 0.614435,
+            "best_chunk_id": "review_S12_v1_c0000",
+            "matched_chunk_ids": [
+              "review_S12_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_S12_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.10.2",
+                "control_name": "클라우드 보안",
+                "similarity_score": 0.736945
+              },
+              {
+                "rank": 2,
+                "control_id": "2.3.1",
+                "control_name": "외부자 현황 관리",
+                "similarity_score": 0.664562
+              },
+              {
+                "rank": 3,
+                "control_id": "2.11.2",
+                "control_name": "취약점 점검 및 조치",
+                "similarity_score": 0.634239
+              },
+              {
+                "rank": 4,
+                "control_id": "2.5.1",
+                "control_name": "사용자 계정 관리",
+                "similarity_score": 0.614488
+              },
+              {
+                "rank": 5,
+                "control_id": "2.10.3",
+                "control_name": "공개서버 보안",
+                "similarity_score": 0.614435
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.10.2",
+          "control_name": "클라우드 보안",
+          "requirement": "클라우드 서비스 이용 시 서비스 유형(SaaS, PaaS, IaaS 등)에 따른 비인가 접근, 설정 오류 등에 따라 중요정보와 개인정보가 유·노출되지 않도록 관리자 접근 및 보안 설정 등에 대한 보호대책을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S12_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.3.1",
+          "control_name": "외부자 현황 관리",
+          "requirement": "업무의 일부(개인정보취급, 정보보호, 정보시스템 운영 또는 개발 등)를 외부에 위탁하거나 외부의 시설 또는 서비스(집적정보통신시설, 클라우드 서비스, 애플리케이션 서비스 등)를 이용하는 경우 그 현황을 식별하고 법적 요구사항 및 외부 조직·서비스로부터 발생되는 위험을 파악하여 적절한 보호대책을 마련하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S12_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.11.2",
+          "control_name": "취약점 점검 및 조치",
+          "requirement": "정보시스템의 취약점이 노출되어 있는지를 확인하기 위하여 정기적으로 취약점 점검을 수행하고, 발견된 취약점에 대해서는 신속하게 조치하여야 한다. 또한 최신 보안취약점의 발생 여부를 지속적으로 파악하고, 정보시스템에 미치는 영향을 분석하여 조치하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S12_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.1",
+          "control_name": "사용자 계정 관리",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "matched_chunk_ids": [
+            "review_S12_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.10.3",
+          "control_name": "공개서버 보안",
+          "requirement": "외부 네트워크에 공개되는 서버의 경우 내부 네트워크와 분리하고 취약점 점검, 접근통제, 인증, 정보 수집·저장·공개 절차 등 강화된 보호대책을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_S12_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:37.340014+09:00"
+    }
+  },
+  {
+    "case_id": "M01",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_M01",
+      "version": 1,
+      "source_file": "review_M01.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_M01",
+          "version": 1,
+          "source_file": "review_M01.txt",
+          "file_type": "txt",
+          "chunk_id": "review_M01_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "사용자 계정 신청서: 신규 계정은 업무 필요성과 부서장 승인을 확인한 후 발급한다. 퇴사 시 계정을 삭제하고 처리 이력을 보관한다.",
+          "block_orders": [
+            1
+          ]
+        },
+        {
+          "evidence_id": "review_M01",
+          "version": 1,
+          "source_file": "review_M01.txt",
+          "file_type": "txt",
+          "chunk_id": "review_M01_v1_c0001",
+          "chunk_index": 1,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "접속기록 보관 점검표: 시스템 사용자의 접속 일시와 수행 내역을 기록한다. 로그는 정해진 기간 동안 보관하며 위변조와 임의 삭제를 방지하도록 보호한다.",
+          "block_orders": [
+            2
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.4",
+            "control_name": "로그 및 접속기록 관리",
+            "similarity_score": 0.755082,
+            "best_chunk_id": "review_M01_v1_c0001",
+            "matched_chunk_ids": [
+              "review_M01_v1_c0001"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.718193,
+            "best_chunk_id": "review_M01_v1_c0001",
+            "matched_chunk_ids": [
+              "review_M01_v1_c0001"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.5.1",
+            "control_name": "사용자 계정 관리",
+            "similarity_score": 0.667707,
+            "best_chunk_id": "review_M01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.641182,
+            "best_chunk_id": "review_M01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M01_v1_c0000",
+              "review_M01_v1_c0001"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.2.5",
+            "control_name": "퇴직 및 직무변경 관리",
+            "similarity_score": 0.638899,
+            "best_chunk_id": "review_M01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M01_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_M01_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.5.1",
+                "control_name": "사용자 계정 관리",
+                "similarity_score": 0.667707
+              },
+              {
+                "rank": 2,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.641182
+              },
+              {
+                "rank": 3,
+                "control_id": "2.2.5",
+                "control_name": "퇴직 및 직무변경 관리",
+                "similarity_score": 0.638899
+              },
+              {
+                "rank": 4,
+                "control_id": "2.5.5",
+                "control_name": "특수 계정 및 권한 관리",
+                "similarity_score": 0.608316
+              },
+              {
+                "rank": 5,
+                "control_id": "2.5.2",
+                "control_name": "사용자 식별",
+                "similarity_score": 0.605893
+              }
+            ]
+          },
+          {
+            "chunk_id": "review_M01_v1_c0001",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.9.4",
+                "control_name": "로그 및 접속기록 관리",
+                "similarity_score": 0.755082
+              },
+              {
+                "rank": 2,
+                "control_id": "2.9.5",
+                "control_name": "로그 및 접속기록 점검",
+                "similarity_score": 0.718193
+              },
+              {
+                "rank": 3,
+                "control_id": "1.3.3",
+                "control_name": "운영현황 관리",
+                "similarity_score": 0.633778
+              },
+              {
+                "rank": 4,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.628488
+              },
+              {
+                "rank": 5,
+                "control_id": "2.9.6",
+                "control_name": "시간 동기화",
+                "similarity_score": 0.626496
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.9.4",
+          "control_name": "로그 및 접속기록 관리",
+          "requirement": "서버, 응용프로그램, 보안시스템, 네트워크시스템 등 정보시스템에 대한 사용자 접속기록, 시스템로그, 권한부여 내역 등의 로그유형, 보존기간, 보존방법 등을 정하고 위·변조, 도난, 분실되지 않도록 안전하게 보존·관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M01_v1_c0001"
+          ]
+        },
+        {
+          "control_id": "2.9.5",
+          "control_name": "로그 및 접속기록 점검",
+          "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M01_v1_c0001"
+          ]
+        },
+        {
+          "control_id": "2.5.1",
+          "control_name": "사용자 계정 관리",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "matched_chunk_ids": [
+            "review_M01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M01_v1_c0000",
+            "review_M01_v1_c0001"
+          ]
+        },
+        {
+          "control_id": "2.2.5",
+          "control_name": "퇴직 및 직무변경 관리",
+          "requirement": "퇴직 및 직무변경 시 인사·정보보호·개인정보보호·IT 등 관련 부서별 이행하여야 할 자산반납, 계정 및 접근권한 회수·조정, 결과확인 등의 절차를 수립·관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M01_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:37.710452+09:00"
+    }
+  },
+  {
+    "case_id": "M02",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_M02",
+      "version": 1,
+      "source_file": "review_M02.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_M02",
+          "version": 1,
+          "source_file": "review_M02.txt",
+          "file_type": "txt",
+          "chunk_id": "review_M02_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "백업 운영 대장: 중요 자료별 백업 주기와 보유 기간을 정하고 복사본을 별도 장소에 보관했다. 매일 백업 작업 성공 여부를 점검한다.",
+          "block_orders": [
+            1
+          ]
+        },
+        {
+          "evidence_id": "review_M02",
+          "version": 1,
+          "source_file": "review_M02.txt",
+          "file_type": "txt",
+          "chunk_id": "review_M02_v1_c0001",
+          "chunk_index": 1,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "재해복구 훈련 보고: 전산센터 전원 상실을 가정해 대체 센터 전환과 서비스 복원을 시험했다. 복구 목표 달성 여부를 평가하고 비상 복구계획을 개선했다.",
+          "block_orders": [
+            2
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.3",
+            "control_name": "백업 및 복구관리",
+            "similarity_score": 0.700211,
+            "best_chunk_id": "review_M02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M02_v1_c0000",
+              "review_M02_v1_c0001"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.12.2",
+            "control_name": "재해 복구 시험 및 개선",
+            "similarity_score": 0.638081,
+            "best_chunk_id": "review_M02_v1_c0001",
+            "matched_chunk_ids": [
+              "review_M02_v1_c0001"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.7.2",
+            "control_name": "암호키 관리",
+            "similarity_score": 0.614999,
+            "best_chunk_id": "review_M02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "3.2.1",
+            "control_name": "개인정보 현황관리",
+            "similarity_score": 0.606445,
+            "best_chunk_id": "review_M02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "1.3.3",
+            "control_name": "운영현황 관리",
+            "similarity_score": 0.603216,
+            "best_chunk_id": "review_M02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M02_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_M02_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.9.3",
+                "control_name": "백업 및 복구관리",
+                "similarity_score": 0.700211
+              },
+              {
+                "rank": 2,
+                "control_id": "2.7.2",
+                "control_name": "암호키 관리",
+                "similarity_score": 0.614999
+              },
+              {
+                "rank": 3,
+                "control_id": "3.2.1",
+                "control_name": "개인정보 현황관리",
+                "similarity_score": 0.606445
+              },
+              {
+                "rank": 4,
+                "control_id": "1.3.3",
+                "control_name": "운영현황 관리",
+                "similarity_score": 0.603216
+              },
+              {
+                "rank": 5,
+                "control_id": "2.1.3",
+                "control_name": "정보자산 관리",
+                "similarity_score": 0.602011
+              }
+            ]
+          },
+          {
+            "chunk_id": "review_M02_v1_c0001",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.12.2",
+                "control_name": "재해 복구 시험 및 개선",
+                "similarity_score": 0.638081
+              },
+              {
+                "rank": 2,
+                "control_id": "2.12.1",
+                "control_name": "재해·재난 대비 안전조치",
+                "similarity_score": 0.587128
+              },
+              {
+                "rank": 3,
+                "control_id": "2.9.3",
+                "control_name": "백업 및 복구관리",
+                "similarity_score": 0.583395
+              },
+              {
+                "rank": 4,
+                "control_id": "2.11.4",
+                "control_name": "사고 대응 훈련 및 개선",
+                "similarity_score": 0.561162
+              },
+              {
+                "rank": 5,
+                "control_id": "2.9.1",
+                "control_name": "변경관리",
+                "similarity_score": 0.556824
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.9.3",
+          "control_name": "백업 및 복구관리",
+          "requirement": "정보시스템의 가용성과 데이터 무결성을 유지하기 위하여 백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다. 아울러 사고 발생 시 적시에 복구할 수 있도록 관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M02_v1_c0000",
+            "review_M02_v1_c0001"
+          ]
+        },
+        {
+          "control_id": "2.12.2",
+          "control_name": "재해 복구 시험 및 개선",
+          "requirement": "재해 복구 전략 및 대책의 적정성을 정기적으로 시험하여 시험결과, 정보시스템 환경변화, 법규 등에 따른 변화를 반영하여 복구전략 및 대책을 보완하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M02_v1_c0001"
+          ]
+        },
+        {
+          "control_id": "2.7.2",
+          "control_name": "암호키 관리",
+          "requirement": "암호키의 안전한 생성·이용·보관·배포·파기를 위한 관리 절차를 수립·이행하고, 필요 시 복구방안을 마련하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "3.2.1",
+          "control_name": "개인정보 현황관리",
+          "requirement": "수집·보유하는 개인정보의 항목, 보유량, 처리 목적 및 방법, 보유기간 등 현황을 정기적으로 관리하여야 하며, 공공기관의 경우 이를 법률에서 정한 관계기관의 장에게 등록하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "1.3.3",
+          "control_name": "운영현황 관리",
+          "requirement": "조직이 수립한 관리체계에 따라 상시적 또는 주기적으로 수행하여야 하는 운영활동 및 수행 내역은 식별 및 추적이 가능하도록 기록하여 관리하고, 경영진은 주기적으로 운영활동의 효과성을 확인하여 관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M02_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:38.103265+09:00"
+    }
+  },
+  {
+    "case_id": "M03",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_M03",
+      "version": 1,
+      "source_file": "review_M03.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_M03",
+          "version": 1,
+          "source_file": "review_M03.txt",
+          "file_type": "txt",
+          "chunk_id": "review_M03_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "외부 원격접속 승인 기록: 승인된 직원만 지정 단말에서 VPN과 추가 인증으로 내부망에 접속한다. 허용 기간이 지나면 접속을 차단한다.",
+          "block_orders": [
+            1
+          ]
+        },
+        {
+          "evidence_id": "review_M03",
+          "version": 1,
+          "source_file": "review_M03.txt",
+          "file_type": "txt",
+          "chunk_id": "review_M03_v1_c0001",
+          "chunk_index": 1,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "특수 계정 통제 대장: root와 Administrator 등 최고권한 계정의 발급을 최소화하고 사용을 별도로 승인한다. 지정된 관리자만 해당 계정을 사용할 수 있다.",
+          "block_orders": [
+            2
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.6.6",
+            "control_name": "원격접근 통제",
+            "similarity_score": 0.762374,
+            "best_chunk_id": "review_M03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.5.5",
+            "control_name": "특수 계정 및 권한 관리",
+            "similarity_score": 0.756122,
+            "best_chunk_id": "review_M03_v1_c0001",
+            "matched_chunk_ids": [
+              "review_M03_v1_c0001"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.6.7",
+            "control_name": "인터넷 접속 통제",
+            "similarity_score": 0.669885,
+            "best_chunk_id": "review_M03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.10.6",
+            "control_name": "업무용 단말기기 보안",
+            "similarity_score": 0.668648,
+            "best_chunk_id": "review_M03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.5.3",
+            "control_name": "사용자 인증",
+            "similarity_score": 0.66736,
+            "best_chunk_id": "review_M03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_M03_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_M03_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.6.6",
+                "control_name": "원격접근 통제",
+                "similarity_score": 0.762374
+              },
+              {
+                "rank": 2,
+                "control_id": "2.6.7",
+                "control_name": "인터넷 접속 통제",
+                "similarity_score": 0.669885
+              },
+              {
+                "rank": 3,
+                "control_id": "2.10.6",
+                "control_name": "업무용 단말기기 보안",
+                "similarity_score": 0.668648
+              },
+              {
+                "rank": 4,
+                "control_id": "2.5.3",
+                "control_name": "사용자 인증",
+                "similarity_score": 0.66736
+              },
+              {
+                "rank": 5,
+                "control_id": "2.6.1",
+                "control_name": "네트워크 접근",
+                "similarity_score": 0.667303
+              }
+            ]
+          },
+          {
+            "chunk_id": "review_M03_v1_c0001",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.5.5",
+                "control_name": "특수 계정 및 권한 관리",
+                "similarity_score": 0.756122
+              },
+              {
+                "rank": 2,
+                "control_id": "2.5.1",
+                "control_name": "사용자 계정 관리",
+                "similarity_score": 0.621842
+              },
+              {
+                "rank": 3,
+                "control_id": "2.5.2",
+                "control_name": "사용자 식별",
+                "similarity_score": 0.601291
+              },
+              {
+                "rank": 4,
+                "control_id": "2.6.3",
+                "control_name": "응용프로그램 접근",
+                "similarity_score": 0.572748
+              },
+              {
+                "rank": 5,
+                "control_id": "3.2.4",
+                "control_name": "개인정보 목적 외 이용 및 제공",
+                "similarity_score": 0.571317
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.6.6",
+          "control_name": "원격접근 통제",
+          "requirement": "보호구역 이외 장소에서의 정보시스템 관리 및 개인정보 처리는 원칙적으로 금지하고, 재택근무·장애대응·원격협업 등 불가피한 사유로 원격접근을 허용하는 경우 책임자 승인, 접근 단말 지정, 접근 허용범위 및 기간 설정, 강화된 인증, 구간 암호화, 접속단말 보안 (백신, 패치 등) 등 보호대책을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.5",
+          "control_name": "특수 계정 및 권한 관리",
+          "requirement": "정보시스템 관리, 개인정보 및 중요정보 관리 등 특수 목적을 위하여 사용하는 계정 및 권한은 최소한으로 부여하고 별도로 식별하여 통제하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M03_v1_c0001"
+          ]
+        },
+        {
+          "control_id": "2.6.7",
+          "control_name": "인터넷 접속 통제",
+          "requirement": "인터넷을 통한 정보 유출, 악성코드 감염, 내부망 침투 등을 예방하기 위하여 주요 정보시스템, 주요 직무 수행 및 개인정보 취급 단말기 등에 대한 인터넷 접속 또는 서비스 (P2P, 웹하드, 메신저 등)를 제한하는 등 인터넷 접속 통제 정책을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.10.6",
+          "control_name": "업무용 단말기기 보안",
+          "requirement": "PC, 모바일 기기 등 단말기기를 업무 목적으로 네트워크에 연결할 경우 기기 인증 및 승인, 접근 범위, 기기 보안설정 등의 접근통제 대책을 수립하고 주기적으로 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.3",
+          "control_name": "사용자 인증",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 대한 사용자의 접근은 안전한 인증절차와 필요에 따라 강화된 인증방식을 적용하여야 한다. 또한 로그인 횟수 제한, 불법 로그인 시도 경고 등 비인가자 접근 통제방안을 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_M03_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:38.517793+09:00"
+    }
+  },
+  {
+    "case_id": "U01",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_U01",
+      "version": 1,
+      "source_file": "review_U01.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_U01",
+          "version": 1,
+          "source_file": "review_U01.txt",
+          "file_type": "txt",
+          "chunk_id": "review_U01_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.1.7",
+            "control_name": "마케팅 목적의 개인정보 수집·이용",
+            "similarity_score": 0.377892,
+            "best_chunk_id": "review_U01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "3.2.3",
+            "control_name": "이용자 단말기 접근 보호",
+            "similarity_score": 0.377486,
+            "best_chunk_id": "review_U01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.4.6",
+            "control_name": "반출입 기기 통제",
+            "similarity_score": 0.376569,
+            "best_chunk_id": "review_U01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.10.6",
+            "control_name": "업무용 단말기기 보안",
+            "similarity_score": 0.373241,
+            "best_chunk_id": "review_U01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.371807,
+            "best_chunk_id": "review_U01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U01_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_U01_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "3.1.7",
+                "control_name": "마케팅 목적의 개인정보 수집·이용",
+                "similarity_score": 0.377892
+              },
+              {
+                "rank": 2,
+                "control_id": "3.2.3",
+                "control_name": "이용자 단말기 접근 보호",
+                "similarity_score": 0.377486
+              },
+              {
+                "rank": 3,
+                "control_id": "2.4.6",
+                "control_name": "반출입 기기 통제",
+                "similarity_score": 0.376569
+              },
+              {
+                "rank": 4,
+                "control_id": "2.10.6",
+                "control_name": "업무용 단말기기 보안",
+                "similarity_score": 0.373241
+              },
+              {
+                "rank": 5,
+                "control_id": "2.1.1",
+                "control_name": "정책의 유지관리",
+                "similarity_score": 0.371807
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "3.1.7",
+          "control_name": "마케팅 목적의 개인정보 수집·이용",
+          "requirement": "재화나 서비스의 홍보, 판매 권유, 광고성 정보전송 등 마케팅 목적으로 개인정보를 수집· 이용하는 경우 그 목적을 정보주체가 명확하게 인지할 수 있도록 고지하고 동의를 받아야 한다.",
+          "matched_chunk_ids": [
+            "review_U01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "3.2.3",
+          "control_name": "이용자 단말기 접근 보호",
+          "requirement": "정보주체(이용자)의 이동통신단말장치 내에 저장되어 있는 정보 및 이동통신단말장치에 설치된 기능에 접근이 필요한 경우 이를 명확하게 인지할 수 있도록 알리고 정보주체 (이용자)의 동의를 받아야 한다.",
+          "matched_chunk_ids": [
+            "review_U01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.4.6",
+          "control_name": "반출입 기기 통제",
+          "requirement": "보호구역 내 정보시스템, 모바일 기기, 저장매체 등에 대한 반출입 통제절차를 수립· 이행하고 주기적으로 검토하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.10.6",
+          "control_name": "업무용 단말기기 보안",
+          "requirement": "PC, 모바일 기기 등 단말기기를 업무 목적으로 네트워크에 연결할 경우 기기 인증 및 승인, 접근 범위, 기기 보안설정 등의 접근통제 대책을 수립하고 주기적으로 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.1.1",
+          "control_name": "정책의 유지관리",
+          "requirement": "정보보호 및 개인정보보호 관련 정책과 시행문서는 법령 및 규제, 상위 조직 및 관련 기관 정책과의 연계성, 조직의 대내외 환경변화 등에 따라 주기적으로 검토하여 필요한 경우 제·개정하고 그 내역을 이력관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U01_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:38.733193+09:00"
+    }
+  },
+  {
+    "case_id": "U02",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_U02",
+      "version": 1,
+      "source_file": "review_U02.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_U02",
+          "version": 1,
+          "source_file": "review_U02.txt",
+          "file_type": "txt",
+          "chunk_id": "review_U02_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.4.2",
+            "control_name": "출입통제",
+            "similarity_score": 0.354123,
+            "best_chunk_id": "review_U02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.4.5",
+            "control_name": "보호구역 내 작업",
+            "similarity_score": 0.342003,
+            "best_chunk_id": "review_U02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.333209,
+            "best_chunk_id": "review_U02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "3.5.1",
+            "control_name": "개인정보 처리방침 공개",
+            "similarity_score": 0.330132,
+            "best_chunk_id": "review_U02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.329741,
+            "best_chunk_id": "review_U02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U02_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_U02_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.4.2",
+                "control_name": "출입통제",
+                "similarity_score": 0.354123
+              },
+              {
+                "rank": 2,
+                "control_id": "2.4.5",
+                "control_name": "보호구역 내 작업",
+                "similarity_score": 0.342003
+              },
+              {
+                "rank": 3,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.333209
+              },
+              {
+                "rank": 4,
+                "control_id": "3.5.1",
+                "control_name": "개인정보 처리방침 공개",
+                "similarity_score": 0.330132
+              },
+              {
+                "rank": 5,
+                "control_id": "2.1.1",
+                "control_name": "정책의 유지관리",
+                "similarity_score": 0.329741
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.4.2",
+          "control_name": "출입통제",
+          "requirement": "보호구역은 인가된 사람만이 출입하도록 통제하고 책임추적성을 확보할 수 있도록 출입 및 접근 이력을 주기적으로 검토하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.4.5",
+          "control_name": "보호구역 내 작업",
+          "requirement": "보호구역 내에서의 비인가행위 및 권한 오·남용 등을 방지하기 위한 작업 절차를 수립· 이행하고, 작업 기록을 주기적으로 검토하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "3.5.1",
+          "control_name": "개인정보 처리방침 공개",
+          "requirement": "개인정보의 처리 목적 등 필요한 사항을 모두 포함하여 정보주체가 알기 쉽도록 개인정보 처리방침을 수립하고, 이를 정보주체가 언제든지 쉽게 확인할 수 있도록 적절한 방법에 따라 공개하고 지속적으로 현행화하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.1.1",
+          "control_name": "정책의 유지관리",
+          "requirement": "정보보호 및 개인정보보호 관련 정책과 시행문서는 법령 및 규제, 상위 조직 및 관련 기관 정책과의 연계성, 조직의 대내외 환경변화 등에 따라 주기적으로 검토하여 필요한 경우 제·개정하고 그 내역을 이력관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U02_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:38.899842+09:00"
+    }
+  },
+  {
+    "case_id": "U03",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_U03",
+      "version": 1,
+      "source_file": "review_U03.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_U03",
+          "version": 1,
+          "source_file": "review_U03.txt",
+          "file_type": "txt",
+          "chunk_id": "review_U03_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.336163,
+            "best_chunk_id": "review_U03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.9.6",
+            "control_name": "시간 동기화",
+            "similarity_score": 0.325614,
+            "best_chunk_id": "review_U03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "3.1.7",
+            "control_name": "마케팅 목적의 개인정보 수집·이용",
+            "similarity_score": 0.324373,
+            "best_chunk_id": "review_U03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "3.2.3",
+            "control_name": "이용자 단말기 접근 보호",
+            "similarity_score": 0.322436,
+            "best_chunk_id": "review_U03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U03_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "3.3.3",
+            "control_name": "영업의 양도 등에 따른 개인정보 이전",
+            "similarity_score": 0.315116,
+            "best_chunk_id": "review_U03_v1_c0000",
+            "matched_chunk_ids": [
+              "review_U03_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_U03_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.9.5",
+                "control_name": "로그 및 접속기록 점검",
+                "similarity_score": 0.336163
+              },
+              {
+                "rank": 2,
+                "control_id": "2.9.6",
+                "control_name": "시간 동기화",
+                "similarity_score": 0.325614
+              },
+              {
+                "rank": 3,
+                "control_id": "3.1.7",
+                "control_name": "마케팅 목적의 개인정보 수집·이용",
+                "similarity_score": 0.324373
+              },
+              {
+                "rank": 4,
+                "control_id": "3.2.3",
+                "control_name": "이용자 단말기 접근 보호",
+                "similarity_score": 0.322436
+              },
+              {
+                "rank": 5,
+                "control_id": "3.3.3",
+                "control_name": "영업의 양도 등에 따른 개인정보 이전",
+                "similarity_score": 0.315116
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.9.5",
+          "control_name": "로그 및 접속기록 점검",
+          "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.9.6",
+          "control_name": "시간 동기화",
+          "requirement": "로그 및 접속기록의 정확성을 보장하고 신뢰성 있는 로그분석을 위하여 관련 정보시스템의 시각을 표준시각으로 동기화하고 주기적으로 관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "3.1.7",
+          "control_name": "마케팅 목적의 개인정보 수집·이용",
+          "requirement": "재화나 서비스의 홍보, 판매 권유, 광고성 정보전송 등 마케팅 목적으로 개인정보를 수집· 이용하는 경우 그 목적을 정보주체가 명확하게 인지할 수 있도록 고지하고 동의를 받아야 한다.",
+          "matched_chunk_ids": [
+            "review_U03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "3.2.3",
+          "control_name": "이용자 단말기 접근 보호",
+          "requirement": "정보주체(이용자)의 이동통신단말장치 내에 저장되어 있는 정보 및 이동통신단말장치에 설치된 기능에 접근이 필요한 경우 이를 명확하게 인지할 수 있도록 알리고 정보주체 (이용자)의 동의를 받아야 한다.",
+          "matched_chunk_ids": [
+            "review_U03_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "3.3.3",
+          "control_name": "영업의 양도 등에 따른 개인정보 이전",
+          "requirement": "영업의 양도·합병 등으로 개인정보를 이전하거나 이전받는 경우 정보주체 통지 등 적절한 보호조치를 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_U03_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:39.086424+09:00"
+    }
+  },
+  {
+    "case_id": "A01",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_A01",
+      "version": 1,
+      "source_file": "review_A01.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_A01",
+          "version": 1,
+          "source_file": "review_A01.txt",
+          "file_type": "txt",
+          "chunk_id": "review_A01_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "정기 점검 완료. 이상 없음. 담당자 확인.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.56207,
+            "best_chunk_id": "review_A01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "1.4.2",
+            "control_name": "관리체계 점검",
+            "similarity_score": 0.561957,
+            "best_chunk_id": "review_A01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.11.2",
+            "control_name": "취약점 점검 및 조치",
+            "similarity_score": 0.548742,
+            "best_chunk_id": "review_A01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.542616,
+            "best_chunk_id": "review_A01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A01_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.3.3",
+            "control_name": "외부자 보안 이행 관리",
+            "similarity_score": 0.524968,
+            "best_chunk_id": "review_A01_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A01_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_A01_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.9.5",
+                "control_name": "로그 및 접속기록 점검",
+                "similarity_score": 0.56207
+              },
+              {
+                "rank": 2,
+                "control_id": "1.4.2",
+                "control_name": "관리체계 점검",
+                "similarity_score": 0.561957
+              },
+              {
+                "rank": 3,
+                "control_id": "2.11.2",
+                "control_name": "취약점 점검 및 조치",
+                "similarity_score": 0.548742
+              },
+              {
+                "rank": 4,
+                "control_id": "2.5.6",
+                "control_name": "접근권한 검토",
+                "similarity_score": 0.542616
+              },
+              {
+                "rank": 5,
+                "control_id": "2.3.3",
+                "control_name": "외부자 보안 이행 관리",
+                "similarity_score": 0.524968
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.9.5",
+          "control_name": "로그 및 접속기록 점검",
+          "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "1.4.2",
+          "control_name": "관리체계 점검",
+          "requirement": "관리체계가 내부 정책 및 법적 요구사항에 따라 효과적으로 운영되고 있는지 독립성과 전문성이 확보된 인력을 구성하여 연 1회 이상 점검하고, 발견된 문제점을 경영진에게 보고하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.11.2",
+          "control_name": "취약점 점검 및 조치",
+          "requirement": "정보시스템의 취약점이 노출되어 있는지를 확인하기 위하여 정기적으로 취약점 점검을 수행하고, 발견된 취약점에 대해서는 신속하게 조치하여야 한다. 또한 최신 보안취약점의 발생 여부를 지속적으로 파악하고, 정보시스템에 미치는 영향을 분석하여 조치하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.5.6",
+          "control_name": "접근권한 검토",
+          "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A01_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.3.3",
+          "control_name": "외부자 보안 이행 관리",
+          "requirement": "계약서, 협정서, 내부정책에 명시된 정보보호 및 개인정보보호 요구사항에 따라 외부자의 보호대책 이행 여부를 주기적인 점검 또는 감사 등 관리·감독하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A01_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:39.217714+09:00"
+    }
+  },
+  {
+    "case_id": "A02",
+    "output": {
+      "schema_version": "retriever-0.2",
+      "success": true,
+      "evidence_id": "review_A02",
+      "version": 1,
+      "source_file": "review_A02.txt",
+      "file_type": "txt",
+      "evidence_chunks": [
+        {
+          "evidence_id": "review_A02",
+          "version": 1,
+          "source_file": "review_A02.txt",
+          "file_type": "txt",
+          "chunk_id": "review_A02_v1_c0000",
+          "chunk_index": 0,
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "회사는 안전한 서비스 운영을 위해 보안을 강화하며 모든 직원은 관련 규정을 준수한다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "retrieval": {
+        "unit": "document",
+        "top_k": 5,
+        "score_type": "cosine_similarity",
+        "aggregation": "max_chunk_similarity",
+        "query_text_field": "text",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.2.6",
+            "control_name": "보안 위반 시 조치",
+            "similarity_score": 0.529183,
+            "best_chunk_id": "review_A02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 2,
+            "control_id": "2.10.4",
+            "control_name": "전자거래 및 핀테크 보안",
+            "similarity_score": 0.51442,
+            "best_chunk_id": "review_A02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 3,
+            "control_id": "2.10.6",
+            "control_name": "업무용 단말기기 보안",
+            "similarity_score": 0.508526,
+            "best_chunk_id": "review_A02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 4,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.507095,
+            "best_chunk_id": "review_A02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A02_v1_c0000"
+            ]
+          },
+          {
+            "rank": 5,
+            "control_id": "2.10.1",
+            "control_name": "보안시스템 운영",
+            "similarity_score": 0.506458,
+            "best_chunk_id": "review_A02_v1_c0000",
+            "matched_chunk_ids": [
+              "review_A02_v1_c0000"
+            ]
+          }
+        ],
+        "chunk_results": [
+          {
+            "chunk_id": "review_A02_v1_c0000",
+            "candidates": [
+              {
+                "rank": 1,
+                "control_id": "2.2.6",
+                "control_name": "보안 위반 시 조치",
+                "similarity_score": 0.529183
+              },
+              {
+                "rank": 2,
+                "control_id": "2.10.4",
+                "control_name": "전자거래 및 핀테크 보안",
+                "similarity_score": 0.51442
+              },
+              {
+                "rank": 3,
+                "control_id": "2.10.6",
+                "control_name": "업무용 단말기기 보안",
+                "similarity_score": 0.508526
+              },
+              {
+                "rank": 4,
+                "control_id": "1.4.1",
+                "control_name": "법적 요구사항 준수 검토",
+                "similarity_score": 0.507095
+              },
+              {
+                "rank": 5,
+                "control_id": "2.10.1",
+                "control_name": "보안시스템 운영",
+                "similarity_score": 0.506458
+              }
+            ]
+          }
+        ]
+      },
+      "candidate_controls": [
+        {
+          "control_id": "2.2.6",
+          "control_name": "보안 위반 시 조치",
+          "requirement": "임직원 및 관련 외부자가 법령, 규제 및 내부정책을 위반한 경우 이에 따른 조치 절차를 수립·이행하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.10.4",
+          "control_name": "전자거래 및 핀테크 보안",
+          "requirement": "전자거래 및 핀테크 서비스 제공 시 정보유출이나 데이터 조작·사기 등의 침해사고 예방을 위하여 인증·암호화 등의 보호대책을 수립하고, 결제시스템 등 외부 시스템과 연계할 경우 안전성을 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.10.6",
+          "control_name": "업무용 단말기기 보안",
+          "requirement": "PC, 모바일 기기 등 단말기기를 업무 목적으로 네트워크에 연결할 경우 기기 인증 및 승인, 접근 범위, 기기 보안설정 등의 접근통제 대책을 수립하고 주기적으로 점검하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "1.4.1",
+          "control_name": "법적 요구사항 준수 검토",
+          "requirement": "조직이 준수하여야 할 정보보호 및 개인정보보호 관련 법적 요구사항을 주기적으로 파악하여 규정에 반영하고, 준수 여부를 지속적으로 검토하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A02_v1_c0000"
+          ]
+        },
+        {
+          "control_id": "2.10.1",
+          "control_name": "보안시스템 운영",
+          "requirement": "보안시스템 유형별로 관리자 지정, 최신 정책 업데이트, 룰셋 변경, 이벤트 모니터링 등의 운영절차를 수립·이행하고 보안시스템별 정책적용 현황을 관리하여야 한다.",
+          "matched_chunk_ids": [
+            "review_A02_v1_c0000"
+          ]
+        }
+      ],
+      "warnings": [],
+      "index": {
+        "collection": "isms_p_controls",
+        "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+        "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+      },
+      "generated_at": "2026-09-23T21:26:39.374464+09:00"
+    }
+  }
+]

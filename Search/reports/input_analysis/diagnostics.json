@@ -1,0 +1,31 @@
+{
+  "storage_string_id": "ValueError: evidence_id 는 1 이상의 정수여야 해요: '000001'",
+  "source_validation_after_only_adding_filename": [
+    "청크0 source='C:\\\\Users\\\\USER\\\\Desktop\\\\ISMS-P 인증 증적 사전점검 도구 개발\\\\개발\\\\I_P\\\\입력\\\\docx-test\\\\test1.docx' (parser 또는 ocr. 파일 이름은 source_file 칸)",
+    "청크2 source='C:\\\\Users\\\\USER\\\\Desktop\\\\ISMS-P 인증 증적 사전점검 도구 개발\\\\개발\\\\I_P\\\\입력\\\\docx-test\\\\test1.docx' (parser 또는 ocr. 파일 이름은 source_file 칸)"
+  ],
+  "synthetic_continued_table_current": [
+    "계정: user001 | 승인자: 담당A | 상태: 활성",
+    "user002: user003 | 담당B: 담당C | 삭제: 활성"
+  ],
+  "synthetic_continued_table_with_existing_helper": [
+    "계정: user001 | 승인자: 담당A | 상태: 활성",
+    "계정: user002 | 승인자: 담당B | 상태: 삭제\n계정: user003 | 승인자: 담당C | 상태: 활성"
+  ],
+  "synthetic_separate_paragraphs": [
+    {
+      "length": 450,
+      "starts": "AAAAA",
+      "ends": "AAAAA"
+    },
+    {
+      "length": 450,
+      "starts": "BBBBB",
+      "ends": "BBBBB"
+    }
+  ],
+  "synthetic_one_long_block_lengths": [
+    800,
+    200
+  ]
+}

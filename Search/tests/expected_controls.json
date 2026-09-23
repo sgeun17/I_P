@@ -1,0 +1,414 @@
+{
+  "reference": {
+    "file": "controls_review.md",
+    "sha256": "8298063cc432518bc175b78fb22ba0d1e8037f138205538ef5a282057c1474a1",
+    "source_pdf_sha256": "72ed9bbb8deee2b57e7e8ba3e19315f46a8d63be2db334ae2fbe82956fcd344e",
+    "status": "기존 원문 대조 기록에서 추출. 전체 수동 검수 완료 아님"
+  },
+  "controls": [
+    {
+      "control_id": "1.1.1",
+      "control_name": "경영진의 참여"
+    },
+    {
+      "control_id": "1.1.2",
+      "control_name": "최고책임자의 지정"
+    },
+    {
+      "control_id": "1.1.3",
+      "control_name": "조직 구성"
+    },
+    {
+      "control_id": "1.1.4",
+      "control_name": "범위 설정"
+    },
+    {
+      "control_id": "1.1.5",
+      "control_name": "정책 수립"
+    },
+    {
+      "control_id": "1.1.6",
+      "control_name": "자원 할당"
+    },
+    {
+      "control_id": "1.2.1",
+      "control_name": "정보자산 식별"
+    },
+    {
+      "control_id": "1.2.2",
+      "control_name": "현황 및 흐름분석"
+    },
+    {
+      "control_id": "1.2.3",
+      "control_name": "위험 평가"
+    },
+    {
+      "control_id": "1.2.4",
+      "control_name": "보호대책 선정"
+    },
+    {
+      "control_id": "1.3.1",
+      "control_name": "보호대책 구현"
+    },
+    {
+      "control_id": "1.3.2",
+      "control_name": "보호대책 공유"
+    },
+    {
+      "control_id": "1.3.3",
+      "control_name": "운영현황 관리"
+    },
+    {
+      "control_id": "1.4.1",
+      "control_name": "법적 요구사항 준수 검토"
+    },
+    {
+      "control_id": "1.4.2",
+      "control_name": "관리체계 점검"
+    },
+    {
+      "control_id": "1.4.3",
+      "control_name": "관리체계 개선"
+    },
+    {
+      "control_id": "2.1.1",
+      "control_name": "정책의 유지관리"
+    },
+    {
+      "control_id": "2.1.2",
+      "control_name": "조직의 유지관리"
+    },
+    {
+      "control_id": "2.1.3",
+      "control_name": "정보자산 관리"
+    },
+    {
+      "control_id": "2.2.1",
+      "control_name": "주요 직무자 지정 및 관리"
+    },
+    {
+      "control_id": "2.2.2",
+      "control_name": "직무 분리"
+    },
+    {
+      "control_id": "2.2.3",
+      "control_name": "보안 서약"
+    },
+    {
+      "control_id": "2.2.4",
+      "control_name": "인식제고 및 교육훈련"
+    },
+    {
+      "control_id": "2.2.5",
+      "control_name": "퇴직 및 직무변경 관리"
+    },
+    {
+      "control_id": "2.2.6",
+      "control_name": "보안 위반 시 조치"
+    },
+    {
+      "control_id": "2.3.1",
+      "control_name": "외부자 현황 관리"
+    },
+    {
+      "control_id": "2.3.2",
+      "control_name": "외부자 계약 시 보안"
+    },
+    {
+      "control_id": "2.3.3",
+      "control_name": "외부자 보안 이행 관리"
+    },
+    {
+      "control_id": "2.3.4",
+      "control_name": "외부자 계약 변경 및 만료 시 보안"
+    },
+    {
+      "control_id": "2.4.1",
+      "control_name": "보호구역 지정"
+    },
+    {
+      "control_id": "2.4.2",
+      "control_name": "출입통제"
+    },
+    {
+      "control_id": "2.4.3",
+      "control_name": "정보시스템 보호"
+    },
+    {
+      "control_id": "2.4.4",
+      "control_name": "보호설비 운영"
+    },
+    {
+      "control_id": "2.4.5",
+      "control_name": "보호구역 내 작업"
+    },
+    {
+      "control_id": "2.4.6",
+      "control_name": "반출입 기기 통제"
+    },
+    {
+      "control_id": "2.4.7",
+      "control_name": "업무환경 보안"
+    },
+    {
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리"
+    },
+    {
+      "control_id": "2.5.2",
+      "control_name": "사용자 식별"
+    },
+    {
+      "control_id": "2.5.3",
+      "control_name": "사용자 인증"
+    },
+    {
+      "control_id": "2.5.4",
+      "control_name": "비밀번호 관리"
+    },
+    {
+      "control_id": "2.5.5",
+      "control_name": "특수 계정 및 권한 관리"
+    },
+    {
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토"
+    },
+    {
+      "control_id": "2.6.1",
+      "control_name": "네트워크 접근"
+    },
+    {
+      "control_id": "2.6.2",
+      "control_name": "정보시스템 접근"
+    },
+    {
+      "control_id": "2.6.3",
+      "control_name": "응용프로그램 접근"
+    },
+    {
+      "control_id": "2.6.4",
+      "control_name": "데이터베이스 접근"
+    },
+    {
+      "control_id": "2.6.5",
+      "control_name": "무선 네트워크 접근"
+    },
+    {
+      "control_id": "2.6.6",
+      "control_name": "원격접근 통제"
+    },
+    {
+      "control_id": "2.6.7",
+      "control_name": "인터넷 접속 통제"
+    },
+    {
+      "control_id": "2.7.1",
+      "control_name": "암호정책 적용"
+    },
+    {
+      "control_id": "2.7.2",
+      "control_name": "암호키 관리"
+    },
+    {
+      "control_id": "2.8.1",
+      "control_name": "보안 요구사항 정의"
+    },
+    {
+      "control_id": "2.8.2",
+      "control_name": "보안 요구사항 검토 및 시험"
+    },
+    {
+      "control_id": "2.8.3",
+      "control_name": "시험과 운영 환경 분리"
+    },
+    {
+      "control_id": "2.8.4",
+      "control_name": "시험 데이터 보안"
+    },
+    {
+      "control_id": "2.8.5",
+      "control_name": "소스 프로그램 관리"
+    },
+    {
+      "control_id": "2.8.6",
+      "control_name": "운영환경 이관"
+    },
+    {
+      "control_id": "2.9.1",
+      "control_name": "변경관리"
+    },
+    {
+      "control_id": "2.9.2",
+      "control_name": "성능 및 장애관리"
+    },
+    {
+      "control_id": "2.9.3",
+      "control_name": "백업 및 복구관리"
+    },
+    {
+      "control_id": "2.9.4",
+      "control_name": "로그 및 접속기록 관리"
+    },
+    {
+      "control_id": "2.9.5",
+      "control_name": "로그 및 접속기록 점검"
+    },
+    {
+      "control_id": "2.9.6",
+      "control_name": "시간 동기화"
+    },
+    {
+      "control_id": "2.9.7",
+      "control_name": "정보자산의 재사용 및 폐기"
+    },
+    {
+      "control_id": "2.10.1",
+      "control_name": "보안시스템 운영"
+    },
+    {
+      "control_id": "2.10.2",
+      "control_name": "클라우드 보안"
+    },
+    {
+      "control_id": "2.10.3",
+      "control_name": "공개서버 보안"
+    },
+    {
+      "control_id": "2.10.4",
+      "control_name": "전자거래 및 핀테크 보안"
+    },
+    {
+      "control_id": "2.10.5",
+      "control_name": "정보전송 보안"
+    },
+    {
+      "control_id": "2.10.6",
+      "control_name": "업무용 단말기기 보안"
+    },
+    {
+      "control_id": "2.10.7",
+      "control_name": "보조저장매체 관리"
+    },
+    {
+      "control_id": "2.10.8",
+      "control_name": "패치관리"
+    },
+    {
+      "control_id": "2.10.9",
+      "control_name": "악성코드 통제"
+    },
+    {
+      "control_id": "2.11.1",
+      "control_name": "사고 예방 및 대응체계 구축"
+    },
+    {
+      "control_id": "2.11.2",
+      "control_name": "취약점 점검 및 조치"
+    },
+    {
+      "control_id": "2.11.3",
+      "control_name": "이상행위 분석 및 모니터링"
+    },
+    {
+      "control_id": "2.11.4",
+      "control_name": "사고 대응 훈련 및 개선"
+    },
+    {
+      "control_id": "2.11.5",
+      "control_name": "사고 대응 및 복구"
+    },
+    {
+      "control_id": "2.12.1",
+      "control_name": "재해·재난 대비 안전조치"
+    },
+    {
+      "control_id": "2.12.2",
+      "control_name": "재해 복구 시험 및 개선"
+    },
+    {
+      "control_id": "3.1.1",
+      "control_name": "개인정보 수집·이용"
+    },
+    {
+      "control_id": "3.1.2",
+      "control_name": "개인정보 수집 제한"
+    },
+    {
+      "control_id": "3.1.3",
+      "control_name": "주민등록번호 처리 제한"
+    },
+    {
+      "control_id": "3.1.4",
+      "control_name": "민감정보 및 고유식별정보의 처리 제한"
+    },
+    {
+      "control_id": "3.1.5",
+      "control_name": "개인정보 간접수집"
+    },
+    {
+      "control_id": "3.1.6",
+      "control_name": "영상정보처리기기 설치·운영"
+    },
+    {
+      "control_id": "3.1.7",
+      "control_name": "마케팅 목적의 개인정보 수집·이용"
+    },
+    {
+      "control_id": "3.2.1",
+      "control_name": "개인정보 현황관리"
+    },
+    {
+      "control_id": "3.2.2",
+      "control_name": "개인정보 품질보장"
+    },
+    {
+      "control_id": "3.2.3",
+      "control_name": "이용자 단말기 접근 보호"
+    },
+    {
+      "control_id": "3.2.4",
+      "control_name": "개인정보 목적 외 이용 및 제공"
+    },
+    {
+      "control_id": "3.2.5",
+      "control_name": "가명정보 처리"
+    },
+    {
+      "control_id": "3.3.1",
+      "control_name": "개인정보 제3자 제공"
+    },
+    {
+      "control_id": "3.3.2",
+      "control_name": "개인정보 처리 업무 위탁"
+    },
+    {
+      "control_id": "3.3.3",
+      "control_name": "영업의 양도 등에 따른 개인정보 이전"
+    },
+    {
+      "control_id": "3.3.4",
+      "control_name": "개인정보 국외이전"
+    },
+    {
+      "control_id": "3.4.1",
+      "control_name": "개인정보 파기"
+    },
+    {
+      "control_id": "3.4.2",
+      "control_name": "처리목적 달성 후 보유 시 조치"
+    },
+    {
+      "control_id": "3.5.1",
+      "control_name": "개인정보 처리방침 공개"
+    },
+    {
+      "control_id": "3.5.2",
+      "control_name": "정보주체 권리보장"
+    },
+    {
+      "control_id": "3.5.3",
+      "control_name": "정보주체에 대한 통지"
+    }
+  ]
+}

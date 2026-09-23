@@ -1,5 +1,18 @@
 # ISMS-P 증적 검색 첫 버전
 
+## 9/23 추가: 전처리 청크 검색과 팀 인계
+
+`05_search_chunks.cmd`는 입력팀 DOCX 샘플의 실제 청크를 받아 전체 101개 ChromaDB에서 검색하고 **문서 전체 Top-5**를 반환합니다. 결과는 `reports/chunk_search_result.json`의 **retrieval.candidates**에서 봅니다. 청크별 상세 후보는 retrieval.chunk_results에 있습니다. 입력팀 소스는 수정하지 않았고 현재 출력의 필드 차이는 명시적 호환 모드로 경고와 함께 처리합니다.
+
+- [진행 현황](handoff/검색팀_진행현황.md)
+- [입력팀 확인·수정 요청](handoff/입력팀_확인수정요청.md)
+- [판단팀 인계·실행·입출력 안내](handoff/판단팀_검색모듈_인계.md)
+- [청크 연결 검증 결과](reports/chunk_integration_result.md)
+- [현재 KB 101개 검증](reports/kb_validation_result.md)
+- [검토 샘플 20건 검색 결과](reports/review_evaluation.md)
+
+새 연동은 `chunk_retriever.retrieve()` 또는 `chunk_retriever.py --input ... --output ...`을 사용합니다. 기존 한 줄 검색 실행 파일은 그대로 유지됩니다. `retriever-0.2`는 검색팀 제안 규격이며 팀 간 최종 합의와 독립 정답 검수·실제 증적 품질 평가는 남아 있습니다. 문서 점수는 해당 통제항목의 청크별 유사도 중 최댓값입니다.
+
 ## 9/22 추가: 전체 101개 ChromaDB 색인
 
 `04_index_chroma.cmd`를 더블클릭하면 현재 KB 101개를 `data/chroma_kb`의 `isms_p_controls` 컬렉션에 저장·색인하고 검증합니다. 실행 절차와 재색인 방법은 [전체 KB 색인 안내](ChromaDB_전체색인_안내.md)에 있습니다. 결과는 `reports/chroma_index_result.md`, DB에서 조회한 전체 벡터 사본은 `data/chroma_kb_vectors_view.json`입니다. KB 최종 버전 고정과 검색 품질 평가는 별도 작업입니다.
@@ -85,7 +98,7 @@ result = retriever.search(
 print(result)
 ```
 
-## 내부 처리 순서
+## 기존 한 줄 검색(retriever.py)의 내부 처리 순서
 
 `controls.json → 검색 문장 101개 → BGE-M3 벡터 → 증적 벡터와 코사인 유사도 비교 → Top-5`
 

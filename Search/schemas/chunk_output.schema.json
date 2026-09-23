@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Retriever 문서 Top-K 출력 v0.2 (판단팀 합의 전)",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "success",
+        "evidence_id",
+        "version",
+        "source_file",
+        "file_type",
+        "evidence_chunks",
+        "retrieval",
+        "candidate_controls",
+        "warnings",
+        "index",
+        "generated_at"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "retriever-0.2"
+        },
+        "success": {
+          "const": true
+        },
+        "evidence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "file_type": {
+          "enum": [
+            "pdf",
+            "docx",
+            "xlsx",
+            "pptx",
+            "txt",
+            "csv"
+          ]
+        },
+        "evidence_chunks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/chunk"
+          }
+        },
+        "retrieval": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "unit",
+            "top_k",
+            "score_type",
+            "aggregation",
+            "query_text_field",
+            "candidates",
+            "chunk_results"
+          ],
+          "properties": {
+            "unit": {
+              "const": "document"
+            },
+            "top_k": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 101
+            },
+            "score_type": {
+              "const": "cosine_similarity"
+            },
+            "query_text_field": {
+              "const": "text"
+            },
+            "chunk_results": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "chunk_id",
+                  "candidates"
+                ],
+                "properties": {
+                  "chunk_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "candidates": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 101,
+                    "items": {
+                      "$ref": "#/$defs/candidate"
+                    }
+                  }
+                }
+              }
+            },
+            "aggregation": {
+              "const": "max_chunk_similarity"
+            },
+            "candidates": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 101,
+              "items": {
+                "$ref": "#/$defs/document_candidate"
+              }
+            }
+          }
+        },
+        "candidate_controls": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 101,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "control_id",
+              "control_name",
+              "requirement",
+              "matched_chunk_ids"
+            ],
+            "properties": {
+              "control_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "control_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "requirement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "matched_chunk_ids": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "code",
+              "field",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "field": {
+                "type": "string",
+                "minLength": 1
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "index": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "collection",
+            "kb_sha256",
+            "embedding_cache_key"
+          ],
+          "properties": {
+            "collection": {
+              "const": "isms_p_controls"
+            },
+            "kb_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "embedding_cache_key": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "success",
+        "error"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "retriever-0.2"
+        },
+        "success": {
+          "const": false
+        },
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "code",
+            "message"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "chunk": {
+      "type": "object",
+      "required": [
+        "chunk_id",
+        "evidence_id",
+        "version",
+        "chunk_index",
+        "file_type",
+        "source_file",
+        "chunk_type",
+        "page_start",
+        "page_end",
+        "heading",
+        "text",
+        "block_orders",
+        "source"
+      ],
+      "properties": {
+        "chunk_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "chunk_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "file_type": {
+          "enum": [
+            "pdf",
+            "docx",
+            "xlsx",
+            "pptx",
+            "txt",
+            "csv"
+          ]
+        },
+        "source_file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "chunk_type": {
+          "enum": [
+            "text",
+            "table"
+          ]
+        },
+        "page_start": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page_end": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "heading": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "block_orders": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "source": {
+          "enum": [
+            "parser",
+            "ocr"
+          ]
+        }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rank",
+        "control_id",
+        "control_name",
+        "similarity_score"
+      ],
+      "properties": {
+        "rank": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 101
+        },
+        "control_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "control_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "similarity_score": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        }
+      }
+    },
+    "document_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rank",
+        "control_id",
+        "control_name",
+        "similarity_score",
+        "best_chunk_id",
+        "matched_chunk_ids"
+      ],
+      "properties": {
+        "rank": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 101
+        },
+        "control_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "control_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "similarity_score": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "best_chunk_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "matched_chunk_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

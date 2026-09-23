@@ -186,6 +186,33 @@ def rank_controls(controls, kb_vectors, query_vector, top_k, evidence_id):
             "retrieval": {"top_k": top_k, "candidates": candidates}}
 
 
+def embedding_cache_key(texts, model_dir, model):
+    """색인과 검색이 같은 KB·모델·실행 환경을 사용하는지 식별합니다."""
+    model_dir = Path(model_dir)
+    files = [(str(p.relative_to(model_dir)), p.stat().st_size, p.stat().st_mtime_ns)
+             for p in sorted(model_dir.rglob("*"))
+             if p.is_file() and ".cache" not in p.relative_to(model_dir).parts]
+    versions = {}
+    for package in ("sentence-transformers", "transformers", "torch"):
+        try:
+            versions[package] = version(package)
+        except PackageNotFoundError:
+            versions[package] = "unavailable"
+    identity = {"format": 1, "texts": texts, "files": files,
+                "versions": versions, "max_length": model.max_seq_length}
+    return hashlib.sha256(json.dumps(identity, ensure_ascii=False).encode()).hexdigest()
+
+
+def encode_texts(model, texts):
+    tokens = model.tokenizer(texts, truncation=False, padding=False)["input_ids"]
+    if any(len(t) > model.max_seq_length for t in tokens):
+        raise ValueError(f"입력이 모델 한도({model.max_seq_length} 토큰)를 넘습니다. 문서를 짧게 나누어 검색해 주세요.")
+    with redirect_stdout(sys.stderr):
+        values = model.encode(texts, batch_size=4, normalize_embeddings=True,
+                              convert_to_numpy=True, show_progress_bar=False)
+    return normalized_vectors(values)
+
+
 class Retriever:
     def __init__(self, kb_path=ROOT / "controls.json", model_dir=MODEL_DIR,
                  cache_dir=ROOT / "data", device="cpu"):
@@ -194,34 +221,11 @@ class Retriever:
         self.model = load_model(model_dir, device)
         self.cache_path = Path(cache_dir) / "control_embeddings.npz"
         # KB 내용/순서, 모델 파일, 라이브러리가 달라지면 캐시를 다시 만듭니다.
-        files = [(str(p.relative_to(model_dir)), p.stat().st_size, p.stat().st_mtime_ns)
-                 for p in sorted(Path(model_dir).rglob("*"))
-                 if p.is_file() and ".cache" not in p.relative_to(model_dir).parts]
-        versions = {}
-        for package in ("sentence-transformers", "transformers", "torch"):
-            try:
-                versions[package] = version(package)
-            except PackageNotFoundError:
-                versions[package] = "unavailable"
-        identity = {"format": 1, "texts": self.texts, "files": files,
-                    "versions": versions, "max_length": self.model.max_seq_length}
-        self.cache_key = hashlib.sha256(json.dumps(identity, ensure_ascii=False).encode()).hexdigest()
+        self.cache_key = embedding_cache_key(self.texts, model_dir, self.model)
         self.vectors = self._load_or_build_vectors()
 
     def _encode(self, texts):
-        # 긴 입력을 모델이 조용히 잘라버리지 않도록 길이를 먼저 확인합니다.
-        tokens = self.model.tokenizer(texts, truncation=False, padding=False)["input_ids"]
-        if any(len(t) > self.model.max_seq_length for t in tokens):
-            raise ValueError(
-                f"입력이 모델 한도({self.model.max_seq_length} 토큰)를 넘습니다. "
-                "문서를 짧게 나누어 검색해 주세요."
-            )
-        with redirect_stdout(sys.stderr):
-            values = self.model.encode(
-                texts, batch_size=4, normalize_embeddings=True,
-                convert_to_numpy=True, show_progress_bar=False,
-            )
-        return normalized_vectors(values)
+        return encode_texts(self.model, texts)
 
     def _load_or_build_vectors(self):
         import numpy as np
