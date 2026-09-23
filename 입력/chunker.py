@@ -55,7 +55,8 @@ def make_chunks(parsed, evidence_id, version, max_chars=MAX_CHARS, overlap=OVERL
         nonlocal basket, basket_size
         if not basket:
             return
-        pieces.append(text_piece("\n".join(b["text"] for b in basket), basket))
+        if not all(b["block_type"] == "heading" for b in basket):
+            pieces.append(text_piece("\n".join(b["text"] for b in basket), basket))
         basket = []
         basket_size = 0
 
