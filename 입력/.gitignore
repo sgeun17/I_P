@@ -1,2 +1,6 @@
 __pycache__/
-.pytest_cache/
+uploads/
+data/
+.env
+chunk_results/
+samples2/
