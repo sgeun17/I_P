@@ -1,5 +1,5 @@
 """
-pptx_parser.py : PPTX 슬라이드 텍스트 추출 (Phase 1 입력 - 파워포인트 담당)
+pptx_parser.py : PPTX 슬라이드 텍스트 추출
 
 하는 일
   파워포인트 파일을 슬라이드 순서대로 읽어서 "슬라이드 제목(heading)", "글상자 내용(paragraph)",
@@ -68,7 +68,7 @@ def parse_pptx(path):
     result = {
         "source_file": path.name,
         "file_type": "pptx",
-        "page_count": 0,
+        "page_count": None,
         "blocks": [],
         "errors": [],
     }
