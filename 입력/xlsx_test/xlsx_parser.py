@@ -1,5 +1,5 @@
 """
-xlsx_parser.py : XLSX 시트·셀 텍스트 추출 (Phase 1 입력 - 엑셀 담당)
+xlsx_parser.py : XLSX 시트·셀 텍스트 추출
 
 하는 일
   엑셀 파일을 시트 순서대로 읽어서 "시트 이름(heading)"과 "표(table)"를 뽑고,
@@ -63,7 +63,7 @@ def parse_xlsx(path):
     result = {
         "source_file": path.name,
         "file_type": "xlsx",
-        "page_count": 0,
+        "page_count": None,
         "blocks": [],
         "errors": [],
     }
