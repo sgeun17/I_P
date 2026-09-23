@@ -1,5 +1,5 @@
 """
-pdf_parser.py : PDF 텍스트/페이지 추출 (Phase 1 입력 - PDF 담당)
+pdf_parser.py : PDF 텍스트/페이지 추출
 
 하는 일
   PDF 파일을 위에서 아래로 읽어서 "제목(heading)", "문단(paragraph)", "표(table)"를
@@ -71,7 +71,7 @@ def parse_pdf(path):
     result = {
         "source_file": path.name,
         "file_type": "pdf",
-        "page_count": 0,
+        "page_count": None,
         "blocks": [],
         "errors": [],
     }
