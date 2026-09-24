@@ -20,7 +20,7 @@ from typing import Any
 from models import LLMMappingOutput, MappingInput
 
 PROMPT_VERSION = "phase1_mapping_v0.3"
-RULESET_VERSION = "mapping_rules_v0.6"
+RULESET_VERSION = "mapping_rules_v0.7"
 
 
 @dataclass(frozen=True)
@@ -113,8 +113,15 @@ _BASE_SYSTEM = r"""
 4. RELATED가 2개 이상이면 match_status=MATCHED.
    문서 제목, heading, 전체 구조와 내용 비중을 기준으로 주된 목적에 해당하는 정확히 하나를 PRIMARY,
    나머지를 RELATED relation으로 둔다.
-5. PRIMARY를 근거 있게 고를 수 없으면 아무거나 고르지 말고 해당 경쟁 후보를 UNCERTAIN으로 조정한 뒤
-   2~4단계를 다시 적용한다.
+5. PRIMARY를 근거 있게 고를 수 없어도 이미 내린 RELATED 판단을 UNCERTAIN으로 되돌리지 않는다.
+   판단을 지우면 검토할 대상이 사라지고, 경쟁 후보가 둘뿐이면 결과가 NO_MATCH가 되어
+   관련 통제항목이 분명히 있는데도 '관련 없음'으로 나간다. 대신 다음을 따른다.
+   - RELATED 판단은 그대로 둔다.
+   - 문서 제목, heading, 앞부분 청크에 가장 가까운 후보를 PRIMARY로 정한다.
+   - 그 후보의 llm_confidence를 실제 확신 수준대로 낮게 매긴다(0.50~0.69에 해당하는 경우가 많다).
+   - reason에 주된 목적 판단이 어려웠다는 점을 함께 적는다.
+   낮은 llm_confidence는 후속 Review Policy가 사람에게 넘기는 신호로 쓰인다.
+   UNCERTAIN은 원문 근거 자체가 부족할 때 쓰며, 주된 목적이 애매한 경우는 여기에 해당하지 않는다.
 6. mapped_controls에는 candidate_decisions에서 decision=RELATED인 후보만 넣는다.
 7. 관련 후보가 4개 이상이어도 임의로 3개로 자르지 않는다. 그대로 출력하고 Validator/Review가 처리하게 한다.
 
