@@ -1,4 +1,2 @@
 -r requirements-chroma.txt
 jsonschema==4.26.0
-pytest==9.1.1
-pydantic==2.13.5

@@ -1,0 +1,6 @@
+{
+  "test_only": true,
+  "llm_called": false,
+  "raw_response": "{broken-json",
+  "call_error": null
+}

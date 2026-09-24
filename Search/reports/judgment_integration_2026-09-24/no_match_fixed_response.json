@@ -1,0 +1,6 @@
+{
+  "test_only": true,
+  "llm_called": false,
+  "raw_response": "{\"match_status\": \"NO_MATCH\", \"candidate_decisions\": [{\"control_id\": \"3.1.7\", \"decision\": \"NOT_RELATED\", \"llm_confidence\": 0.9, \"reason\": \"시험 응답에서 이 후보와의 연결을 제외했습니다.\", \"citations\": []}, {\"control_id\": \"2.9.3\", \"decision\": \"NOT_RELATED\", \"llm_confidence\": 0.9, \"reason\": \"시험 응답에서 이 후보와의 연결을 제외했습니다.\", \"citations\": []}, {\"control_id\": \"2.9.5\", \"decision\": \"NOT_RELATED\", \"llm_confidence\": 0.9, \"reason\": \"시험 응답에서 이 후보와의 연결을 제외했습니다.\", \"citations\": []}, {\"control_id\": \"3.2.3\", \"decision\": \"NOT_RELATED\", \"llm_confidence\": 0.9, \"reason\": \"시험 응답에서 이 후보와의 연결을 제외했습니다.\", \"citations\": []}, {\"control_id\": \"3.5.3\", \"decision\": \"NOT_RELATED\", \"llm_confidence\": 0.9, \"reason\": \"시험 응답에서 이 후보와의 연결을 제외했습니다.\", \"citations\": []}], \"mapped_controls\": []}",
+  "call_error": null
+}

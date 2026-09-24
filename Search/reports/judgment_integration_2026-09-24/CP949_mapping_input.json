@@ -1,0 +1,77 @@
+{
+  "evidence_id": "000103",
+  "version": 1,
+  "chunks": [
+    {
+      "chunk_id": "000103_v1_c0000",
+      "evidence_id": "000103",
+      "version": 1,
+      "chunk_index": 0,
+      "file_type": "txt",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": null,
+      "text": "사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다.",
+      "block_orders": [
+        1
+      ],
+      "source_file": "계정_CP949.txt"
+    }
+  ],
+  "candidate_controls": [
+    {
+      "rank": 1,
+      "control_id": "2.2.5",
+      "control_name": "퇴직 및 직무변경 관리",
+      "similarity_score": 0.635433,
+      "requirement": "퇴직 및 직무변경 시 인사·정보보호·개인정보보호·IT 등 관련 부서별 이행하여야 할 자산반납, 계정 및 접근권한 회수·조정, 결과확인 등의 절차를 수립·관리하여야 한다.",
+      "source_chunk_ids": [
+        "000103_v1_c0000"
+      ]
+    },
+    {
+      "rank": 2,
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "similarity_score": 0.626665,
+      "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+      "source_chunk_ids": [
+        "000103_v1_c0000"
+      ]
+    },
+    {
+      "rank": 3,
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토",
+      "similarity_score": 0.600383,
+      "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+      "source_chunk_ids": [
+        "000103_v1_c0000"
+      ]
+    },
+    {
+      "rank": 4,
+      "control_id": "2.3.4",
+      "control_name": "외부자 계약 변경 및 만료 시 보안",
+      "similarity_score": 0.582309,
+      "requirement": "외부자 계약만료, 업무종료, 담당자 변경 시에는 제공한 정보자산 반납, 정보시스템 접근계정 삭제, 중요정보 파기, 업무 수행 중 취득정보의 비밀유지 확약서 징구 등의 보호대책을 이행하여야 한다.",
+      "source_chunk_ids": [
+        "000103_v1_c0000"
+      ]
+    },
+    {
+      "rank": 5,
+      "control_id": "2.5.5",
+      "control_name": "특수 계정 및 권한 관리",
+      "similarity_score": 0.572191,
+      "requirement": "정보시스템 관리, 개인정보 및 중요정보 관리 등 특수 목적을 위하여 사용하는 계정 및 권한은 최소한으로 부여하고 별도로 식별하여 통제하여야 한다.",
+      "source_chunk_ids": [
+        "000103_v1_c0000"
+      ]
+    }
+  ],
+  "top_k": 5,
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be"
+}
