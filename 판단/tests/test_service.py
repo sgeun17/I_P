@@ -140,7 +140,7 @@ def test_ocr_청크_인용시_검토(mapping_input, versions):
 def test_버전_정보가_기록된다(mapping_input, versions):
     result = build_result(GOOD_RESPONSE, mapping_input, versions, trace_id="t-1",
                           llm_raw_response_ref="logs/a.json", processing_time_ms=4210)
-    assert result.versions.ruleset_version == "mapping_rules_v0.6"
+    assert result.versions.ruleset_version == "mapping_rules_v0.7"
     assert result.trace_id == "t-1"
     assert result.llm_raw_response_ref == "logs/a.json"
 
@@ -185,3 +185,72 @@ def test_다른_증적_청크가_섞이면_막는다(mapping_input):
         raise AssertionError("통과해버림")
     except ValidationError:
         pass
+
+
+# --------------------------------------------------------------------------
+# 입력 자체가 판단 불가 (v0.7)
+# --------------------------------------------------------------------------
+
+
+def test_후보에_중복_control_id가_있으면_막는다(mapping_input):
+    """검색이 청크 단위라 합칠 때 실제로 잘 생기는 상황이다."""
+    from pydantic import ValidationError
+    from models import MappingInput
+
+    bad = mapping_input.model_dump()
+    bad["candidate_controls"].append(dict(bad["candidate_controls"][0], rank=9))
+    try:
+        MappingInput.model_validate(bad)
+        raise AssertionError("통과해버림")
+    except ValidationError as exc:
+        assert "중복" in str(exc)
+
+
+def test_청크가_없으면_입력을_만들_수_없다(mapping_input):
+    from pydantic import ValidationError
+    from models import MappingInput
+
+    bad = mapping_input.model_dump()
+    bad["chunks"] = []
+    try:
+        MappingInput.model_validate(bad)
+        raise AssertionError("통과해버림")
+    except ValidationError:
+        pass
+
+
+def test_입력을_못_만들어도_결과는_남는다(versions):
+    """MappingInput을 만들 수조차 없을 때의 길.
+
+    결과 객체가 없으면 그 증적은 화면에서 사라지고 통계에서도 빠진다.
+    """
+    from enums import ErrorCode, EvidenceStatus, MatchStatus, ProcessingStatus, ReviewReason
+    from service import build_unjudgeable_result, to_evidence_status
+
+    result = build_unjudgeable_result(
+        "E0404", 1, versions,
+        code=ErrorCode.INPUT_NO_CHUNKS,
+        message="파서가 청크를 만들지 못했다",
+    )
+
+    assert result.evidence_id == "E0404"
+    assert result.processing_status == ProcessingStatus.FAILED
+    assert result.match_status == MatchStatus.NO_MATCH, "'관련 없음'이 아니라 '판단 못 함'이다"
+    assert result.mapped_controls == []
+    assert result.human_review.required
+    assert result.human_review.reasons == [ReviewReason.INPUT_NOT_JUDGEABLE]
+    assert result.validation.issues[0].code == ErrorCode.INPUT_NO_CHUNKS
+    assert to_evidence_status(result) == EvidenceStatus.FAILED
+
+
+def test_입력_오류코드는_전부_무조건_검토다():
+    from enums import ErrorCode, ReviewReason
+    from review_policy import BLOCKING_ERROR_CODES
+
+    for code in (
+        ErrorCode.INPUT_NO_CHUNKS,
+        ErrorCode.INPUT_NO_CANDIDATES,
+        ErrorCode.INPUT_DUPLICATE_CANDIDATE,
+        ErrorCode.INPUT_MALFORMED,
+    ):
+        assert BLOCKING_ERROR_CODES[code] == ReviewReason.INPUT_NOT_JUDGEABLE

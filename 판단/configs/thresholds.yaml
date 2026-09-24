@@ -1,13 +1,17 @@
 # Human Review 전환 임계값
 #
-# v0.3 — 골든셋 29건 측정 결과를 반영했다.
-# 여전히 임시값이다. 골든셋 평가 뒤에 확정한다.
+# v0.4 — llm_confidence의 정의가 규칙으로 확정되면서 0.70에 근거가 생겼다.
+# 여전히 임시값이다. 실제 LLM 분포를 보고 확정한다.
 # 값을 바꾸면 profile_name도 올린다. 코드는 건드리지 않는다.
 
-profile_name: thresholds_v0.3
+profile_name: thresholds_v0.4
 
 review:
   # 매핑된 통제항목의 llm_confidence가 이 값보다 낮으면 검토
+  #
+  # llm_confidence의 뜻은 mapping_rules 2.2에서 정의한다. 0.70은 구간 경계다.
+  #   0.70 이상  관련이 분명하다
+  #   0.70 미만  다른 통제항목으로도 읽힌다  ← 여기부터 사람이 본다
   low_confidence: 0.70
 
   # 1위와 2위 후보의 similarity_score 차이가 이보다 작으면 검토

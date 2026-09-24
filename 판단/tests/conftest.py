@@ -69,7 +69,7 @@ def versions() -> VersionInfo:
     return VersionInfo(
         prompt_version="phase1_mapping_v0.1",
         model_name="qwen2.5-14b-instruct",
-        ruleset_version="mapping_rules_v0.6",
+        ruleset_version="mapping_rules_v0.7",
     )
 
 

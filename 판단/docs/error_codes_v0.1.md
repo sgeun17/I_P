@@ -24,6 +24,18 @@
 
 ## 2. 전체 목록
 
+### E0xx — 입력 (v0.7 신설)
+
+**LLM을 부르기 전에** 걸린다. 그래도 결과 객체는 반드시 만든다
+(`service.build_unjudgeable_result()`). 전부 `R110`으로 무조건 검토다.
+
+| 코드 | 이름 | 상황 |
+|---|---|---|
+| `E001` | INPUT_NO_CHUNKS | 청크가 0개. 파서 실패거나 빈 문서 |
+| `E002` | INPUT_NO_CANDIDATES | Top-K 후보가 0개 |
+| `E003` | INPUT_DUPLICATE_CANDIDATE | 같은 `control_id`가 후보에 두 번 |
+| `E004` | INPUT_MALFORMED | 그 밖의 입력 계약 위반 |
+
 ### E1xx — LLM 호출
 
 | 코드 | 이름 | 상황 |
@@ -87,7 +99,7 @@
 
 근거가 부실한 것은 결과가 틀린 것과 다르다. 이걸로 사람을 부르면 검토량만 늘고
 정확도는 안 오른다. 모아 두고 **프롬프트를 고칠 자료로 쓴다.**
-작성 규칙은 `mapping_rules_v0.6.md` 2.1에 있다.
+작성 규칙은 `mapping_rules_v0.7.md` 2.1에 있다.
 
 ---
 

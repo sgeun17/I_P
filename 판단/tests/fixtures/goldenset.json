@@ -1,7 +1,7 @@
 {
   "version": "goldenset_v0.1",
   "created_at": "2026-09-24",
-  "ruleset_version": "mapping_rules_v0.6",
+  "ruleset_version": "mapping_rules_v0.7",
   "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
   "note": "증적 본문은 전부 합성이다. 실제 회사 문서를 쓰지 않는다. response_kind=ideal은 정답대로 답한 가상 응답이며, 이것을 돌린다고 LLM 정확도가 측정되지 않는다. 실제 정확도는 로컬 LLM에 input을 넣고 나온 결과를 expected.controls와 비교해 계산한다.",
   "counts": {

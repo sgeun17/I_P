@@ -33,9 +33,16 @@ PRIMARY_COUNT_WHEN_MATCHED = 1   # MATCHED면 PRIMARY는 정확히 1개
 
 @dataclass(frozen=True)
 class Thresholds:
-    profile_name: str = "thresholds_v0.3"
+    profile_name: str = "thresholds_v0.4"
 
-    low_confidence: float = 0.70       # 이 미만이면 검토
+    # `llm_confidence`의 뜻을 규칙으로 정의했기 때문에 이 값에 근거가 생겼다
+    # (mapping_rules 2.2). 0.70은 구간 경계다.
+    #
+    #   0.70 이상  관련이 분명하다
+    #   0.70 미만  다른 통제항목으로도 읽힌다  ← 여기부터 사람이 본다
+    #
+    # 정의가 프롬프트에 들어간 뒤 실제 분포를 보고 다시 조정한다.
+    low_confidence: float = 0.70
 
     # BGE-M3 실측: 관련 있어도 0.5~0.6에 몰리고, 무관한 항목도 0.49가 나온다.
     #
@@ -61,6 +68,10 @@ DEFAULT_THRESHOLDS = Thresholds()
 
 # 무조건 검토로 보내는 오류 코드
 BLOCKING_ERROR_CODES: dict[ErrorCode, ReviewReason] = {
+    ErrorCode.INPUT_NO_CHUNKS: ReviewReason.INPUT_NOT_JUDGEABLE,
+    ErrorCode.INPUT_NO_CANDIDATES: ReviewReason.INPUT_NOT_JUDGEABLE,
+    ErrorCode.INPUT_DUPLICATE_CANDIDATE: ReviewReason.INPUT_NOT_JUDGEABLE,
+    ErrorCode.INPUT_MALFORMED: ReviewReason.INPUT_NOT_JUDGEABLE,
     ErrorCode.JSON_PARSE_FAILED: ReviewReason.JSON_PARSE_FAILED,
     ErrorCode.SCHEMA_INVALID: ReviewReason.SCHEMA_INVALID,
     ErrorCode.REQUIRED_FIELD_MISSING: ReviewReason.SCHEMA_INVALID,

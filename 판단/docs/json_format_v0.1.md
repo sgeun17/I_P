@@ -4,7 +4,7 @@
 상태: **초안. 팀 합의 전**
 
 판단 파트가 **받는 JSON**과 **내보내는 JSON**을 한 곳에 모았다.
-다른 팀은 이 문서만 보면 된다. 규칙의 근거는 `mapping_rules_v0.6.md`에 있다.
+다른 팀은 이 문서만 보면 된다. 규칙의 근거는 `mapping_rules_v0.7.md`에 있다.
 
 기계가 읽을 형식은 `schemas/*.json`(JSON Schema)에 있고,
 **Pydantic 모델에서 자동 생성한다.** 손으로 고치지 않는다.
@@ -139,6 +139,10 @@ chunk_id == f"{evidence_id}_v{version}_c{chunk_index:04d}"
 | `requirement` | string \| null | | 요구사항 본문. 지금은 안 실려 온다 |
 | `source_chunk_ids` | string[] | | 어느 청크 검색에서 나온 후보인지 |
 
+> **후보에 같은 `control_id`가 두 번 오면 안 된다.**
+> 검색이 청크 단위라 증적 하나에 Top-5 × N개의 결과가 나오고, 같은 통제항목이 여러 번 잡힌다.
+> **증적 단위로 합칠 때 중복을 제거해야 한다.** 중복이 있으면 입력 단계에서 거부된다(`E003`).
+
 > **`similarity_score`는 정답 확률이 아니다.**
 > BGE-M3 한국어 문장에서는 관련 있어도 0.5~0.6에 몰리고,
 > **완전히 무관한 항목도 0.4988이 나온다**(실측).
@@ -201,7 +205,7 @@ JSON 외의 설명 문장을 앞뒤에 붙이지 않는다.
 |---|---|:---:|---|
 | `control_id` | string | ● | 후보 목록에 있던 ID |
 | `decision` | enum | ● | `RELATED` / `NOT_RELATED` / `UNCERTAIN` |
-| `llm_confidence` | float 0~1 | ● | 모델이 스스로 매긴 값 |
+| `llm_confidence` | float 0~1 | ● | **뜻은 `mapping_rules_v0.7.md` 2.2에서 정의한다.** 0.70 미만이면 검토 |
 | `reason` | string | ● | 판단 이유. 작성 규칙은 2.4 |
 | `citations` | 배열 | | `RELATED`면 **1개 이상 필수** |
 
@@ -317,13 +321,13 @@ Phase 1은 **연결까지만** 한다. "충족하는가"는 Phase 2의 일이다
     "required": true,
     "status": "PENDING",
     "reasons": ["R205"],
-    "threshold_profile": "thresholds_v0.3"
+    "threshold_profile": "thresholds_v0.4"
   },
   "versions": {
     "schema_version": "0.3.0",
     "prompt_version": "phase1_mapping_v0.1",
     "model_name": "qwen2.5-14b-instruct",
-    "ruleset_version": "mapping_rules_v0.6",
+    "ruleset_version": "mapping_rules_v0.7",
     "kb_sha256": "6421a840c5fd84d1...",
     "embedding_model_revision": "5617a9f61b028005..."
   },
@@ -397,7 +401,7 @@ required=false → status = NOT_REQUIRED
 | `schema_version` | 이 JSON 구조의 버전 (`0.3.0`) |
 | `prompt_version` | 프롬프트 버전 |
 | `model_name` | 사용한 LLM |
-| `ruleset_version` | 판단 규칙 문서 버전 (`mapping_rules_v0.6`) |
+| `ruleset_version` | 판단 규칙 문서 버전 (`mapping_rules_v0.7`) |
 | `kb_sha256` | KB 파일 해시 |
 | `embedding_model_revision` | 임베딩 모델 리비전 |
 
@@ -476,8 +480,8 @@ required=false → status = NOT_REQUIRED
   "version": 1,
   "decision": { ... },
   "previous_status": "PENDING",
-  "ruleset_version": "mapping_rules_v0.6",
-  "threshold_profile": "thresholds_v0.3"
+  "ruleset_version": "mapping_rules_v0.7",
+  "threshold_profile": "thresholds_v0.4"
 }
 ```
 
@@ -523,6 +527,7 @@ PENDING  ──┬─→ APPROVED    그대로 확정
 
 | 대역 | 뜻 |
 |---|---|
+| `E0xx` | 입력 자체가 판단 불가 (LLM 호출 전) |
 | `E1xx` | LLM 호출 실패 |
 | `E2xx` | 출력 형식 오류 |
 | `E3xx` | 통제항목 ID 오류 |

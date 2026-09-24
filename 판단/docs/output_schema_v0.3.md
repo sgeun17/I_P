@@ -36,7 +36,7 @@ models.py  ──(python src/check.py)──▶  schemas/*.json
 > **`evidence_id`는 문자열로 다룬다.**
 > 입력팀 JSON 규격 문서의 지적대로, 숫자로 저장하면 앞의 0이 사라져 DB와 대조가 안 된다.
 > 다만 표기가 전처리팀 안에서 아직 갈려 있다 (`E0001` / `000001` / 정수 `1`).
-> 자세한 내용과 우리 처리 방식은 `mapping_rules_v0.6.md` 12장에 있다.
+> 자세한 내용과 우리 처리 방식은 `mapping_rules_v0.7.md` 12장에 있다.
 
 ### Chunk — 전처리팀 `CHUNK_KEYS` 그대로
 

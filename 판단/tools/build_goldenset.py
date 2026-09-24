@@ -1004,7 +1004,7 @@ def main() -> None:
     payload = {
         "version": "goldenset_v0.1",
         "created_at": "2026-09-24",
-        "ruleset_version": "mapping_rules_v0.6",
+        "ruleset_version": "mapping_rules_v0.7",
         "kb_sha256": DEFAULT_INDEX.kb_sha256,
         "note": (
             "증적 본문은 전부 합성이다. 실제 회사 문서를 쓰지 않는다. "

@@ -116,12 +116,22 @@ class ErrorCode(StrEnum):
     """판단 파트에서 발생하는 오류.
 
     코드 체계
+      E0xx  입력 자체가 판단 불가
       E1xx  LLM 호출 실패
       E2xx  출력 형식 오류
       E3xx  통제항목 ID 오류
       E4xx  Citation 오류
       E5xx  판단 규칙 위반
     """
+
+    # E0xx — 입력 (LLM을 부르기 전에 걸러진다)
+    #
+    # 이 상태에서는 판단을 시도하지 않는다. 그래도 **결과 객체는 반드시 만든다.**
+    # 증적 하나가 판단 불가라고 배치가 멈추거나 화면에서 사라지면 안 된다.
+    INPUT_NO_CHUNKS = "E001"            # 청크가 0개. 파서 실패거나 빈 문서다
+    INPUT_NO_CANDIDATES = "E002"        # Top-K 후보가 0개. 검색이 아무것도 못 줬다
+    INPUT_DUPLICATE_CANDIDATE = "E003"  # 같은 control_id가 후보에 두 번
+    INPUT_MALFORMED = "E004"            # 그 밖의 입력 계약 위반
 
     # E1xx — LLM 호출
     LLM_TIMEOUT = "E101"
@@ -178,6 +188,7 @@ class ReviewReason(StrEnum):
     UNCERTAIN_DECISION = "R107"
     LLM_CALL_FAILED = "R108"
     PROMPT_INJECTION_SUSPECTED = "R109"
+    INPUT_NOT_JUDGEABLE = "R110"   # 청크·후보가 없어 LLM을 부르지도 못했다
 
     # 조건부 검토
     LOW_CONFIDENCE = "R201"

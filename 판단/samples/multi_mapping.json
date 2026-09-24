@@ -78,13 +78,13 @@
     "reasons": [
       "R205"
     ],
-    "threshold_profile": "thresholds_v0.3"
+    "threshold_profile": "thresholds_v0.4"
   },
   "versions": {
     "schema_version": "0.3.0",
     "prompt_version": "phase1_mapping_v0.1",
     "model_name": "qwen2.5-14b-instruct",
-    "ruleset_version": "mapping_rules_v0.6",
+    "ruleset_version": "mapping_rules_v0.7",
     "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
     "embedding_model_revision": "5617a9f61b028005a4858fdac845db406aefb181"
   },

@@ -165,6 +165,26 @@ class MappingInput(Base):
                 raise ValueError(f"다른 증적·버전의 청크가 섞였다: {c.chunk_id}")
         return self
 
+    @model_validator(mode="after")
+    def _check_candidates_unique(self) -> "MappingInput":
+        """후보에 같은 control_id가 두 번 오면 안 된다.
+
+        **검색이 청크 단위이기 때문에 실제로 잘 생긴다.** 증적 하나에 청크가 N개면
+        Top-5 × N개의 결과가 나오고, 같은 통제항목이 여러 청크에서 잡힌다.
+        합치는 쪽에서 중복을 없애야 한다.
+
+        조용히 지우지 않는 이유는, LLM이 후보 하나마다 판단을 정확히 하나씩
+        남겨야 하기 때문이다. 중복이 있으면 그 1:1 대응이 깨진다.
+        """
+        ids = [c.control_id for c in self.candidate_controls]
+        dupes = {i for i in ids if ids.count(i) > 1}
+        if dupes:
+            raise ValueError(
+                f"후보에 중복된 control_id가 있다: {', '.join(sorted(dupes))}. "
+                "청크별 검색 결과를 증적 단위로 합칠 때 중복을 제거해야 한다"
+            )
+        return self
+
 
 # ==========================================================================
 # 공통 조각

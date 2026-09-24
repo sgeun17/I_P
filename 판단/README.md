@@ -1,4 +1,4 @@
-# Phase 1 판단 파트 — 규격 · 규칙 · Validator · 골든셋 (v0.11)
+# Phase 1 판단 파트 — 규격 · 규칙 · Validator · 골든셋 (v0.12)
 
 작성: 판단팀 · 2026-09-24
 상태: **초안. 팀 리뷰 전**
@@ -17,7 +17,7 @@
 
 ```bash
 pip install pydantic pytest
-pytest                          # 265개
+pytest                          # 269개
 python src/check.py             # 스키마·정책 검증 + JSON Schema 생성
 python tools/report_goldenset.py  # 검토 전환율과 임계값 시나리오
 python tools/eval_goldenset.py --self-test   # 평가 지표 계산 점검
@@ -33,12 +33,13 @@ python tools/eval_goldenset.py --self-test   # 평가 지표 계산 점검
 ```
 docs/
 ├── output_schema_v0.3.md          입출력 필드 정의표 ← 다른 팀은 이것만 보면 된다
-├── mapping_rules_v0.6.md          판단 규칙 (1:N 매핑, control_id, Citation, 위반 처리)
+├── mapping_rules_v0.7.md          판단 규칙 (1:N 매핑, control_id, Citation, 위반 처리)
 ├── human_review_policy_v0.1.md    검토 조건, 임계값, 상태 머신
 ├── error_codes_v0.1.md            오류코드, 재시도·Timeout 정책
 ├── goldenset_v0.1.md              골든셋 29건 구성과 측정 결과
 ├── human_review_storage_v0.1.md   검토 큐·수정 이력 저장 구조 (백엔드 합의 필요)
 └── json_format_v0.1.md            JSON 형식 총정리 ← 다른 팀 공유용
+                                   ※ mapping_rules 13장 = 프롬프트에 그대로 넣을 문구
 
 src/
 ├── enums.py                       판단팀이 소유하는 공통 Enum (상태값·오류코드)
@@ -56,7 +57,7 @@ src/
 tools/build_goldenset.py           골든셋 생성기 (JSON을 직접 고치지 않는다)
 tools/report_goldenset.py          검토율·임계값 시나리오 보고
 tools/eval_goldenset.py            LLM 결과로 정확도 평가
-tests/                             pytest 265개
+tests/                             pytest 269개
 tests/fixtures/goldenset.json      골든셋 29건
 schemas/                           모델에서 생성된 JSON Schema
 samples/                           단일 / 다중 / NO_MATCH / 검토필요 예시
@@ -86,7 +87,7 @@ result = build_result(
 
 ---
 
-## 핵심 결정 7가지
+## 핵심 결정 9가지
 
 **1. `match_status` + `relation` 2단 구조**
 
@@ -128,6 +129,21 @@ Phase 1은 **증적과 통제항목을 연결하는 것까지만** 한다.
 검증되지 않은 판정이 그대로 보고서로 넘어가는 것이 인증 심사 도구에서 가장 위험하다.
 
 `reason`만 검사하고 `quote`는 보지 않는다. 증적 원문에는 "미흡", "위반"이 얼마든지 나온다.
+
+**8. 판단을 지우지 않는다 (v0.7)**
+
+PRIMARY를 고르기 어려워도 `RELATED` 판단을 `UNCERTAIN`으로 내리지 않는다.
+판단을 지우면 사람이 검토할 대상이 사라지고, 2개가 경쟁할 때는 `NO_MATCH`가 되어
+관련 통제항목이 분명히 있는데도 "관련 없음"으로 나간다.
+
+대신 판단을 남기고 `llm_confidence`를 낮게 매긴다. 그러면 `R201`로 알아서 사람에게 간다.
+**모델은 판단을 남기고, 사람이 고친다.** 틀린 판단도 골든셋 재료가 된다.
+
+**9. 판단 못 한 증적도 결과를 남긴다 (v0.7)**
+
+청크가 0개면 `MappingInput`을 만들 수조차 없어서 결과 객체가 아예 안 생겼다.
+그러면 **그 증적은 화면에서 사라지고 통계에서도 빠진다.**
+`build_unjudgeable_result()`로 `FAILED` 결과를 만들어 `R110`으로 사람에게 보낸다.
 
 ---
 
@@ -193,9 +209,15 @@ LLM 출력 모델에 규칙까지 강제하면 **규칙을 어긴 응답이 객�
   후보 목록 자체가 여기서 정해지므로, 남은 것 중 제일 급하다
 - 후보에 `requirement` 본문을 실어달라. KB에 이미 있다
 
-**자운 (LLM 하네스·프롬프트)**
-- **`llm_confidence`의 정의를 프롬프트에 써넣어야 한다.** 지금 임계값 `0.70`에 근거가 없다
-- `reason` 작성 규칙(`mapping_rules_v0.6.md` 2.1)을 프롬프트에 반영
+**자운 (LLM 하네스·프롬프트)** — 프롬프트 `phase1_mapping_v0.2.1` 검토 결과를 v0.7에 반영했다.
+**`mapping_rules_v0.7.md` 13장에 프롬프트에 그대로 넣을 문구를 정리해 뒀다.** 13장만 보면 된다.
+- ~~`llm_confidence` 정의~~ → **판단팀이 정했다 (2.2).** 13.1을 프롬프트에 넣어달라
+- `reason` 작성 규칙 (2.1) → 13.2
+- **PRIMARY 경쟁 시 `UNCERTAIN`으로 내리지 말 것** (4.4) → 13.3.
+  지금 프롬프트 F절대로면 RELATED 2개가 경쟁할 때 `NO_MATCH`가 되어 판단이 사라진다
+- **후보 중복은 adapter에서 제거해야 한다** (4.8). 검색이 청크 단위라 실제로 잘 생긴다
+- `PromptInputError`가 나면 예외를 던지지 말고 `build_unjudgeable_result()`로 결과를 만들어달라 (8.1) → 13.4
+- `RULESET_VERSION`을 `mapping_rules_v0.7`로
 - 실제 LLM으로 골든셋 29건을 돌려야 임계값을 확정할 수 있다
 
 **KB 담당**
@@ -220,12 +242,14 @@ LLM 출력 모델에 규칙까지 강제하면 **규칙을 어긴 응답이 객�
       켜면 83%, 끄면 48%. 정확도가 안정되면 `R204`부터 끈다
 - [x] `UNCERTAIN`만 남았을 때 `match_status` → **`NO_MATCH` 유지 + `R107`로 구분 (2026-09-24)**
 - [x] Top-K → **5로 진행**
+- [x] `llm_confidence`의 정의 → **판단팀이 확정 (2026-09-24, `mapping_rules_v0.7.md` 2.2)**
+- [x] PRIMARY를 못 고를 때 → **판단을 남기고 confidence를 낮게 (2026-09-24)**. `UNCERTAIN`으로 내리지 않는다
+- [x] 후보 중복 → **입력 단계에서 거부(`E003`).** 합치는 쪽에서 제거한다
 
 **아직 못 정한 것**
 
 - [ ] `UNCERTAIN` 판단값을 쓸지 — 지금은 쓰는 것으로 작성됨
 - [ ] 1:N 상한 3개 — 골든셋 정답 분포를 보고 확정
-- [ ] `llm_confidence`의 정의 — 프롬프트에 써넣어야 한다 (자운)
 - [ ] Citation 개수 상한 — 지금은 없다
 - [ ] `reason` 최소 길이 10자 — 실제 응답 분포를 보고 확정
 - [ ] 적정성 판정 표현 목록 — 실제 응답을 보고 늘리거나 줄인다

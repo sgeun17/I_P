@@ -84,8 +84,12 @@
       "type": "string"
     },
     "ErrorCode": {
-      "description": "판단 파트에서 발생하는 오류.\n\n코드 체계\n  E1xx  LLM 호출 실패\n  E2xx  출력 형식 오류\n  E3xx  통제항목 ID 오류\n  E4xx  Citation 오류\n  E5xx  판단 규칙 위반",
+      "description": "판단 파트에서 발생하는 오류.\n\n코드 체계\n  E0xx  입력 자체가 판단 불가\n  E1xx  LLM 호출 실패\n  E2xx  출력 형식 오류\n  E3xx  통제항목 ID 오류\n  E4xx  Citation 오류\n  E5xx  판단 규칙 위반",
       "enum": [
+        "E001",
+        "E002",
+        "E003",
+        "E004",
         "E101",
         "E102",
         "E103",
@@ -291,6 +295,7 @@
         "R107",
         "R108",
         "R109",
+        "R110",
         "R201",
         "R202",
         "R203",
