@@ -1,0 +1,481 @@
+[
+  {
+    "case": {
+      "id": "DOCX",
+      "path": "../입력/docx-test/test1.docx",
+      "expected_ids_draft": [
+        "2.5.1",
+        "2.9.4"
+      ],
+      "expected_parser_error": null,
+      "origin": "입력팀 제공 샘플",
+      "sha256": "d05623b89fb29ea830d92accf06a17c55a9cbcc6e1dd3eac5bfa5df2b6d7487d"
+    },
+    "parsed": {
+      "source_file": "C:\\Users\\USER\\Desktop\\ISMS-P 인증 증적 사전점검 도구 개발\\개발\\I_P\\Search\\..\\입력\\docx-test\\test1.docx",
+      "file_type": "docx",
+      "page_count": null,
+      "blocks": [
+        {
+          "order": 1,
+          "block_type": "heading",
+          "level": 1,
+          "page": null,
+          "text": "제1장 총칙",
+          "table": null
+        },
+        {
+          "order": 2,
+          "block_type": "paragraph",
+          "level": null,
+          "page": null,
+          "text": "제1조 (목적) 이 규정은 회사의 정보보호 관리체계 운영에 필요한 사항을 정함을 목적으로 한다.",
+          "table": null
+        },
+        {
+          "order": 3,
+          "block_type": "table",
+          "level": null,
+          "page": null,
+          "text": "",
+          "table": {
+            "rows": [
+              [
+                "구분",
+                "내용"
+              ],
+              [
+                "접근통제",
+                "사용자 계정은 승인 후 발급한다"
+              ],
+              [
+                "로그관리",
+                "접속기록은 1년간 보관한다"
+              ]
+            ]
+          }
+        },
+        {
+          "order": 4,
+          "block_type": "paragraph",
+          "level": null,
+          "page": null,
+          "text": "제2조 (적용범위) 이 규정은 모든 임직원에게 적용한다.",
+          "table": null
+        }
+      ],
+      "errors": []
+    },
+    "payload": {
+      "evidence_id": 101,
+      "version": 1,
+      "source_file": "test1.docx",
+      "file_type": "docx",
+      "chunks": [
+        {
+          "chunk_id": "000101_v1_c0000",
+          "evidence_id": 101,
+          "version": 1,
+          "chunk_index": 0,
+          "file_type": "docx",
+          "source": "C:\\Users\\USER\\Desktop\\ISMS-P 인증 증적 사전점검 도구 개발\\개발\\I_P\\Search\\..\\입력\\docx-test\\test1.docx",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": "제1장 총칙",
+          "text": "제1장 총칙\n제1조 (목적) 이 규정은 회사의 정보보호 관리체계 운영에 필요한 사항을 정함을 목적으로 한다.",
+          "block_orders": [
+            1,
+            2
+          ]
+        },
+        {
+          "chunk_id": "000101_v1_c0001",
+          "evidence_id": 101,
+          "version": 1,
+          "chunk_index": 1,
+          "file_type": "docx",
+          "source": "parser",
+          "chunk_type": "table",
+          "page_start": null,
+          "page_end": null,
+          "heading": "제1장 총칙",
+          "text": "구분: 내용\n접근통제: 사용자 계정은 승인 후 발급한다\n로그관리: 접속기록은 1년간 보관한다",
+          "block_orders": [
+            3
+          ]
+        },
+        {
+          "chunk_id": "000101_v1_c0002",
+          "evidence_id": 101,
+          "version": 1,
+          "chunk_index": 2,
+          "file_type": "docx",
+          "source": "C:\\Users\\USER\\Desktop\\ISMS-P 인증 증적 사전점검 도구 개발\\개발\\I_P\\Search\\..\\입력\\docx-test\\test1.docx",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": "제1장 총칙",
+          "text": "제2조 (적용범위) 이 규정은 모든 임직원에게 적용한다.",
+          "block_orders": [
+            4
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case": {
+      "id": "UTF8",
+      "path": "tests/fixtures/file_pipeline/계정_UTF8.txt",
+      "expected_ids_draft": [
+        "2.5.1"
+      ],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "e9477f2485f36b1215791ffb2341f19e1d3fb47f9c6ea1a744d7abaa4089fbd0"
+    },
+    "parsed": {
+      "source_file": "계정_UTF8.txt",
+      "file_type": "txt",
+      "page_count": null,
+      "blocks": [
+        {
+          "order": 1,
+          "block_type": "paragraph",
+          "level": null,
+          "page": null,
+          "text": "사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다.",
+          "table": null
+        }
+      ],
+      "errors": []
+    },
+    "payload": {
+      "evidence_id": 102,
+      "version": 1,
+      "source_file": "계정_UTF8.txt",
+      "file_type": "txt",
+      "chunks": [
+        {
+          "chunk_id": "000102_v1_c0000",
+          "evidence_id": 102,
+          "version": 1,
+          "chunk_index": 0,
+          "file_type": "txt",
+          "source": "계정_UTF8.txt",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case": {
+      "id": "CP949",
+      "path": "tests/fixtures/file_pipeline/계정_CP949.txt",
+      "expected_ids_draft": [
+        "2.5.1"
+      ],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "1970c093ded6174d9360c4039b7eae94e331ca1bd063d0bd4c2fd1d1952cba7e"
+    },
+    "parsed": {
+      "source_file": "계정_CP949.txt",
+      "file_type": "txt",
+      "page_count": null,
+      "blocks": [
+        {
+          "order": 1,
+          "block_type": "paragraph",
+          "level": null,
+          "page": null,
+          "text": "사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다.",
+          "table": null
+        }
+      ],
+      "errors": []
+    },
+    "payload": {
+      "evidence_id": 103,
+      "version": 1,
+      "source_file": "계정_CP949.txt",
+      "file_type": "txt",
+      "chunks": [
+        {
+          "chunk_id": "000103_v1_c0000",
+          "evidence_id": 103,
+          "version": 1,
+          "chunk_index": 0,
+          "file_type": "txt",
+          "source": "계정_CP949.txt",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case": {
+      "id": "LONG",
+      "path": "tests/fixtures/file_pipeline/계정_긴문단.txt",
+      "expected_ids_draft": [
+        "2.5.1"
+      ],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "3a93fba8c3ba186ceb806be6575c5bfa45cd72e9c604d846f079c3eec15c918f"
+    },
+    "parsed": {
+      "source_file": "계정_긴문단.txt",
+      "file_type": "txt",
+      "page_count": null,
+      "blocks": [
+        {
+          "order": 1,
+          "block_type": "paragraph",
+          "level": null,
+          "page": null,
+          "text": "사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다.",
+          "table": null
+        }
+      ],
+      "errors": []
+    },
+    "payload": {
+      "evidence_id": 104,
+      "version": 1,
+      "source_file": "계정_긴문단.txt",
+      "file_type": "txt",
+      "chunks": [
+        {
+          "chunk_id": "000104_v1_c0000",
+          "evidence_id": 104,
+          "version": 1,
+          "chunk_index": 0,
+          "file_type": "txt",
+          "source": "계정_긴문단.txt",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서",
+          "block_orders": [
+            1
+          ]
+        },
+        {
+          "chunk_id": "000104_v1_c0001",
+          "evidence_id": 104,
+          "version": 1,
+          "chunk_index": 1,
+          "file_type": "txt",
+          "source": "계정_긴문단.txt",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다. 사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case": {
+      "id": "CSV",
+      "path": "tests/fixtures/file_pipeline/계정과로그.csv",
+      "expected_ids_draft": [
+        "2.5.1",
+        "2.9.4"
+      ],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "64cd3808a82eb5fc60368482051ffec14c3cdb6ad83a91e2012727146eb58bf1"
+    },
+    "parsed": {
+      "source_file": "계정과로그.csv",
+      "file_type": "csv",
+      "page_count": null,
+      "blocks": [
+        {
+          "order": 1,
+          "block_type": "table",
+          "level": null,
+          "page": null,
+          "text": "",
+          "table": {
+            "rows": [
+              [
+                "항목",
+                "운영내역"
+              ],
+              [
+                "계정관리",
+                "신규 사용자 계정은 부서장 승인 후 발급하고 퇴사자 계정은 삭제한다. 등록 변경 삭제 처리 이력을 기록한다."
+              ],
+              [
+                "로그관리",
+                "시스템 접속기록은 사용자 식별자와 접속 일시 및 작업 내역을 포함해 정해진 기간 동안 보관하고 위변조와 임의 삭제를 방지한다."
+              ]
+            ]
+          }
+        }
+      ],
+      "errors": []
+    },
+    "payload": {
+      "evidence_id": 105,
+      "version": 1,
+      "source_file": "계정과로그.csv",
+      "file_type": "csv",
+      "chunks": [
+        {
+          "chunk_id": "000105_v1_c0000",
+          "evidence_id": 105,
+          "version": 1,
+          "chunk_index": 0,
+          "file_type": "csv",
+          "source": "parser",
+          "chunk_type": "table",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "항목: 운영내역\n계정관리: 신규 사용자 계정은 부서장 승인 후 발급하고 퇴사자 계정은 삭제한다. 등록 변경 삭제 처리 이력을 기록한다.\n로그관리: 시스템 접속기록은 사용자 식별자와 접속 일시 및 작업 내역을 포함해 정해진 기간 동안 보관하고 위변조와 임의 삭제를 방지한다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case": {
+      "id": "UNRELATED",
+      "path": "tests/fixtures/file_pipeline/무관_식단.txt",
+      "expected_ids_draft": [],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "496341d0c7e1e69ece50efaf8439aaae9db3951202fd5a6d95056c1e4ab888de"
+    },
+    "parsed": {
+      "source_file": "무관_식단.txt",
+      "file_type": "txt",
+      "page_count": null,
+      "blocks": [
+        {
+          "order": 1,
+          "block_type": "paragraph",
+          "level": null,
+          "page": null,
+          "text": "오늘 점심 메뉴는 김치볶음밥과 달걀국이다. 후식으로 귤을 먹었다.",
+          "table": null
+        }
+      ],
+      "errors": []
+    },
+    "payload": {
+      "evidence_id": 106,
+      "version": 1,
+      "source_file": "무관_식단.txt",
+      "file_type": "txt",
+      "chunks": [
+        {
+          "chunk_id": "000106_v1_c0000",
+          "evidence_id": 106,
+          "version": 1,
+          "chunk_index": 0,
+          "file_type": "txt",
+          "source": "무관_식단.txt",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "오늘 점심 메뉴는 김치볶음밥과 달걀국이다. 후식으로 귤을 먹었다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case": {
+      "id": "EMPTY",
+      "path": "tests/fixtures/file_pipeline/빈파일.txt",
+      "expected_ids_draft": [],
+      "expected_parser_error": "empty_document",
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "parsed": {
+      "source_file": "빈파일.txt",
+      "file_type": "txt",
+      "page_count": null,
+      "blocks": [],
+      "errors": [
+        "empty_document"
+      ]
+    },
+    "payload": {
+      "evidence_id": 107,
+      "version": 1,
+      "source_file": "빈파일.txt",
+      "file_type": "txt",
+      "chunks": [],
+      "errors": [
+        "empty_document"
+      ]
+    }
+  },
+  {
+    "case": {
+      "id": "CORRUPTED",
+      "path": "tests/fixtures/file_pipeline/손상입력.txt",
+      "expected_ids_draft": [],
+      "expected_parser_error": "corrupted_file",
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "6c7345ce3080797e1c18cfd5e8056d87fa072e8b0dd909f2db61a83ad1bd8607"
+    },
+    "parsed": {
+      "source_file": "손상입력.txt",
+      "file_type": "txt",
+      "page_count": null,
+      "blocks": [],
+      "errors": [
+        "corrupted_file"
+      ]
+    },
+    "payload": {
+      "evidence_id": 108,
+      "version": 1,
+      "source_file": "손상입력.txt",
+      "file_type": "txt",
+      "chunks": [],
+      "errors": [
+        "corrupted_file"
+      ]
+    }
+  }
+]

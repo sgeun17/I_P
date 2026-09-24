@@ -1,0 +1,10 @@
+{
+  "evidence_id": 107,
+  "version": 1,
+  "source_file": "빈파일.txt",
+  "file_type": "txt",
+  "chunks": [],
+  "errors": [
+    "empty_document"
+  ]
+}

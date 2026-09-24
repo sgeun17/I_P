@@ -1,0 +1,193 @@
+{
+  "schema_version": "retriever-0.2",
+  "success": true,
+  "evidence_id": "000106",
+  "version": 1,
+  "source_file": "무관_식단.txt",
+  "file_type": "txt",
+  "evidence_chunks": [
+    {
+      "chunk_id": "000106_v1_c0000",
+      "evidence_id": "000106",
+      "version": 1,
+      "chunk_index": 0,
+      "file_type": "txt",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": null,
+      "text": "오늘 점심 메뉴는 김치볶음밥과 달걀국이다. 후식으로 귤을 먹었다.",
+      "block_orders": [
+        1
+      ],
+      "source_file": "무관_식단.txt"
+    }
+  ],
+  "retrieval": {
+    "unit": "document",
+    "top_k": 5,
+    "score_type": "cosine_similarity",
+    "aggregation": "max_chunk_similarity",
+    "query_text_field": "text",
+    "candidates": [
+      {
+        "rank": 1,
+        "control_id": "3.1.7",
+        "control_name": "마케팅 목적의 개인정보 수집·이용",
+        "similarity_score": 0.350005,
+        "best_chunk_id": "000106_v1_c0000",
+        "matched_chunk_ids": [
+          "000106_v1_c0000"
+        ]
+      },
+      {
+        "rank": 2,
+        "control_id": "2.9.3",
+        "control_name": "백업 및 복구관리",
+        "similarity_score": 0.341496,
+        "best_chunk_id": "000106_v1_c0000",
+        "matched_chunk_ids": [
+          "000106_v1_c0000"
+        ]
+      },
+      {
+        "rank": 3,
+        "control_id": "2.9.5",
+        "control_name": "로그 및 접속기록 점검",
+        "similarity_score": 0.340729,
+        "best_chunk_id": "000106_v1_c0000",
+        "matched_chunk_ids": [
+          "000106_v1_c0000"
+        ]
+      },
+      {
+        "rank": 4,
+        "control_id": "3.2.3",
+        "control_name": "이용자 단말기 접근 보호",
+        "similarity_score": 0.340522,
+        "best_chunk_id": "000106_v1_c0000",
+        "matched_chunk_ids": [
+          "000106_v1_c0000"
+        ]
+      },
+      {
+        "rank": 5,
+        "control_id": "3.5.3",
+        "control_name": "정보주체에 대한 통지",
+        "similarity_score": 0.336867,
+        "best_chunk_id": "000106_v1_c0000",
+        "matched_chunk_ids": [
+          "000106_v1_c0000"
+        ]
+      }
+    ],
+    "chunk_results": [
+      {
+        "chunk_id": "000106_v1_c0000",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.1.7",
+            "control_name": "마케팅 목적의 개인정보 수집·이용",
+            "similarity_score": 0.350005
+          },
+          {
+            "rank": 2,
+            "control_id": "2.9.3",
+            "control_name": "백업 및 복구관리",
+            "similarity_score": 0.341496
+          },
+          {
+            "rank": 3,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.340729
+          },
+          {
+            "rank": 4,
+            "control_id": "3.2.3",
+            "control_name": "이용자 단말기 접근 보호",
+            "similarity_score": 0.340522
+          },
+          {
+            "rank": 5,
+            "control_id": "3.5.3",
+            "control_name": "정보주체에 대한 통지",
+            "similarity_score": 0.336867
+          }
+        ]
+      }
+    ]
+  },
+  "candidate_controls": [
+    {
+      "control_id": "3.1.7",
+      "control_name": "마케팅 목적의 개인정보 수집·이용",
+      "requirement": "재화나 서비스의 홍보, 판매 권유, 광고성 정보전송 등 마케팅 목적으로 개인정보를 수집· 이용하는 경우 그 목적을 정보주체가 명확하게 인지할 수 있도록 고지하고 동의를 받아야 한다.",
+      "matched_chunk_ids": [
+        "000106_v1_c0000"
+      ]
+    },
+    {
+      "control_id": "2.9.3",
+      "control_name": "백업 및 복구관리",
+      "requirement": "정보시스템의 가용성과 데이터 무결성을 유지하기 위하여 백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다. 아울러 사고 발생 시 적시에 복구할 수 있도록 관리하여야 한다.",
+      "matched_chunk_ids": [
+        "000106_v1_c0000"
+      ]
+    },
+    {
+      "control_id": "2.9.5",
+      "control_name": "로그 및 접속기록 점검",
+      "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+      "matched_chunk_ids": [
+        "000106_v1_c0000"
+      ]
+    },
+    {
+      "control_id": "3.2.3",
+      "control_name": "이용자 단말기 접근 보호",
+      "requirement": "정보주체(이용자)의 이동통신단말장치 내에 저장되어 있는 정보 및 이동통신단말장치에 설치된 기능에 접근이 필요한 경우 이를 명확하게 인지할 수 있도록 알리고 정보주체 (이용자)의 동의를 받아야 한다.",
+      "matched_chunk_ids": [
+        "000106_v1_c0000"
+      ]
+    },
+    {
+      "control_id": "3.5.3",
+      "control_name": "정보주체에 대한 통지",
+      "requirement": "개인정보의 이용·제공 내역 등 정보주체에게 통지하여야 할 사항을 파악하여 그 내용을 주기적으로 통지하여야 한다.",
+      "matched_chunk_ids": [
+        "000106_v1_c0000"
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "EVIDENCE_ID_CONVERTED",
+      "field": "evidence_id",
+      "message": "입력팀 정수 ID를 저장 모듈의 6자리 문자열로 변환했습니다."
+    },
+    {
+      "code": "EVIDENCE_ID_CONVERTED",
+      "field": "chunks[0].evidence_id",
+      "message": "입력팀 정수 ID를 저장 모듈의 6자리 문자열로 변환했습니다."
+    },
+    {
+      "code": "SOURCE_FILE_FROM_DOCUMENT",
+      "field": "chunks[0]",
+      "message": "누락된 파일명을 명시된 문서 정보에서 보충했습니다."
+    },
+    {
+      "code": "LEGACY_SOURCE_CONVERTED",
+      "field": "chunks[0]",
+      "message": "기존 source의 파일 경로를 parser로 변환했습니다. 입력팀 수정 전 호환 처리입니다."
+    }
+  ],
+  "index": {
+    "collection": "isms_p_controls",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+  },
+  "generated_at": "2026-09-24T14:20:25.570977+09:00"
+}

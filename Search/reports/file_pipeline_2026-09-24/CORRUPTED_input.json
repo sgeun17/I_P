@@ -1,0 +1,10 @@
+{
+  "evidence_id": 108,
+  "version": 1,
+  "source_file": "손상입력.txt",
+  "file_type": "txt",
+  "chunks": [],
+  "errors": [
+    "corrupted_file"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "evidence_id": 105,
+  "version": 1,
+  "source_file": "계정과로그.csv",
+  "file_type": "csv",
+  "chunks": [
+    {
+      "chunk_id": "000105_v1_c0000",
+      "evidence_id": 105,
+      "version": 1,
+      "chunk_index": 0,
+      "file_type": "csv",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": null,
+      "text": "항목: 운영내역\n계정관리: 신규 사용자 계정은 부서장 승인 후 발급하고 퇴사자 계정은 삭제한다. 등록 변경 삭제 처리 이력을 기록한다.\n로그관리: 시스템 접속기록은 사용자 식별자와 접속 일시 및 작업 내역을 포함해 정해진 기간 동안 보관하고 위변조와 임의 삭제를 방지한다.",
+      "block_orders": [
+        1
+      ]
+    }
+  ],
+  "errors": []
+}

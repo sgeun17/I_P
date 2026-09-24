@@ -1,0 +1,81 @@
+{
+  "label_status": "검색 실행 전 작성한 예상 ID 초안. 사람 검수 전.",
+  "cases": [
+    {
+      "id": "DOCX",
+      "path": "../입력/docx-test/test1.docx",
+      "expected_ids_draft": [
+        "2.5.1",
+        "2.9.4"
+      ],
+      "expected_parser_error": null,
+      "origin": "입력팀 제공 샘플",
+      "sha256": "d05623b89fb29ea830d92accf06a17c55a9cbcc6e1dd3eac5bfa5df2b6d7487d"
+    },
+    {
+      "id": "UTF8",
+      "path": "tests/fixtures/file_pipeline/계정_UTF8.txt",
+      "expected_ids_draft": [
+        "2.5.1"
+      ],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "e9477f2485f36b1215791ffb2341f19e1d3fb47f9c6ea1a744d7abaa4089fbd0"
+    },
+    {
+      "id": "CP949",
+      "path": "tests/fixtures/file_pipeline/계정_CP949.txt",
+      "expected_ids_draft": [
+        "2.5.1"
+      ],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "1970c093ded6174d9360c4039b7eae94e331ca1bd063d0bd4c2fd1d1952cba7e"
+    },
+    {
+      "id": "LONG",
+      "path": "tests/fixtures/file_pipeline/계정_긴문단.txt",
+      "expected_ids_draft": [
+        "2.5.1"
+      ],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "3a93fba8c3ba186ceb806be6575c5bfa45cd72e9c604d846f079c3eec15c918f"
+    },
+    {
+      "id": "CSV",
+      "path": "tests/fixtures/file_pipeline/계정과로그.csv",
+      "expected_ids_draft": [
+        "2.5.1",
+        "2.9.4"
+      ],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "64cd3808a82eb5fc60368482051ffec14c3cdb6ad83a91e2012727146eb58bf1"
+    },
+    {
+      "id": "UNRELATED",
+      "path": "tests/fixtures/file_pipeline/무관_식단.txt",
+      "expected_ids_draft": [],
+      "expected_parser_error": null,
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "496341d0c7e1e69ece50efaf8439aaae9db3951202fd5a6d95056c1e4ab888de"
+    },
+    {
+      "id": "EMPTY",
+      "path": "tests/fixtures/file_pipeline/빈파일.txt",
+      "expected_ids_draft": [],
+      "expected_parser_error": "empty_document",
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "CORRUPTED",
+      "path": "tests/fixtures/file_pipeline/손상입력.txt",
+      "expected_ids_draft": [],
+      "expected_parser_error": "corrupted_file",
+      "origin": "검색팀 합성 시험 파일",
+      "sha256": "6c7345ce3080797e1c18cfd5e8056d87fa072e8b0dd909f2db61a83ad1bd8607"
+    }
+  ]
+}
