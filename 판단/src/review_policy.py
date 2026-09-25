@@ -1,7 +1,25 @@
 """Human Review 전환 정책과 상태 머신.
 
-임계값은 전부 임시값이다. 골든셋 평가 뒤에 조정한다.
-값을 바꾸면 thresholds.yaml만 고치고 이 코드는 건드리지 않는다.
+### 임계값은 **이 파일이 원본이다**
+
+임계값을 바꾸려면 아래 `Thresholds`를 고치고 `python src/check.py`를 돌린다.
+그러면 `configs/thresholds.yaml`이 현재 값으로 다시 생성된다.
+
+    review_policy.py  (원본)  ──check.py──▶  configs/thresholds.yaml  (생성물)
+
+`schemas/*.json`을 Pydantic 모델에서 생성하는 것과 같은 방식이다.
+**YAML을 손으로 고치면 `check.py`가 FAIL을 낸다.**
+
+v0.7까지는 반대로 적혀 있었다("YAML만 고치면 된다"). 그런데 코드가 YAML을
+읽은 적이 없어서, YAML만 고치면 아무 일도 일어나지 않았다.
+검색팀이 코드를 읽다가 찾아줬다.
+
+### 왜 코드를 원본으로 두는가
+
+임계값을 바꾸면 검토 대상이 크게 달라진다. 조용히 일어나면 안 되는 변경이다.
+코드에 있으면 PR에 올라가고 리뷰를 거친다. 근거 주석도 값 바로 옆에 남는다.
+
+값은 전부 임시값이다. 실제 LLM을 붙여 골든셋을 돌린 뒤 확정한다.
 """
 
 from __future__ import annotations
@@ -64,6 +82,62 @@ class Thresholds:
 
 
 DEFAULT_THRESHOLDS = Thresholds()
+
+
+def thresholds_to_yaml(t: Thresholds = DEFAULT_THRESHOLDS) -> str:
+    """현재 임계값을 `configs/thresholds.yaml` 내용으로 만든다.
+
+    `check.py`가 이걸 파일에 쓰고, 기존 파일과 다르면 FAIL을 낸다.
+    **파이썬 표준 라이브러리만 쓴다.** 값이 전부 숫자·bool·짧은 문자열이라
+    YAML 라이브러리가 필요 없고, 다른 팀에 의존성을 늘리지 않기 위해서다.
+    """
+
+    def val(v: object) -> str:
+        if isinstance(v, bool):      # bool이 int보다 먼저다
+            return "true" if v else "false"
+        return str(v)
+
+    return f"""\
+# Human Review 전환 임계값
+#
+# ⚠ 이 파일은 `python src/check.py`가 자동 생성한다. **손으로 고치지 않는다.**
+#    값을 바꾸려면 src/review_policy.py의 Thresholds를 고치고 check.py를 다시 돌린다.
+#    손으로 고치면 check.py가 FAIL을 낸다.
+#
+# 각 값의 근거는 review_policy.py의 주석에 값 바로 옆에 있다.
+# 전부 임시값이다. 실제 LLM으로 골든셋을 돌린 뒤 확정한다.
+
+profile_name: {t.profile_name}
+
+review:
+  # 매핑된 통제항목의 llm_confidence가 이 값보다 낮으면 검토
+  low_confidence: {val(t.low_confidence)}
+
+  # 1위와 2위 후보의 similarity_score 차이가 이보다 작으면 검토
+  narrow_score_gap: {val(t.narrow_score_gap)}
+
+  # 검색 점수가 이 이상인데 전부 NOT_RELATED면 검색과 판단이 충돌한 것으로 본다
+  high_similarity: {val(t.high_similarity)}
+
+  # 판단 근거가 된 청크 텍스트 합계가 이 글자 수보다 짧으면 검토
+  min_chunk_length: {val(t.min_chunk_length)}
+
+  # 결과 유형 자체를 검토로 보낼지
+  review_on_no_match: {val(t.review_on_no_match)}
+  review_on_multi_mapping: {val(t.review_on_multi_mapping)}
+
+rules:
+  # 1:N 매핑 상한. 골든셋 정답이 4개 이상인 사례가 나오면 올린다
+  max_mapped_controls: {MAX_MAPPED_CONTROLS}
+
+  # MATCHED일 때 PRIMARY 개수
+  primary_count_when_matched: {PRIMARY_COUNT_WHEN_MATCHED}
+
+retry:
+  max_retries: {DEFAULT_RETRY_POLICY.max_retries}
+  timeout_seconds: {DEFAULT_RETRY_POLICY.timeout_seconds}
+  backoff_seconds: {DEFAULT_RETRY_POLICY.backoff_seconds}
+"""
 
 
 # 무조건 검토로 보내는 오류 코드

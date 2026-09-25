@@ -31,6 +31,7 @@ from enums import ErrorCode as ErrorCode_  # noqa: E402
 from review_policy import (  # noqa: E402
     BLOCKING_ERROR_CODES,
     DEFAULT_RETRY_POLICY,
+    DEFAULT_THRESHOLDS as DEFAULT_THRESHOLDS_,
     InvalidTransition,
     decide_review,
     is_confirmed,
@@ -339,6 +340,36 @@ for filename, model in exports.items():
         json.dumps(schema, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     report(filename, True, "생성됨")
+
+
+# --------------------------------------------------------------------------
+print("\n== 7. 임계값 파일 내보내기 ==")
+#
+# `configs/thresholds.yaml`은 review_policy.py의 Thresholds에서 **생성한다.**
+# 예전에는 YAML이 원본인 것처럼 문서에 적혀 있었는데, 코드가 YAML을 읽은 적이
+# 없어서 YAML만 고치면 아무 일도 일어나지 않았다. 원본을 코드 한 곳으로 모은다.
+#
+# 손으로 고친 흔적이 있으면 덮어쓰기 전에 FAIL로 알린다. 조용히 지우지 않는다.
+from review_policy import thresholds_to_yaml  # noqa: E402
+
+CONFIGS = ROOT / "configs"
+CONFIGS.mkdir(exist_ok=True)
+thresholds_path = CONFIGS / "thresholds.yaml"
+generated = thresholds_to_yaml(DEFAULT_THRESHOLDS_)
+
+if thresholds_path.exists():
+    current = thresholds_path.read_text(encoding="utf-8")
+    report(
+        "thresholds.yaml이 코드와 일치",
+        current == generated,
+        "" if current == generated else
+        "손으로 고쳤거나 코드가 바뀌었다. 아래 새 값으로 덮어썼으니 diff를 확인할 것",
+    )
+else:
+    report("thresholds.yaml 없음 → 새로 생성", True)
+
+thresholds_path.write_text(generated, encoding="utf-8")
+report("thresholds.yaml — 생성됨", True, f"profile={DEFAULT_THRESHOLDS_.profile_name}")
 
 
 print(f"\n결과: {ok} PASS / {fail} FAIL")

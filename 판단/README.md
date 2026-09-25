@@ -1,4 +1,4 @@
-# Phase 1 판단 파트 — 규격 · 규칙 · Validator · 골든셋 (v0.12)
+# Phase 1 판단 파트 — 규격 · 규칙 · Validator · 골든셋 (v0.13)
 
 작성: 판단팀 · 2026-09-24
 상태: **초안. 팀 리뷰 전**
@@ -23,8 +23,9 @@ python tools/report_goldenset.py  # 검토 전환율과 임계값 시나리오
 python tools/eval_goldenset.py --self-test   # 평가 지표 계산 점검
 ```
 
-`schemas/*.json`은 `check.py`가 Pydantic 모델에서 **자동 생성**한다.
-손으로 고치지 않는다. 모델을 고치고 스크립트를 다시 돌린다.
+`schemas/*.json`과 `configs/thresholds.yaml`은 `check.py`가 **코드에서 자동 생성**한다.
+손으로 고치지 않는다. 원본(모델·`Thresholds`)을 고치고 스크립트를 다시 돌린다.
+**손으로 고치면 `check.py`가 FAIL을 낸다.**
 
 ---
 
@@ -62,7 +63,7 @@ tests/fixtures/goldenset.json      골든셋 29건
 schemas/                           모델에서 생성된 JSON Schema
 samples/                           단일 / 다중 / NO_MATCH / 검토필요 예시
 data/control_index.json            KB에서 뽑은 ID → 명칭 표
-configs/thresholds.yaml            임계값 (코드 밖)
+configs/thresholds.yaml            임계값 (review_policy.py에서 생성됨)
 ```
 
 ---
@@ -87,7 +88,7 @@ result = build_result(
 
 ---
 
-## 핵심 결정 9가지
+## 핵심 결정 10가지
 
 **1. `match_status` + `relation` 2단 구조**
 
@@ -144,6 +145,17 @@ PRIMARY를 고르기 어려워도 `RELATED` 판단을 `UNCERTAIN`으로 내리�
 청크가 0개면 `MappingInput`을 만들 수조차 없어서 결과 객체가 아예 안 생겼다.
 그러면 **그 증적은 화면에서 사라지고 통계에서도 빠진다.**
 `build_unjudgeable_result()`로 `FAILED` 결과를 만들어 `R110`으로 사람에게 보낸다.
+
+**10. 임계값은 코드가 원본이다 (v0.8)**
+
+v0.7까지는 "임계값은 `thresholds.yaml`에서 관리한다"고 써놨는데 **코드가 그 파일을
+읽은 적이 없었다.** 값이 같아서 티가 안 났을 뿐이다(검색팀이 찾아줬다).
+
+원본을 `review_policy.py`로 모으고, YAML은 `check.py`가 생성한다.
+`schemas/*.json`과 같은 방식이다. **YAML을 손으로 고치면 `check.py`가 FAIL을 낸다.**
+
+임계값을 바꾸면 검토 대상이 크게 달라진다. 조용히 일어나면 안 되는 변경이므로
+코드에 두고 PR 리뷰를 거치게 한다. 근거 주석도 값 바로 옆에 남는다.
 
 ---
 
