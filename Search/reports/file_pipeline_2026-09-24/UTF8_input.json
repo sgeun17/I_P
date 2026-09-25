@@ -1,0 +1,25 @@
+{
+  "evidence_id": 102,
+  "version": 1,
+  "source_file": "계정_UTF8.txt",
+  "file_type": "txt",
+  "chunks": [
+    {
+      "chunk_id": "000102_v1_c0000",
+      "evidence_id": 102,
+      "version": 1,
+      "chunk_index": 0,
+      "file_type": "txt",
+      "source": "계정_UTF8.txt",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": null,
+      "text": "사용자 계정 신청 및 처리 기록. 신규 입사자의 업무용 계정은 부서장의 승인 후 발급했다. 부서 이동자의 권한은 변경된 업무 범위에 맞춰 조정했고 퇴사자 계정은 퇴사 당일 삭제했다. 승인자와 처리 일시를 대장에 기록했다.",
+      "block_orders": [
+        1
+      ]
+    }
+  ],
+  "errors": []
+}

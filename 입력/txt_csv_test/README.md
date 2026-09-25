@@ -136,3 +136,8 @@ else:
                   error_message=", ".join(result["errors"]))
 ```
 `evidence_id`, `version` 은 파서가 아니라 이 부분(파서를 부르는 쪽)에서 결과에 붙여요.
+
+## 저장소에 없는 파일
+
+테스트 파일(`test_*.py`), 샘플 폴더(`samples/`), `make_samples.py`, `requirements.txt` 는
+저장소에 올리지 않았어요 (각자 로컬에만 있음). 필요한 도구는 `database/requirements.txt` 에 모아 두었어요.

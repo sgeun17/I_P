@@ -1,5 +1,5 @@
 """
-pdf_parser.py : PDF 텍스트/페이지 추출 (Phase 1 입력 - PDF 담당)
+pdf_parser.py : PDF 텍스트/페이지 추출
 
 하는 일
   PDF 파일을 위에서 아래로 읽어서 "제목(heading)", "문단(paragraph)", "표(table)"를
@@ -60,6 +60,8 @@ SPLIT_TABLE_RATIO = 0.5     # 위아래 줄의 칸 경계가 이 비율보다 �
 WRAP_GAP_RATIO = 1.3        # 윗줄이 오른쪽 끝까지 찼으면 줄 간격이 "글자 높이 × 이 값"까지는 같은 문단
 # 이런 글자로 시작하는 줄은 항상 새 문단 (목록 항목): ● • ○ ■ □ ▶ ※ - / ㅇ o · (뒤에 띄어쓰기) / 1. 2) / 가. 나) / (1) / 제3조
 LIST_START = re.compile(r"^([●•○◦■□▪▶※\-–]|[ㅇo·]\s|\d{1,2}[.)]\s|[가-하][.)]\s|\(\d{1,2}\)|제\s*\d+\s*조)")
+EDGE_ZONE_RATIO = 0.12      # 페이지 위·아래 이 비율 안에 있으면 머리글·바닥글 자리로 봄
+MIN_REPEAT_PAGES = 3        # 최소 이 페이지 수 이상 반복돼야 머리글·바닥글로 판단
 WRAP_SLACK_CHARS = 6        # 오른쪽 끝에서 글자 몇 개 이내로 끝나면 "끝까지 찬 줄"로 봄
 
 
@@ -69,7 +71,7 @@ def parse_pdf(path):
     result = {
         "source_file": path.name,
         "file_type": "pdf",
-        "page_count": 0,
+        "page_count": None,
         "blocks": [],
         "errors": [],
     }
@@ -88,7 +90,7 @@ def parse_pdf(path):
         return result
 
     # ③ 1차: 페이지마다 표·글자 덩어리 뽑기 (아직 제목/문단 구분 전)
-    raw = []                  # (페이지, 종류, 내용, 글자크기, 줄 수)
+    raw = []                  # (페이지, 종류, 내용, 글자크기, 줄 수, 세로 위치, 페이지 높이)
     size_counter = Counter()  # 문서 전체 글자 크기 통계 → 본문 크기 찾기
     failed_pages = 0
     with pdf:
@@ -107,16 +109,19 @@ def parse_pdf(path):
         result["errors"].append("corrupted_file" if broken else "empty_document")
         return result
 
+    # ③-2 매 페이지 반복되는 머리글·바닥글 버리기
+    raw = _drop_headers_footers(raw, page_count)
+
     # ④ 2차: 제목 판단 + 최종 블록 만들기
     body_size = size_counter.most_common(1)[0][0] if size_counter else 0
     heading_sizes = sorted(
-        {size for _, kind, text, size, n_lines in raw
+        {size for _, kind, text, size, n_lines, *_ in raw
          if kind == "text" and _looks_like_heading(text, size, n_lines, body_size)},
         reverse=True,
     )
 
     blocks = []
-    for page_no, kind, payload, size, n_lines in raw:
+    for page_no, kind, payload, size, n_lines, top, page_h in raw:
         if kind == "table":
             block_type, level, text, table = "table", None, "", {"rows": payload}
         elif size in heading_sizes and _looks_like_heading(payload, size, n_lines, body_size):
@@ -149,8 +154,8 @@ def _looks_like_heading(text, size, n_lines, body_size):
 def _extract_page(page, size_counter):
     """
     한 페이지에서 표와 글자 덩어리를 위에서 아래 순서대로 돌려줍니다.
-      표   : ("table", rows, None, None)
-      글자 : ("text",  text, 글자크기, 줄 수)
+      표   : ("table", rows, None, None, 세로 위치, 페이지 높이)
+      글자 : ("text",  text, 글자크기, 줄 수, 세로 위치, 페이지 높이)
     표 안의 글자는 글자 덩어리로 한 번 더 나오지 않게 뺍니다.
     """
     items = []  # (세로 위치, 종류, 내용, 크기, 줄 수)
@@ -184,7 +189,7 @@ def _extract_page(page, size_counter):
         items.append((top, "text", text, size, n_lines))
 
     items.sort(key=lambda x: x[0])
-    return [item[1:] for item in items]
+    return [(*item[1:], item[0], page.height) for item in items]   # 뒤에 세로 위치·페이지 높이 추가
 
 
 def _group_paragraphs(lines):
@@ -313,6 +318,42 @@ def _extract_table(page, t):
     return out
 
 
+def _drop_headers_footers(raw, page_count):
+    """
+    매 페이지 똑같이 반복되는 머리글·바닥글(회사명, 문서명, 페이지 번호)을 정리합니다.
+    **맨 처음 나온 것 하나는 남기고, 그 뒤 반복되는 것만 버립니다.**
+    (머리글의 "| 대외비" 같은 보안등급 표시가 증적이 될 수 있어서, 문서에 한 번은 남겨 둬요)
+      조건 ① 페이지 맨 위 또는 맨 아래 EDGE_ZONE_RATIO(12%) 안에 있는 글자 덩어리
+           ② 같은 글이 MIN_REPEAT_PAGES(3쪽) 이상 + 전체 페이지의 절반 이상에서 반복
+    "한국공직연금관리공단 - 3 -" 처럼 쪽 번호만 달라지는 것도 잡으려고, 숫자는 # 로 바꿔서 비교해요.
+    표는 절대 버리지 않고, 조건에 안 맞으면 아무것도 바꾸지 않아요.
+    """
+    edge_pages = {}       # 숫자를 지운 글 → 그 글이 가장자리에 나온 페이지 번호들
+    for page_no, kind, payload, size, n_lines, top, page_h in raw:
+        if kind != "text" or not page_h:
+            continue
+        if top <= page_h * EDGE_ZONE_RATIO or top >= page_h * (1 - EDGE_ZONE_RATIO):
+            edge_pages.setdefault(re.sub(r"\d+", "#", payload), set()).add(page_no)
+
+    need = max(MIN_REPEAT_PAGES, page_count / 2)
+    repeated = {key for key, pages in edge_pages.items() if len(pages) >= need}
+    if not repeated:
+        return raw
+
+    out, kept = [], set()
+    for item in raw:
+        page_no, kind, payload, size, n_lines, top, page_h = item
+        if (kind == "text" and page_h
+                and (top <= page_h * EDGE_ZONE_RATIO or top >= page_h * (1 - EDGE_ZONE_RATIO))):
+            key = re.sub(r"\d+", "#", payload)
+            if key in repeated:
+                if key in kept:
+                    continue              # 두 번째부터는 버림
+                kept.add(key)             # 처음 나온 것은 남김
+        out.append(item)
+    return out
+
+
 def _clean_cell(cell):
     """표 칸 정리 : None(병합·빈 칸) → "", 칸 안 줄바꿈 → 공백 (주소(URL) 중간 줄바꿈은 붙임)"""
     if cell is None:
@@ -326,7 +367,7 @@ URL_CONTINUE = re.compile(r"^[!-~]+")   # 한글 없이 영문·숫자·기호�
 def _join_lines(lines):
     """
     여러 줄을 한 줄로 합칩니다. 보통은 사이에 띄어쓰기를 넣지만,
-    윗줄 끝이 주소(https://...) 의 중간에서 끊겼으면 띄어쓰기 없이 그대로 이어 붙입니다.
+    윗줄 끝이 주소(https://...)의 중간에서 끊겼으면 띄어쓰기 없이 그대로 이어 붙입니다.
     (긴 주소가 칸 너비 때문에 줄바꿈되면 주소 중간에 공백이 생겨 링크가 망가지는 것 방지)
     """
     out = ""

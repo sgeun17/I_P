@@ -1,0 +1,60 @@
+{
+  "evidence_id": "000001",
+  "version": 1,
+  "source_file": "test1.docx",
+  "file_type": "docx",
+  "chunks": [
+    {
+      "chunk_id": "000001_v1_c0000",
+      "evidence_id": "000001",
+      "version": 1,
+      "chunk_index": 0,
+      "file_type": "docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": "제1장 총칙",
+      "text": "제1장 총칙\n제1조 (목적) 이 규정은 회사의 정보보호 관리체계 운영에 필요한 사항을 정함을 목적으로 한다.",
+      "block_orders": [
+        1,
+        2
+      ],
+      "source_file": "test1.docx"
+    },
+    {
+      "chunk_id": "000001_v1_c0001",
+      "evidence_id": "000001",
+      "version": 1,
+      "chunk_index": 1,
+      "file_type": "docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "제1장 총칙",
+      "text": "구분: 내용\n접근통제: 사용자 계정은 승인 후 발급한다\n로그관리: 접속기록은 1년간 보관한다",
+      "block_orders": [
+        3
+      ],
+      "source_file": "test1.docx"
+    },
+    {
+      "chunk_id": "000001_v1_c0002",
+      "evidence_id": "000001",
+      "version": 1,
+      "chunk_index": 2,
+      "file_type": "docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": "제1장 총칙",
+      "text": "제2조 (적용범위) 이 규정은 모든 임직원에게 적용한다.",
+      "block_orders": [
+        4
+      ],
+      "source_file": "test1.docx"
+    }
+  ]
+}

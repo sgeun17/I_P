@@ -1,0 +1,111 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-24T14:33:59.474235+09:00",
+  "llm_called": false,
+  "scope": "실제 검색 출력과 판단팀 원본 모델·서비스 코드 연결. 응답은 고정 시험 자료이며 LLM 품질 평가 아님.",
+  "file_cases_converted": [
+    "CP949",
+    "CSV",
+    "DOCX",
+    "LONG",
+    "UNRELATED",
+    "UTF8"
+  ],
+  "search_errors_rejected": [
+    "CORRUPTED",
+    "EMPTY"
+  ],
+  "review_cases_converted": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "M01",
+    "M02",
+    "M03",
+    "U01",
+    "U02",
+    "U03",
+    "A01",
+    "A02"
+  ],
+  "judgment_files_unchanged": 44,
+  "scenarios": [
+    {
+      "scenario": "single",
+      "processing_status": "COMPLETED",
+      "match_status": "MATCHED",
+      "validation_passed": true,
+      "human_review": true,
+      "review_reasons": [
+        "R202"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "multiple",
+      "processing_status": "COMPLETED",
+      "match_status": "MATCHED",
+      "validation_passed": true,
+      "human_review": true,
+      "review_reasons": [
+        "R205"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "no_match",
+      "processing_status": "COMPLETED",
+      "match_status": "NO_MATCH",
+      "validation_passed": true,
+      "human_review": true,
+      "review_reasons": [
+        "R202",
+        "R204"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "invalid_quote",
+      "processing_status": "COMPLETED",
+      "match_status": "MATCHED",
+      "validation_passed": false,
+      "human_review": true,
+      "review_reasons": [
+        "R104",
+        "R202"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "invalid_json",
+      "processing_status": "FAILED",
+      "match_status": "NO_MATCH",
+      "validation_passed": false,
+      "human_review": true,
+      "review_reasons": [
+        "R108"
+      ],
+      "evidence_status": "FAILED"
+    },
+    {
+      "scenario": "call_failure",
+      "processing_status": "FAILED",
+      "match_status": "NO_MATCH",
+      "validation_passed": false,
+      "human_review": true,
+      "review_reasons": [
+        "R108"
+      ],
+      "evidence_status": "FAILED"
+    }
+  ]
+}

@@ -1,0 +1,430 @@
+{
+  "checked_at": "2026-09-23T21:26:39.379483+09:00",
+  "execution_status": "PASS",
+  "label_status": "검색 결과를 보기 전에 KB 요구사항을 바탕으로 작성한 합성 증적·정답 초안. 사람의 독립 검수 전이며 운영 정확도를 의미하지 않음.",
+  "dataset_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "schema_version": "retriever-0.2",
+  "metrics": {
+    "labeled_documents": 15,
+    "all_expected_in_top5": 15,
+    "macro_recall_at_5": 1.0,
+    "single_top1_hits": 11,
+    "single_documents": 12,
+    "unrelated_documents": 3,
+    "unrelated_returned_candidates": 3
+  },
+  "cases": [
+    {
+      "id": "S01",
+      "kind": "single",
+      "expected": [
+        "2.5.1"
+      ],
+      "top5": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6"
+      ],
+      "top1_score": 0.600898,
+      "matched_expected": [
+        "2.5.1"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S02",
+      "kind": "single",
+      "expected": [
+        "2.5.5"
+      ],
+      "top5": [
+        "2.5.5",
+        "2.5.2",
+        "2.5.1",
+        "2.9.4",
+        "2.5.6"
+      ],
+      "top1_score": 0.682263,
+      "matched_expected": [
+        "2.5.5"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S03",
+      "kind": "single",
+      "expected": [
+        "2.5.6"
+      ],
+      "top5": [
+        "2.5.6",
+        "2.6.3",
+        "2.2.2",
+        "2.5.1",
+        "2.9.5"
+      ],
+      "top1_score": 0.656926,
+      "matched_expected": [
+        "2.5.6"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S04",
+      "kind": "single",
+      "expected": [
+        "2.6.6"
+      ],
+      "top5": [
+        "2.6.6",
+        "2.5.3",
+        "2.10.6",
+        "2.6.7",
+        "2.6.1"
+      ],
+      "top1_score": 0.758995,
+      "matched_expected": [
+        "2.6.6"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S05",
+      "kind": "single",
+      "expected": [
+        "2.9.3"
+      ],
+      "top5": [
+        "2.9.3",
+        "1.3.3",
+        "1.4.2",
+        "3.2.1",
+        "2.9.4"
+      ],
+      "top1_score": 0.689362,
+      "matched_expected": [
+        "2.9.3"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S06",
+      "kind": "single",
+      "expected": [
+        "2.9.4"
+      ],
+      "top5": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "1.3.3"
+      ],
+      "top1_score": 0.786998,
+      "matched_expected": [
+        "2.9.4"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S07",
+      "kind": "single",
+      "expected": [
+        "2.9.5"
+      ],
+      "top5": [
+        "2.9.5",
+        "2.5.3",
+        "2.5.6",
+        "2.9.4",
+        "2.5.1"
+      ],
+      "top1_score": 0.737891,
+      "matched_expected": [
+        "2.9.5"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S08",
+      "kind": "single",
+      "expected": [
+        "2.2.4"
+      ],
+      "top5": [
+        "2.2.4",
+        "2.2.3",
+        "2.1.1",
+        "2.1.2",
+        "2.2.6"
+      ],
+      "top1_score": 0.719647,
+      "matched_expected": [
+        "2.2.4"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S09",
+      "kind": "single",
+      "expected": [
+        "2.11.2"
+      ],
+      "top5": [
+        "2.11.2",
+        "2.9.5",
+        "2.9.2",
+        "2.5.6",
+        "2.10.8"
+      ],
+      "top1_score": 0.769868,
+      "matched_expected": [
+        "2.11.2"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S10",
+      "kind": "single",
+      "expected": [
+        "2.12.2"
+      ],
+      "top5": [
+        "2.11.4",
+        "2.12.1",
+        "2.12.2",
+        "2.9.3",
+        "2.11.5"
+      ],
+      "top1_score": 0.630583,
+      "matched_expected": [
+        "2.12.2"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": false
+    },
+    {
+      "id": "S11",
+      "kind": "single",
+      "expected": [
+        "3.4.1"
+      ],
+      "top5": [
+        "3.4.1",
+        "3.4.2",
+        "2.3.4",
+        "2.9.7",
+        "3.2.1"
+      ],
+      "top1_score": 0.743348,
+      "matched_expected": [
+        "3.4.1"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "S12",
+      "kind": "single",
+      "expected": [
+        "2.10.2"
+      ],
+      "top5": [
+        "2.10.2",
+        "2.3.1",
+        "2.11.2",
+        "2.5.1",
+        "2.10.3"
+      ],
+      "top1_score": 0.736945,
+      "matched_expected": [
+        "2.10.2"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "M01",
+      "kind": "multiple",
+      "expected": [
+        "2.5.1",
+        "2.9.4"
+      ],
+      "top5": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5"
+      ],
+      "top1_score": 0.755082,
+      "matched_expected": [
+        "2.5.1",
+        "2.9.4"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "M02",
+      "kind": "multiple",
+      "expected": [
+        "2.9.3",
+        "2.12.2"
+      ],
+      "top5": [
+        "2.9.3",
+        "2.12.2",
+        "2.7.2",
+        "3.2.1",
+        "1.3.3"
+      ],
+      "top1_score": 0.700211,
+      "matched_expected": [
+        "2.12.2",
+        "2.9.3"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "M03",
+      "kind": "multiple",
+      "expected": [
+        "2.6.6",
+        "2.5.5"
+      ],
+      "top5": [
+        "2.6.6",
+        "2.5.5",
+        "2.6.7",
+        "2.10.6",
+        "2.5.3"
+      ],
+      "top1_score": 0.762374,
+      "matched_expected": [
+        "2.5.5",
+        "2.6.6"
+      ],
+      "missing_expected": [],
+      "recall_at_5": 1.0,
+      "top1_hit": true
+    },
+    {
+      "id": "U01",
+      "kind": "unrelated",
+      "expected": [],
+      "top5": [
+        "3.1.7",
+        "3.2.3",
+        "2.4.6",
+        "2.10.6",
+        "2.1.1"
+      ],
+      "top1_score": 0.377892,
+      "matched_expected": [],
+      "missing_expected": [],
+      "recall_at_5": null,
+      "top1_hit": null
+    },
+    {
+      "id": "U02",
+      "kind": "unrelated",
+      "expected": [],
+      "top5": [
+        "2.4.2",
+        "2.4.5",
+        "2.5.6",
+        "3.5.1",
+        "2.1.1"
+      ],
+      "top1_score": 0.354123,
+      "matched_expected": [],
+      "missing_expected": [],
+      "recall_at_5": null,
+      "top1_hit": null
+    },
+    {
+      "id": "U03",
+      "kind": "unrelated",
+      "expected": [],
+      "top5": [
+        "2.9.5",
+        "2.9.6",
+        "3.1.7",
+        "3.2.3",
+        "3.3.3"
+      ],
+      "top1_score": 0.336163,
+      "matched_expected": [],
+      "missing_expected": [],
+      "recall_at_5": null,
+      "top1_hit": null
+    },
+    {
+      "id": "A01",
+      "kind": "ambiguous",
+      "expected": [],
+      "top5": [
+        "2.9.5",
+        "1.4.2",
+        "2.11.2",
+        "2.5.6",
+        "2.3.3"
+      ],
+      "top1_score": 0.56207,
+      "matched_expected": [],
+      "missing_expected": [],
+      "recall_at_5": null,
+      "top1_hit": null
+    },
+    {
+      "id": "A02",
+      "kind": "ambiguous",
+      "expected": [],
+      "top5": [
+        "2.2.6",
+        "2.10.4",
+        "2.10.6",
+        "1.4.1",
+        "2.10.1"
+      ],
+      "top1_score": 0.529183,
+      "matched_expected": [],
+      "missing_expected": [],
+      "recall_at_5": null,
+      "top1_hit": null
+    }
+  ],
+  "limitations": [
+    "합성 문장 20건의 개발 점검. 독립 정답 검수·실제 운영 품질 평가 전.",
+    "무관·애매한 문서는 정답 재현율 계산에서 제외. 무관 문서도 K개를 반환하므로 판단팀에서 관련성을 판단해야 함.",
+    "이 점수 분포만으로 임계값을 결정하지 않음. 예상 정답 누락은 결과에 그대로 기록."
+  ]
+}

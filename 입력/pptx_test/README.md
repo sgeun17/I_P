@@ -141,3 +141,8 @@ else:
 
 청킹할 때는 **table 블록의 `text` 가 `""`** 라서, `table.rows` 를 글자로 바꿔야 검색에 걸려요.
 그리고 PPT 는 문단이 잘게 쪼개져 있으니, **같은 슬라이드(page)의 블록을 하나로 묶어서** 조각을 만드는 게 좋아요.
+
+## 저장소에 없는 파일
+
+테스트 파일(`test_*.py`), 샘플 폴더(`samples/`), `make_samples.py`, `requirements.txt` 는
+저장소에 올리지 않았어요 (각자 로컬에만 있음). 필요한 도구는 `database/requirements.txt` 에 모아 두었어요.

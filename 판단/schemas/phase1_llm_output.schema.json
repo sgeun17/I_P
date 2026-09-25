@@ -1,0 +1,177 @@
+{
+  "$defs": {
+    "CandidateDecision": {
+      "additionalProperties": false,
+      "description": "후보 하나에 대한 LLM의 판단. Top-K 후보 전부에 대해 하나씩 나온다.",
+      "properties": {
+        "control_id": {
+          "title": "Control Id",
+          "type": "string"
+        },
+        "decision": {
+          "$ref": "#/$defs/Decision"
+        },
+        "llm_confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Llm Confidence",
+          "type": "number"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "citations": {
+          "items": {
+            "$ref": "#/$defs/Citation"
+          },
+          "title": "Citations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "control_id",
+        "decision",
+        "llm_confidence",
+        "reason"
+      ],
+      "title": "CandidateDecision",
+      "type": "object"
+    },
+    "Citation": {
+      "additionalProperties": false,
+      "description": "판단 근거가 되는 원문 인용.",
+      "properties": {
+        "chunk_id": {
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "quote": {
+          "description": "청크 text 그대로. 요약·의역 금지",
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "quote"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "Decision": {
+      "description": "Top-K 후보 하나에 대한 LLM의 판단값.",
+      "enum": [
+        "RELATED",
+        "NOT_RELATED",
+        "UNCERTAIN"
+      ],
+      "title": "Decision",
+      "type": "string"
+    },
+    "LLMMappedControl": {
+      "additionalProperties": false,
+      "description": "LLM이 최종 매핑으로 고른 통제항목.",
+      "properties": {
+        "control_id": {
+          "title": "Control Id",
+          "type": "string"
+        },
+        "control_name": {
+          "title": "Control Name",
+          "type": "string"
+        },
+        "relation": {
+          "$ref": "#/$defs/Relation"
+        },
+        "llm_confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Llm Confidence",
+          "type": "number"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "citations": {
+          "items": {
+            "$ref": "#/$defs/Citation"
+          },
+          "title": "Citations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "control_id",
+        "control_name",
+        "relation",
+        "llm_confidence",
+        "reason"
+      ],
+      "title": "LLMMappedControl",
+      "type": "object"
+    },
+    "MatchStatus": {
+      "description": "증적 하나에 대한 최종 매핑 결과 상태.",
+      "enum": [
+        "MATCHED",
+        "NO_MATCH"
+      ],
+      "title": "MatchStatus",
+      "type": "string"
+    },
+    "Relation": {
+      "description": "매핑된 통제항목 하나가 증적과 맺는 관계.",
+      "enum": [
+        "PRIMARY",
+        "RELATED"
+      ],
+      "title": "Relation",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "LLM이 반환해야 하는 JSON 구조. 프롬프트에 이 형식을 그대로 명시한다.",
+  "properties": {
+    "match_status": {
+      "$ref": "#/$defs/MatchStatus"
+    },
+    "candidate_decisions": {
+      "items": {
+        "$ref": "#/$defs/CandidateDecision"
+      },
+      "title": "Candidate Decisions",
+      "type": "array"
+    },
+    "mapped_controls": {
+      "items": {
+        "$ref": "#/$defs/LLMMappedControl"
+      },
+      "title": "Mapped Controls",
+      "type": "array"
+    }
+  },
+  "required": [
+    "match_status",
+    "candidate_decisions"
+  ],
+  "title": "LLMMappingOutput",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

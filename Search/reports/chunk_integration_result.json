@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-23T21:24:01.024398+09:00",
+  "checks": [
+    "정식 입력/출력 JSON Schema 검사",
+    "실제 DOCX에서 나온 3개 청크의 본문·ID 보존",
+    "문서 전체 Top-5 중복 제거·순위·최대 유사도 집계",
+    "명령행 호환 모드와 Python 정식 입력 검색 결과 일치",
+    "후보 중복 제거 및 원본 KB 요구사항 연결",
+    "기본 모드에서 잘못된 입력 거부",
+    "다른 작업 폴더에서 호출해도 호출자 폴더 유지"
+  ],
+  "compatibility_warnings": 9,
+  "chunk_count": 3,
+  "candidate_controls_count": 5,
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "scope": "현재 입력팀 DOCX 샘플의 파싱/청킹 반환값을 사용한 검색 모듈 연결 검증. 업로드 서버 연결 및 정답률 평가는 아님."
+}

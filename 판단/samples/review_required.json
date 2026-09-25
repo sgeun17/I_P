@@ -1,0 +1,76 @@
+{
+  "evidence_id": "E0004",
+  "version": 1,
+  "processing_status": "COMPLETED",
+  "match_status": "MATCHED",
+  "mapped_controls": [
+    {
+      "control_id": "2.6.1",
+      "control_name": "네트워크 접근",
+      "relation": "PRIMARY",
+      "llm_confidence": 0.58,
+      "reason": "망 분리 관련 서술로 보이나 근거 문장이 불완전하다.",
+      "citations": [
+        {
+          "chunk_id": "E0004_v1_c0007",
+          "page": 3,
+          "quote": "업무망과 인터넷망은 물리적으로 분리하여 운영"
+        }
+      ],
+      "similarity_score": 0.703
+    }
+  ],
+  "candidate_decisions": [
+    {
+      "control_id": "2.6.1",
+      "decision": "RELATED",
+      "llm_confidence": 0.58,
+      "reason": "망 분리 서술이 있으나 OCR 품질이 낮아 확신이 어렵다.",
+      "citations": [
+        {
+          "chunk_id": "E0004_v1_c0007",
+          "page": 3,
+          "quote": "업무망과 인터넷망은 물리적으로 분리하여 운영"
+        }
+      ]
+    },
+    {
+      "control_id": "2.6.2",
+      "decision": "UNCERTAIN",
+      "llm_confidence": 0.44,
+      "reason": "정보시스템 접근 통제 여부를 판단할 근거가 부족하다.",
+      "citations": []
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "schema_valid": true,
+    "control_ids_valid": true,
+    "citations_valid": true,
+    "rules_valid": true,
+    "issues": [],
+    "warnings": []
+  },
+  "human_review": {
+    "required": true,
+    "status": "PENDING",
+    "reasons": [
+      "R107",
+      "R201",
+      "R207"
+    ],
+    "threshold_profile": "thresholds_v0.4"
+  },
+  "versions": {
+    "schema_version": "0.3.0",
+    "prompt_version": "phase1_mapping_v0.1",
+    "model_name": "qwen2.5-14b-instruct",
+    "ruleset_version": "mapping_rules_v0.7",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_model_revision": "5617a9f61b028005a4858fdac845db406aefb181"
+  },
+  "llm_raw_response_ref": "logs/llm/2026-09-21/EVID-2026-000004-g7h8.json",
+  "trace_id": "5f2c9a1e-0000-4000-8000-000000000004",
+  "created_at": "2026-09-21T14:15:02+09:00",
+  "processing_time_ms": 6120
+}

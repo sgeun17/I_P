@@ -1,0 +1,52 @@
+{
+  "evidence_id": "E0003",
+  "version": 1,
+  "processing_status": "COMPLETED",
+  "match_status": "NO_MATCH",
+  "mapped_controls": [],
+  "candidate_decisions": [
+    {
+      "control_id": "2.5.1",
+      "decision": "NOT_RELATED",
+      "llm_confidence": 0.84,
+      "reason": "계정 관리와 무관한 회식비 정산 내역이다.",
+      "citations": []
+    },
+    {
+      "control_id": "2.4.6",
+      "decision": "NOT_RELATED",
+      "llm_confidence": 0.81,
+      "reason": "반입·반출 통제와 관련된 내용이 없다.",
+      "citations": []
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "schema_valid": true,
+    "control_ids_valid": true,
+    "citations_valid": true,
+    "rules_valid": true,
+    "issues": [],
+    "warnings": []
+  },
+  "human_review": {
+    "required": true,
+    "status": "PENDING",
+    "reasons": [
+      "R204"
+    ],
+    "threshold_profile": "thresholds_v0.4"
+  },
+  "versions": {
+    "schema_version": "0.3.0",
+    "prompt_version": "phase1_mapping_v0.1",
+    "model_name": "qwen2.5-14b-instruct",
+    "ruleset_version": "mapping_rules_v0.7",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_model_revision": "5617a9f61b028005a4858fdac845db406aefb181"
+  },
+  "llm_raw_response_ref": "logs/llm/2026-09-21/EVID-2026-000003-e5f6.json",
+  "trace_id": "5f2c9a1e-0000-4000-8000-000000000003",
+  "created_at": "2026-09-21T14:11:20+09:00",
+  "processing_time_ms": 3980
+}

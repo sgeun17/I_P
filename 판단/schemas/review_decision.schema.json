@@ -1,0 +1,188 @@
+{
+  "$defs": {
+    "Citation": {
+      "additionalProperties": false,
+      "description": "판단 근거가 되는 원문 인용.",
+      "properties": {
+        "chunk_id": {
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "quote": {
+          "description": "청크 text 그대로. 요약·의역 금지",
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "quote"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "MappedControl": {
+      "additionalProperties": false,
+      "description": "검증을 통과한 최종 매핑. 검색 점수가 함께 붙는다.\n\n점수는 네 가지를 절대 섞지 않는다.\n  similarity_score       검색팀의 코사인 유사도\n  llm_confidence         LLM이 스스로 매긴 신뢰도. 정확도가 아니다\n  validation.passed      기계적 검증 통과 여부\n  human_review.required  사람이 봐야 하는가",
+      "properties": {
+        "control_id": {
+          "title": "Control Id",
+          "type": "string"
+        },
+        "control_name": {
+          "title": "Control Name",
+          "type": "string"
+        },
+        "relation": {
+          "$ref": "#/$defs/Relation"
+        },
+        "llm_confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Llm Confidence",
+          "type": "number"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "citations": {
+          "items": {
+            "$ref": "#/$defs/Citation"
+          },
+          "title": "Citations",
+          "type": "array"
+        },
+        "similarity_score": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": -1.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Similarity Score"
+        }
+      },
+      "required": [
+        "control_id",
+        "control_name",
+        "relation",
+        "llm_confidence",
+        "reason"
+      ],
+      "title": "MappedControl",
+      "type": "object"
+    },
+    "MatchStatus": {
+      "description": "증적 하나에 대한 최종 매핑 결과 상태.",
+      "enum": [
+        "MATCHED",
+        "NO_MATCH"
+      ],
+      "title": "MatchStatus",
+      "type": "string"
+    },
+    "Relation": {
+      "description": "매핑된 통제항목 하나가 증적과 맺는 관계.",
+      "enum": [
+        "PRIMARY",
+        "RELATED"
+      ],
+      "title": "Relation",
+      "type": "string"
+    },
+    "ReviewStatus": {
+      "description": "사람의 검토 상태.",
+      "enum": [
+        "NOT_REQUIRED",
+        "PENDING",
+        "APPROVED",
+        "MODIFIED",
+        "REJECTED"
+      ],
+      "title": "ReviewStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "검토자가 내린 결정 하나.",
+  "properties": {
+    "status": {
+      "$ref": "#/$defs/ReviewStatus"
+    },
+    "reviewer_id": {
+      "minLength": 1,
+      "title": "Reviewer Id",
+      "type": "string"
+    },
+    "note": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Note"
+    },
+    "decided_at": {
+      "format": "date-time",
+      "title": "Decided At",
+      "type": "string"
+    },
+    "modified_match_status": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MatchStatus"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "modified_controls": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/MappedControl"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Modified Controls"
+    }
+  },
+  "required": [
+    "status",
+    "reviewer_id"
+  ],
+  "title": "ReviewDecision",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

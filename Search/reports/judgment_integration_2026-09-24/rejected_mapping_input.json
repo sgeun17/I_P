@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "error": {
+    "code": "MAPPING_INPUT_REJECTED",
+    "message": "검색 실패 결과는 판단 입력으로 보낼 수 없습니다."
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "retriever-0.2",
+  "success": false,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "evidence_id: 공백 없는 증적 ID 문자열이 필요합니다."
+  }
+}

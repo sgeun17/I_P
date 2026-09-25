@@ -1,0 +1,55 @@
+{
+  "source_file": "C:\\Users\\USER\\Desktop\\ISMS-P 인증 증적 사전점검 도구 개발\\개발\\I_P\\입력\\docx-test\\test1.docx",
+  "file_type": "docx",
+  "page_count": null,
+  "blocks": [
+    {
+      "order": 1,
+      "block_type": "heading",
+      "level": 1,
+      "page": null,
+      "text": "제1장 총칙",
+      "table": null
+    },
+    {
+      "order": 2,
+      "block_type": "paragraph",
+      "level": null,
+      "page": null,
+      "text": "제1조 (목적) 이 규정은 회사의 정보보호 관리체계 운영에 필요한 사항을 정함을 목적으로 한다.",
+      "table": null
+    },
+    {
+      "order": 3,
+      "block_type": "table",
+      "level": null,
+      "page": null,
+      "text": "",
+      "table": {
+        "rows": [
+          [
+            "구분",
+            "내용"
+          ],
+          [
+            "접근통제",
+            "사용자 계정은 승인 후 발급한다"
+          ],
+          [
+            "로그관리",
+            "접속기록은 1년간 보관한다"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 4,
+      "block_type": "paragraph",
+      "level": null,
+      "page": null,
+      "text": "제2조 (적용범위) 이 규정은 모든 임직원에게 적용한다.",
+      "table": null
+    }
+  ],
+  "errors": []
+}

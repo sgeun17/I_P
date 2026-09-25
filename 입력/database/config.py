@@ -23,7 +23,7 @@ DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = int(os.getenv("DB_PORT", "3306"))
 DB_USER = os.getenv("DB_USER", "root")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "")
-DB_NAME = os.getenv("DB_NAME", "isms")
+DB_NAME = os.getenv("DB_NAME", "evidence_db")   # schema.sql 과 같은 이름
 
 # ── 파일 저장 폴더 ───────────────────────────
 # 상대경로로 적어도 항상 "프로젝트 폴더 기준"이 되도록 BASE_DIR에 붙입니다.
@@ -33,16 +33,11 @@ TEMP_DIR = BASE_DIR / os.getenv("TEMP_DIR", "data/tmp")
 
 # ── 규칙들 ──────────────────────────────────
 # 증적 번호 모양 = ID_PREFIX + 숫자(ID_DIGITS 자리)
-#   ID_PREFIX = "",          ID_DIGITS = 6  →  000001
-#   ID_PREFIX = "",          ID_DIGITS = 5  →  00001
 #   ID_PREFIX = "E",         ID_DIGITS = 4  →  E0001        (A 파트 원래 모양)
-#   ID_PREFIX = "EVID-2026-", ID_DIGITS = 6 →  EVID-2026-000001 (팀 JSON 규격 예시 모양)
-# ※ 데이터가 쌓이기 전에 팀이 정해서 바꾸세요. 중간에 바꾸면 번호가 꼬입니다.
-ID_PREFIX = ""
-ID_DIGITS = 6
+ID_PREFIX = "E"
+ID_DIGITS = 4
 
 # 받을 수 있는 파일 형식 (소문자, 점 없이)
-# A파트(업로드 검사) 기준 목록. A파트와 연결하면 A파트도 이 목록을 같이 쓰게 하면 됩니다.
 ALLOWED_FILE_TYPES = {"pdf", "docx", "xlsx", "pptx", "png", "jpg", "txt", "csv"}
 
 # 팀이 확정한 상태값 8개. 이 목록에 없는 값은 DB에 들어가지 못하게 막습니다.

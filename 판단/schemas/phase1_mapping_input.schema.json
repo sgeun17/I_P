@@ -1,0 +1,283 @@
+{
+  "$defs": {
+    "CandidateControl": {
+      "additionalProperties": false,
+      "description": "검색팀이 넘겨주는 Top-K 후보.\n\nsimilarity_score = 1 - cosine_distance. 즉 코사인 유사도 그 자체다.\nBGE-M3 한국어 문장에서는 관련 있어도 0.5~0.6 부근에 몰린다.\n**점수의 절대값으로 관련성을 판단하지 않는다.**",
+      "properties": {
+        "rank": {
+          "minimum": 1,
+          "title": "Rank",
+          "type": "integer"
+        },
+        "control_id": {
+          "pattern": "^[123]\\.\\d+\\.\\d+$",
+          "title": "Control Id",
+          "type": "string"
+        },
+        "control_name": {
+          "minLength": 1,
+          "title": "Control Name",
+          "type": "string"
+        },
+        "similarity_score": {
+          "maximum": 1.0,
+          "minimum": -1.0,
+          "title": "Similarity Score",
+          "type": "number"
+        },
+        "distance": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "ChromaDB 코사인 거리 = 1 - score",
+          "title": "Distance"
+        },
+        "requirement": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "통제항목 요구사항 본문. KB에 있으나 현재 검색 결과에는 실리지 않는다",
+          "title": "Requirement"
+        },
+        "source_chunk_ids": {
+          "description": "이 후보가 어느 청크 검색에서 나왔는지. 청크별 결과를 합칠 때 채운다",
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Chunk Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "rank",
+        "control_id",
+        "control_name",
+        "similarity_score"
+      ],
+      "title": "CandidateControl",
+      "type": "object"
+    },
+    "Chunk": {
+      "additionalProperties": false,
+      "description": "전처리팀이 넘겨주는 증적 청크. 필드 이름과 순서는 그쪽 규격을 따른다.",
+      "properties": {
+        "chunk_id": {
+          "minLength": 1,
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "evidence_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        },
+        "chunk_index": {
+          "minimum": 0,
+          "title": "Chunk Index",
+          "type": "integer"
+        },
+        "file_type": {
+          "$ref": "#/$defs/FileType"
+        },
+        "source_file": {
+          "minLength": 1,
+          "title": "Source File",
+          "type": "string"
+        },
+        "chunk_type": {
+          "$ref": "#/$defs/ChunkType"
+        },
+        "page_start": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Start"
+        },
+        "page_end": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page End"
+        },
+        "heading": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Heading"
+        },
+        "text": {
+          "maxLength": 800,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "block_orders": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Block Orders",
+          "type": "array"
+        },
+        "source": {
+          "$ref": "#/$defs/ChunkSource",
+          "default": "parser"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "evidence_id",
+        "version",
+        "chunk_index",
+        "file_type",
+        "source_file",
+        "chunk_type",
+        "text",
+        "block_orders"
+      ],
+      "title": "Chunk",
+      "type": "object"
+    },
+    "ChunkSource": {
+      "enum": [
+        "parser",
+        "ocr"
+      ],
+      "title": "ChunkSource",
+      "type": "string"
+    },
+    "ChunkType": {
+      "enum": [
+        "text",
+        "table"
+      ],
+      "title": "ChunkType",
+      "type": "string"
+    },
+    "FileType": {
+      "enum": [
+        "pdf",
+        "docx",
+        "xlsx",
+        "pptx",
+        "txt",
+        "csv"
+      ],
+      "title": "FileType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "판단 파트가 받는 입력 전체.",
+  "properties": {
+    "evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "version": {
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "chunks": {
+      "items": {
+        "$ref": "#/$defs/Chunk"
+      },
+      "minItems": 1,
+      "title": "Chunks",
+      "type": "array"
+    },
+    "candidate_controls": {
+      "items": {
+        "$ref": "#/$defs/CandidateControl"
+      },
+      "title": "Candidate Controls",
+      "type": "array"
+    },
+    "top_k": {
+      "anyOf": [
+        {
+          "maximum": 101,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Top K"
+    },
+    "kb_sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Kb Sha256"
+    },
+    "model_revision": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Revision"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "version",
+    "chunks",
+    "candidate_controls"
+  ],
+  "title": "MappingInput",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

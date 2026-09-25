@@ -1,0 +1,169 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-24T14:20:25.622928+09:00",
+  "scope": "로컬 파일→입력팀 실제 파서·청커→검색→JSON 소비 참조 검사. 업로드 서버·LLM 판단 실행은 포함하지 않음.",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "manifest_sha256": "7a04e4c9c6ca381426c584497ec2d174d033212547944086f1db67b76cc1783f",
+  "input_files_unchanged": 26,
+  "utf8_cp949_same_result": true,
+  "rows": [
+    {
+      "id": "DOCX",
+      "origin": "입력팀 제공 샘플",
+      "file": "../입력/docx-test/test1.docx",
+      "parser_errors": [],
+      "chunks": 3,
+      "success": true,
+      "expected_ids_draft": [
+        "2.5.1",
+        "2.9.4"
+      ],
+      "check": "PASS",
+      "top5": [
+        "2.9.4",
+        "2.5.1",
+        "2.5.6",
+        "3.4.2",
+        "2.9.5"
+      ],
+      "missing_expected": [],
+      "warnings": 9,
+      "top1_score": 0.745946
+    },
+    {
+      "id": "UTF8",
+      "origin": "검색팀 합성 시험 파일",
+      "file": "tests/fixtures/file_pipeline/계정_UTF8.txt",
+      "parser_errors": [],
+      "chunks": 1,
+      "success": true,
+      "expected_ids_draft": [
+        "2.5.1"
+      ],
+      "check": "PASS",
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.6",
+        "2.3.4",
+        "2.5.5"
+      ],
+      "missing_expected": [],
+      "warnings": 4,
+      "top1_score": 0.635433
+    },
+    {
+      "id": "CP949",
+      "origin": "검색팀 합성 시험 파일",
+      "file": "tests/fixtures/file_pipeline/계정_CP949.txt",
+      "parser_errors": [],
+      "chunks": 1,
+      "success": true,
+      "expected_ids_draft": [
+        "2.5.1"
+      ],
+      "check": "PASS",
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.6",
+        "2.3.4",
+        "2.5.5"
+      ],
+      "missing_expected": [],
+      "warnings": 4,
+      "top1_score": 0.635433
+    },
+    {
+      "id": "LONG",
+      "origin": "검색팀 합성 시험 파일",
+      "file": "tests/fixtures/file_pipeline/계정_긴문단.txt",
+      "parser_errors": [],
+      "chunks": 2,
+      "success": true,
+      "expected_ids_draft": [
+        "2.5.1"
+      ],
+      "check": "PASS",
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.6",
+        "2.3.4",
+        "2.2.1"
+      ],
+      "missing_expected": [],
+      "warnings": 7,
+      "top1_score": 0.636079
+    },
+    {
+      "id": "CSV",
+      "origin": "검색팀 합성 시험 파일",
+      "file": "tests/fixtures/file_pipeline/계정과로그.csv",
+      "parser_errors": [],
+      "chunks": 1,
+      "success": true,
+      "expected_ids_draft": [
+        "2.5.1",
+        "2.9.4"
+      ],
+      "check": "PASS",
+      "top5": [
+        "2.9.4",
+        "2.5.1",
+        "2.2.5",
+        "1.3.3",
+        "2.9.5"
+      ],
+      "missing_expected": [],
+      "warnings": 3,
+      "top1_score": 0.733609
+    },
+    {
+      "id": "UNRELATED",
+      "origin": "검색팀 합성 시험 파일",
+      "file": "tests/fixtures/file_pipeline/무관_식단.txt",
+      "parser_errors": [],
+      "chunks": 1,
+      "success": true,
+      "expected_ids_draft": [],
+      "check": "PASS",
+      "top5": [
+        "3.1.7",
+        "2.9.3",
+        "2.9.5",
+        "3.2.3",
+        "3.5.3"
+      ],
+      "missing_expected": [],
+      "warnings": 4,
+      "top1_score": 0.350005
+    },
+    {
+      "id": "EMPTY",
+      "origin": "검색팀 합성 시험 파일",
+      "file": "tests/fixtures/file_pipeline/빈파일.txt",
+      "parser_errors": [
+        "empty_document"
+      ],
+      "chunks": 0,
+      "success": false,
+      "expected_ids_draft": [],
+      "check": "PASS",
+      "search_error": "PREPROCESSING_FAILED"
+    },
+    {
+      "id": "CORRUPTED",
+      "origin": "검색팀 합성 시험 파일",
+      "file": "tests/fixtures/file_pipeline/손상입력.txt",
+      "parser_errors": [
+        "corrupted_file"
+      ],
+      "chunks": 0,
+      "success": false,
+      "expected_ids_draft": [],
+      "check": "PASS",
+      "search_error": "PREPROCESSING_FAILED"
+    }
+  ]
+}

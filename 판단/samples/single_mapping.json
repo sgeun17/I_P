@@ -1,0 +1,72 @@
+{
+  "evidence_id": "E0001",
+  "version": 1,
+  "processing_status": "COMPLETED",
+  "match_status": "MATCHED",
+  "mapped_controls": [
+    {
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "relation": "PRIMARY",
+      "llm_confidence": 0.91,
+      "reason": "계정 생성 시 관리자 승인 절차가 문서에 명시되어 있다.",
+      "citations": [
+        {
+          "chunk_id": "E0001_v1_c0001",
+          "page": 1,
+          "quote": "사용자 계정은 관리자 승인 후 생성한다."
+        }
+      ],
+      "similarity_score": 0.892
+    }
+  ],
+  "candidate_decisions": [
+    {
+      "control_id": "2.5.1",
+      "decision": "RELATED",
+      "llm_confidence": 0.91,
+      "reason": "계정 생성 승인 절차가 직접 언급된다.",
+      "citations": [
+        {
+          "chunk_id": "E0001_v1_c0001",
+          "page": 1,
+          "quote": "사용자 계정은 관리자 승인 후 생성한다."
+        }
+      ]
+    },
+    {
+      "control_id": "2.5.3",
+      "decision": "NOT_RELATED",
+      "llm_confidence": 0.88,
+      "reason": "인증 수단에 관한 내용은 나타나지 않는다.",
+      "citations": []
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "schema_valid": true,
+    "control_ids_valid": true,
+    "citations_valid": true,
+    "rules_valid": true,
+    "issues": [],
+    "warnings": []
+  },
+  "human_review": {
+    "required": false,
+    "status": "NOT_REQUIRED",
+    "reasons": [],
+    "threshold_profile": "thresholds_v0.4"
+  },
+  "versions": {
+    "schema_version": "0.3.0",
+    "prompt_version": "phase1_mapping_v0.1",
+    "model_name": "qwen2.5-14b-instruct",
+    "ruleset_version": "mapping_rules_v0.7",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_model_revision": "5617a9f61b028005a4858fdac845db406aefb181"
+  },
+  "llm_raw_response_ref": "logs/llm/2026-09-21/EVID-2026-000001-a1b2.json",
+  "trace_id": "5f2c9a1e-0000-4000-8000-000000000001",
+  "created_at": "2026-09-21T14:03:11+09:00",
+  "processing_time_ms": 4210
+}

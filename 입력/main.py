@@ -85,6 +85,34 @@ def all_evidence():
         page += 1
 
 
+def looks_like_text(head: bytes) -> bool:
+    """
+    txt·csv 가 진짜 글자 파일인지 확인합니다. (전처리 text_parser.py 와 같은 기준)
+      ① NUL 이 있으면 글자 파일이 아님 (그림·압축·실행 파일)
+      ② BOM 이 있으면 글자 파일
+      ③ UTF-8 또는 CP949 로 읽히고, 보이지 않는 제어문자가 거의 없어야 함
+    """
+    if b"\x00" in head:
+        return False
+    if head.startswith((b"\xef\xbb\xbf", b"\xff\xfe", b"\xfe\xff")):
+        return True
+    for encoding in ("utf-8", "cp949"):
+        data = head
+        try:
+            text = data.decode(encoding)
+        except UnicodeDecodeError as e:
+            if e.start < len(data) - 4:      # 파일 끝(8KB 경계)에서 잘린 게 아니면 이 인코딩은 아님
+                continue
+            text = data[: e.start].decode(encoding, "ignore")
+        except LookupError:
+            continue
+        if not text:
+            continue
+        control = sum(1 for ch in text if ord(ch) < 32 and ch not in "\t\n\r")
+        return control <= len(text) * 0.01     # 제어문자가 1% 이하면 글자 파일로 봄
+    return False
+
+
 async def process_file(file: UploadFile) -> dict:
     name = file.filename
 
@@ -104,9 +132,14 @@ async def process_file(file: UploadFile) -> dict:
         return fail("EMPTY_FILE", "빈 파일입니다.")
 
     # 3. 실제 파일 종류 검사 (매직 넘버)
-    kind = filetype.guess(head)
-    if kind is None or kind.extension != ext:
-        return fail("CONTENT_MISMATCH", "파일 내용이 확장자와 일치하지 않습니다.")
+    #    txt·csv 는 매직 넘버가 없어서 filetype 이 판별하지 못함(None) → "글자로 읽히는지"로 확인
+    if ext in ("txt", "csv"):
+        if not looks_like_text(head):
+            return fail("CONTENT_MISMATCH", "파일 내용이 확장자와 일치하지 않습니다.")
+    else:
+        kind = filetype.guess(head)
+        if kind is None or kind.extension != ext:
+            return fail("CONTENT_MISMATCH", "파일 내용이 확장자와 일치하지 않습니다.")
 
     # 4. 크기 검사 + 임시 저장
     tmp_path = TMP_DIR / f"{uuid.uuid4().hex}.{ext}"
@@ -265,7 +298,7 @@ th{color:#6b7280;font-weight:600}
 </style></head>
 <body><div class="wrap">
 <h1>증적 파일 업로드</h1>
-<div class="sub">PDF, DOCX, XLSX, PPTX, PNG, JPG / 파일당 20MB / 한 번에 1000개까지 / 같은 파일명은 새 버전으로 저장됩니다</div>
+<div class="sub">PDF, DOCX, XLSX, PPTX, TXT, CSV, PNG, JPG / 파일당 20MB / 한 번에 1000개까지 / 같은 파일명은 새 버전으로 저장됩니다</div>
 
 <div class="card">
   <h2>1. 파일 업로드</h2>

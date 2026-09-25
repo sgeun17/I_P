@@ -1,0 +1,323 @@
+{
+  "schema_version": "retriever-0.2",
+  "success": true,
+  "evidence_id": "000001",
+  "version": 1,
+  "source_file": "test1.docx",
+  "file_type": "docx",
+  "evidence_chunks": [
+    {
+      "chunk_id": "000001_v1_c0000",
+      "evidence_id": "000001",
+      "version": 1,
+      "chunk_index": 0,
+      "file_type": "docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": "제1장 총칙",
+      "text": "제1장 총칙\n제1조 (목적) 이 규정은 회사의 정보보호 관리체계 운영에 필요한 사항을 정함을 목적으로 한다.",
+      "block_orders": [
+        1,
+        2
+      ],
+      "source_file": "test1.docx"
+    },
+    {
+      "chunk_id": "000001_v1_c0001",
+      "evidence_id": "000001",
+      "version": 1,
+      "chunk_index": 1,
+      "file_type": "docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "제1장 총칙",
+      "text": "구분: 내용\n접근통제: 사용자 계정은 승인 후 발급한다\n로그관리: 접속기록은 1년간 보관한다",
+      "block_orders": [
+        3
+      ],
+      "source_file": "test1.docx"
+    },
+    {
+      "chunk_id": "000001_v1_c0002",
+      "evidence_id": "000001",
+      "version": 1,
+      "chunk_index": 2,
+      "file_type": "docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": "제1장 총칙",
+      "text": "제2조 (적용범위) 이 규정은 모든 임직원에게 적용한다.",
+      "block_orders": [
+        4
+      ],
+      "source_file": "test1.docx"
+    }
+  ],
+  "retrieval": {
+    "unit": "document",
+    "top_k": 5,
+    "score_type": "cosine_similarity",
+    "aggregation": "max_chunk_similarity",
+    "query_text_field": "text",
+    "candidates": [
+      {
+        "rank": 1,
+        "control_id": "2.9.4",
+        "control_name": "로그 및 접속기록 관리",
+        "similarity_score": 0.745946,
+        "best_chunk_id": "000001_v1_c0001",
+        "matched_chunk_ids": [
+          "000001_v1_c0001"
+        ]
+      },
+      {
+        "rank": 2,
+        "control_id": "2.5.1",
+        "control_name": "사용자 계정 관리",
+        "similarity_score": 0.709177,
+        "best_chunk_id": "000001_v1_c0001",
+        "matched_chunk_ids": [
+          "000001_v1_c0001"
+        ]
+      },
+      {
+        "rank": 3,
+        "control_id": "2.5.6",
+        "control_name": "접근권한 검토",
+        "similarity_score": 0.682196,
+        "best_chunk_id": "000001_v1_c0001",
+        "matched_chunk_ids": [
+          "000001_v1_c0001"
+        ]
+      },
+      {
+        "rank": 4,
+        "control_id": "3.4.2",
+        "control_name": "처리목적 달성 후 보유 시 조치",
+        "similarity_score": 0.668554,
+        "best_chunk_id": "000001_v1_c0001",
+        "matched_chunk_ids": [
+          "000001_v1_c0001"
+        ]
+      },
+      {
+        "rank": 5,
+        "control_id": "2.9.5",
+        "control_name": "로그 및 접속기록 점검",
+        "similarity_score": 0.659416,
+        "best_chunk_id": "000001_v1_c0001",
+        "matched_chunk_ids": [
+          "000001_v1_c0001"
+        ]
+      }
+    ],
+    "chunk_results": [
+      {
+        "chunk_id": "000001_v1_c0000",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.644727
+          },
+          {
+            "rank": 2,
+            "control_id": "1.1.4",
+            "control_name": "범위 설정",
+            "similarity_score": 0.642272
+          },
+          {
+            "rank": 3,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.641338
+          },
+          {
+            "rank": 4,
+            "control_id": "1.1.3",
+            "control_name": "조직 구성",
+            "similarity_score": 0.632944
+          },
+          {
+            "rank": 5,
+            "control_id": "2.10.1",
+            "control_name": "보안시스템 운영",
+            "similarity_score": 0.631209
+          }
+        ]
+      },
+      {
+        "chunk_id": "000001_v1_c0001",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.4",
+            "control_name": "로그 및 접속기록 관리",
+            "similarity_score": 0.745946
+          },
+          {
+            "rank": 2,
+            "control_id": "2.5.1",
+            "control_name": "사용자 계정 관리",
+            "similarity_score": 0.709177
+          },
+          {
+            "rank": 3,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.682196
+          },
+          {
+            "rank": 4,
+            "control_id": "3.4.2",
+            "control_name": "처리목적 달성 후 보유 시 조치",
+            "similarity_score": 0.668554
+          },
+          {
+            "rank": 5,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.659416
+          }
+        ]
+      },
+      {
+        "chunk_id": "000001_v1_c0002",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.2.1",
+            "control_name": "주요 직무자 지정 및 관리",
+            "similarity_score": 0.468479
+          },
+          {
+            "rank": 2,
+            "control_id": "2.2.3",
+            "control_name": "보안 서약",
+            "similarity_score": 0.462967
+          },
+          {
+            "rank": 3,
+            "control_id": "2.2.6",
+            "control_name": "보안 위반 시 조치",
+            "similarity_score": 0.455346
+          },
+          {
+            "rank": 4,
+            "control_id": "2.3.1",
+            "control_name": "외부자 현황 관리",
+            "similarity_score": 0.447212
+          },
+          {
+            "rank": 5,
+            "control_id": "2.10.6",
+            "control_name": "업무용 단말기기 보안",
+            "similarity_score": 0.441675
+          }
+        ]
+      }
+    ]
+  },
+  "candidate_controls": [
+    {
+      "control_id": "2.9.4",
+      "control_name": "로그 및 접속기록 관리",
+      "requirement": "서버, 응용프로그램, 보안시스템, 네트워크시스템 등 정보시스템에 대한 사용자 접속기록, 시스템로그, 권한부여 내역 등의 로그유형, 보존기간, 보존방법 등을 정하고 위·변조, 도난, 분실되지 않도록 안전하게 보존·관리하여야 한다.",
+      "matched_chunk_ids": [
+        "000001_v1_c0001"
+      ]
+    },
+    {
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+      "matched_chunk_ids": [
+        "000001_v1_c0001"
+      ]
+    },
+    {
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토",
+      "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+      "matched_chunk_ids": [
+        "000001_v1_c0001"
+      ]
+    },
+    {
+      "control_id": "3.4.2",
+      "control_name": "처리목적 달성 후 보유 시 조치",
+      "requirement": "개인정보의 보유기간 경과 또는 처리목적 달성 후에도 관련 법령 등에 따라 파기하지 않고 보존하는 경우에는 해당 목적에 필요한 최소한의 항목으로 제한하고 다른 개인정보와 분리하여 저장·관리하여야 한다.",
+      "matched_chunk_ids": [
+        "000001_v1_c0001"
+      ]
+    },
+    {
+      "control_id": "2.9.5",
+      "control_name": "로그 및 접속기록 점검",
+      "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+      "matched_chunk_ids": [
+        "000001_v1_c0001"
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "EVIDENCE_ID_CONVERTED",
+      "field": "evidence_id",
+      "message": "입력팀 정수 ID를 저장 모듈의 6자리 문자열로 변환했습니다."
+    },
+    {
+      "code": "EVIDENCE_ID_CONVERTED",
+      "field": "chunks[0].evidence_id",
+      "message": "입력팀 정수 ID를 저장 모듈의 6자리 문자열로 변환했습니다."
+    },
+    {
+      "code": "SOURCE_FILE_FROM_DOCUMENT",
+      "field": "chunks[0]",
+      "message": "누락된 파일명을 명시된 문서 정보에서 보충했습니다."
+    },
+    {
+      "code": "LEGACY_SOURCE_CONVERTED",
+      "field": "chunks[0]",
+      "message": "기존 source의 파일 경로를 parser로 변환했습니다. 입력팀 수정 전 호환 처리입니다."
+    },
+    {
+      "code": "EVIDENCE_ID_CONVERTED",
+      "field": "chunks[1].evidence_id",
+      "message": "입력팀 정수 ID를 저장 모듈의 6자리 문자열로 변환했습니다."
+    },
+    {
+      "code": "SOURCE_FILE_FROM_DOCUMENT",
+      "field": "chunks[1]",
+      "message": "누락된 파일명을 명시된 문서 정보에서 보충했습니다."
+    },
+    {
+      "code": "EVIDENCE_ID_CONVERTED",
+      "field": "chunks[2].evidence_id",
+      "message": "입력팀 정수 ID를 저장 모듈의 6자리 문자열로 변환했습니다."
+    },
+    {
+      "code": "SOURCE_FILE_FROM_DOCUMENT",
+      "field": "chunks[2]",
+      "message": "누락된 파일명을 명시된 문서 정보에서 보충했습니다."
+    },
+    {
+      "code": "LEGACY_SOURCE_CONVERTED",
+      "field": "chunks[2]",
+      "message": "기존 source의 파일 경로를 parser로 변환했습니다. 입력팀 수정 전 호환 처리입니다."
+    }
+  ],
+  "index": {
+    "collection": "isms_p_controls",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+  },
+  "generated_at": "2026-09-23T21:22:06.453771+09:00"
+}

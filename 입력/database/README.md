@@ -43,7 +43,7 @@ database/
 | 항목 | 정한 내용 |
 |---|---|
 | JSON 칸 이름 | 팀 규격: `evidence_id, version, file_name, file_type, file_size, file_hash, uploaded_at, status, error_code, error_message` |
-| 허용 파일 | 기준: `pdf, docx, xlsx, pptx, png, jpg` (png·jpg OCR은 전처리 단계) |
+| 허용 파일 | `pdf, docx, xlsx, pptx, txt, csv, png, jpg` (png·jpg 는 OCR 붙인 뒤 처리) |
 | 증적 번호 | `000001` (`config.py` 의 `ID_PREFIX`, `ID_DIGITS` 로 변경 가능) |
 | 저장 파일 이름 | `data/evidence/000001_v1.pdf` (원래 파일명은 DB에만 저장) |
 | 같은 파일 재업로드 | 막지 않고 `is_duplicate: true`, `duplicate_of: 000001` 로 표시만 |
@@ -162,3 +162,7 @@ except Exception:
 1. **증적 정보는 이 함수들로만 가져가기.** 표를 직접 SQL로 조회하면, 나중에 버전 저장 방식이 바뀔 때 그 사람 코드까지 고쳐야 해요.
 2. **각자 PC에서 `schema.sql` 다시 실행하기.** `evidence_history` 표가 없으면 새 증적 업로드부터 에러가 나요.
 3. **청크·매핑 결과를 저장할 때 `version` 도 같이 저장하기.** 교체되면 v1 결과와 v2 결과가 섞이지 않게.
+
+## 저장소에 없는 파일
+
+`api.py` 와 `practice/` 는 아직 저장소에 올리지 않았어요 (로컬 확인용). 위 문서의 해당 부분은 참고용이에요.

@@ -153,3 +153,8 @@ else:
 
 청킹할 때는 **table 블록의 `text` 가 `""`** 라서, `table.rows` 를 글자로 바꿔야 검색에 걸려요.
 머리글 줄과 짝지어서 `"계정: user01 | 이름: 홍길동 | 부서: 정보보호부"` 처럼 만들면 됩니다.
+
+## 저장소에 없는 파일
+
+테스트 파일(`test_*.py`), 샘플 폴더(`samples/`), `make_samples.py`, `requirements.txt` 는
+저장소에 올리지 않았어요 (각자 로컬에만 있음). 필요한 도구는 `database/requirements.txt` 에 모아 두었어요.

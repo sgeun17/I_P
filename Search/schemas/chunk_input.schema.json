@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Retriever 청크 입력 v0.1 (검색팀 제안 규격)",
+  "type": "object",
+  "required": [
+    "evidence_id",
+    "version",
+    "source_file",
+    "file_type",
+    "chunks"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "file_type": {
+      "enum": [
+        "pdf",
+        "docx",
+        "xlsx",
+        "pptx",
+        "txt",
+        "csv"
+      ]
+    },
+    "chunks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5000,
+      "items": {
+        "$ref": "#/$defs/chunk"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "maxItems": 0
+    }
+  },
+  "$defs": {
+    "chunk": {
+      "type": "object",
+      "required": [
+        "chunk_id",
+        "evidence_id",
+        "version",
+        "chunk_index",
+        "file_type",
+        "source_file",
+        "chunk_type",
+        "page_start",
+        "page_end",
+        "heading",
+        "text",
+        "block_orders",
+        "source"
+      ],
+      "properties": {
+        "chunk_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "chunk_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "file_type": {
+          "enum": [
+            "pdf",
+            "docx",
+            "xlsx",
+            "pptx",
+            "txt",
+            "csv"
+          ]
+        },
+        "source_file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "chunk_type": {
+          "enum": [
+            "text",
+            "table"
+          ]
+        },
+        "page_start": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page_end": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "heading": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "block_orders": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "source": {
+          "enum": [
+            "parser",
+            "ocr"
+          ]
+        }
+      }
+    }
+  }
+}
