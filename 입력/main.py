@@ -5,7 +5,7 @@ from datetime import datetime
 from pathlib import Path
 
 import filetype
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, UploadFile, Form
 from fastapi.responses import HTMLResponse, JSONResponse
 
 # database 폴더의 코드가 "from config import ..." 식으로 서로를 불러오므로 경로를 추가한다
@@ -62,21 +62,6 @@ async def unexpected_error_handler(request, exc: Exception):
     return error(500, "SERVER_ERROR", "서버 오류가 발생했습니다. 서버 터미널의 오류 내용을 확인하세요.")
 
 
-def find_current_by_name(name):
-    """같은 파일명의 현재 증적을 찾는다. 없으면 None"""
-    conn = get_connection()
-    try:
-        with conn.cursor() as cur:
-            cur.execute(
-                "SELECT evidence_id, version, file_hash FROM evidence "
-                "WHERE file_name = %s ORDER BY uploaded_at DESC LIMIT 1",
-                (name,),
-            )
-            return cur.fetchone()
-    finally:
-        conn.close()
-
-
 def all_evidence():
     """저장된 증적 전체 (list_evidence가 한 번에 100개까지라 나눠서 가져온다)"""
     items, page = [], 1
@@ -116,7 +101,7 @@ def looks_like_text(head: bytes) -> bool:
     return False
 
 
-async def process_file(file: UploadFile) -> dict:
+async def process_file(file: UploadFile, evidence_id: str | None = None) -> dict:
     name = file.filename
 
     def fail(code, message):
@@ -165,7 +150,12 @@ async def process_file(file: UploadFile) -> dict:
     # 5. 저장 (B 파트): 신규 등록 / 버전 갱신 / 변경 없음
     async with lock:
         try:
-            existing = await asyncio.to_thread(find_current_by_name, name)
+            existing = None
+            if evidence_id:
+                existing = await asyncio.to_thread(get_evidence, evidence_id)
+                if existing is None:
+                    tmp_path.unlink(missing_ok=True)
+                    return fail("EVIDENCE_NOT_FOUND", "지정한 evidence_id를 찾을 수 없습니다.")
 
             if existing is None:
                 saved = await asyncio.to_thread(save_evidence, str(tmp_path), name, ext)
@@ -212,13 +202,13 @@ async def process_file(file: UploadFile) -> dict:
 
 
 @app.post("/evidence/upload")
-async def upload(files: list[UploadFile]):
+async def upload(files: list[UploadFile], evidence_id: str | None = Form(None)):
     if not files:
         return error(400, "NO_FILES", "업로드된 파일이 없습니다.")
     if len(files) > MAX_FILES:
         return error(413, "TOO_MANY_FILES", f"한 번에 {MAX_FILES}개까지 업로드할 수 있습니다.")
 
-    results = [await process_file(f) for f in files]
+    results = [await process_file(f, evidence_id) for f in files]
     ok = sum(1 for r in results if r["status"] == "ok")
     return {
         "total": len(results),
