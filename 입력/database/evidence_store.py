@@ -471,16 +471,27 @@ def delete_evidence(evidence_id):
             rows = cur.fetchall()
             if not rows:
                 raise EvidenceError("EVIDENCE_NOT_FOUND", f"{evidence_id} 증적을 찾을 수 없습니다.")
+            # ② 파일을 먼저 지웁니다. (DB 를 먼저 지우면, 파일 삭제가 실패했을 때
+            #    DB 에는 없는데 저장소에만 남는 파일(orphan file)이 생깁니다)
+            removed = []
+            for r in rows:
+                path = _stored_file_path(evidence_id, r["version"], r["file_type"])
+                if os.path.exists(path):
+                    try:
+                        os.remove(path)
+                        removed.append(path)
+                    except OSError as e:
+                        conn.rollback()
+                        raise EvidenceError(
+                            "FILE_DELETE_FAILED",
+                            f"파일을 지우지 못해 증적을 삭제하지 않았습니다: {path} ({e})") from e
+
+            # ③ 파일이 다 지워진 뒤에 DB 에서 지웁니다.
             cur.execute("DELETE FROM evidence_history WHERE evidence_id = %s", (evidence_id,))
             cur.execute("DELETE FROM evidence WHERE evidence_id = %s", (evidence_id,))
-        conn.commit()  # DB에서 먼저 지우고
+        conn.commit()
     except Exception:
         conn.rollback()
         raise
     finally:
         conn.close()
-
-    for r in rows:  # 그다음 파일 삭제 (파일이 이미 없으면 그냥 넘어감)
-        path = _stored_file_path(evidence_id, r["version"], r["file_type"])
-        if os.path.exists(path):
-            os.remove(path)
