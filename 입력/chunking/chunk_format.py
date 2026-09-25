@@ -3,14 +3,14 @@ chunk_format.py : 청크 형식 고정 (Phase 1 입력 - 청킹-B)
 
 하는 일
   1. 청크 형식(칸 이름·순서)과 크기 설정을 한 곳에서 관리합니다.
-  2. make_chunk_id()   : chunk_id 만들기  → 000001_v1_c0003
+  2. make_chunk_id()   : chunk_id 만들기  → E0001_v1_c0003
   3. finalize_chunks() : 청크 조각들에 번호·ID·증적 정보를 붙여 완성된 청크로 만들기
   4. validate_chunks() : 완성된 청크가 공통 규칙을 지키는지 검사 (문제 목록, 없으면 [])
 
 청크 하나의 형식 (공통 규칙)
   {
-    "chunk_id": "000001_v1_c0003",   증적번호 6자리 _ v버전 _ c청크순서 4자리
-    "evidence_id": "000001",         B파트 DB 의 증적 번호 (글자). 숫자로 줘도 됨
+    "chunk_id": "E0001_v1_c0003",    증적번호 _ v버전 _ c청크순서 4자리
+    "evidence_id": "E0001",          B파트 DB 의 증적 번호 (글자). 정수는 안 됨
     "version": 1,
     "chunk_index": 3,                0부터 (INDEX_START), 문서 순서대로 빈 번호 없이
     "file_type": "pdf",              pdf, docx, xlsx, pptx, txt, csv
@@ -47,23 +47,33 @@ CHUNK_KEYS = ["chunk_id", "evidence_id", "version", "chunk_index", "file_type", 
 # 청크 조각의 칸 : table_chunks() / 청킹-A 가 만드는 것. 번호·ID·증적 정보는 finalize_chunks() 가 붙임
 PART_KEYS = ["chunk_type", "page_start", "page_end", "heading", "text", "block_orders", "source"]
 
-FILE_TYPES = {"pdf", "docx", "xlsx", "pptx", "txt", "csv"}
-PAGED_TYPES = {"pdf", "xlsx", "pptx"}          # page 가 숫자인 파일
+FILE_TYPES = {"pdf", "docx", "xlsx", "pptx", "txt", "csv", "png", "jpg"}   # png·jpg 는 OCR
+PAGED_TYPES = {"pdf", "xlsx", "pptx"}          # page 가 숫자인 파일 (png·jpg 는 null)
 CHUNK_TYPES = {"text", "table"}
 SOURCES = {"parser", "ocr"}
 
-CHUNK_ID = re.compile(r"^(\d{6})_v(\d+)_c(\d{%d})$" % ID_DIGITS)
+# 증적 번호 모양 : 영문 접두사(없어도 됨) + 숫자 4~8자리
+#   "E0001"(database/config.py 의 ID_PREFIX="E", ID_DIGITS=4) · "000001" 둘 다 통과
+#   "abc" · "test" · "1" · "E" 처럼 번호 모양이 아닌 값은 막습니다
+EVIDENCE_ID = re.compile(r"^[A-Za-z]{0,6}\d{4,8}$")
+CHUNK_ID = re.compile(r"^[A-Za-z]{0,6}\d{4,8}_v\d+_c\d{%d}$" % ID_DIGITS)
 
 
 def make_chunk_id(evidence_id, version, index):
     """
     chunk_id 를 만듭니다.
-      make_chunk_id("000001", 1, 3) → "000001_v1_c0003"   ← B파트 DB 가 주는 모양 (글자)
-      make_chunk_id(1, 1, 3)        → "000001_v1_c0003"   ← 숫자로 줘도 6자리로 채움
-    앞부분(000001_v1)은 B파트 저장 파일 이름(000001_v1.pdf)과 같은 모양이에요.
+      make_chunk_id("E0001", 1, 3) → "E0001_v1_c0003"     ← B파트 DB 가 주는 값 그대로 (글자)
+
+    ⚠ evidence_id 는 **반드시 글자(str)** 로 넘기세요.
+      정수를 넘기면 앞의 접두사·0 이 사라져 DB 와 대조가 안 되는 ID 가 만들어지므로 막습니다.
+    앞부분(E0001_v1)은 B파트 저장 파일 이름(E0001_v1.pdf)과 같은 모양이에요.
     """
+    if isinstance(evidence_id, int) and not isinstance(evidence_id, bool):
+        raise ValueError(
+            f"evidence_id 는 글자여야 해요 (DB 값 그대로). 정수 {evidence_id!r} 를 넘기면 "
+            f"'E0001' 같은 모양이 깨집니다. str(evidence_id) 말고 DB 에서 받은 값을 그대로 쓰세요.")
     if not _is_evidence_id(evidence_id):
-        raise ValueError(f"evidence_id 는 '000001' 같은 글자 또는 1 이상의 정수여야 해요: {evidence_id!r}")
+        raise ValueError(f"evidence_id 는 'E0001' 같은 번호여야 해요 (영문 0~6자 + 숫자 4~8자): {evidence_id!r}")
     if not _is_pos_int(version):
         raise ValueError(f"version 은 1 이상의 정수여야 해요: {version!r}")
     if not _is_int(index) or index < INDEX_START:
@@ -120,7 +130,7 @@ def validate_chunks(chunks, max_chars=CHUNK_MAX_CHARS):
         if c["chunk_index"] != i:
             problems.append(f"{where} chunk_index={c['chunk_index']} ({INDEX_START}부터 빈 번호 없이)")
         if not (_is_evidence_id(c["evidence_id"]) and _is_pos_int(c["version"])):
-            problems.append(f"{where} evidence_id 는 글자/정수, version 은 1 이상의 정수")
+            problems.append(f"{where} evidence_id 는 'E0001' 같은 글자, version 은 1 이상의 정수")
         elif _is_int(c["chunk_index"]) and c["chunk_index"] >= INDEX_START:
             expected = make_chunk_id(c["evidence_id"], c["version"], c["chunk_index"]) \
                 if c["chunk_index"] < 10 ** ID_DIGITS else None
@@ -177,15 +187,16 @@ def validate_chunks(chunks, max_chars=CHUNK_MAX_CHARS):
 
 
 def _is_evidence_id(value):
-    """증적 번호 : B파트 DB 가 주는 "000001" 같은 글자, 또는 1 이상의 정수"""
-    if isinstance(value, str):
-        return bool(value.strip())
-    return _is_pos_int(value)
+    """
+    증적 번호 : B파트 DB 가 주는 글자 ("E0001" · "000001").
+    맨 위 EVIDENCE_ID 규칙을 씁니다. 정수는 받지 않아요 (접두사·앞의 0 이 사라지기 때문).
+    """
+    return isinstance(value, str) and bool(EVIDENCE_ID.match(value.strip()))
 
 
 def _evidence_text(evidence_id):
-    """숫자로 받으면 6자리로 채우고, 글자면 그대로 씁니다 (config.py 의 ID_PREFIX 모양도 그대로)."""
-    return evidence_id.strip() if isinstance(evidence_id, str) else f"{evidence_id:06d}"
+    """DB 에서 받은 글자를 그대로 씁니다 (config.py 의 ID_PREFIX 모양 유지)."""
+    return evidence_id.strip()
 
 
 def _is_int(value):
