@@ -29,7 +29,10 @@ MAX_MB = 20                        # 파일 1개당 최대 용량
 MAX_BYTES = MAX_MB * 1024 * 1024
 MAX_FILES = 1000                   # 한 번에 올릴 수 있는 파일 수
 
-TMP_DIR = Path("uploads/tmp")      # 검사 중인 임시 파일 (통과하면 B 코드가 정식 폴더로 이동)
+# 이 파일(main.py)이 있는 폴더를 기준으로 삼습니다.
+# 상대경로로 두면 "어느 폴더에서 python 을 실행했는지"에 따라 임시 파일 위치가 달라집니다.
+BASE_DIR = Path(__file__).resolve().parent
+TMP_DIR = BASE_DIR / "uploads" / "tmp"   # 검사 중인 임시 파일 (통과하면 B 코드가 정식 폴더로 이동)
 TMP_DIR.mkdir(parents=True, exist_ok=True)
 
 lock = asyncio.Lock()              # 번호 발급이 겹치지 않도록 저장은 한 번에 하나씩
@@ -88,14 +91,14 @@ def all_evidence():
 def looks_like_text(head: bytes) -> bool:
     """
     txt·csv 가 진짜 글자 파일인지 확인합니다. (전처리 text_parser.py 와 같은 기준)
-      ① NUL 이 있으면 글자 파일이 아님 (그림·압축·실행 파일)
-      ② BOM 이 있으면 글자 파일
+      ① BOM 이 있으면 글자 파일 (UTF-16 은 NUL 이 많아서 먼저 확인)
+      ② NUL 이 있으면 글자 파일이 아님 (그림·압축·실행 파일)
       ③ UTF-8 또는 CP949 로 읽히고, 보이지 않는 제어문자가 거의 없어야 함
     """
+    if head.startswith((b"\xef\xbb\xbf", b"\xff\xfe", b"\xfe\xff")):
+        return True                      # UTF-16 은 NUL 이 많아서 BOM 을 먼저 봐야 함
     if b"\x00" in head:
         return False
-    if head.startswith((b"\xef\xbb\xbf", b"\xff\xfe", b"\xfe\xff")):
-        return True
     for encoding in ("utf-8", "cp949"):
         data = head
         try:
