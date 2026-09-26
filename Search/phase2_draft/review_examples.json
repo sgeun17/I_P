@@ -1,0 +1,78 @@
+{
+  "status": "SYNTHETIC_REVIEW_EXAMPLES_NOT_EXECUTED",
+  "purpose": "필드·질문·기대 판정의 의미를 토론하기 위한 합성 자료. 실제 증적·실행 결과·승인된 정답 아님.",
+  "cases": [
+    {
+      "case_id": "EX-01",
+      "item_id": "2.5.1-Q11",
+      "assumed_scope": "검토 범위는 A시스템 사용자 가온의 9/26 현재 권한이다.",
+      "evidence_text": "업무별 권한 기준에서 가온의 업무에는 조회 권한만 필요하다. 현재 가온의 권한은 조회뿐이다.",
+      "expected_result_draft": "MET",
+      "review_note": "명시한 가정과 이 문항에만 해당하는 예상값. 다른 문항이나 통제 전체의 판정으로 확대하지 않음."
+    },
+    {
+      "case_id": "EX-02",
+      "item_id": "2.5.1-Q11",
+      "assumed_scope": "검토 범위는 A시스템 사용자 가온의 9/26 현재 권한이다.",
+      "evidence_text": "업무별 권한 기준에서 가온의 업무에는 조회 권한만 필요하다. 현재 가온에게 불필요한 삭제 권한도 부여되어 있다.",
+      "expected_result_draft": "NOT_MET",
+      "review_note": "명시한 가정과 이 문항에만 해당하는 예상값. 다른 문항이나 통제 전체의 판정으로 확대하지 않음."
+    },
+    {
+      "case_id": "EX-03",
+      "item_id": "2.5.1-Q11",
+      "assumed_scope": "검토 범위는 A시스템 사용자 가온의 9/26 현재 권한이다.",
+      "evidence_text": "가온의 계정을 관리하고 있다. 업무별 권한 기준과 현재 권한 내역은 첨부하지 않았다.",
+      "expected_result_draft": "UNKNOWN",
+      "review_note": "명시한 가정과 이 문항에만 해당하는 예상값. 다른 문항이나 통제 전체의 판정으로 확대하지 않음."
+    },
+    {
+      "case_id": "EX-04",
+      "item_id": "2.5.6-Q07",
+      "assumed_scope": "검토 기준일은 9/26이며, 예시 조직의 적용 정책은 매월 말일까지 이력 검토이다. 검토 대상은 8월분이다. 월별 주기는 테스트 가정이며 인증기준의 고정 주기가 아니다.",
+      "evidence_text": "8월분 계정 및 접근권한 이력 검토를 8/31 완료했다.",
+      "expected_result_draft": "MET",
+      "review_note": "명시한 가정과 이 문항에만 해당하는 예상값. 다른 문항이나 통제 전체의 판정으로 확대하지 않음."
+    },
+    {
+      "case_id": "EX-05",
+      "item_id": "2.5.6-Q07",
+      "assumed_scope": "검토 기준일은 9/26이며, 예시 조직의 적용 정책은 매월 말일까지 이력 검토이다. 검토 대상은 8월분이다. 월별 주기는 테스트 가정이며 인증기준의 고정 주기가 아니다.",
+      "evidence_text": "9/26 현재 8월분 계정 및 접근권한 이력 검토를 아직 수행하지 않았다.",
+      "expected_result_draft": "NOT_MET",
+      "review_note": "명시한 가정과 이 문항에만 해당하는 예상값. 다른 문항이나 통제 전체의 판정으로 확대하지 않음."
+    },
+    {
+      "case_id": "EX-06",
+      "item_id": "2.5.6-Q07",
+      "assumed_scope": "검토 기준일은 9/26이며, 예시 조직의 적용 정책은 매월 말일까지 이력 검토이다. 검토 대상은 8월분이다. 월별 주기는 테스트 가정이며 인증기준의 고정 주기가 아니다.",
+      "evidence_text": "계정 및 접근권한 이력 검토를 실시했다. 검토 대상 기간과 수행 날짜는 확인할 수 없다.",
+      "expected_result_draft": "UNKNOWN",
+      "review_note": "명시한 가정과 이 문항에만 해당하는 예상값. 다른 문항이나 통제 전체의 판정으로 확대하지 않음."
+    },
+    {
+      "case_id": "EX-07",
+      "item_id": "2.9.3-Q01",
+      "assumed_scope": "검토 범위는 A서비스의 백업 대상 정의 여부이다.",
+      "evidence_text": "A서비스 백업 절차: 백업 대상은 고객 DB와 서비스 설정 파일이다.",
+      "expected_result_draft": "MET",
+      "review_note": "명시한 가정과 이 문항에만 해당하는 예상값. 다른 문항이나 통제 전체의 판정으로 확대하지 않음."
+    },
+    {
+      "case_id": "EX-08",
+      "item_id": "2.9.3-Q01",
+      "assumed_scope": "검토 범위는 A서비스의 백업 대상 정의 여부이다.",
+      "evidence_text": "A서비스 운영 현황 확인서: 백업 대상을 아직 정하지 않았다.",
+      "expected_result_draft": "NOT_MET",
+      "review_note": "명시한 가정과 이 문항에만 해당하는 예상값. 다른 문항이나 통제 전체의 판정으로 확대하지 않음."
+    },
+    {
+      "case_id": "EX-09",
+      "item_id": "2.9.3-Q01",
+      "assumed_scope": "검토 범위는 A서비스의 백업 대상 정의 여부이다.",
+      "evidence_text": "A서비스 백업을 수행한다. 백업 대상 목록이 있는 절차서는 제공하지 않았다.",
+      "expected_result_draft": "UNKNOWN",
+      "review_note": "명시한 가정과 이 문항에만 해당하는 예상값. 다른 문항이나 통제 전체의 판정으로 확대하지 않음."
+    }
+  ]
+}

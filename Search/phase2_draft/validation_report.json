@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "checked_at_date": "2026-09-26",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "candidate_count": 5,
+  "sample_control_count": 3,
+  "question_count": 30,
+  "synthetic_example_count": 9,
+  "checks": [
+    {
+      "check": "KB SHA-256 일치",
+      "passed": true
+    },
+    {
+      "check": "초안 상태·미승인 표시",
+      "passed": true
+    },
+    {
+      "check": "우선 후보 5개·중복 없음",
+      "passed": true
+    },
+    {
+      "check": "후보 ID·명칭의 기존 KB 일치",
+      "passed": true
+    },
+    {
+      "check": "질문 30개·ID 중복 없음",
+      "passed": true
+    },
+    {
+      "check": "샘플 3개·우선 후보에 포함",
+      "passed": true
+    },
+    {
+      "check": "2.5.1 KB 명칭·요구사항 일치",
+      "passed": true
+    },
+    {
+      "check": "2.5.1 ID·순서·control_id 연결",
+      "passed": true
+    },
+    {
+      "check": "2.5.1 근거 문구가 requirement에 존재",
+      "passed": true
+    },
+    {
+      "check": "2.5.6 KB 명칭·요구사항 일치",
+      "passed": true
+    },
+    {
+      "check": "2.5.6 ID·순서·control_id 연결",
+      "passed": true
+    },
+    {
+      "check": "2.5.6 근거 문구가 requirement에 존재",
+      "passed": true
+    },
+    {
+      "check": "2.9.3 KB 명칭·요구사항 일치",
+      "passed": true
+    },
+    {
+      "check": "2.9.3 ID·순서·control_id 연결",
+      "passed": true
+    },
+    {
+      "check": "2.9.3 근거 문구가 requirement에 존재",
+      "passed": true
+    },
+    {
+      "check": "critical 미정 유지",
+      "passed": true
+    },
+    {
+      "check": "필수 문항 필드·판정 규칙 존재",
+      "passed": true
+    },
+    {
+      "check": "합성 예시 9개·문항 참조·결과값",
+      "passed": true
+    },
+    {
+      "check": "예시 질문별 3종 판정 포함",
+      "passed": true
+    },
+    {
+      "check": "예시 참조 질문 의미 확인",
+      "passed": true
+    },
+    {
+      "check": "후보의 기존 검색 사례 참조 존재",
+      "passed": true
+    },
+    {
+      "check": "검토 문서·JSON 질문 동기화",
+      "passed": true
+    },
+    {
+      "check": "문서 상대 링크 확인",
+      "passed": true
+    }
+  ],
+  "limits": [
+    "공식 원문 전체 대조·사람의 내용 검수는 미실행",
+    "실제 증적·LLM 판정 및 통합 테스트는 미실행",
+    "critical·판정 규칙·우선 범위는 미합의"
+  ]
+}

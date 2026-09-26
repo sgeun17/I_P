@@ -1,0 +1,794 @@
+{
+  "draft_version": "phase2-checklist-draft-2026-09-26",
+  "status": "DRAFT_FOR_TEAM_REVIEW",
+  "approved": false,
+  "source": {
+    "path": "../controls.json",
+    "sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "basis": "현재 프로젝트 KB requirement를 분해한 개발 초안. 공식 점검항목과 원문 전체의 대조·승인 전."
+  },
+  "scope": {
+    "wbs_date": "2026-09-26",
+    "candidate_count": 5,
+    "sample_control_count": 3,
+    "selection_basis": "기존 개발 테스트 활용 가능성·통제 간 경계·근거 형태의 다양성. 실제 사용 빈도나 중요도 순위 자료는 없음.",
+    "excluded": [
+      "운영 검색 변경",
+      "Phase 2 실행 API 계약 확정",
+      "LLM 실행",
+      "종합 등급 계산"
+    ]
+  },
+  "priority_candidates": [
+    {
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "draft_action": "샘플 작성",
+      "existing_search_case_ids": [
+        "S01",
+        "M01",
+        "R01"
+      ],
+      "reason": "기존 계정 증적과 검색 테스트를 재사용할 수 있고, 절차 수립과 실제 이행을 구분하기 좋음."
+    },
+    {
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토",
+      "draft_action": "샘플 작성",
+      "existing_search_case_ids": [
+        "S03",
+        "R02"
+      ],
+      "reason": "2.5.1과 가까운 항목이라 계정 처리와 권한 검토를 구분하는 기준을 확인하기 좋음."
+    },
+    {
+      "control_id": "2.9.3",
+      "control_name": "백업 및 복구관리",
+      "draft_action": "샘플 작성",
+      "existing_search_case_ids": [
+        "S05",
+        "M02",
+        "R03"
+      ],
+      "reason": "절차서와 실행 기록을 함께 검토하는 구조, 여러 청크에 흩어진 근거를 확인하기 좋음."
+    },
+    {
+      "control_id": "3.4.1",
+      "control_name": "개인정보 파기",
+      "draft_action": "범위 검토 후보",
+      "existing_search_case_ids": [
+        "S11",
+        "R04"
+      ],
+      "reason": "파기 시점·방법의 근거를 검토하는 사례로 확장 가능. 구체적 기한은 원문과 적용 조건 검토가 먼저 필요함."
+    },
+    {
+      "control_id": "2.2.5",
+      "control_name": "퇴직 및 직무변경 관리",
+      "draft_action": "범위 검토 후보",
+      "existing_search_case_ids": [],
+      "reason": "실제 파일 시험에서 계정 관리와 후보가 겹친 사례가 있고 판단팀 G-MULTI-02도 있음. 인사 절차와 계정 통제의 경계를 검토하기 좋음."
+    }
+  ],
+  "proposed_result_values": [
+    "MET",
+    "NOT_MET",
+    "UNKNOWN"
+  ],
+  "controls": [
+    {
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+      "coverage_status": "DRAFT_NOT_APPROVED",
+      "items": [
+        {
+          "item_id": "2.5.1-Q01",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "사용자 등록 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 사용자 등록 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 사용자 등록 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 사용자 등록 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q02",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 사용자 등록 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "사용자 등록 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 사용자 등록 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 사용자 등록 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q03",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "사용자 해지 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 사용자 해지 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 사용자 해지 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 사용자 해지 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q04",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 사용자 해지 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "사용자 해지 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 사용자 해지 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 사용자 해지 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q05",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "접근권한 부여 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 접근권한 부여 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 접근권한 부여 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 접근권한 부여 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q06",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 접근권한 부여 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "접근권한 부여 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 부여 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 접근권한 부여 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q07",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "접근권한 변경 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 접근권한 변경 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 접근권한 변경 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 접근권한 변경 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q08",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 접근권한 변경 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "접근권한 변경 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 변경 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 접근권한 변경 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q09",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "접근권한 말소 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 접근권한 말소 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 접근권한 말소 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 접근권한 말소 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q10",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 접근권한 말소 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "접근권한 말소 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 말소 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 접근권한 말소 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q11",
+          "control_id": "2.5.1",
+          "source_clause": "업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록",
+          "question": "검토 대상 계정의 권한이 업무 목적에 필요한 최소 범위로 부여되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상자의 업무 역할, 허용 권한 기준, 실제 권한 내역"
+            ],
+            "met": "업무상 필요한 권한 범위와 실제 권한을 대조했을 때 초과 권한이 없음.",
+            "not_met": "업무상 불필요한 권한이 실제로 부여되어 있음을 확인할 수 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q12",
+          "control_id": "2.5.1",
+          "source_clause": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고",
+          "question": "검토 범위에서 비인가 접근을 통제하는 조치가 이행되고 있는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "보호 대상과 허용 접근 주체를 식별할 수 있는 접근통제 설정·점검 기록"
+            ],
+            "met": "검토 범위에서 허용되지 않은 접근을 제한하는 조치의 이행 근거가 있음.",
+            "not_met": "검토 범위에서 비인가 접근이 허용되는 설정이나 통제 미이행 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q13",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "question": "사용자 등록 및 권한부여 시 사용자의 보안책임이 규정에 명시되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "사용자 보안책임을 명시한 규정"
+            ],
+            "met": "사용자 등록 및 권한부여에 적용되는 규정에 사용자의 보안책임이 명시됨.",
+            "not_met": "해당 보안책임을 규정화하지 않았다는 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.1-Q14",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "question": "검토 대상 사용자에게 등록 및 권한부여 시 보안책임을 인식시키는 조치가 이루어졌는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "등록·권한부여 과정의 보안책임 안내·확인·교육 등 이행 근거"
+            ],
+            "met": "검토 대상 사용자의 등록·권한부여 과정에서 보안책임을 전달하고 인식시키는 조치가 확인됨.",
+            "not_met": "검토 대상 사용자에게 해당 조치를 수행하지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        }
+      ]
+    },
+    {
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토",
+      "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+      "coverage_status": "DRAFT_NOT_APPROVED",
+      "items": [
+        {
+          "item_id": "2.5.6-Q01",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 사용자 계정 등록 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 사용자 계정 등록 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 사용자 계정 등록 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 사용자 계정 등록 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.6-Q02",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 사용자 계정 이용 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 사용자 계정 이용 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 사용자 계정 이용 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 사용자 계정 이용 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.6-Q03",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 사용자 계정 삭제 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 사용자 계정 삭제 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 사용자 계정 삭제 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 사용자 계정 삭제 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.6-Q04",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 접근권한 부여 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 접근권한 부여 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 부여 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 접근권한 부여 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.6-Q05",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 접근권한 변경 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 접근권한 변경 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 변경 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 접근권한 변경 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.6-Q06",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 접근권한 삭제 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 접근권한 삭제 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 삭제 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 접근권한 삭제 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.6-Q07",
+          "control_id": "2.5.6",
+          "source_clause": "주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "question": "계정 및 접근권한 이력을 정해진 주기에 따라 검토했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 검토 주기와 기준일, 대상 기간의 검토 이력"
+            ],
+            "met": "합의된 대상 기간과 적용 주기에 따라 이력 검토가 이행됨.",
+            "not_met": "적용 주기에 따른 검토 기한이 지났고 검토를 이행하지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.5.6-Q08",
+          "control_id": "2.5.6",
+          "source_clause": "주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "question": "이력 검토에서 계정 및 접근권한의 적정성 여부를 점검했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상, 적정성 판단 기준 및 점검 결과가 확인되는 기록"
+            ],
+            "met": "계정 및 접근권한의 적정성을 실제 점검한 근거가 있음.",
+            "not_met": "이력 수집만 수행하고 적정성 점검은 수행하지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        }
+      ]
+    },
+    {
+      "control_id": "2.9.3",
+      "control_name": "백업 및 복구관리",
+      "requirement": "정보시스템의 가용성과 데이터 무결성을 유지하기 위하여 백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다. 아울러 사고 발생 시 적시에 복구할 수 있도록 관리하여야 한다.",
+      "coverage_status": "DRAFT_NOT_APPROVED",
+      "items": [
+        {
+          "item_id": "2.9.3-Q01",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 대상에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 대상를 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 대상 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 대상 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.9.3-Q02",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 주기에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 주기를 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 주기 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 주기 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.9.3-Q03",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 방법에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 방법를 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 방법 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 방법 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.9.3-Q04",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 보관장소에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 보관장소를 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 보관장소 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 보관장소 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.9.3-Q05",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 보관기간에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 보관기간를 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 보관기간 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 보관기간 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.9.3-Q06",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 소산에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 소산를 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 소산 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 소산 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.9.3-Q07",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "검토 대상 백업이 정해진 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 절차와 대상 작업의 실행·보관·소산 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 정한 백업 작업이 적용 절차에 따라 이행되었음을 확인할 수 있음.",
+            "not_met": "검토 대상 백업 작업이 적용 절차를 따르지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        },
+        {
+          "item_id": "2.9.3-Q08",
+          "control_id": "2.9.3",
+          "source_clause": "사고 발생 시 적시에 복구할 수 있도록 관리하여야 한다.",
+          "question": "사고 발생 시 적시에 복구할 수 있도록 관리하고 있는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "복구 절차·복구시험 또는 실제 복구 기록 등 복구 가능성을 확인할 자료"
+            ],
+            "met": "검토 범위의 복구 가능성과 적시성을 뒷받침하는 관리 근거가 있음.",
+            "not_met": "검토 범위에서 필요한 시점에 복구할 수 없는 상태를 방치하고 있다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다."
+          },
+          "review_status": "DRAFT"
+        }
+      ]
+    }
+  ]
+}
