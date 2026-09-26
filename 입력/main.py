@@ -22,6 +22,10 @@ from evidence_store import (  # noqa: E402
     save_evidence,
 )
 
+# 파서 → 청킹 → 청크 DB 를 잇는 부분 (팀장님 피드백 4번)
+# pipeline.py 가 chunking·database 폴더 경로를 스스로 추가하므로 여기서는 그냥 부르면 됩니다.
+from pipeline import process_one  # noqa: E402
+
 app = FastAPI()
 
 ALLOWED = {"pdf", "docx", "xlsx", "pptx", "png", "jpg", "txt", "csv"}
@@ -36,6 +40,13 @@ TMP_DIR = BASE_DIR / "uploads" / "tmp"   # 검사 중인 임시 파일 (통과�
 TMP_DIR.mkdir(parents=True, exist_ok=True)
 
 lock = asyncio.Lock()              # 번호 발급이 겹치지 않도록 저장은 한 번에 하나씩
+
+# 아직 파싱·청킹을 안 한 상태. 이 상태인 증적만 분석 대상으로 잡습니다.
+#   FAILED 를 넣어둔 이유: 한 번 실패한 증적도 다시 누르면 재시도되게 하려는 것입니다.
+TO_PROCESS = ("UPLOADED", "FAILED")
+
+# 분석 진행 상황. 서버를 끄면 사라지지만, 각 증적의 결과는 evidence.status 에 남습니다.
+JOBS = {}
 
 ERROR_STATUS = {
     "EVIDENCE_NOT_FOUND": 404,
@@ -234,21 +245,77 @@ def delete_api(evidence_id: str):
     return {"deleted": evidence_id}
 
 
+async def run_pipeline(analysis_id, evidence_ids):
+    """
+    증적을 하나씩 파싱 → 청킹 → 청크 DB 저장 합니다. (백그라운드에서 돎)
+
+    to_thread 로 부르는 이유 : pipeline.process_one 은 DB·OCR 을 기다리는 동안 멈춰 있는
+      코드(동기 함수)라서, 그냥 부르면 그 시간 내내 서버가 다른 요청을 못 받습니다.
+    """
+    job = JOBS[analysis_id]
+    for evidence_id in evidence_ids:
+        job["current"] = evidence_id
+        try:
+            result, detail = await asyncio.to_thread(process_one, evidence_id, False)
+        except Exception as e:                    # process_one 안에서 이미 FAILED 로 바꿔주지만,
+            result, detail = "failed", f"{type(e).__name__}: {e}"   # 그마저 실패한 경우
+        job["done"] += 1
+        if result == "ok":
+            job["ok"] += 1
+            job["chunks"] += detail if isinstance(detail, int) else 0
+        else:
+            job["failed"] += 1
+            job["errors"].append({"evidence_id": evidence_id, "reason": str(detail)})
+    job["current"] = None
+    job["status"] = "done"
+    job["finished_at"] = datetime.now().isoformat(timespec="seconds")
+
+
 @app.post("/analysis/start")
-def start_analysis():
-    """저장된 증적 전체를 분석 대상으로 확정한다. (Phase 2 분석 모듈이 연결될 자리)"""
+async def start_analysis():
+    """
+    저장된 증적을 파싱·청킹합니다. (Main → Parser → Chunker 연결)
+
+    바로 끝내지 않고 analysis_id 를 먼저 돌려줍니다.
+      PNG·JPG 는 OCR 이 한 장에 10~30초라, 다 끝날 때까지 기다리면 브라우저가 먼저 끊깁니다.
+      진행 상황은 GET /analysis/{analysis_id} 로 확인합니다.
+    """
     items = all_evidence()
     if not items:
         return error(400, "NO_EVIDENCE", "분석할 증적이 없습니다. 먼저 파일을 업로드하세요.")
 
+    running = next((k for k, v in JOBS.items() if v["status"] == "running"), None)
+    if running:
+        return error(409, "ANALYSIS_RUNNING", f"이미 분석이 돌고 있습니다: {running}")
+
+    targets = [i["evidence_id"] for i in items if i["status"] in TO_PROCESS]
+    skipped = len(items) - len(targets)
     analysis_id = "A" + datetime.now().strftime("%Y%m%d%H%M%S")
-    # TODO: Phase 2 분석 함수 호출 -> run_analysis(analysis_id, items)
-    return {
-        "analysis_id": analysis_id,
-        "status": "queued",
-        "total": len(items),
-        "evidence_ids": [i["evidence_id"] for i in items],
+
+    if not targets:
+        return {"analysis_id": analysis_id, "status": "done", "total": 0, "skipped": skipped,
+                "ok": 0, "failed": 0, "chunks": 0, "done": 0, "errors": [],
+                "message": f"이미 전처리된 증적 {skipped}개뿐입니다. 새로 처리할 것이 없습니다."}
+
+    JOBS[analysis_id] = {
+        "analysis_id": analysis_id, "status": "running",
+        "total": len(targets), "done": 0, "ok": 0, "failed": 0, "chunks": 0,
+        "skipped": skipped, "current": None, "errors": [],
+        "started_at": datetime.now().isoformat(timespec="seconds"), "finished_at": None,
+        "evidence_ids": targets,
     }
+    asyncio.create_task(run_pipeline(analysis_id, targets))
+    return JOBS[analysis_id]
+
+
+@app.get("/analysis/{analysis_id}")
+def analysis_status(analysis_id: str):
+    """분석 진행 상황. status 가 running 이면 화면이 1초마다 다시 물어봅니다."""
+    job = JOBS.get(analysis_id)
+    if job is None:
+        return error(404, "ANALYSIS_NOT_FOUND",
+                     "그런 분석 기록이 없습니다. (서버를 다시 켜면 진행 기록은 사라집니다)")
+    return job
 
 
 PAGE = r"""
@@ -426,21 +493,52 @@ stored.onclick = async e => {
   loadStored();
 };
 
+function drawJob(d) {
+  const pct = d.total ? Math.round(d.done / d.total * 100) : 100;
+  let html = '<h2>' + (d.status === 'running' ? '전처리 중...' : '전처리 완료') + '</h2>' +
+    '<div>분석 ID: <b>' + esc(d.analysis_id) + '</b></div>';
+  if (d.message) html += '<div class="muted" style="margin-top:8px">' + esc(d.message) + '</div>';
+  if (d.total) {
+    html += '<div style="margin-top:8px">' + d.done + ' / ' + d.total + '개 (' + pct + '%)' +
+      (d.current ? ' — 지금 ' + esc(d.current) : '') + '</div>' +
+      '<div>성공 ' + d.ok + '개 · 실패 ' + d.failed + '개 · 청크 ' + d.chunks + '개</div>';
+  }
+  if (d.skipped) html += '<div class="muted">이미 전처리된 ' + d.skipped + '개는 건너뛰었습니다</div>';
+  if (d.errors && d.errors.length) {
+    html += '<div style="margin-top:8px"><b>실패한 증적</b>' +
+      d.errors.map(e => '<div class="muted">' + esc(e.evidence_id) + ' — ' + esc(e.reason) + '</div>').join('') +
+      '</div>';
+  }
+  analysis.innerHTML = html;
+}
+
 go.onclick = async () => {
-  go.disabled = true; go.textContent = '분석 요청 중...';
+  go.disabled = true; go.textContent = '전처리 중...';
+  analysis.style.display = 'block';
   try {
     const res = await fetch('/analysis/start', {method: 'POST'});
     const d = await res.json();
-    analysis.innerHTML = res.ok
-      ? '<h2>분석 요청 완료</h2><div>분석 ID: <b>' + esc(d.analysis_id) + '</b></div>' +
-        '<div>상태: ' + esc(d.status) + '</div><div>분석 대상: ' + d.total + '개 증적</div>' +
-        '<div class="muted" style="margin-top:8px">' + esc(d.evidence_ids.join(', ')) + '</div>'
-      : '<div class="err">' + esc(errMsg(d)) + '</div>';
+    if (!res.ok) {
+      analysis.innerHTML = '<div class="err">' + esc(errMsg(d)) + '</div>';
+    } else {
+      drawJob(d);
+      // 끝날 때까지 1초마다 진행 상황을 물어봅니다 (OCR 이 있으면 몇 분 걸릴 수 있음)
+      let job = d;
+      while (job.status === 'running') {
+        await new Promise(r => setTimeout(r, 1000));
+        try {
+          const p = await fetch('/analysis/' + encodeURIComponent(job.analysis_id));
+          if (!p.ok) break;
+          job = await p.json();
+          drawJob(job);
+        } catch (e) { break; }
+      }
+    }
   } catch (e) {
     analysis.innerHTML = '<div class="err">서버에 연결할 수 없습니다.</div>';
   }
-  analysis.style.display = 'block';
-  loadStored();
+  go.disabled = false;
+  loadStored();          // 버튼 글자와 목록(상태 칸)을 다시 그립니다
 };
 
 loadStored();
