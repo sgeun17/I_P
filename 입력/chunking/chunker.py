@@ -47,6 +47,8 @@ def add_overlap(pieces, max_chars, overlap):
     for prev, cur in zip(pieces, pieces[1:]):
         if prev["chunk_type"] != "text" or cur["chunk_type"] != "text":
             continue
+        if prev["block_orders"] == cur["block_orders"]:
+            continue                               # 긴 문단 하나를 나눈 것 → split_long_text 가 이미 겹쳐 놓음
         if prev["page_end"] != cur["page_start"]:
             continue
         room = max_chars - len(cur["text"]) - 1
@@ -94,7 +96,10 @@ def make_chunks(parsed, evidence_id, version, max_chars=MAX_CHARS, overlap=OVERL
         basket = []
         basket_size = 0
 
-    for block in fill_continued_headers(parsed["blocks"]):   # PDF 페이지 넘김 표에 머리글 붙이기
+    blocks = parsed["blocks"]
+    if parsed["file_type"] == "pdf":                # 페이지 넘김 표는 PDF 에서만 생김
+        blocks = fill_continued_headers(blocks)     # 뒤 페이지 조각에 앞 페이지 머리글 붙이기
+    for block in blocks:
         kind = block["block_type"]
 
         if parsed["file_type"] in ("pptx", "xlsx"):

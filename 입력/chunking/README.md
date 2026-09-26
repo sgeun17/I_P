@@ -1,4 +1,4 @@
-# 청킹-B : 표 청크 + 청크 형식 (Phase 1 입력)
+# 청킹-B : 표 청크 + 청크 형식
 
 파서가 뽑은 **표 블록을 검색에 걸리는 글자로 바꿔서 표 청크로 만들고**,
 청크의 **형식(chunk_id·page·text)을 고정·검사**하는 부분이에요.
@@ -58,15 +58,15 @@ def make_chunks(parsed, evidence_id, version):
 >
 > ★ 청킹-A 에 맞춘 것 (09-22)
 > - 연결 파일 이름 `chunk_links.py`
-> - **청크 번호는 0부터** (`INDEX_START = 0`, 첫 청크 `000001_v1_c0000`)
+> - **청크 번호는 0부터** (`INDEX_START = 0`, 첫 청크 `E0001_v1_c0000`)
 > - **파일 이름은 `source_file` 칸**을 새로 둠. `source` 칸은 그대로 `"parser"` (나중에 OCR 글이면 `"ocr"`)
 
 ## 청크 형식
 
 ```json
 {
-  "chunk_id": "000001_v1_c0003",
-  "evidence_id": "000001", "version": 1, "chunk_index": 3,
+  "chunk_id": "E0001_v1_c0003",
+  "evidence_id": "E0001", "version": 1, "chunk_index": 3,
   "file_type": "pdf", "source_file": "계정발급대장.pdf", "chunk_type": "table",
   "page_start": 2, "page_end": 2,
   "heading": "계정 발급 대장",
@@ -79,12 +79,18 @@ def make_chunks(parsed, evidence_id, version):
 `validate_chunks()` 가 검사하는 것:
 - 칸 이름 (빠진 칸·없어야 할 칸. 칸 순서는 상관없음)
 - `chunk_index` 0부터 빈 번호 없음, `chunk_id` 형식과 중복
-- `evidence_id` 는 B파트 DB 가 주는 글자(`"000001"`) 또는 정수 둘 다 허용
+- `evidence_id` 는 B파트 DB 가 주는 **글자**(`"E0001"`). **정수를 넘기면 `ValueError`**
+  (정수를 허용하면 `E` 와 앞의 0 이 사라져 DB 와 대조가 안 되는 ID 가 조용히 만들어져요)
+- 증적 번호 모양은 `EVIDENCE_ID` 정규식(`^[A-Za-z]{0,6}\d{4,8}$`)으로 검사해요.
+  `abc` · `test` · `1` · `E` 같은 값은 막히고, `E0001` · `000001` 은 통과해요
 - `source_file` 이 비어 있지 않고 한 문서 안에서 같음
-- `file_type`, `chunk_type`, `source`(parser·ocr) 값
-- page: PDF·XLSX·PPTX는 숫자이고 `start ≤ end`, DOCX·TXT·CSV는 null
+- `file_type` : `pdf` `docx` `xlsx` `pptx` `txt` `csv` **`png` `jpg`** (png·jpg 는 OCR)
+- `chunk_type`, `source`(parser·ocr) 값
+- page: PDF·XLSX·PPTX는 숫자이고 `start ≤ end`, DOCX·TXT·CSV·**PNG·JPG**는 null
 - `heading`은 글자 또는 null
 - `text`는 비어 있지 않고 800자 이하 (**겹침 포함**)
+- 글 청크끼리는 앞 청크 끝 100자를 겹쳐요. 표 청크와 페이지가 바뀌는 곳은 겹치지 않고,
+  긴 문단 하나를 나눈 경우는 이미 겹쳐 있어서 두 번 겹치지 않아요
 - `block_orders`는 오름차순이고, 표 청크는 블록 1개에서만 나옴
 - 청크 순서가 문서 순서와 같음
 
@@ -109,13 +115,15 @@ def make_chunks(parsed, evidence_id, version):
 애매하면 항목표로 봐요. 항목표로 잘못 보면 `항목: 건수 / 계정 발급: 12` 처럼 그래도 읽히지만,
 머리글 표로 잘못 보면 `성명: 소속 | 홍길동: 정보보호부` 처럼 뜻이 망가지기 때문이에요.
 
-### PDF 페이지 넘김 표
+### PDF 페이지 넘김 표 (PDF 에서만 사용)
 PDF 는 표가 두 페이지에 걸치면 페이지마다 따로 table 블록이 나오고, 뒤 조각은 머리글 없이 시작해요.
 `fill_continued_headers()` 가 **바로 앞 블록이 다음 페이지 직전의 표이고 칸 수가 같으면** 앞 표의 머리글을 붙여줘요.
 - 블록을 합치지 않아서 **page 는 원래 페이지 그대로**예요 (인용할 때 페이지가 정확함)
 - 머리글이 다시 인쇄된 표는 그대로 둠 (머리글 두 번 안 붙음)
 - 첫 줄이 자기 머리글처럼 보이면(첫 줄엔 숫자 없고 둘째 줄엔 있음) **다른 표**로 보고 안 붙임
 - 원본 blocks 는 바꾸지 않고 사본을 돌려줘요
+- **`chunker.py` 는 `file_type == "pdf"` 일 때만 이 함수를 불러요.** XLSX 시트·PPTX 슬라이드도 page 를 쓰기 때문에,
+  전부에 적용하면 관계없는 시트끼리 머리글이 붙을 수 있어요
 
 ## 테스트 결과 (74개 통과)
 
@@ -140,3 +148,14 @@ PDF 는 표가 두 페이지에 걸치면 페이지마다 따로 table 블록이
 - **세로 병합 칸**(데이터 칸의 `""`)은 건너뛰어요. 2칸 항목표의 항목 칸만 위 값을 이어받아요.
 - 페이지 넘김 판단은 추정이에요. 칸 수가 같은 다른 표가 연속 페이지에 머리글 없이 있으면 앞 표 머리글이 붙을 수 있어요.
 
+---
+
+## 변경 이력
+
+| 날짜 | 내용 |
+|---|---|
+| 2026-09-22 | 청크 형식 확정 (번호 0부터, `source_file` 칸 추가) |
+| 2026-09-23 | 겹침 규칙 확정. 긴 문단을 나눈 조각끼리는 두 번 겹치지 않게 수정 |
+| 2026-09-24 | `fill_continued_headers` 를 **PDF 에서만** 호출 (엑셀 시트 머리글이 다른 시트에 붙던 문제) |
+| 2026-09-25 | 증적 번호 `E0001` 확정. `FILE_TYPES` 에 `png`·`jpg` 추가 (OCR). 증적번호 정규식 검사 추가, 정수 차단 |
+| 2026-09-26 | 청크를 DB 에 저장하는 `database/chunk_store.py` 추가 |

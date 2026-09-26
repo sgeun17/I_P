@@ -1,6 +1,6 @@
 # 101개 인증기준 ChromaDB 색인 검증 결과
 
-- 결과: **PASS** (2026-09-22T17:20:23.985983+09:00)
+- 결과: **PASS** (2026-09-25T23:34:52.795227+09:00)
 - ChromaDB: 1.5.9 / 컬렉션: `isms_p_controls`
 - BGE-M3: 인증기준 101개 × 1,024차원
 - DB 저장 위치: `C:\Users\USER\Desktop\ISMS-P 인증 증적 사전점검 도구 개발\개발\I_P\Search\data\chroma_kb`
