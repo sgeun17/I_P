@@ -9,3 +9,7 @@ pdfplumber>=0.11
 openpyxl>=3.1
 python-pptx>=1.0
 python-docx>=1.1
+easyocr>=1.7
+# torch 가 같이 깔려서 2GB 가 넘고, 받는 데 몇 분 걸립니다.
+# Python 3.14 에서는 torch 가 아직 없어 설치가 실패할 수 있습니다. 그때는 3.12 를 쓰세요.
+#   py -3.12 -m pip install -r database/requirements.txt
