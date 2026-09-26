@@ -1,5 +1,9 @@
 import json
 import re
+import logging
+
+logger = logging.getLogger(__name__)
+
 from pathlib import Path
 from docx import Document
 from docx.opc.exceptions import PackageNotFoundError
@@ -86,9 +90,11 @@ def parse_docx(path):
     try:
         blocks = extract_blocks(path)
     except PackageNotFoundError:
+        logger.exception("DOCX parsing failed (corrupted): %s", path)
         result["errors"].append("corrupted_file")
         return result
     except Exception:
+        logger.exception("DOCX parsing failed (unexpected): %s", path)
         result["errors"].append("corrupted_file")
         return result
 

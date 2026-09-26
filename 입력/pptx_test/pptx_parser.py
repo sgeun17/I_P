@@ -44,6 +44,10 @@ errors 코드 (팀 합의: 두 가지만 사용)
 import io
 import json
 from collections import Counter
+import logging
+
+logger = logging.getLogger(__name__)
+
 import os
 import re
 import sys
@@ -118,7 +122,8 @@ def _collect(prs):
                 continue
             items = _slide_items(slide)
         except Exception:
-            continue                                  # 이 슬라이드만 건너뜀 (규칙 11)
+            logger.exception("PPTX slide %d extraction failed", slide_no)
+            continue                                   # 이 슬라이드만 건너뜀 (규칙 11)
         for kind, payload, level in items:
             if kind == "table":
                 blocks.append(_block(len(blocks) + 1, "table", slide_no, table={"rows": payload}))
@@ -147,6 +152,7 @@ def _load(path):
     try:
         return Presentation(_unwrap_alternate_content(path))
     except Exception:
+        logger.exception("PPTX open failed (both attempts): %s", path)
         return None
 
 

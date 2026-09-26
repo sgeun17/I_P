@@ -47,6 +47,10 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 import pdfplumber
 from pdfplumber.utils import extract_text
 
@@ -86,6 +90,7 @@ def parse_pdf(path):
         pdf = pdfplumber.open(str(path))
         page_count = len(pdf.pages)
     except Exception:
+        logger.exception("PDF open failed: %s", path)
         result["errors"].append("corrupted_file")
         return result
 
@@ -99,7 +104,8 @@ def parse_pdf(path):
             try:
                 items = _extract_page(page, size_counter)
             except Exception:
-                failed_pages += 1      # 이 페이지만 건너뜀
+                logger.exception("PDF page %d extraction failed: %s", page_no, path)
+                failed_pages += 1      
                 continue
             raw += [(page_no, *item) for item in items]   # 빈 페이지면 아무것도 안 붙음
 

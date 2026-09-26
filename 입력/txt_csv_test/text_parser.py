@@ -49,6 +49,11 @@ import csv
 import io
 import json
 import os
+import logging
+
+logger = logging.getLogger(__name__)
+
+logger = logging.getLogger(__name__)
 import re
 import sys
 from pathlib import Path
@@ -103,6 +108,7 @@ def parse_csv(path):
     try:
         rows = _csv_rows(text)
     except Exception:
+        logger.exception("CSV parsing failed: %s", path)
         result["errors"].append("corrupted_file")
         return result
 
@@ -154,6 +160,7 @@ def _read_text(path):
     try:
         data = path.read_bytes()
     except Exception:
+        logger.exception("File read failed: %s", path)
         return None, "corrupted_file"
 
     text = _decode(data)

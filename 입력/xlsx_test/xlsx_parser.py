@@ -44,6 +44,10 @@ import datetime
 import io
 import json
 import os
+import logging
+
+logger = logging.getLogger(__name__)
+
 import re
 import sys
 import zipfile
@@ -93,6 +97,7 @@ def parse_xlsx(path):
             ws_formula = wb_formula[ws.title] if wb_formula is not None and ws.title in wb_formula.sheetnames else None
             rows = _sheet_rows(ws, ws_formula)
         except Exception:
+            logger.exception("XLSX sheet %d (%s) extraction failed", sheet_no, ws.title)
             continue                      # 이 시트만 건너뜀 (규칙 11)
         if not rows:                      # 빈 시트는 버림 (규칙 8)
             continue
@@ -135,6 +140,7 @@ def _load(path, data_only):
     try:
         return openpyxl.load_workbook(_unwrap_alternate_content(path), data_only=data_only)
     except Exception:
+        logger.exception("XLSX open failed (both attempts): %s", path)
         return None
 
 
