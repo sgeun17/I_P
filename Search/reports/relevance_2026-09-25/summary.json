@@ -1,0 +1,673 @@
+{
+  "checked_at": "2026-09-25T23:37:22.286728+09:00",
+  "status": "PASS",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54",
+  "new_cases_sha256": "2c12e2aa7da28558dd0383f8204dcb4d086f9b94695cffe701e2d619cd4e64f9",
+  "label_status": "합성 사례·미검수 정답 초안, 배포 임계값 보정용 독립 평가 아님",
+  "ranges": {
+    "related": {
+      "n": 19,
+      "min_top1": 0.537245,
+      "max_top1": 0.786998
+    },
+    "unrelated": {
+      "n": 7,
+      "min_top1": 0.336163,
+      "max_top1": 0.569209
+    },
+    "ambiguous": {
+      "n": 4,
+      "min_top1": 0.529183,
+      "max_top1": 0.666794
+    }
+  },
+  "cases": [
+    {
+      "id": "S01",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.5.1"
+      ],
+      "top5": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6"
+      ],
+      "top1": 0.600898,
+      "gap": 0.017895,
+      "missing_expected": []
+    },
+    {
+      "id": "S02",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.5.5"
+      ],
+      "top5": [
+        "2.5.5",
+        "2.5.2",
+        "2.5.1",
+        "2.9.4",
+        "2.5.6"
+      ],
+      "top1": 0.682263,
+      "gap": 0.031029,
+      "missing_expected": []
+    },
+    {
+      "id": "S03",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.5.6"
+      ],
+      "top5": [
+        "2.5.6",
+        "2.6.3",
+        "2.2.2",
+        "2.5.1",
+        "2.9.5"
+      ],
+      "top1": 0.656926,
+      "gap": 0.034834,
+      "missing_expected": []
+    },
+    {
+      "id": "S04",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.6.6"
+      ],
+      "top5": [
+        "2.6.6",
+        "2.5.3",
+        "2.10.6",
+        "2.6.7",
+        "2.6.1"
+      ],
+      "top1": 0.758995,
+      "gap": 0.145057,
+      "missing_expected": []
+    },
+    {
+      "id": "S05",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.9.3"
+      ],
+      "top5": [
+        "2.9.3",
+        "1.3.3",
+        "1.4.2",
+        "3.2.1",
+        "2.9.4"
+      ],
+      "top1": 0.689362,
+      "gap": 0.080308,
+      "missing_expected": []
+    },
+    {
+      "id": "S06",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.9.4"
+      ],
+      "top5": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "1.3.3"
+      ],
+      "top1": 0.786998,
+      "gap": 0.072821,
+      "missing_expected": []
+    },
+    {
+      "id": "S07",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.9.5"
+      ],
+      "top5": [
+        "2.9.5",
+        "2.5.3",
+        "2.5.6",
+        "2.9.4",
+        "2.5.1"
+      ],
+      "top1": 0.737891,
+      "gap": 0.084383,
+      "missing_expected": []
+    },
+    {
+      "id": "S08",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.2.4"
+      ],
+      "top5": [
+        "2.2.4",
+        "2.2.3",
+        "2.1.1",
+        "2.1.2",
+        "2.2.6"
+      ],
+      "top1": 0.719647,
+      "gap": 0.06667,
+      "missing_expected": []
+    },
+    {
+      "id": "S09",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.11.2"
+      ],
+      "top5": [
+        "2.11.2",
+        "2.9.5",
+        "2.9.2",
+        "2.5.6",
+        "2.10.8"
+      ],
+      "top1": 0.769868,
+      "gap": 0.122196,
+      "missing_expected": []
+    },
+    {
+      "id": "S10",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.12.2"
+      ],
+      "top5": [
+        "2.11.4",
+        "2.12.1",
+        "2.12.2",
+        "2.9.3",
+        "2.11.5"
+      ],
+      "top1": 0.630583,
+      "gap": 0.011923,
+      "missing_expected": []
+    },
+    {
+      "id": "S11",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "3.4.1"
+      ],
+      "top5": [
+        "3.4.1",
+        "3.4.2",
+        "2.3.4",
+        "2.9.7",
+        "3.2.1"
+      ],
+      "top1": 0.743348,
+      "gap": 0.06906,
+      "missing_expected": []
+    },
+    {
+      "id": "S12",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.10.2"
+      ],
+      "top5": [
+        "2.10.2",
+        "2.3.1",
+        "2.11.2",
+        "2.5.1",
+        "2.10.3"
+      ],
+      "top1": 0.736945,
+      "gap": 0.072383,
+      "missing_expected": []
+    },
+    {
+      "id": "M01",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.5.1",
+        "2.9.4"
+      ],
+      "top5": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5"
+      ],
+      "top1": 0.755082,
+      "gap": 0.036889,
+      "missing_expected": []
+    },
+    {
+      "id": "M02",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.9.3",
+        "2.12.2"
+      ],
+      "top5": [
+        "2.9.3",
+        "2.12.2",
+        "2.7.2",
+        "3.2.1",
+        "1.3.3"
+      ],
+      "top1": 0.700211,
+      "gap": 0.06213,
+      "missing_expected": []
+    },
+    {
+      "id": "M03",
+      "kind": "related",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [
+        "2.6.6",
+        "2.5.5"
+      ],
+      "top5": [
+        "2.6.6",
+        "2.5.5",
+        "2.6.7",
+        "2.10.6",
+        "2.5.3"
+      ],
+      "top1": 0.762374,
+      "gap": 0.006252,
+      "missing_expected": []
+    },
+    {
+      "id": "U01",
+      "kind": "unrelated",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [],
+      "top5": [
+        "3.1.7",
+        "3.2.3",
+        "2.4.6",
+        "2.10.6",
+        "2.1.1"
+      ],
+      "top1": 0.377892,
+      "gap": 0.000406,
+      "missing_expected": []
+    },
+    {
+      "id": "U02",
+      "kind": "unrelated",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [],
+      "top5": [
+        "2.4.2",
+        "2.4.5",
+        "2.5.6",
+        "3.5.1",
+        "2.1.1"
+      ],
+      "top1": 0.354123,
+      "gap": 0.01212,
+      "missing_expected": []
+    },
+    {
+      "id": "U03",
+      "kind": "unrelated",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [],
+      "top5": [
+        "2.9.5",
+        "2.9.6",
+        "3.1.7",
+        "3.2.3",
+        "3.3.3"
+      ],
+      "top1": 0.336163,
+      "gap": 0.010549,
+      "missing_expected": []
+    },
+    {
+      "id": "A01",
+      "kind": "ambiguous",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [],
+      "top5": [
+        "2.9.5",
+        "1.4.2",
+        "2.11.2",
+        "2.5.6",
+        "2.3.3"
+      ],
+      "top1": 0.56207,
+      "gap": 0.000113,
+      "missing_expected": []
+    },
+    {
+      "id": "A02",
+      "kind": "ambiguous",
+      "origin": "2026-09-23 저장된 검색 결과",
+      "expected": [],
+      "top5": [
+        "2.2.6",
+        "2.10.4",
+        "2.10.6",
+        "1.4.1",
+        "2.10.1"
+      ],
+      "top1": 0.529183,
+      "gap": 0.014763,
+      "missing_expected": []
+    },
+    {
+      "id": "R01",
+      "kind": "related",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [
+        "2.5.1"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.3.4",
+        "3.4.1",
+        "2.5.6"
+      ],
+      "top1": 0.537245,
+      "gap": 0.025664,
+      "missing_expected": []
+    },
+    {
+      "id": "R02",
+      "kind": "related",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [
+        "2.5.6"
+      ],
+      "top5": [
+        "2.5.6",
+        "2.6.3",
+        "2.5.1",
+        "2.2.2",
+        "2.2.5"
+      ],
+      "top1": 0.617386,
+      "gap": 0.0287,
+      "missing_expected": []
+    },
+    {
+      "id": "R03",
+      "kind": "related",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [
+        "2.9.3"
+      ],
+      "top5": [
+        "2.9.3",
+        "2.11.2",
+        "1.4.2",
+        "2.9.5",
+        "1.3.3"
+      ],
+      "top1": 0.583661,
+      "gap": 0.037184,
+      "missing_expected": []
+    },
+    {
+      "id": "R04",
+      "kind": "related",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [
+        "3.4.1"
+      ],
+      "top5": [
+        "3.4.1",
+        "2.9.7",
+        "3.4.2",
+        "2.3.4",
+        "2.9.3"
+      ],
+      "top1": 0.626289,
+      "gap": 0.058109,
+      "missing_expected": []
+    },
+    {
+      "id": "N01",
+      "kind": "unrelated",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [],
+      "top5": [
+        "2.9.4",
+        "2.5.4",
+        "2.5.1",
+        "2.9.3",
+        "2.7.1"
+      ],
+      "top1": 0.569209,
+      "gap": 0.018614,
+      "missing_expected": []
+    },
+    {
+      "id": "N02",
+      "kind": "unrelated",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [],
+      "top5": [
+        "2.4.2",
+        "2.4.6",
+        "2.2.3",
+        "2.2.6",
+        "2.5.3"
+      ],
+      "top1": 0.419663,
+      "gap": 0.013808,
+      "missing_expected": []
+    },
+    {
+      "id": "N03",
+      "kind": "unrelated",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [],
+      "top5": [
+        "2.9.5",
+        "1.2.2",
+        "2.9.4",
+        "2.2.4",
+        "2.9.6"
+      ],
+      "top1": 0.428809,
+      "gap": 0.02162,
+      "missing_expected": []
+    },
+    {
+      "id": "N04",
+      "kind": "unrelated",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [],
+      "top5": [
+        "1.3.2",
+        "2.8.3",
+        "2.5.1",
+        "2.7.2",
+        "2.10.1"
+      ],
+      "top1": 0.509249,
+      "gap": 0.014525,
+      "missing_expected": []
+    },
+    {
+      "id": "B01",
+      "kind": "ambiguous",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [],
+      "top5": [
+        "2.9.4",
+        "2.5.6",
+        "2.5.1",
+        "2.9.3",
+        "2.9.5"
+      ],
+      "top1": 0.6486,
+      "gap": 0.013804,
+      "missing_expected": []
+    },
+    {
+      "id": "B02",
+      "kind": "ambiguous",
+      "origin": "2026-09-25 실제 추가 검색",
+      "expected": [],
+      "top5": [
+        "2.11.2",
+        "2.9.5",
+        "2.5.6",
+        "2.3.3",
+        "2.10.6"
+      ],
+      "top1": 0.666794,
+      "gap": 0.008755,
+      "missing_expected": []
+    }
+  ],
+  "threshold_trials": [
+    {
+      "cutoff": 0.35,
+      "rule": "top1 < cutoff이면 후보 없음으로 처리하는 가정",
+      "related_wrongly_removed": [],
+      "unrelated_still_retained": [
+        "U01",
+        "U02",
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ],
+      "ambiguous_removed_observation_only": []
+    },
+    {
+      "cutoff": 0.4,
+      "rule": "top1 < cutoff이면 후보 없음으로 처리하는 가정",
+      "related_wrongly_removed": [],
+      "unrelated_still_retained": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ],
+      "ambiguous_removed_observation_only": []
+    },
+    {
+      "cutoff": 0.45,
+      "rule": "top1 < cutoff이면 후보 없음으로 처리하는 가정",
+      "related_wrongly_removed": [],
+      "unrelated_still_retained": [
+        "N01",
+        "N04"
+      ],
+      "ambiguous_removed_observation_only": []
+    },
+    {
+      "cutoff": 0.5,
+      "rule": "top1 < cutoff이면 후보 없음으로 처리하는 가정",
+      "related_wrongly_removed": [],
+      "unrelated_still_retained": [
+        "N01",
+        "N04"
+      ],
+      "ambiguous_removed_observation_only": []
+    },
+    {
+      "cutoff": 0.55,
+      "rule": "top1 < cutoff이면 후보 없음으로 처리하는 가정",
+      "related_wrongly_removed": [
+        "R01"
+      ],
+      "unrelated_still_retained": [
+        "N01"
+      ],
+      "ambiguous_removed_observation_only": [
+        "A02"
+      ]
+    },
+    {
+      "cutoff": 0.6,
+      "rule": "top1 < cutoff이면 후보 없음으로 처리하는 가정",
+      "related_wrongly_removed": [
+        "R01",
+        "R03"
+      ],
+      "unrelated_still_retained": [],
+      "ambiguous_removed_observation_only": [
+        "A01",
+        "A02"
+      ]
+    }
+  ],
+  "current_policy": {
+    "profile_name": "thresholds_v0.4",
+    "low_confidence": 0.7,
+    "narrow_score_gap": 0.01,
+    "high_similarity": 0.55,
+    "min_chunk_length": 30,
+    "review_on_no_match": true,
+    "review_on_multi_mapping": true
+  },
+  "policy_tests": [
+    {
+      "name": "no_match",
+      "status": "COMPLETED",
+      "match_status": "NO_MATCH",
+      "review_reasons": [
+        "R202",
+        "R204"
+      ]
+    },
+    {
+      "name": "uncertain",
+      "status": "COMPLETED",
+      "match_status": "NO_MATCH",
+      "review_reasons": [
+        "R107",
+        "R204",
+        "R206"
+      ]
+    },
+    {
+      "name": "high_score_no_match",
+      "status": "COMPLETED",
+      "match_status": "NO_MATCH",
+      "review_reasons": [
+        "R204",
+        "R206"
+      ]
+    },
+    {
+      "name": "call_failure",
+      "status": "FAILED",
+      "match_status": "NO_MATCH",
+      "review_reasons": [
+        "R108"
+      ]
+    }
+  ],
+  "adapters_equivalent_cases": 30,
+  "judgment_files_unchanged": 51,
+  "production_filter_enabled": false,
+  "llm_called": false
+}

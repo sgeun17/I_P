@@ -1,0 +1,122 @@
+{
+  "llm_called": false,
+  "fixed_response": {
+    "match_status": "NO_MATCH",
+    "mapped_controls": [],
+    "candidate_decisions": [
+      {
+        "control_id": "2.9.4",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      },
+      {
+        "control_id": "2.5.6",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      },
+      {
+        "control_id": "2.5.1",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      },
+      {
+        "control_id": "2.9.3",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      },
+      {
+        "control_id": "2.9.5",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      }
+    ]
+  },
+  "result": {
+    "evidence_id": "review_B01",
+    "version": 1,
+    "processing_status": "COMPLETED",
+    "match_status": "NO_MATCH",
+    "mapped_controls": [],
+    "candidate_decisions": [
+      {
+        "control_id": "2.9.4",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      },
+      {
+        "control_id": "2.5.6",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      },
+      {
+        "control_id": "2.5.1",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      },
+      {
+        "control_id": "2.9.3",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      },
+      {
+        "control_id": "2.9.5",
+        "decision": "UNCERTAIN",
+        "llm_confidence": 0.8,
+        "reason": "정책 분기 검사에 사용하는 고정 응답이며 실제 모델 판단이 아닙니다.",
+        "citations": []
+      }
+    ],
+    "validation": {
+      "passed": true,
+      "schema_valid": true,
+      "control_ids_valid": true,
+      "citations_valid": true,
+      "rules_valid": true,
+      "issues": [],
+      "warnings": []
+    },
+    "human_review": {
+      "required": true,
+      "status": "PENDING",
+      "reasons": [
+        "R107",
+        "R204",
+        "R206"
+      ],
+      "threshold_profile": "thresholds_v0.4",
+      "reviewer_id": null,
+      "reviewed_at": null,
+      "review_note": null
+    },
+    "versions": {
+      "schema_version": "0.3.0",
+      "prompt_version": "phase1_mapping_v0.3",
+      "model_name": "NO_LLM_POLICY_TEST",
+      "ruleset_version": "mapping_rules_v0.7",
+      "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+      "embedding_model_revision": null
+    },
+    "llm_raw_response_ref": null,
+    "trace_id": null,
+    "created_at": "2026-09-25T23:37:22.245554+09:00",
+    "processing_time_ms": null
+  }
+}

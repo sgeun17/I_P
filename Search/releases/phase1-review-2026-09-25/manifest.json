@@ -1,0 +1,31 @@
+{
+  "snapshot_id": "phase1-review-2026-09-25",
+  "status": "REVIEW_SNAPSHOT_NOT_FINAL_RELEASE",
+  "created_at": "2026-09-25T23:38:13.781114+09:00",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "controls_count": 101,
+  "model": {
+    "model_id": "BAAI/bge-m3",
+    "revision": "5617a9f61b028005a4858fdac845db406aefb181"
+  },
+  "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54",
+  "chromadb_version": "1.5.9",
+  "collection": "isms_p_controls",
+  "retriever_schema": "retriever-0.2",
+  "top_k": 5,
+  "aggregation": "max_chunk_similarity",
+  "source": {
+    "file": "controls_review.md",
+    "sha256": "8298063cc432518bc175b78fb22ba0d1e8037f138205538ef5a282057c1474a1",
+    "source_pdf_sha256": "72ed9bbb8deee2b57e7e8ba3e19315f46a8d63be2db334ae2fbe82956fcd344e",
+    "status": "기존 원문 대조 기록에서 추출. 전체 수동 검수 완료 아님"
+  },
+  "report_sha256": {
+    "kb_validation_result.json": "7207c99a29478784fb5a648f8edef9c4583fc658f4a17b85c170d53c7dab1fbf",
+    "chroma_index_result.json": "6d65e5732ee092b3430262b7f232fdfb376b97fdf4b00b35e30ae0452ec6014f"
+  },
+  "human_kb_review_complete": false,
+  "independent_relevance_labels_approved": false,
+  "actual_llm_integration_verified": false,
+  "production_relevance_cutoff": null
+}
