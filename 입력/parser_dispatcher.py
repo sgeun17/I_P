@@ -26,8 +26,8 @@ PARSERS = {
     "pptx": ("pptx_test",     "pptx_parser",  ["parse_pptx"]),
     "txt":  ("txt_csv_test",  "text_parser",  ["parse_text"]),
     "csv":  ("txt_csv_test",  "text_parser",  ["parse_text"]),
-    "png":  ("",              "easyocr_test",   ["parse_image"]),
-    "jpg":  ("",              "easyocr_test",   ["parse_image"]),
+    "png":  ("",              "ocr_parser",   ["parse_image"]),
+    "jpg":  ("",              "ocr_parser",   ["parse_image"]),
 }
 
 
