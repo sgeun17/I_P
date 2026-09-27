@@ -1,0 +1,6 @@
+{
+  "status": "VERIFICATION_ASSERTION_FAILED",
+  "reason": "검사 도구가 호환 입력의 정수 증적 ID 1을 변환된 문자열 000001과 직접 비교했다. 기존 변환 규격을 검사 도구에 반영해 별도 출력 경로로 재실행한다.",
+  "runtime_failure_confirmed": false,
+  "complete_result": "../model_reuse_2026-09-27_v2/summary.json"
+}

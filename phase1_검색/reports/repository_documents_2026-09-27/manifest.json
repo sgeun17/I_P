@@ -1,0 +1,112 @@
+{
+  "created_before_search": true,
+  "independent_labels_available": false,
+  "production_evidence_verified": false,
+  "inventory": [
+    {
+      "path": "../phase1_입력/uploads/tmp/08504e7811e14a149d97e62e7e9b12d8.docx",
+      "sha256": "fc3e1fda214cf6dcab8c96e15d6b8c0d4e260511f2e384602b05ed951179d4f0",
+      "size": 16491,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D01"
+    },
+    {
+      "path": "../phase1_입력/uploads/tmp/11c56b6802834307958e85389161021f.docx",
+      "sha256": "1d46230bf0f16fb0db542300881a3ec2e2f1cffd6940a4ecbe265b4076e14f7d",
+      "size": 46666,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D02"
+    },
+    {
+      "path": "../phase1_입력/uploads/tmp/393f9fc697a4477cbf39559aff3a0932.docx",
+      "sha256": "1d46230bf0f16fb0db542300881a3ec2e2f1cffd6940a4ecbe265b4076e14f7d",
+      "size": 46666,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": "../phase1_입력/uploads/tmp/11c56b6802834307958e85389161021f.docx"
+    },
+    {
+      "path": "../phase1_입력/uploads/tmp/55083f17f11c4492b8d004f1261afe32.docx",
+      "sha256": "162724606574b80d7db52a06f882d76f06504c6407679d6adb3fc6f67d397d6d",
+      "size": 49046,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D03"
+    },
+    {
+      "path": "../phase1_입력/uploads/tmp/8ef130fb9f4e4aba8b7bea20f9da330c.docx",
+      "sha256": "b8a633312a48f6cc1129222f942be96040dfadd2316077f18c9eb5469a04812f",
+      "size": 45414,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D04"
+    },
+    {
+      "path": "../phase1_입력/uploads/tmp/f0fa24c369c24a48a551d32f289cae50.docx",
+      "sha256": "f0ae4260fc7feac98f057beecb4915691634905b0ca5e67b27bd07c0b1027f7d",
+      "size": 9943,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D05"
+    },
+    {
+      "path": "../phase1_입력/docx_test/test1.docx",
+      "sha256": "d05623b89fb29ea830d92accf06a17c55a9cbcc6e1dd3eac5bfa5df2b6d7487d",
+      "size": 9658,
+      "provenance": "PROVIDED_TEST_FIXTURE",
+      "duplicate_of": null,
+      "id": "D06"
+    }
+  ],
+  "cases": [
+    {
+      "path": "../phase1_입력/uploads/tmp/08504e7811e14a149d97e62e7e9b12d8.docx",
+      "sha256": "fc3e1fda214cf6dcab8c96e15d6b8c0d4e260511f2e384602b05ed951179d4f0",
+      "size": 16491,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D01"
+    },
+    {
+      "path": "../phase1_입력/uploads/tmp/11c56b6802834307958e85389161021f.docx",
+      "sha256": "1d46230bf0f16fb0db542300881a3ec2e2f1cffd6940a4ecbe265b4076e14f7d",
+      "size": 46666,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D02"
+    },
+    {
+      "path": "../phase1_입력/uploads/tmp/55083f17f11c4492b8d004f1261afe32.docx",
+      "sha256": "162724606574b80d7db52a06f882d76f06504c6407679d6adb3fc6f67d397d6d",
+      "size": 49046,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D03"
+    },
+    {
+      "path": "../phase1_입력/uploads/tmp/8ef130fb9f4e4aba8b7bea20f9da330c.docx",
+      "sha256": "b8a633312a48f6cc1129222f942be96040dfadd2316077f18c9eb5469a04812f",
+      "size": 45414,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D04"
+    },
+    {
+      "path": "../phase1_입력/uploads/tmp/f0fa24c369c24a48a551d32f289cae50.docx",
+      "sha256": "f0ae4260fc7feac98f057beecb4915691634905b0ca5e67b27bd07c0b1027f7d",
+      "size": 9943,
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "duplicate_of": null,
+      "id": "D05"
+    },
+    {
+      "path": "../phase1_입력/docx_test/test1.docx",
+      "sha256": "d05623b89fb29ea830d92accf06a17c55a9cbcc6e1dd3eac5bfa5df2b6d7487d",
+      "size": 9658,
+      "provenance": "PROVIDED_TEST_FIXTURE",
+      "duplicate_of": null,
+      "id": "D06"
+    }
+  ]
+}

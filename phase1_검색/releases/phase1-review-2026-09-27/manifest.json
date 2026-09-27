@@ -1,0 +1,52 @@
+{
+  "snapshot_id": "phase1-review-2026-09-27",
+  "status": "REVIEW_SNAPSHOT_NOT_FINAL_RELEASE",
+  "created_at": "2026-09-27T19:39:49.439224+09:00",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "control_count": 101,
+  "labels_sha256": "bddc0311d84546cf3d0add8d179d083471dfccb14dc52415535fa0e5a4b82530",
+  "model": {
+    "model_id": "BAAI/bge-m3",
+    "revision": "5617a9f61b028005a4858fdac845db406aefb181"
+  },
+  "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54",
+  "index_count_verified": 101,
+  "index_manifest_sha256": "191c9529c51cd141cdb02d0d30cfdd78650f0ffed7fd766fc53bf0716f57491a",
+  "top_k": 5,
+  "aggregation": "max_chunk_similarity",
+  "schema_version": "retriever-0.2",
+  "files": {
+    "controls.json": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "tests/source_reviewed_cases_2026-09-27.json": "bddc0311d84546cf3d0add8d179d083471dfccb14dc52415535fa0e5a4b82530",
+    "reports/kb_source_review_2026-09-27_v2/comparison.json": "222e0393616438da1589a622eecd9db1f35245ca9852c27d1174d251398c64bf",
+    "reports/kb_source_review_2026-09-27_v2/keyword_review.json": "f75bbfe176130b3965138ac8d8dea9c4767d6846b6ea9c99d4961fe1af0564f3",
+    "reports/kb_source_review_2026-09-27_v2/source_differences_review.json": "f3f259b9e79e3feb662d6341b3934335dc18253c507fe6442cec73adf9e93422",
+    "reports/search_quality_2026-09-27/evaluation.json": "47c34b108990f6cd2310bd435a45f6ff9b1f23d4767a0e3ef8b21bceab70c2f6",
+    "reports/search_quality_2026-09-27/search_outputs.json": "164a5b2c5d2c6a2855387d0048cb8220211b95525ef7e742149fa4663d7b0dd0",
+    "data/chroma_kb_manifest.json": "191c9529c51cd141cdb02d0d30cfdd78650f0ffed7fd766fc53bf0716f57491a",
+    "chunk_retriever.py": "35437f265809b0c94c9349248cd98c909b38c0a1cd5729c6657296ef52bdb6f1",
+    "retriever.py": "ce4dc261dc21264422382dde7b37b4abc9e063c6baabc4649491b93480ed482e",
+    "judgment_adapter.py": "8a973a6d09ac1c506cfcf88b21dcf5ddbd6ea8275e32c5ced7ca077ad61cebbc",
+    "schemas/chunk_input.schema.json": "5b9330ddc9a826806e10c990986a2cba25224859a7bb8d95e9c274055b22fad8",
+    "schemas/chunk_output.schema.json": "33d6018ef41b272981b54a1db82cbbc80411661988fd78bf2554690a473fc15f",
+    "requirements.txt": "7ddda57261f4fc8057c354b9428b96cdf6a4cf44196c0c725ee598c27c5721e1",
+    "requirements-chroma.txt": "a8090b24f35fb67d3a5be4ed40190e51839908b1b0eb167b0e14f1cea4fc42a2",
+    "tests/review_kb_sources.py": "dceda3a57a070d865c6f4c55e2e8b260c1708f0d0efef7d6f8668db8660c4828",
+    "tests/review_retriever_labels.py": "2fff4c4cbccaf3db31091b40a45ad0f7c728c28427e32b76167e100d43aa12b0",
+    "tests/evaluate_phase1_finish.py": "d9f6d7ee66c76c91c5fe6861042028bb95e9813ef95a1aa0de3acdbc0c9aa370",
+    "tests/record_phase1_finish_review.py": "0c09704c9e142678fdf5e37f6695ea46841db6c7c12a9b34a818663c138f9e10"
+  },
+  "kb_source_text_comparison_complete": true,
+  "human_kb_review_complete": false,
+  "independent_labels_approved": false,
+  "keyword_semantic_review_complete": false,
+  "actual_llm_integration_verified": false,
+  "full_upload_db_ui_integration_verified": false,
+  "production_relevance_cutoff": null,
+  "rebuild_command_from_search_directory": ".venv/Scripts/python.exe -X utf8 chroma_index.py --stage all",
+  "recheck_command_from_search_directory": ".venv/Scripts/python.exe -X utf8 tests/evaluate_phase1_finish.py --output-dir reports/new_quality_run",
+  "limits": [
+    "모델·DB는 기존 로컬 자산을 사용한다. 스냅샷에 모델 가중치나 DB 원본을 복사하지 않았다.",
+    "검수용 재현 묶음이며 최종 KB 승인·배포 버전·Phase1 완료 선언이 아니다."
+  ]
+}

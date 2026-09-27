@@ -1,0 +1,1824 @@
+{
+  "schema_version": "retriever-0.2",
+  "success": true,
+  "evidence_id": "E0102",
+  "version": 1,
+  "source_file": "11c56b6802834307958e85389161021f.docx",
+  "file_type": "docx",
+  "evidence_chunks": [
+    {
+      "chunk_id": "E0102_v1_c0000",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 0,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": null,
+      "text": "CONSULTING REVIEW\n정보보호·개인정보보호\n문제점 컨설팅 보고서\n공직연금관리공단 팀 인터뷰 자료 기반",
+      "block_orders": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0001",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 1,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": null,
+      "text": "문서 성격: 문제점 진단 보고서\n분석 기준: 인터뷰 시트의 판정 및 미흡사항\n포함 범위: 수정 필요 · 추가 증적 · 확인 필요\n제외 범위: 해소 항목 · 개선방안 · 이행계획\n작성일: 2026년 9월 2일",
+      "block_orders": [
+        4
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0002",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 2,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": null,
+      "text": "보고서 요약\n인터뷰 자료 27개 항목 중 해소로 판정된 항목을 제외하고, 확인된 문제점 18건과 사실관계 확인이 완료되지 않은 항목 2건을 정리하였다. 본 보고서는 문제의 현황과 영향만 기술하며 개선방안은 포함하지 않는다.",
+      "block_orders": [
+        5,
+        6
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0003",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 3,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": "1. 진단 개요",
+      "text": "판정된 항목을 제외하고, 확인된 문제점 18건과 사실관계 확인이 완료되지 않은 항목 2건을 정리하였다. 본 보고서는 문제의 현황과 영향만 기술하며 개선방안은 포함하지 않는다.\n1. 진단 개요\n본 보고서는 제공된 인터뷰 PDF의 질문, 답변, 판정 및 미흡사항을 기준으로 작성하였다. ‘수정 필요’와 ‘추가 증적’은 확인된 문제점으로 분류하고, ‘확인 필요’는 관련 사실이나 증적의 확인이 끝나지 않은 통제 공백으로 별도 표시하였다.",
+      "block_orders": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0004",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 4,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "2. 문제점 총괄",
+      "text": "총 문제 항목: 20 | 수정 필요: 12 | 추가 증적: 6 | 확인 필요: 2",
+      "block_orders": [
+        10
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0005",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 5,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": "2. 문제점 총괄",
+      "text": "위험도 분포: 높음 15건 · 중간 5건",
+      "block_orders": [
+        11
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0006",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 6,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "3. 문제점 목록",
+      "text": "No.: 01 | 세부 항목: 1.1.3.3 | 영역: 거버넌스 | 문제 요약: 전자금융감독규정상 필수 심의사항이 실제 안건으로 상정·심의된 회의록이 제출되지 않았다. | 위험도: 높음\nNo.: 02 | 세부 항목: 1.2.1.2 | 영역: 정보자산 관리 | 문제 요약: 정보자산 식별번호가 IA-XXX와 PROC-XXX 체계로 혼용되고 있으며, 전환 과정의 기존 항목이 정리되지 않았다. | 위험도: 중간\nNo.: 03 | 세부 항목: 2.8.5.1 | 영역: 소스프로그램 관리 | 문제 요약: 소스프로그램의 등록·변경 방법은 있으나 운영 종료 또는 장기 미사용 프로그램의 폐기 기준과 절차가 정의되어 있지 않다. | 위험도: 높음\nNo.: 04 | 세부 항목: 2.8.5.4 | 영역: 프로그램 문서관리 | 문제 요약: 담당자 변경 시 프로그램 설명서와 입출력 레코드 설명서를 갱신·검토했다는 이력이 확인되지 않는다. | 위험도: 중간\nNo.: 05 | 세부 항목: 2.9.3.3 | 영역: 백업매체 보호 | 문제 요약: 백업매체 원격지 소산 장소의 침수·화재 등 입지 위험평가와 항온·항습, 소화, 침수방지 등 물리적 보호대책 및 점검 이력이 없다. | 위험도: 높음\nNo.: 06 | 세부 항목: 2.9.4.5 | 영역: 접속기록 보존 | 문제 요약: 내·외부 IP 인터넷 접속기록의 1년 이상 별도 보존 기준과 실제 보존기간·저장용량·삭제주기 증적이 확인되지 않는다. | 위험도: 높음",
+      "block_orders": [
+        13
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0007",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 7,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "3. 문제점 목록",
+      "text": "No.: 07 | 세부 항목: 2.9.5.3 | 영역: 개인정보 접속기록 | 문제 요약: 개인정보처리시스템 접속기록은 생성·보관되지만 월 1회 이상 점검 기준과 수행 이력이 확인되지 않는다. | 위험도: 높음\nNo.: 08 | 세부 항목: 2.10.1.13 | 영역: 퇴직·직무변경 관리 | 문제 요약: 퇴직 및 직무변경자 관련 정책이 별도 절차서에 규정되어 있다는 답변만 있고, 해당 절차와 실제 수행 증적의 연결이 확인되지 않았다. | 위험도: 중간\nNo.: 09 | 세부 항목: 2.10.2(전체) | 영역: 클라우드 계약 | 문제 요약: 클라우드 이용 계약서·SLA에 소비자 피해 발생 시 금융회사와 클라우드서비스 제공자의 연대 손해배상 책임 및 청구·처리 절차가 반영되어 있지 않다. | 위험도: 높음\nNo.: 10 | 세부 항목: 2.10.3.12 / 2.10.6.8 | 영역: 증적 신뢰성 | 문제 요약: 일부 점검 증적의 수행일자가 실제 작성 시점 이후의 미래일자로 기재되어 있다. | 위험도: 높음\nNo.: 11 | 세부 항목: 2.10.2.2 외 4개 항목 | 영역: 문서 승인관리 | 문제 요약: 주요 증적의 작성자·검토자·관리책임자 서명·날인란이 공란이거나 ‘추후 기재’로 남아 있다. | 위험도: 높음\nNo.: 12 | 세부 항목: 2.11.5.8 | 영역: 개인정보 유출 대응 | 문제 요약: 개인정보 유출 통지·신고 절차에 인터뷰 기준인 ‘인지 후 72시간 이내’ 기준과 기한 준수 통제가 명시되어 있지 않다. | 위험도: 높음",
+      "block_orders": [
+        13
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0008",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 8,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "3. 문제점 목록",
+      "text": "No.: 13 | 세부 항목: 3.1.5.1 | 영역: 제3자 수령 개인정보 | 문제 요약: 제3자로부터 개인정보를 제공받는 계약에 정보주체 동의 획득 책임이 개인정보 제공자에게 있음을 명확히 하는 조항이 확인되지 않는다. | 위험도: 높음\nNo.: 14 | 세부 항목: 3.1.7.4 | 영역: 광고성 정보 발송 | 문제 요약: 21:00~08:00 야간 발송 차단과 전송자 명칭·연락처 자동 표시가 실제 적용됨을 입증하는 설정 화면 또는 발송본문이 없다. | 위험도: 중간\nNo.: 15 | 세부 항목: 3.3.1.10 | 영역: 동의 없는 추가 제공 | 문제 요약: 정보주체 동의 없는 개인정보 추가 제공 시 수집목적 관련성, 예측가능성, 이익 침해 여부, 안전성 확보조치를 판단할 기준과 승인 양식이 없다. | 위험도: 높음\nNo.: 16 | 세부 항목: 3.3.3.1 | 영역: 영업양도 등 개인정보 이전 | 문제 요약: 영업양도·합병·분할에 따른 실제 이전 사례 유무와 사전 통지, 거부 시 조치, 이전받는 자의 이용목적 제한 절차가 문서화되어 있는지 확인되지 않는다. | 위험도: 중간\nNo.: 17 | 세부 항목: 3.3.4.1 | 영역: 개인정보 국외이전 | 문제 요약: 싱가포르·미국 국외 처리위탁·보관 건의 수탁자별 이전 항목·국가·시기·방법·적법 근거와 동의·승인 기록이 연결되지 않으며, 기존 ‘대상 미확정’ 문구와 운영 현황도 불일치한다. | 위험도: 높음",
+      "block_orders": [
+        13
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0009",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 9,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "3. 문제점 목록",
+      "text": "No.: 18 | 세부 항목: 3.5.1.1 | 영역: 개인정보 처리방침 | 문제 요약: 홈페이지에서 개인정보 처리방침을 확인할 수 없다. | 위험도: 높음\nNo.: 19 | 세부 항목: 3.1.7.1 | 영역: 마케팅 동의 | 문제 요약: 오프라인 개인정보 수집 양식에서 마케팅 목적 동의가 필수 항목과 분리되어 있지 않다. | 위험도: 높음\nNo.: 20 | 세부 항목: 3.1.3.3 | 영역: 주민등록번호 수집 | 문제 요약: 온라인 회원가입 과정에서 주민등록번호를 필수 항목으로 수집하고 대체가입수단을 제공하지 않는다. | 위험도: 높음",
+      "block_orders": [
+        13
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0010",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 10,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "01. 거버넌스  |  1.1.3.3",
+      "text": "판정: 추가 증적\n확인된 문제: 전자금융감독규정상 필수 심의사항이 실제 안건으로 상정·심의된 회의록이 제출되지 않았다.\n위험 및 영향: 필수 심의사항의 논의·의결 여부와 책임 있는 의사결정 과정을 확인할 수 없다.",
+      "block_orders": [
+        16
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0011",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 11,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "02. 정보자산 관리  |  1.2.1.2",
+      "text": "판정: 수정 필요\n확인된 문제: 정보자산 식별번호가 IA-XXX와 PROC-XXX 체계로 혼용되고 있으며, 전환 과정의 기존 항목이 정리되지 않았다.\n위험 및 영향: 현행 기준 식별이 어렵고 자산 추적, 변경관리 및 증적 간 대조의 신뢰성이 저하된다.",
+      "block_orders": [
+        18
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0012",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 12,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "03. 소스프로그램 관리  |  2.8.5.1",
+      "text": "판정: 수정 필요\n확인된 문제: 소스프로그램의 등록·변경 방법은 있으나 운영 종료 또는 장기 미사용 프로그램의 폐기 기준과 절차가 정의되어 있지 않다.\n위험 및 영향: 폐기 대상 식별, 승인권자, 폐기 방식 및 이력 관리가 불명확해 불필요한 소스가 잔존할 수 있다.",
+      "block_orders": [
+        20
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0013",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 13,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "04. 프로그램 문서관리  |  2.8.5.4",
+      "text": "판정: 추가 증적\n확인된 문제: 담당자 변경 시 프로그램 설명서와 입출력 레코드 설명서를 갱신·검토했다는 이력이 확인되지 않는다.\n위험 및 영향: 인수인계 이후 문서와 실제 프로그램 간 불일치 여부를 검증할 수 없다.",
+      "block_orders": [
+        22
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0014",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 14,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "05. 백업매체 보호  |  2.9.3.3",
+      "text": "판정: 추가 증적\n확인된 문제: 백업매체 원격지 소산 장소의 침수·화재 등 입지 위험평가와 항온·항습, 소화, 침수방지 등 물리적 보호대책 및 점검 이력이 없다.\n위험 및 영향: 재해 발생 시 백업매체의 가용성과 복구 가능성을 보장하기 어렵다.",
+      "block_orders": [
+        24
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0015",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 15,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "06. 접속기록 보존  |  2.9.4.5",
+      "text": "판정: 추가 증적\n확인된 문제: 내·외부 IP 인터넷 접속기록의 1년 이상 별도 보존 기준과 실제 보존기간·저장용량·삭제주기 증적이 확인되지 않는다.\n위험 및 영향: 규정 준수 여부와 사고 발생 시 장기간 추적 가능성을 입증하기 어렵다.",
+      "block_orders": [
+        26
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0016",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 16,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "07. 개인정보 접속기록  |  2.9.5.3",
+      "text": "판정: 수정 필요\n확인된 문제: 개인정보처리시스템 접속기록은 생성·보관되지만 월 1회 이상 점검 기준과 수행 이력이 확인되지 않는다.\n위험 및 영향: 이상행위와 개인정보 다운로드의 적정성을 적시에 탐지·검토했다는 근거가 없다.",
+      "block_orders": [
+        28
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0017",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 17,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "08. 퇴직·직무변경 관리  |  2.10.1.13",
+      "text": "판정: 확인 필요\n확인된 문제: 퇴직 및 직무변경자 관련 정책이 별도 절차서에 규정되어 있다는 답변만 있고, 해당 절차와 실제 수행 증적의 연결이 확인되지 않았다.\n위험 및 영향: 권한 회수와 보안정책 적용 여부에 대한 검증 공백이 남아 있다.",
+      "block_orders": [
+        30
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0018",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 18,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "09. 클라우드 계약  |  2.10.2(전체)",
+      "text": "판정: 수정 필요\n확인된 문제: 클라우드 이용 계약서·SLA에 소비자 피해 발생 시 금융회사와 클라우드서비스 제공자의 연대 손해배상 책임 및 청구·처리 절차가 반영되어 있지 않다.\n위험 및 영향: 피해 발생 시 책임 범위와 배상 처리 기준이 불명확해 분쟁 및 소비자 보호 공백이 발생할 수 있다.",
+      "block_orders": [
+        32
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0019",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 19,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "10. 증적 신뢰성  |  2.10.3.12 / 2.10.6.8",
+      "text": "판정: 수정 필요\n확인된 문제: 일부 점검 증적의 수행일자가 실제 작성 시점 이후의 미래일자로 기재되어 있다.\n위험 및 영향: 실제 점검 수행 여부와 시점을 확인하기 어려워 증적의 진정성과 신뢰성이 훼손된다.",
+      "block_orders": [
+        34
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0020",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 20,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "11. 문서 승인관리  |  2.10.2.2 외 4개 항목",
+      "text": "판정: 수정 필요\n확인된 문제: 주요 증적의 작성자·검토자·관리책임자 서명·날인란이 공란이거나 ‘추후 기재’로 남아 있다.\n위험 및 영향: 정당한 권한자의 검토·승인 여부와 확정 시점을 확인할 수 없다.",
+      "block_orders": [
+        36
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0021",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 21,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "12. 개인정보 유출 대응  |  2.11.5.8",
+      "text": "판정: 수정 필요\n확인된 문제: 개인정보 유출 통지·신고 절차에 인터뷰 기준인 ‘인지 후 72시간 이내’ 기준과 기한 준수 통제가 명시되어 있지 않다.\n위험 및 영향: 유출 발생 시 법정기한을 놓칠 가능성이 있고 적시 대응 여부를 입증하기 어렵다.",
+      "block_orders": [
+        38
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0022",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 22,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "13. 제3자 수령 개인정보  |  3.1.5.1",
+      "text": "판정: 수정 필요\n확인된 문제: 제3자로부터 개인정보를 제공받는 계약에 정보주체 동의 획득 책임이 개인정보 제공자에게 있음을 명확히 하는 조항이 확인되지 않는다.\n위험 및 영향: 적법한 동의 확보 책임이 불명확해 제공받은 개인정보의 처리 근거를 입증하기 어렵다.",
+      "block_orders": [
+        40
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0023",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 23,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "14. 광고성 정보 발송  |  3.1.7.4",
+      "text": "판정: 추가 증적\n확인된 문제: 21:00~08:00 야간 발송 차단과 전송자 명칭·연락처 자동 표시가 실제 적용됨을 입증하는 설정 화면 또는 발송본문이 없다.\n위험 및 영향: 광고성 정보 전송 통제가 운영되고 있는지 객관적으로 확인할 수 없다.",
+      "block_orders": [
+        42
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0024",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 24,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "15. 동의 없는 추가 제공  |  3.3.1.10",
+      "text": "판정: 수정 필요\n확인된 문제: 정보주체 동의 없는 개인정보 추가 제공 시 수집목적 관련성, 예측가능성, 이익 침해 여부, 안전성 확보조치를 판단할 기준과 승인 양식이 없다.\n위험 및 영향: 사례 발생 시 적법성 판단과 승인 근거를 일관되게 확보하기 어렵다.",
+      "block_orders": [
+        44
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0025",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 25,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "16. 영업양도 등 개인정보 이전  |  3.3.3.1",
+      "text": "판정: 확인 필요\n확인된 문제: 영업양도·합병·분할에 따른 실제 이전 사례 유무와 사전 통지, 거부 시 조치, 이전받는 자의 이용목적 제한 절차가 문서화되어 있는지 확인되지 않는다.\n위험 및 영향: 조직변경 시 정보주체 권리보호와 이전 후 목적 제한을 입증할 근거가 부족하다.",
+      "block_orders": [
+        46
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0026",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 26,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "17. 개인정보 국외이전  |  3.3.4.1",
+      "text": "판정: 추가 증적\n확인된 문제: 싱가포르·미국 국외 처리위탁·보관 건의 수탁자별 이전 항목·국가·시기·방법·적법 근거와 동의·승인 기록이 연결되지 않으며, 기존 ‘대상 미확정’ 문구와 운영 현황도 불일치한다.\n위험 및 영향: 국외이전의 적법성과 실제 처리 현황에 대한 추적성과 정합성이 부족하다.",
+      "block_orders": [
+        48
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0027",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 27,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "18. 개인정보 처리방침  |  3.5.1.1",
+      "text": "판정: 수정 필요\n확인된 문제: 홈페이지에서 개인정보 처리방침을 확인할 수 없다.\n위험 및 영향: 정보주체가 개인정보 처리 현황과 권리행사 방법을 쉽게 확인할 수 없다.",
+      "block_orders": [
+        50
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0028",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 28,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "19. 마케팅 동의  |  3.1.7.1",
+      "text": "판정: 수정 필요\n확인된 문제: 오프라인 개인정보 수집 양식에서 마케팅 목적 동의가 필수 항목과 분리되어 있지 않다.\n위험 및 영향: 선택 동의의 자율성이 훼손되고 마케팅 처리의 적법한 동의 여부가 불명확해질 수 있다.",
+      "block_orders": [
+        52
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0029",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 29,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "table",
+      "page_start": null,
+      "page_end": null,
+      "heading": "20. 주민등록번호 수집  |  3.1.3.3",
+      "text": "판정: 수정 필요\n확인된 문제: 온라인 회원가입 과정에서 주민등록번호를 필수 항목으로 수집하고 대체가입수단을 제공하지 않는다.\n위험 및 영향: 고유식별정보의 과도한 수집과 회원가입 단계의 적법성 문제가 발생할 수 있다.",
+      "block_orders": [
+        54
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0030",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 30,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": "5. 확인 공백",
+      "text": "5. 확인 공백\n아래 항목은 인터뷰 답변만으로 사실관계나 실제 운영 증적을 확정할 수 없어 문제의 해소 여부를 판단할 수 없는 상태다.\n2.10.1.13  퇴직 및 직무변경자 관련 정책이 별도 절차서에 규정되어 있다는 답변만 있고, 해당 절차와 실제 수행 증적의 연결이 확인되지 않았다.\n3.3.3.1  영업양도·합병·분할에 따른 실제 이전 사례 유무와 사전 통지, 거부 시 조치, 이전받는 자의 이용목적 제한 절차가 문서화되어 있는지 확인되지 않는다.",
+      "block_orders": [
+        55,
+        56,
+        57,
+        58
+      ]
+    },
+    {
+      "chunk_id": "E0102_v1_c0031",
+      "evidence_id": "E0102",
+      "version": 1,
+      "chunk_index": 31,
+      "file_type": "docx",
+      "source_file": "11c56b6802834307958e85389161021f.docx",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": "6. 결론",
+      "text": "않았다.\n3.3.3.1  영업양도·합병·분할에 따른 실제 이전 사례 유무와 사전 통지, 거부 시 조치, 이전받는 자의 이용목적 제한 절차가 문서화되어 있는지 확인되지 않는다.\n6. 결론\n인터뷰 결과, 문제는 문서의 존재 여부에만 국한되지 않고 실제 운영 이력, 승인 책임, 법정기한, 계약상 책임, 개인정보 수집·제공의 적법성 및 증적 신뢰성 전반에 분포한다. 특히 미래일자 증적과 미승인 문서는 제출 자료 전체의 신뢰성을 낮추며, 접속기록 점검·보존, 주민등록번호 수집, 개인정보 국외이전 및 유출 대응 관련 문제는 규제 준수와 정보주체 권리에 직접적인 영향을 줄 수 있다.",
+      "block_orders": [
+        58,
+        59,
+        60
+      ]
+    }
+  ],
+  "retrieval": {
+    "unit": "document",
+    "top_k": 5,
+    "score_type": "cosine_similarity",
+    "aggregation": "max_chunk_similarity",
+    "query_text_field": "text",
+    "candidates": [
+      {
+        "rank": 1,
+        "control_id": "3.3.3",
+        "control_name": "영업의 양도 등에 따른 개인정보 이전",
+        "similarity_score": 0.732624,
+        "best_chunk_id": "E0102_v1_c0025",
+        "matched_chunk_ids": [
+          "E0102_v1_c0025",
+          "E0102_v1_c0030",
+          "E0102_v1_c0031"
+        ]
+      },
+      {
+        "rank": 2,
+        "control_id": "3.1.3",
+        "control_name": "주민등록번호 처리 제한",
+        "similarity_score": 0.731761,
+        "best_chunk_id": "E0102_v1_c0029",
+        "matched_chunk_ids": [
+          "E0102_v1_c0009",
+          "E0102_v1_c0029"
+        ]
+      },
+      {
+        "rank": 3,
+        "control_id": "2.9.5",
+        "control_name": "로그 및 접속기록 점검",
+        "similarity_score": 0.724389,
+        "best_chunk_id": "E0102_v1_c0016",
+        "matched_chunk_ids": [
+          "E0102_v1_c0003",
+          "E0102_v1_c0007",
+          "E0102_v1_c0010",
+          "E0102_v1_c0015",
+          "E0102_v1_c0016",
+          "E0102_v1_c0019",
+          "E0102_v1_c0020"
+        ]
+      },
+      {
+        "rank": 4,
+        "control_id": "2.2.5",
+        "control_name": "퇴직 및 직무변경 관리",
+        "similarity_score": 0.722433,
+        "best_chunk_id": "E0102_v1_c0017",
+        "matched_chunk_ids": [
+          "E0102_v1_c0000",
+          "E0102_v1_c0011",
+          "E0102_v1_c0013",
+          "E0102_v1_c0017",
+          "E0102_v1_c0030"
+        ]
+      },
+      {
+        "rank": 5,
+        "control_id": "3.3.1",
+        "control_name": "개인정보 제3자 제공",
+        "similarity_score": 0.716347,
+        "best_chunk_id": "E0102_v1_c0008",
+        "matched_chunk_ids": [
+          "E0102_v1_c0008",
+          "E0102_v1_c0022",
+          "E0102_v1_c0024"
+        ]
+      }
+    ],
+    "chunk_results": [
+      {
+        "chunk_id": "E0102_v1_c0000",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.601842
+          },
+          {
+            "rank": 2,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.596218
+          },
+          {
+            "rank": 3,
+            "control_id": "2.2.5",
+            "control_name": "퇴직 및 직무변경 관리",
+            "similarity_score": 0.593712
+          },
+          {
+            "rank": 4,
+            "control_id": "2.1.2",
+            "control_name": "조직의 유지관리",
+            "similarity_score": 0.587511
+          },
+          {
+            "rank": 5,
+            "control_id": "1.2.4",
+            "control_name": "보호대책 선정",
+            "similarity_score": 0.57662
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0001",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.607502
+          },
+          {
+            "rank": 2,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.595559
+          },
+          {
+            "rank": 3,
+            "control_id": "1.2.3",
+            "control_name": "위험 평가",
+            "similarity_score": 0.594181
+          },
+          {
+            "rank": 4,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.586674
+          },
+          {
+            "rank": 5,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.581924
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0002",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.550557
+          },
+          {
+            "rank": 2,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.549862
+          },
+          {
+            "rank": 3,
+            "control_id": "2.11.2",
+            "control_name": "취약점 점검 및 조치",
+            "similarity_score": 0.537866
+          },
+          {
+            "rank": 4,
+            "control_id": "1.3.1",
+            "control_name": "보호대책 구현",
+            "similarity_score": 0.532346
+          },
+          {
+            "rank": 5,
+            "control_id": "1.4.3",
+            "control_name": "관리체계 개선",
+            "similarity_score": 0.527437
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0003",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.633663
+          },
+          {
+            "rank": 2,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.631244
+          },
+          {
+            "rank": 3,
+            "control_id": "2.11.2",
+            "control_name": "취약점 점검 및 조치",
+            "similarity_score": 0.62845
+          },
+          {
+            "rank": 4,
+            "control_id": "1.4.3",
+            "control_name": "관리체계 개선",
+            "similarity_score": 0.623181
+          },
+          {
+            "rank": 5,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.622529
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0004",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.527313
+          },
+          {
+            "rank": 2,
+            "control_id": "2.12.2",
+            "control_name": "재해 복구 시험 및 개선",
+            "similarity_score": 0.526204
+          },
+          {
+            "rank": 3,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.524482
+          },
+          {
+            "rank": 4,
+            "control_id": "2.11.2",
+            "control_name": "취약점 점검 및 조치",
+            "similarity_score": 0.520049
+          },
+          {
+            "rank": 5,
+            "control_id": "2.11.4",
+            "control_name": "사고 대응 훈련 및 개선",
+            "similarity_score": 0.505438
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0005",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "1.2.3",
+            "control_name": "위험 평가",
+            "similarity_score": 0.51784
+          },
+          {
+            "rank": 2,
+            "control_id": "2.3.1",
+            "control_name": "외부자 현황 관리",
+            "similarity_score": 0.462798
+          },
+          {
+            "rank": 3,
+            "control_id": "1.2.4",
+            "control_name": "보호대책 선정",
+            "similarity_score": 0.458204
+          },
+          {
+            "rank": 4,
+            "control_id": "2.11.3",
+            "control_name": "이상행위 분석 및 모니터링",
+            "similarity_score": 0.457487
+          },
+          {
+            "rank": 5,
+            "control_id": "2.5.3",
+            "control_name": "사용자 인증",
+            "similarity_score": 0.443376
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0006",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "1.2.3",
+            "control_name": "위험 평가",
+            "similarity_score": 0.665297
+          },
+          {
+            "rank": 2,
+            "control_id": "2.1.3",
+            "control_name": "정보자산 관리",
+            "similarity_score": 0.661879
+          },
+          {
+            "rank": 3,
+            "control_id": "2.9.3",
+            "control_name": "백업 및 복구관리",
+            "similarity_score": 0.655355
+          },
+          {
+            "rank": 4,
+            "control_id": "2.9.1",
+            "control_name": "변경관리",
+            "similarity_score": 0.654879
+          },
+          {
+            "rank": 5,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.650871
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0007",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.10.2",
+            "control_name": "클라우드 보안",
+            "similarity_score": 0.680661
+          },
+          {
+            "rank": 2,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.679175
+          },
+          {
+            "rank": 3,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.674476
+          },
+          {
+            "rank": 4,
+            "control_id": "1.1.4",
+            "control_name": "범위 설정",
+            "similarity_score": 0.67439
+          },
+          {
+            "rank": 5,
+            "control_id": "2.9.4",
+            "control_name": "로그 및 접속기록 관리",
+            "similarity_score": 0.673894
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0008",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.3.1",
+            "control_name": "개인정보 제3자 제공",
+            "similarity_score": 0.716347
+          },
+          {
+            "rank": 2,
+            "control_id": "3.2.4",
+            "control_name": "개인정보 목적 외 이용 및 제공",
+            "similarity_score": 0.702042
+          },
+          {
+            "rank": 3,
+            "control_id": "3.1.7",
+            "control_name": "마케팅 목적의 개인정보 수집·이용",
+            "similarity_score": 0.699683
+          },
+          {
+            "rank": 4,
+            "control_id": "3.1.1",
+            "control_name": "개인정보 수집·이용",
+            "similarity_score": 0.683358
+          },
+          {
+            "rank": 5,
+            "control_id": "2.3.2",
+            "control_name": "외부자 계약 시 보안",
+            "similarity_score": 0.674625
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0009",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.1.2",
+            "control_name": "개인정보 수집 제한",
+            "similarity_score": 0.710295
+          },
+          {
+            "rank": 2,
+            "control_id": "3.1.7",
+            "control_name": "마케팅 목적의 개인정보 수집·이용",
+            "similarity_score": 0.691094
+          },
+          {
+            "rank": 3,
+            "control_id": "3.1.1",
+            "control_name": "개인정보 수집·이용",
+            "similarity_score": 0.690504
+          },
+          {
+            "rank": 4,
+            "control_id": "3.5.1",
+            "control_name": "개인정보 처리방침 공개",
+            "similarity_score": 0.670424
+          },
+          {
+            "rank": 5,
+            "control_id": "3.1.3",
+            "control_name": "주민등록번호 처리 제한",
+            "similarity_score": 0.661995
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0010",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.599014
+          },
+          {
+            "rank": 2,
+            "control_id": "1.2.3",
+            "control_name": "위험 평가",
+            "similarity_score": 0.593483
+          },
+          {
+            "rank": 3,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.592202
+          },
+          {
+            "rank": 4,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.58823
+          },
+          {
+            "rank": 5,
+            "control_id": "2.10.4",
+            "control_name": "전자거래 및 핀테크 보안",
+            "similarity_score": 0.587974
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0011",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "1.2.1",
+            "control_name": "정보자산 식별",
+            "similarity_score": 0.650556
+          },
+          {
+            "rank": 2,
+            "control_id": "2.9.1",
+            "control_name": "변경관리",
+            "similarity_score": 0.638229
+          },
+          {
+            "rank": 3,
+            "control_id": "2.1.3",
+            "control_name": "정보자산 관리",
+            "similarity_score": 0.633319
+          },
+          {
+            "rank": 4,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.604857
+          },
+          {
+            "rank": 5,
+            "control_id": "2.2.5",
+            "control_name": "퇴직 및 직무변경 관리",
+            "similarity_score": 0.603443
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0012",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.1",
+            "control_name": "변경관리",
+            "similarity_score": 0.640372
+          },
+          {
+            "rank": 2,
+            "control_id": "2.9.7",
+            "control_name": "정보자산의 재사용 및 폐기",
+            "similarity_score": 0.640302
+          },
+          {
+            "rank": 3,
+            "control_id": "2.9.3",
+            "control_name": "백업 및 복구관리",
+            "similarity_score": 0.637446
+          },
+          {
+            "rank": 4,
+            "control_id": "2.8.5",
+            "control_name": "소스 프로그램 관리",
+            "similarity_score": 0.636446
+          },
+          {
+            "rank": 5,
+            "control_id": "2.3.4",
+            "control_name": "외부자 계약 변경 및 만료 시 보안",
+            "similarity_score": 0.635064
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0013",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.1",
+            "control_name": "변경관리",
+            "similarity_score": 0.635493
+          },
+          {
+            "rank": 2,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.611837
+          },
+          {
+            "rank": 3,
+            "control_id": "2.2.5",
+            "control_name": "퇴직 및 직무변경 관리",
+            "similarity_score": 0.611495
+          },
+          {
+            "rank": 4,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.61119
+          },
+          {
+            "rank": 5,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.604925
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0014",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.3",
+            "control_name": "백업 및 복구관리",
+            "similarity_score": 0.593913
+          },
+          {
+            "rank": 2,
+            "control_id": "2.12.1",
+            "control_name": "재해·재난 대비 안전조치",
+            "similarity_score": 0.569593
+          },
+          {
+            "rank": 3,
+            "control_id": "2.9.7",
+            "control_name": "정보자산의 재사용 및 폐기",
+            "similarity_score": 0.561323
+          },
+          {
+            "rank": 4,
+            "control_id": "2.10.7",
+            "control_name": "보조저장매체 관리",
+            "similarity_score": 0.558318
+          },
+          {
+            "rank": 5,
+            "control_id": "2.4.3",
+            "control_name": "정보시스템 보호",
+            "similarity_score": 0.553925
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0015",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.6.7",
+            "control_name": "인터넷 접속 통제",
+            "similarity_score": 0.598467
+          },
+          {
+            "rank": 2,
+            "control_id": "2.11.3",
+            "control_name": "이상행위 분석 및 모니터링",
+            "similarity_score": 0.597859
+          },
+          {
+            "rank": 3,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.595089
+          },
+          {
+            "rank": 4,
+            "control_id": "2.4.3",
+            "control_name": "정보시스템 보호",
+            "similarity_score": 0.592982
+          },
+          {
+            "rank": 5,
+            "control_id": "2.9.4",
+            "control_name": "로그 및 접속기록 관리",
+            "similarity_score": 0.591361
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0016",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.724389
+          },
+          {
+            "rank": 2,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.694029
+          },
+          {
+            "rank": 3,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.677056
+          },
+          {
+            "rank": 4,
+            "control_id": "2.9.4",
+            "control_name": "로그 및 접속기록 관리",
+            "similarity_score": 0.66759
+          },
+          {
+            "rank": 5,
+            "control_id": "2.11.2",
+            "control_name": "취약점 점검 및 조치",
+            "similarity_score": 0.666916
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0017",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.2.5",
+            "control_name": "퇴직 및 직무변경 관리",
+            "similarity_score": 0.722433
+          },
+          {
+            "rank": 2,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.659721
+          },
+          {
+            "rank": 3,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.654055
+          },
+          {
+            "rank": 4,
+            "control_id": "2.2.6",
+            "control_name": "보안 위반 시 조치",
+            "similarity_score": 0.641839
+          },
+          {
+            "rank": 5,
+            "control_id": "2.2.1",
+            "control_name": "주요 직무자 지정 및 관리",
+            "similarity_score": 0.639747
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0018",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.10.2",
+            "control_name": "클라우드 보안",
+            "similarity_score": 0.699156
+          },
+          {
+            "rank": 2,
+            "control_id": "2.10.8",
+            "control_name": "패치관리",
+            "similarity_score": 0.554002
+          },
+          {
+            "rank": 3,
+            "control_id": "2.12.1",
+            "control_name": "재해·재난 대비 안전조치",
+            "similarity_score": 0.552879
+          },
+          {
+            "rank": 4,
+            "control_id": "2.3.1",
+            "control_name": "외부자 현황 관리",
+            "similarity_score": 0.55128
+          },
+          {
+            "rank": 5,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.54821
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0019",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.60122
+          },
+          {
+            "rank": 2,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.597542
+          },
+          {
+            "rank": 3,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.587487
+          },
+          {
+            "rank": 4,
+            "control_id": "2.11.2",
+            "control_name": "취약점 점검 및 조치",
+            "similarity_score": 0.585292
+          },
+          {
+            "rank": 5,
+            "control_id": "2.9.1",
+            "control_name": "변경관리",
+            "similarity_score": 0.582846
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0020",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.9.1",
+            "control_name": "변경관리",
+            "similarity_score": 0.617931
+          },
+          {
+            "rank": 2,
+            "control_id": "2.5.6",
+            "control_name": "접근권한 검토",
+            "similarity_score": 0.617108
+          },
+          {
+            "rank": 3,
+            "control_id": "1.2.3",
+            "control_name": "위험 평가",
+            "similarity_score": 0.600574
+          },
+          {
+            "rank": 4,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.600257
+          },
+          {
+            "rank": 5,
+            "control_id": "1.4.3",
+            "control_name": "관리체계 개선",
+            "similarity_score": 0.5972
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0021",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.11.5",
+            "control_name": "사고 대응 및 복구",
+            "similarity_score": 0.661159
+          },
+          {
+            "rank": 2,
+            "control_id": "2.2.6",
+            "control_name": "보안 위반 시 조치",
+            "similarity_score": 0.633137
+          },
+          {
+            "rank": 3,
+            "control_id": "3.3.4",
+            "control_name": "개인정보 국외이전",
+            "similarity_score": 0.631231
+          },
+          {
+            "rank": 4,
+            "control_id": "3.2.4",
+            "control_name": "개인정보 목적 외 이용 및 제공",
+            "similarity_score": 0.62629
+          },
+          {
+            "rank": 5,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.623842
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0022",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.3.1",
+            "control_name": "개인정보 제3자 제공",
+            "similarity_score": 0.709534
+          },
+          {
+            "rank": 2,
+            "control_id": "3.2.4",
+            "control_name": "개인정보 목적 외 이용 및 제공",
+            "similarity_score": 0.658413
+          },
+          {
+            "rank": 3,
+            "control_id": "3.1.1",
+            "control_name": "개인정보 수집·이용",
+            "similarity_score": 0.657281
+          },
+          {
+            "rank": 4,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.651049
+          },
+          {
+            "rank": 5,
+            "control_id": "2.3.2",
+            "control_name": "외부자 계약 시 보안",
+            "similarity_score": 0.645595
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0023",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.1.7",
+            "control_name": "마케팅 목적의 개인정보 수집·이용",
+            "similarity_score": 0.622147
+          },
+          {
+            "rank": 2,
+            "control_id": "2.3.1",
+            "control_name": "외부자 현황 관리",
+            "similarity_score": 0.571476
+          },
+          {
+            "rank": 3,
+            "control_id": "2.11.3",
+            "control_name": "이상행위 분석 및 모니터링",
+            "similarity_score": 0.556231
+          },
+          {
+            "rank": 4,
+            "control_id": "2.10.6",
+            "control_name": "업무용 단말기기 보안",
+            "similarity_score": 0.554872
+          },
+          {
+            "rank": 5,
+            "control_id": "3.1.4",
+            "control_name": "민감정보 및 고유식별정보의 처리 제한",
+            "similarity_score": 0.552419
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0024",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.1.1",
+            "control_name": "개인정보 수집·이용",
+            "similarity_score": 0.693656
+          },
+          {
+            "rank": 2,
+            "control_id": "3.2.4",
+            "control_name": "개인정보 목적 외 이용 및 제공",
+            "similarity_score": 0.692143
+          },
+          {
+            "rank": 3,
+            "control_id": "3.3.1",
+            "control_name": "개인정보 제3자 제공",
+            "similarity_score": 0.683287
+          },
+          {
+            "rank": 4,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.680575
+          },
+          {
+            "rank": 5,
+            "control_id": "3.1.2",
+            "control_name": "개인정보 수집 제한",
+            "similarity_score": 0.663178
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0025",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.3.3",
+            "control_name": "영업의 양도 등에 따른 개인정보 이전",
+            "similarity_score": 0.732624
+          },
+          {
+            "rank": 2,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.669888
+          },
+          {
+            "rank": 3,
+            "control_id": "2.9.1",
+            "control_name": "변경관리",
+            "similarity_score": 0.645446
+          },
+          {
+            "rank": 4,
+            "control_id": "1.1.4",
+            "control_name": "범위 설정",
+            "similarity_score": 0.636037
+          },
+          {
+            "rank": 5,
+            "control_id": "2.8.2",
+            "control_name": "보안 요구사항 검토 및 시험",
+            "similarity_score": 0.631711
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0026",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.3.4",
+            "control_name": "개인정보 국외이전",
+            "similarity_score": 0.638542
+          },
+          {
+            "rank": 2,
+            "control_id": "2.3.1",
+            "control_name": "외부자 현황 관리",
+            "similarity_score": 0.616781
+          },
+          {
+            "rank": 3,
+            "control_id": "2.3.4",
+            "control_name": "외부자 계약 변경 및 만료 시 보안",
+            "similarity_score": 0.584651
+          },
+          {
+            "rank": 4,
+            "control_id": "2.3.3",
+            "control_name": "외부자 보안 이행 관리",
+            "similarity_score": 0.578236
+          },
+          {
+            "rank": 5,
+            "control_id": "2.3.2",
+            "control_name": "외부자 계약 시 보안",
+            "similarity_score": 0.566765
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0027",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.5.1",
+            "control_name": "개인정보 처리방침 공개",
+            "similarity_score": 0.692544
+          },
+          {
+            "rank": 2,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.673622
+          },
+          {
+            "rank": 3,
+            "control_id": "2.5.4",
+            "control_name": "비밀번호 관리",
+            "similarity_score": 0.654902
+          },
+          {
+            "rank": 4,
+            "control_id": "3.5.2",
+            "control_name": "정보주체 권리보장",
+            "similarity_score": 0.652143
+          },
+          {
+            "rank": 5,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.650206
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0028",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.1.7",
+            "control_name": "마케팅 목적의 개인정보 수집·이용",
+            "similarity_score": 0.691479
+          },
+          {
+            "rank": 2,
+            "control_id": "3.1.2",
+            "control_name": "개인정보 수집 제한",
+            "similarity_score": 0.648363
+          },
+          {
+            "rank": 3,
+            "control_id": "3.1.1",
+            "control_name": "개인정보 수집·이용",
+            "similarity_score": 0.62961
+          },
+          {
+            "rank": 4,
+            "control_id": "3.2.4",
+            "control_name": "개인정보 목적 외 이용 및 제공",
+            "similarity_score": 0.601002
+          },
+          {
+            "rank": 5,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.597719
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0029",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.1.3",
+            "control_name": "주민등록번호 처리 제한",
+            "similarity_score": 0.731761
+          },
+          {
+            "rank": 2,
+            "control_id": "3.1.4",
+            "control_name": "민감정보 및 고유식별정보의 처리 제한",
+            "similarity_score": 0.663103
+          },
+          {
+            "rank": 3,
+            "control_id": "3.1.1",
+            "control_name": "개인정보 수집·이용",
+            "similarity_score": 0.634926
+          },
+          {
+            "rank": 4,
+            "control_id": "3.1.2",
+            "control_name": "개인정보 수집 제한",
+            "similarity_score": 0.631917
+          },
+          {
+            "rank": 5,
+            "control_id": "2.5.3",
+            "control_name": "사용자 인증",
+            "similarity_score": 0.603901
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0030",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "2.2.5",
+            "control_name": "퇴직 및 직무변경 관리",
+            "similarity_score": 0.67009
+          },
+          {
+            "rank": 2,
+            "control_id": "3.3.3",
+            "control_name": "영업의 양도 등에 따른 개인정보 이전",
+            "similarity_score": 0.636686
+          },
+          {
+            "rank": 3,
+            "control_id": "2.1.1",
+            "control_name": "정책의 유지관리",
+            "similarity_score": 0.608723
+          },
+          {
+            "rank": 4,
+            "control_id": "2.2.1",
+            "control_name": "주요 직무자 지정 및 관리",
+            "similarity_score": 0.608335
+          },
+          {
+            "rank": 5,
+            "control_id": "1.3.3",
+            "control_name": "운영현황 관리",
+            "similarity_score": 0.60607
+          }
+        ]
+      },
+      {
+        "chunk_id": "E0102_v1_c0031",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.3.3",
+            "control_name": "영업의 양도 등에 따른 개인정보 이전",
+            "similarity_score": 0.705989
+          },
+          {
+            "rank": 2,
+            "control_id": "1.4.1",
+            "control_name": "법적 요구사항 준수 검토",
+            "similarity_score": 0.635596
+          },
+          {
+            "rank": 3,
+            "control_id": "3.3.4",
+            "control_name": "개인정보 국외이전",
+            "similarity_score": 0.630511
+          },
+          {
+            "rank": 4,
+            "control_id": "1.1.4",
+            "control_name": "범위 설정",
+            "similarity_score": 0.630227
+          },
+          {
+            "rank": 5,
+            "control_id": "2.3.1",
+            "control_name": "외부자 현황 관리",
+            "similarity_score": 0.609699
+          }
+        ]
+      }
+    ]
+  },
+  "candidate_controls": [
+    {
+      "control_id": "3.3.3",
+      "control_name": "영업의 양도 등에 따른 개인정보 이전",
+      "requirement": "영업의 양도·합병 등으로 개인정보를 이전하거나 이전받는 경우 정보주체 통지 등 적절한 보호조치를 수립·이행하여야 한다.",
+      "matched_chunk_ids": [
+        "E0102_v1_c0025",
+        "E0102_v1_c0030",
+        "E0102_v1_c0031"
+      ]
+    },
+    {
+      "control_id": "3.1.3",
+      "control_name": "주민등록번호 처리 제한",
+      "requirement": "주민등록번호는 법적 근거가 있는 경우를 제외하고는 수집·이용 등 처리할 수 없으며, 주민등록번호의 처리가 허용된 경우라 하더라도 인터넷 홈페이지 등에서 대체수단을 제공하여야 한다.",
+      "matched_chunk_ids": [
+        "E0102_v1_c0009",
+        "E0102_v1_c0029"
+      ]
+    },
+    {
+      "control_id": "2.9.5",
+      "control_name": "로그 및 접속기록 점검",
+      "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+      "matched_chunk_ids": [
+        "E0102_v1_c0003",
+        "E0102_v1_c0007",
+        "E0102_v1_c0010",
+        "E0102_v1_c0015",
+        "E0102_v1_c0016",
+        "E0102_v1_c0019",
+        "E0102_v1_c0020"
+      ]
+    },
+    {
+      "control_id": "2.2.5",
+      "control_name": "퇴직 및 직무변경 관리",
+      "requirement": "퇴직 및 직무변경 시 인사·정보보호·개인정보보호·IT 등 관련 부서별 이행하여야 할 자산반납, 계정 및 접근권한 회수·조정, 결과확인 등의 절차를 수립·관리하여야 한다.",
+      "matched_chunk_ids": [
+        "E0102_v1_c0000",
+        "E0102_v1_c0011",
+        "E0102_v1_c0013",
+        "E0102_v1_c0017",
+        "E0102_v1_c0030"
+      ]
+    },
+    {
+      "control_id": "3.3.1",
+      "control_name": "개인정보 제3자 제공",
+      "requirement": "개인정보를 제3자에게 제공하는 경우 법적 근거에 의하거나 정보주체의 동의를 받아야 하며, 제3자에게 개인정보의 접근을 허용하는 등 제공 과정에서 개인정보를 안전하게 보호하기 위한 보호대책을 수립·이행하여야 한다.",
+      "matched_chunk_ids": [
+        "E0102_v1_c0008",
+        "E0102_v1_c0022",
+        "E0102_v1_c0024"
+      ]
+    }
+  ],
+  "warnings": [],
+  "index": {
+    "collection": "isms_p_controls",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+  },
+  "generated_at": "2026-09-27T20:01:52.105838+09:00"
+}

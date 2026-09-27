@@ -1,0 +1,409 @@
+{
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "primary_source": "KISA-2023",
+  "primary_source_exact_matches": 101,
+  "general_evidence_examples_exact_matches": 399,
+  "differences_by_source": {
+    "GENERAL-XLSX": 16,
+    "FSI-2023": 3
+  },
+  "kb_modified": false,
+  "reviews": [
+    {
+      "control_id": "1.2.3",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "의",
+              "comparison_text": ""
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "1.4.2",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "가",
+              "comparison_text": ""
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.1.3",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "control_name",
+          "edits": [
+            {
+              "kb_text": "정보",
+              "comparison_text": ""
+            },
+            {
+              "kb_text": "",
+              "comparison_text": "의유지"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.2.1",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "리",
+              "comparison_text": "라"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.2.4",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "·",
+              "comparison_text": ""
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.3.3",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "control_name",
+          "edits": [
+            {
+              "kb_text": "자",
+              "comparison_text": ""
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.4.7",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "용",
+              "comparison_text": "유"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.5.1",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "켜",
+              "comparison_text": "키"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.6.1",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "를",
+              "comparison_text": ""
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.6.7",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "한",
+              "comparison_text": ""
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.8.1",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "적",
+              "comparison_text": "작"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.8.4",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "시스템시험과정에서운영데이터의유출을예방하기위하여시험데이터의생성과이용및관리,파기,기술적보호조치에관한절차를수립·이행하여야한다.",
+              "comparison_text": ""
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "일반 점검항목 XLSX의 인증기준 셀이 비어 있다. 일반 안내서 PDF의 인증기준 문장과 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.9.1",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "",
+              "comparison_text": "'"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.9.2",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "생",
+              "comparison_text": "견"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.9.3",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "에",
+              "comparison_text": ""
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.11.2",
+      "source_id": "FSI-2023",
+      "changes": [
+        {
+          "field": "control_name",
+          "edits": [
+            {
+              "kb_text": "및",
+              "comparison_text": ""
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": true,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "금융 안내서에는 명칭 표기가 다르다. 일반 안내서와 일치하는 KB 명칭을 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "2.12.1",
+      "source_id": "GENERAL-XLSX",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "",
+              "comparison_text": "의"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": false,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "점검항목 XLSX에 명칭·조사·단어·구두점 차이가 있다. 일반 안내서 PDF와 일치하는 KB를 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "3.1.1",
+      "source_id": "FSI-2023",
+      "changes": [
+        {
+          "field": "control_name",
+          "edits": [
+            {
+              "kb_text": "",
+              "comparison_text": "의"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": true,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "금융 안내서에는 명칭 표기가 다르다. 일반 안내서와 일치하는 KB 명칭을 유지한다.",
+      "scope_approval": "PENDING"
+    },
+    {
+      "control_id": "3.2.3",
+      "source_id": "FSI-2023",
+      "changes": [
+        {
+          "field": "requirement",
+          "edits": [
+            {
+              "kb_text": "",
+              "comparison_text": "대하여"
+            },
+            {
+              "kb_text": "",
+              "comparison_text": "할수있는권한"
+            },
+            {
+              "kb_text": "이를",
+              "comparison_text": ""
+            },
+            {
+              "kb_text": "아야한다.",
+              "comparison_text": "고있는가?"
+            }
+          ]
+        }
+      ],
+      "review_type": "AI_SOURCE_DIFFERENCE_REVIEW",
+      "visual_pdf_page_verified": true,
+      "decision": "KEEP_GENERAL_GUIDE_MATCHING_KB",
+      "reason": "금융 안내서 인증기준 칸이 주요 확인사항과 같은 질문형 문장으로 인쇄되어 있다. 일반 안내서의 인증기준 문장을 유지한다.",
+      "scope_approval": "PENDING"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-27T20:27:42.054808+09:00",
+  "scope": "실제 BGE-M3 공개 Python 호출의 모델 수명·요청 격리·결과 호환 검사. LLM 호출 없음.",
+  "initial_worker_model_loads": 1,
+  "initial_worker_successful_searches": 7,
+  "total_model_loads_including_explicit_restart": 2,
+  "concurrent_requests": 3,
+  "preprocessing_invalid_requests": 2,
+  "caller_cwd_preserved": true,
+  "search_results_match_reference": true,
+  "worker_terminated_after_close": true,
+  "input_judgment_sources_unchanged": {
+    "phase1_입력\\main.py": "9c51bdd75b2e16ca446ee2c8317b2188095c26a7f62384e3066b492fafbb2f34",
+    "phase1_입력\\ocr_parser.py": "5e70cceb58e46f94340bbfe69b0af615e17993f9adbdba431f15121acefefe34",
+    "phase1_입력\\parser_dispatcher.py": "1d6bf469f09a338aad607bacb5f6467dd116053acd1721ecf0633f7b17d9f516",
+    "phase1_입력\\pipeline.py": "9385571ae5733a36df91305de3251890fe6bc85a398aac6a018bb4cbe5d0d8cd",
+    "phase1_입력\\chunking\\chunker.py": "19d1ce73cda0f724d9680b684d0da9667efb0099446ab4e5e7b4d0699739e0fa",
+    "phase1_입력\\chunking\\chunk_format.py": "e8592349a8bea3da9691a0efe7853a69e0df070e9eb723bdc94cdc0f8bf96cbf",
+    "phase1_입력\\chunking\\chunk_links.py": "e49d0c0539c12eeb6984bfd48c75de3d5f95279cff8723ca41579c56ab045d3b",
+    "phase1_입력\\chunking\\table_chunker.py": "f2f3e3ca85196e399e3cbfe35222b4cf71416f53328cc48782f21d616e151bf9",
+    "phase1_입력\\chunking\\__init__.py": "c4cd1ecd1a5ba3c22543559db134eb4a0184062a85c09a5bcb979e5fb2e82ec3",
+    "phase1_입력\\database\\chunk_store.py": "dad797b07fcc5152813f1ebffc07313d7a44a7616cce262a29e1f4ee09311abb",
+    "phase1_입력\\database\\config.py": "b029706eb70b68669b2af8a99e21748af71928762e42a2af2f49aa6ad427fabd",
+    "phase1_입력\\database\\db.py": "00473967e3e277161c2fea39be102823bd5e0af8061e21d546761828b36498c2",
+    "phase1_입력\\database\\evidence_store.py": "4747dbe429c732fa6c9a7d4bb31b562ba4d0e1759a98a9fc593aa4a7986aa0ad",
+    "phase1_입력\\docx_test\\docx_parser.py": "b56f0d5fbd3d68cdb1c9943be21a2882f003c76af22ebb9172d976883079f64b",
+    "phase1_입력\\pdf_test\\pdf_parser.py": "898537b5a672d1738957cea1f7aba48bd9c3a50290fbc9951975d072a42ebe35",
+    "phase1_입력\\pptx_test\\pptx_parser.py": "ef0b0b19fa2e457c61407bb2067f2e8c7ddc6bcb589b08035509b2bca09c8b3f",
+    "phase1_입력\\txt_csv_test\\text_parser.py": "6ee07e255c9d896cfd1f99bdc73077843a3563af2d5237e6114834728ae6a85d",
+    "phase1_입력\\xlsx_test\\xlsx_parser.py": "98b613b4813874edcfa6bd673bf55ed348afe4d3d96d97d4ee90f6da8d087254",
+    "phase1_판단\\src\\check.py": "d77b006f39286461fc14c078c241d8eacec20a266bdc93b549564e8b870faef9",
+    "phase1_판단\\src\\enums.py": "076f83b3b0ac87e86040a55c2e69cacc6069ac4f583cd55c233d9a224730d67a",
+    "phase1_판단\\src\\kb.py": "66da8d6e13b6a37b581d9b55f4a22a6dd19946d9454394ab60cbc8716b8d0eb4",
+    "phase1_판단\\src\\metrics.py": "2cfa6e459cf380dddccb078c5454bdcc29b5c433ea57a983f4a2fbd2146e860f",
+    "phase1_판단\\src\\models.py": "ed0de131475e8a32cb426f653513b68981ef18ce9015b4d281ff6d35b5f80265",
+    "phase1_판단\\src\\output_parser.py": "657c5dd7c62bc9b054bd00c4e4176f8f677ea4e6b4a66aa2a731249164355b45",
+    "phase1_판단\\src\\prompts.py": "6b714245763887061e246bbadf1fe3a5f67146834826e0863d442f653ac76a3c",
+    "phase1_판단\\src\\retrieval_adapter.py": "8df8e07d13afb3875f76b11542e0141354b6d49844363e6e2413f21bc38a94f6",
+    "phase1_판단\\src\\retry_prompt.py": "24d6d8adf5fc5a89f85833f879ee0e2ed735b44494b8fd83b1c3262cddb5fe7b",
+    "phase1_판단\\src\\review.py": "a8a7ec0af7f225baf61e41524514182f55d071139c55aa261556714882ffd4a4",
+    "phase1_판단\\src\\review_policy.py": "7a86ece3c96408d03a75300af0620b8c5394b4eea177ff19831f1b77325bf8fb",
+    "phase1_판단\\src\\service.py": "44f28502f8822f82db80c41aee712cccc7811ffa0b2ea4ce9a323c08a1bb75e0",
+    "phase1_판단\\src\\validators.py": "587860fd9f9975c8fc32e7b3f2dc869dcb0b0d32ee2012efe9e04385fe7702f6",
+    "phase1_판단\\src\\versions.py": "5a2a071f1f2b4b1d06c1b46fddd29ca4e2ece8391e7e71821ddf0d8b32e09d93",
+    "phase1_판단\\tests\\conftest.py": "56f89026d5aae3b3b701f998c1b14ba11623204369e6ba2f0d00017336813114",
+    "phase1_판단\\tests\\test_goldenset.py": "a63f9e9dbee0d697ce2fef35a5b99424aa3d559ccd7a0d3b29a01e73fd178e86",
+    "phase1_판단\\tests\\test_llm_harness_contract.py": "1adb59b86199d16b0b4c1df7e9f68b2957acfd98b409d7563ba2125347ec7d2b",
+    "phase1_판단\\tests\\test_metrics.py": "610d17d3c68d078bc59c6322c6c95db476d7bed4f0d8c678875e37db7c7e193a",
+    "phase1_판단\\tests\\test_output_parser.py": "299c1325e3bb39840b5ea3afa7a6811fbd661aba5276de4d9a955794d0ee1809",
+    "phase1_판단\\tests\\test_review.py": "1ead977c60103f73a7df3c0df870c1d12b458d4d16b43cabae6709166b39643d",
+    "phase1_판단\\tests\\test_service.py": "40fadccb40b998a6fbee29954b965042e7a432f4f0d4fa3fa67867beed85de6b",
+    "phase1_판단\\tests\\test_validators.py": "d95045ba8cc79355810996df86a734b848cdb3b85e6db87092b432dfbf880a4e",
+    "phase1_판단\\tools\\build_goldenset.py": "2ed42a5c6aab2d1bdddd326195641fd6f7600356cf0b6e86f2e9b7d560d9a7ac",
+    "phase1_판단\\tools\\eval_goldenset.py": "9436a90338adc7391a0dae655b717c9baf005d34ea4d554c25433d7881815aaf",
+    "phase1_판단\\tools\\report_goldenset.py": "6105cdd71db176b2eeb02feb2833fca3decd31ac0e62c774ef963baddfce150e"
+  },
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "llm_calls": 0,
+  "rows": [
+    {
+      "name": "first",
+      "seconds": 8.8257,
+      "success": true,
+      "pid": 41112,
+      "evidence_id": "000001",
+      "error": null
+    },
+    {
+      "name": "repeat",
+      "seconds": 0.2054,
+      "success": true,
+      "pid": 41112,
+      "evidence_id": "000001",
+      "error": null
+    },
+    {
+      "name": "preprocessing_error",
+      "seconds": 0.0002,
+      "success": false,
+      "pid": 41112,
+      "evidence_id": null,
+      "error": "PREPROCESSING_FAILED"
+    },
+    {
+      "name": "invalid_top_k",
+      "seconds": 0.0002,
+      "success": false,
+      "pid": 41112,
+      "evidence_id": null,
+      "error": "INVALID_INPUT"
+    },
+    {
+      "name": "compatibility",
+      "seconds": 0.2206,
+      "success": true,
+      "pid": 41112,
+      "evidence_id": "000001",
+      "error": null
+    },
+    {
+      "name": "top_k_3",
+      "seconds": 0.2083,
+      "success": true,
+      "pid": 41112,
+      "evidence_id": "000001",
+      "error": null
+    },
+    {
+      "name": "parallel_0",
+      "seconds": 0.2171,
+      "success": true,
+      "pid": 41112,
+      "evidence_id": "REUSE00",
+      "error": null
+    },
+    {
+      "name": "parallel_1",
+      "seconds": 0.4315,
+      "success": true,
+      "pid": 41112,
+      "evidence_id": "REUSE01",
+      "error": null
+    },
+    {
+      "name": "parallel_2",
+      "seconds": 0.6499,
+      "success": true,
+      "pid": 41112,
+      "evidence_id": "REUSE02",
+      "error": null
+    },
+    {
+      "name": "after_close",
+      "seconds": 8.359,
+      "success": true,
+      "pid": 40280,
+      "evidence_id": "000001",
+      "error": null
+    }
+  ],
+  "runtime_files_sha256": {
+    "chunk_retriever.py": "c2a777a32657bf339efdc082ec9632f26617452b1405dce809eae476b9140154",
+    "worker_client.py": "4e6188679129eca3f58fbbb1d9b0556b4c469425ffb067558e75dd0c325ac1b2",
+    "tests/verify_model_reuse.py": "0ed9723580ae073ad2b964787bc212db6eb00d3f3183eee08cda1b1adf70c139"
+  },
+  "regression_tests": {
+    "passed": 36,
+    "subtests_passed": 41
+  },
+  "limits": [
+    "동일한 호출 프로그램에서 재사용하며 별도 프로그램·서버 프로세스는 각각 모델을 로드한다.",
+    "첫 유효 요청에서 모델을 로드한다. 호출 프로그램이 종료되면 모델 메모리를 해제한다.",
+    "시간은 이 PC와 3청크 DOCX 샘플에서 측정한 값이며 모든 문서의 응답시간을 보장하지 않는다.",
+    "실제 서버·업로드 API·DB·화면·LLM 전체 연동 성능 평가는 포함하지 않는다."
+  ]
+}

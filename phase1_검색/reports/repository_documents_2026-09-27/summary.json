@@ -1,0 +1,182 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-27T20:02:23.031510+09:00",
+  "scope": "기존 DOCX→입력팀 파서·청커→실제 로컬 검색→판단 입력·프롬프트 생성. LLM 전송 없음.",
+  "inventory_file_count": 7,
+  "unique_document_count": 6,
+  "duplicate_file_count": 1,
+  "manifest_sha256": "aa7e15ecf9de2d881a57fc5a98bab6cbeb16e3440409808facb383c54cd09449",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54",
+  "sources_unchanged": true,
+  "source_fingerprint_count": 68,
+  "input_judgment_source_count": 43,
+  "independent_labels_available": false,
+  "production_evidence_verified": false,
+  "llm_calls": 0,
+  "rows": [
+    {
+      "id": "D01",
+      "file": "../phase1_입력/uploads/tmp/08504e7811e14a149d97e62e7e9b12d8.docx",
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "sha256": "fc3e1fda214cf6dcab8c96e15d6b8c0d4e260511f2e384602b05ed951179d4f0",
+      "parser_block_types": {
+        "paragraph": 30,
+        "heading": 6,
+        "table": 2
+      },
+      "chunk_count": 9,
+      "null_page_count": 9,
+      "sources": [
+        "parser"
+      ],
+      "candidate_ids": [
+        "1.1.2",
+        "2.11.5",
+        "1.1.3",
+        "1.1.1",
+        "2.1.2"
+      ],
+      "check": "PASS",
+      "search_quality_assessed": false,
+      "llm_called": false
+    },
+    {
+      "id": "D02",
+      "file": "../phase1_입력/uploads/tmp/11c56b6802834307958e85389161021f.docx",
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "sha256": "1d46230bf0f16fb0db542300881a3ec2e2f1cffd6940a4ecbe265b4076e14f7d",
+      "parser_block_types": {
+        "paragraph": 11,
+        "table": 23,
+        "heading": 26
+      },
+      "chunk_count": 32,
+      "null_page_count": 32,
+      "sources": [
+        "parser"
+      ],
+      "candidate_ids": [
+        "3.3.3",
+        "3.1.3",
+        "2.9.5",
+        "2.2.5",
+        "3.3.1"
+      ],
+      "check": "PASS",
+      "search_quality_assessed": false,
+      "llm_called": false
+    },
+    {
+      "id": "D03",
+      "file": "../phase1_입력/uploads/tmp/55083f17f11c4492b8d004f1261afe32.docx",
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "sha256": "162724606574b80d7db52a06f882d76f06504c6407679d6adb3fc6f67d397d6d",
+      "parser_block_types": {
+        "paragraph": 24,
+        "table": 24,
+        "heading": 29
+      },
+      "chunk_count": 33,
+      "null_page_count": 33,
+      "sources": [
+        "parser"
+      ],
+      "candidate_ids": [
+        "2.2.5",
+        "3.1.3",
+        "3.3.3",
+        "2.9.5",
+        "3.5.1"
+      ],
+      "check": "PASS",
+      "search_quality_assessed": false,
+      "llm_called": false
+    },
+    {
+      "id": "D04",
+      "file": "../phase1_입력/uploads/tmp/8ef130fb9f4e4aba8b7bea20f9da330c.docx",
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "sha256": "b8a633312a48f6cc1129222f942be96040dfadd2316077f18c9eb5469a04812f",
+      "parser_block_types": {
+        "paragraph": 103,
+        "heading": 26,
+        "table": 2
+      },
+      "chunk_count": 29,
+      "null_page_count": 29,
+      "sources": [
+        "parser"
+      ],
+      "candidate_ids": [
+        "3.1.3",
+        "3.3.1",
+        "2.9.5",
+        "3.1.7",
+        "3.3.4"
+      ],
+      "check": "PASS",
+      "search_quality_assessed": false,
+      "llm_called": false
+    },
+    {
+      "id": "D05",
+      "file": "../phase1_입력/uploads/tmp/f0fa24c369c24a48a551d32f289cae50.docx",
+      "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+      "sha256": "f0ae4260fc7feac98f057beecb4915691634905b0ca5e67b27bd07c0b1027f7d",
+      "parser_block_types": {
+        "paragraph": 24
+      },
+      "chunk_count": 2,
+      "null_page_count": 2,
+      "sources": [
+        "parser"
+      ],
+      "candidate_ids": [
+        "2.8.2",
+        "2.11.2",
+        "2.8.1",
+        "1.2.2",
+        "2.9.1"
+      ],
+      "check": "PASS",
+      "search_quality_assessed": false,
+      "llm_called": false
+    },
+    {
+      "id": "D06",
+      "file": "../phase1_입력/docx_test/test1.docx",
+      "provenance": "PROVIDED_TEST_FIXTURE",
+      "sha256": "d05623b89fb29ea830d92accf06a17c55a9cbcc6e1dd3eac5bfa5df2b6d7487d",
+      "parser_block_types": {
+        "heading": 1,
+        "paragraph": 2,
+        "table": 1
+      },
+      "chunk_count": 3,
+      "null_page_count": 3,
+      "sources": [
+        "parser"
+      ],
+      "candidate_ids": [
+        "2.9.4",
+        "2.5.1",
+        "2.5.6",
+        "3.4.2",
+        "2.9.5"
+      ],
+      "check": "PASS",
+      "search_quality_assessed": false,
+      "llm_called": false
+    }
+  ],
+  "limits": [
+    "저장소 업로드 문서의 실제 운영 출처는 확인되지 않았다. 알려진 테스트 DOCX도 포함한다.",
+    "정답이 없어 후보 검색 품질·매핑·충족 판정의 정확도를 계산하지 않는다.",
+    "문서 단위 Top-5는 복수 주제를 모두 망라하는 결과라고 보장하지 않는다.",
+    "업로드 API·DB·화면·실제 LLM 호출·판정은 이 검사에 포함하지 않는다."
+  ],
+  "report_corrections": [
+    "Windows 경로 구분자를 정규화해 입력·판단 소스 개수 집계를 0→43으로 수정. 실행 검사 결과에는 영향 없음."
+  ]
+}

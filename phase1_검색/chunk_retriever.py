@@ -1,11 +1,12 @@
 """전처리 청크 → 로컬 BGE-M3 → ChromaDB Top-K → 판단팀 전달 JSON.
 
-공개 Python 함수 retrieve()는 별도 프로세스를 사용하여 호출자의 작업 폴더를 보존합니다.
+공개 Python 함수 retrieve()는 검색 프로세스를 재사용하며 호출자의 작업 폴더를 보존합니다.
 입력팀의 소스는 import하거나 수정하지 않습니다.
 """
 from __future__ import annotations
 
 import argparse
+import atexit
 from contextlib import redirect_stdout
 from copy import deepcopy
 from datetime import datetime
@@ -14,12 +15,12 @@ import json
 import math
 import os
 from pathlib import Path, PureWindowsPath
-import subprocess
 import sys
 import tempfile
 
 from retriever import (ROOT, MODEL_DIR, load_controls, control_text, load_model,
                        embedding_cache_key, encode_texts)
+from worker_client import PersistentWorker
 
 SCHEMA_VERSION = "retriever-0.2"
 COLLECTION = "isms_p_controls"
@@ -215,24 +216,61 @@ def error_result(code, message):
     return {"schema_version": SCHEMA_VERSION, "success": False, "error": {"code": code, "message": message}}
 
 
+_WORKER_CLIENT = PersistentWorker(
+    [str(ROOT / ".venv/Scripts/python.exe"), "-B", "-u", "-X", "utf8",
+     str(Path(__file__).resolve()), "--persistent-worker"], ROOT)
+
+
+def close_retriever():
+    """검색 프로세스와 모델 메모리를 해제한다. 다음 retrieve()는 새로 초기화한다."""
+    _WORKER_CLIENT.close()
+
+
+atexit.register(close_retriever)
+
+
 def retrieve(payload, top_k=5, compatibility=False, timeout=600):
-    """어느 작업 폴더에서도 호출 가능. 성공/실패 JSON 객체 반환. 호출마다 모델을 로드합니다."""
+    """같은 호출 프로그램에서 모델을 재사용한다. 호출자 폴더와 성공/실패 JSON 규격은 보존한다."""
     python = ROOT / ".venv/Scripts/python.exe"
     if not python.is_file():
         return error_result("ENVIRONMENT_ERROR", "phase1_검색의 Python 환경이 없습니다. 01_setup.cmd를 실행하세요.")
     try:
-        result = subprocess.run([str(python), "-X", "utf8", str(Path(__file__).resolve()), "--worker"],
-            input=json.dumps({"payload": payload, "top_k": top_k, "compatibility": compatibility}, ensure_ascii=False, allow_nan=False),
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding="utf-8", cwd=ROOT, timeout=timeout)
-        if result.stderr:
-            print(result.stderr, file=sys.stderr, end="")
-        answer = json.loads(result.stdout)
-        check(isinstance(answer, dict) and isinstance(answer.get("success"), bool), "검색 프로세스의 응답이 잘못됐습니다.", "WORKER_FAILED")
-        return answer
-    except subprocess.TimeoutExpired:
-        return error_result("TIMEOUT", "검색 시간이 제한을 초과했습니다.")
+        check(type(top_k) is int and 1 <= top_k <= 101, "top_k는 1~101의 정수여야 합니다.")
+        prepare_input(payload, compatibility)  # 잘못된 입력은 프로세스를 띄우기 전에 거부한다.
+        return _WORKER_CLIENT.request({"payload": payload, "top_k": top_k,
+                                       "compatibility": compatibility}, timeout)
+    except RetrievalError as error:
+        return error_result(error.code, str(error))
     except (OSError, ValueError, TypeError) as error:
         return error_result("WORKER_FAILED", str(error))
+
+
+def serve_requests(input_stream, output_stream, factory=LocalDocumentRetriever):
+    """프로세스 내부 전용 JSON-lines 루프. 유효한 첫 요청에서 검색 객체를 한 번 초기화한다."""
+    engine = None
+    for line in input_stream:
+        request_id = None
+        try:
+            request = json.loads(line)
+            check(isinstance(request, dict), "검색 요청은 객체여야 합니다.")
+            request_id = request.get("request_id")
+            top_k, compatibility = request.get("top_k", 5), request.get("compatibility", False)
+            check(type(top_k) is int and 1 <= top_k <= 101, "top_k는 1~101의 정수여야 합니다.")
+            payload = request.get("payload")
+            prepare_input(payload, compatibility)
+            with redirect_stdout(sys.stderr):
+                if engine is None:
+                    engine = factory()
+                result = engine.search(payload, top_k, compatibility)
+        except RetrievalError as error:
+            result = error_result(error.code, str(error))
+        except json.JSONDecodeError as error:
+            result = error_result("INVALID_INPUT", str(error))
+        except Exception as error:
+            result = error_result("SEARCH_FAILED", str(error))
+        output_stream.write(json.dumps({"request_id": request_id, "result": result},
+                                       ensure_ascii=False, allow_nan=False) + "\n")
+        output_stream.flush()
 
 
 def write_result(path, result):
@@ -256,8 +294,13 @@ def main():
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--compat-input", action="store_true", help="입력팀 현재 출력의 알려진 필드 차이를 경고와 함께 보정")
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--persistent-worker", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
-    if args.worker:
+    if args.persistent_worker:
+        os.chdir(ROOT)
+        serve_requests(sys.stdin, sys.stdout)
+        return 0
+    elif args.worker:
         try:
             request = json.load(sys.stdin)
             os.chdir(ROOT)

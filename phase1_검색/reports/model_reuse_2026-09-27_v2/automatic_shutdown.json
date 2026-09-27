@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "automatic_cleanup_verified": true,
+  "scope": "public retrieve atexit hook with lightweight worker"
+}
