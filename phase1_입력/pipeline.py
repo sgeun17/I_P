@@ -20,7 +20,7 @@ pipeline.py : 업로드된 증적을 파싱 → 청킹 → 청크 DB 저장까�
 """
 
 import sys
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -28,7 +28,7 @@ sys.path.insert(0, str(HERE / "database"))
 sys.path.insert(0, str(HERE / "chunking"))
 
 from chunk_format import validate_chunks          # noqa: E402
-from chunk_store import save_chunks               # noqa: E402
+from chunk_store import delete_chunks, save_chunks  # noqa: E402
 from chunker import make_chunks                   # noqa: E402
 from evidence_store import (get_evidence, get_file_path,  # noqa: E402
                             list_evidence, update_status)
@@ -48,10 +48,20 @@ def process_one(evidence_id, verbose=True):
 
     ★ 어떤 이유로 터져도 status 를 PREPROCESSING 에 남겨두지 않습니다.
       남겨두면 --all 이 그 증적을 영원히 건너뛰어서, 아무도 모르게 빠집니다.
+    ★ 실패하면 그 증적의 청크를 모두 지웁니다.
+      남겨두면 옛 버전(또는 이전 처리) 청크가 지금 증적인 것처럼 검색에 걸립니다.
     """
     def say(msg):
         if verbose:
             print(msg)
+
+    def fail(code, message):
+        """청크를 지우고 FAILED 로 바꿉니다. 청크 삭제가 실패해도 상태는 반드시 바꿉니다."""
+        try:
+            delete_chunks(evidence_id)
+        except Exception as e:
+            message = f"{message} (옛 청크 삭제 실패: {type(e).__name__}: {e})"
+        update_status(evidence_id, "FAILED", error_code=code, error_message=message)
 
     info = get_evidence(evidence_id)
     file_type, version = info["file_type"], info["version"]
@@ -61,25 +71,29 @@ def process_one(evidence_id, verbose=True):
     try:
         path = get_file_path(evidence_id)
         parsed = parse_file(path, file_type)
+        # 파서는 저장 파일 이름(E0001_v1.pdf)을 source_file 로 돌려줍니다.
+        # 청크 규격의 source_file 은 "사용자가 올린 원래 파일 이름"이라 DB 값으로 바꿉니다.
+        # (혹시 경로가 섞여 들어온 경우를 대비해 파일 이름만 남김)
+        original = PureWindowsPath(info["file_name"] or "").name.strip()
+        if original:
+            parsed["source_file"] = original
 
         if parsed["errors"]:
             first = parsed["errors"][0]
             code, message = ERROR_CODES.get(first, ("FILE_PARSE_FAILED", f"파서 오류: {first}"))
-            update_status(evidence_id, "FAILED", error_code=code, error_message=message)
+            fail(code, message)
             say(f"  ✗ FAILED  {first}")
             return "failed", first
 
         chunks = make_chunks(parsed, evidence_id, version)
         if not chunks:
-            update_status(evidence_id, "FAILED", error_code="FILE_PARSE_FAILED",
-                          error_message="글자는 읽었지만 만들 청크가 없습니다.")
+            fail("FILE_PARSE_FAILED", "글자는 읽었지만 만들 청크가 없습니다.")
             say("  ✗ FAILED  청크 0개")
             return "failed", "no_chunks"
 
         problems = validate_chunks(chunks)
         if problems:
-            update_status(evidence_id, "FAILED", error_code="CHUNK_RULE_VIOLATION",
-                          error_message=f"청크 규칙 위반 {len(problems)}건: {problems[0]}")
+            fail("CHUNK_RULE_VIOLATION", f"청크 규칙 위반 {len(problems)}건: {problems[0]}")
             say(f"  ✗ FAILED  청크 규칙 위반 {len(problems)}건")
             for p in problems[:3]:
                 say(f"      {p}")
@@ -91,8 +105,7 @@ def process_one(evidence_id, verbose=True):
         return "ok", saved
 
     except Exception as e:                                # ★ 여기서 안 잡으면 상태가 멈춥니다
-        update_status(evidence_id, "FAILED", error_code="FILE_PARSE_FAILED",
-                      error_message=f"{type(e).__name__}: {e}")
+        fail("FILE_PARSE_FAILED", f"{type(e).__name__}: {e}")
         say(f"  ✗ FAILED  {type(e).__name__}: {e}")
         return "failed", type(e).__name__
 
