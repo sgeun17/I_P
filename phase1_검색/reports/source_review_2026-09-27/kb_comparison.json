@@ -1,0 +1,76 @@
+{
+  "review_date": "2026-09-27",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "kb_modified": false,
+  "normalization": "공백·줄바꿈 제거 및 ･→·만 허용",
+  "controls": [
+    {
+      "control_id": "2.5.1",
+      "requirement": "MATCH_BOTH_GUIDES_AFTER_WHITESPACE_AND_MIDDLEDOT_NORMALIZATION",
+      "name": "MATCH",
+      "evidence_examples": "ALL_MATCH_GENERAL_GUIDE",
+      "evidence_example_count": 4,
+      "general_pdf_pages": [
+        91,
+        92
+      ],
+      "financial_pdf_pages": [
+        105,
+        106
+      ]
+    },
+    {
+      "control_id": "2.5.6",
+      "requirement": "MATCH_BOTH_GUIDES_AFTER_WHITESPACE_AND_MIDDLEDOT_NORMALIZATION",
+      "name": "MATCH",
+      "evidence_examples": "ALL_MATCH_GENERAL_GUIDE",
+      "evidence_example_count": 3,
+      "general_pdf_pages": [
+        102,
+        103
+      ],
+      "financial_pdf_pages": [
+        117,
+        118,
+        119
+      ]
+    },
+    {
+      "control_id": "2.9.3",
+      "requirement": "MATCH_BOTH_GUIDES_AFTER_WHITESPACE_AND_MIDDLEDOT_NORMALIZATION",
+      "name": "MATCH",
+      "evidence_examples": "ALL_MATCH_GENERAL_GUIDE",
+      "evidence_example_count": 3,
+      "general_pdf_pages": [
+        142,
+        143
+      ],
+      "financial_pdf_pages": [
+        164,
+        165
+      ]
+    }
+  ],
+  "source_documents": [
+    {
+      "source_id": "KISA-2023",
+      "path": "../../../../ISMP-P 인증기준·제도/ISMS-P 인증기준 안내서(2023.11.23).pdf",
+      "sha256": "72ed9bbb8deee2b57e7e8ba3e19315f46a8d63be2db334ae2fbe82956fcd344e",
+      "page_numbering": "pdf_page는 파일 첫 페이지부터 1, printed_page는 인쇄 쪽수",
+      "currency_status": "보유 2023년 판본 대조. 현재 시행 법규 또는 최신 판본 확인 아님."
+    },
+    {
+      "source_id": "FSI-2023",
+      "path": "../../../../ISMP-P 인증기준·제도/금융보안원 - 금융권에 적합한 ISMS-P 인증기준 점검항목 안내서(2023.12.).pdf",
+      "sha256": "3d0b8cd367e673cc72d0218577f6ec394566c8ea5136035803c237f5b7cfc50e",
+      "page_numbering": "pdf_page는 파일 첫 페이지부터 1, printed_page는 인쇄 쪽수",
+      "currency_status": "보유 2023년 판본 대조. 현재 시행 법규 또는 최신 판본 확인 아님."
+    }
+  ],
+  "limitations": [
+    "3개 항목만 대조",
+    "키워드는 검색 확장어이며 의무 목록이 아님",
+    "현재 KB에 inspection_items 필드는 없음. Phase 2 원문 참조로 보완하고 검색 입력은 변경하지 않음",
+    "최신 법규·최신 판본 확인 및 사람의 최종 승인 아님"
+  ]
+}

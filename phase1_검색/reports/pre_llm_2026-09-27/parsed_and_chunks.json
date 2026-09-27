@@ -1,0 +1,460 @@
+[
+  {
+    "case_id": "TXT",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "d2251af64881eadff68af5488e1d479dae14626c614fbe6343d3888bd3790f09",
+    "payload": {
+      "evidence_id": "E8001",
+      "version": 2,
+      "source_file": "account.txt",
+      "file_type": "txt",
+      "chunks": [
+        {
+          "chunk_id": "E8001_v2_c0000",
+          "evidence_id": "E8001",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "txt",
+          "source_file": "account.txt",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "CP949",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "423eb66a00356ee4bf3622244ab6aa9594a04f38ca1da79037e37e84cd9001a8",
+    "payload": {
+      "evidence_id": "E8002",
+      "version": 2,
+      "source_file": "cp949.txt",
+      "file_type": "txt",
+      "chunks": [
+        {
+          "chunk_id": "E8002_v2_c0000",
+          "evidence_id": "E8002",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "txt",
+          "source_file": "cp949.txt",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "LONG",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "0abfef7ef16f51d18b0828d700381f3ae834b30fb539d31aab938edd5eae5474",
+    "payload": {
+      "evidence_id": "E8003",
+      "version": 2,
+      "source_file": "long.txt",
+      "file_type": "txt",
+      "chunks": [
+        {
+          "chunk_id": "E8003_v2_c0000",
+          "evidence_id": "E8003",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "txt",
+          "source_file": "long.txt",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인",
+          "block_orders": [
+            1
+          ]
+        },
+        {
+          "chunk_id": "E8003_v2_c0001",
+          "evidence_id": "E8003",
+          "version": 2,
+          "chunk_index": 1,
+          "file_type": "txt",
+          "source_file": "long.txt",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한",
+          "block_orders": [
+            1
+          ]
+        },
+        {
+          "chunk_id": "E8003_v2_c0002",
+          "evidence_id": "E8003",
+          "version": 2,
+          "chunk_index": 2,
+          "file_type": "txt",
+          "source_file": "long.txt",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다. 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "CSV",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "416cfa3a64c750262437b782b0b5ebadac2e1d9029dabb24161f4178bdaebefc",
+    "payload": {
+      "evidence_id": "E8004",
+      "version": 2,
+      "source_file": "account.csv",
+      "file_type": "csv",
+      "chunks": [
+        {
+          "chunk_id": "E8004_v2_c0000",
+          "evidence_id": "E8004",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "csv",
+          "source_file": "account.csv",
+          "source": "parser",
+          "chunk_type": "table",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "항목: 계정관리 | 내용: 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자 승인자 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "UNRELATED",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "cbc8106a1165398a2ad679ce540d65c2f2f1a29af303091eac8d7cc1c2a22796",
+    "payload": {
+      "evidence_id": "E8005",
+      "version": 2,
+      "source_file": "menu.txt",
+      "file_type": "txt",
+      "chunks": [
+        {
+          "chunk_id": "E8005_v2_c0000",
+          "evidence_id": "E8005",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "txt",
+          "source_file": "menu.txt",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "오늘 점심은 김치볶음밥과 달걀국이다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "EMPTY",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "payload": {
+      "evidence_id": "E8006",
+      "version": 2,
+      "source_file": "empty.txt",
+      "file_type": "txt",
+      "chunks": [],
+      "errors": [
+        "empty_document"
+      ]
+    }
+  },
+  {
+    "case_id": "CORRUPTED",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "da0ef2fd51b8d5213525befcb9b043ede99f128ce8315ce6247ec8feeb191c69",
+    "payload": {
+      "evidence_id": "E8007",
+      "version": 2,
+      "source_file": "corrupted.txt",
+      "file_type": "txt",
+      "chunks": [],
+      "errors": [
+        "corrupted_file"
+      ]
+    }
+  },
+  {
+    "case_id": "DOCX",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "1944d3ffd234d272579df1728079945643644f6be79c75cde656e6d396d9eda1",
+    "payload": {
+      "evidence_id": "E8008",
+      "version": 2,
+      "source_file": "account.docx",
+      "file_type": "docx",
+      "chunks": [
+        {
+          "chunk_id": "E8008_v2_c0000",
+          "evidence_id": "E8008",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "docx",
+          "source_file": "account.docx",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": "계정 관리",
+          "text": "계정 관리\n사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            1,
+            2
+          ]
+        },
+        {
+          "chunk_id": "E8008_v2_c0001",
+          "evidence_id": "E8008",
+          "version": 2,
+          "chunk_index": 1,
+          "file_type": "docx",
+          "source_file": "account.docx",
+          "source": "parser",
+          "chunk_type": "table",
+          "page_start": null,
+          "page_end": null,
+          "heading": "계정 관리",
+          "text": "계정: 처리\n합성계정: 퇴직 당일 삭제",
+          "block_orders": [
+            3
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "XLSX",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "1355e2a954710b4f426996b57b7d9da3211a01814547680207948fee610d2278",
+    "payload": {
+      "evidence_id": "E8009",
+      "version": 2,
+      "source_file": "account.xlsx",
+      "file_type": "xlsx",
+      "chunks": [
+        {
+          "chunk_id": "E8009_v2_c0000",
+          "evidence_id": "E8009",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "xlsx",
+          "source_file": "account.xlsx",
+          "source": "parser",
+          "chunk_type": "table",
+          "page_start": 1,
+          "page_end": 1,
+          "heading": "Sheet",
+          "text": "항목: 계정 1 | 내용: 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            2
+          ]
+        },
+        {
+          "chunk_id": "E8009_v2_c0001",
+          "evidence_id": "E8009",
+          "version": 2,
+          "chunk_index": 1,
+          "file_type": "xlsx",
+          "source_file": "account.xlsx",
+          "source": "parser",
+          "chunk_type": "table",
+          "page_start": 2,
+          "page_end": 2,
+          "heading": "승인 이력",
+          "text": "항목: 계정 2 | 내용: 사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            4
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "PPTX",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "ec2c01d2f632d64daf4032e02a8c9431ca8749aa570c68c56f6d0b06b189715e",
+    "payload": {
+      "evidence_id": "E8010",
+      "version": 2,
+      "source_file": "account.pptx",
+      "file_type": "pptx",
+      "chunks": [
+        {
+          "chunk_id": "E8010_v2_c0000",
+          "evidence_id": "E8010",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "pptx",
+          "source_file": "account.pptx",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": 1,
+          "page_end": 1,
+          "heading": "계정 관리 1",
+          "text": "계정 관리 1\n사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            1,
+            2
+          ]
+        },
+        {
+          "chunk_id": "E8010_v2_c0001",
+          "evidence_id": "E8010",
+          "version": 2,
+          "chunk_index": 1,
+          "file_type": "pptx",
+          "source_file": "account.pptx",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": 2,
+          "page_end": 2,
+          "heading": "계정 관리 2",
+          "text": "계정 관리 2\n사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            3,
+            4
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "PDF",
+    "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+    "fixture_sha256": "70d6dec18f2675cbe767664c6ca2909dd21d8a8f8cad330a0b041afe892c1760",
+    "payload": {
+      "evidence_id": "E8011",
+      "version": 2,
+      "source_file": "account.pdf",
+      "file_type": "pdf",
+      "chunks": [
+        {
+          "chunk_id": "E8011_v2_c0000",
+          "evidence_id": "E8011",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "pdf",
+          "source_file": "account.pdf",
+          "source": "parser",
+          "chunk_type": "text",
+          "page_start": 1,
+          "page_end": 2,
+          "heading": null,
+          "text": "사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.\n사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            1,
+            2
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "PNG_CONTRACT",
+    "origin": "SIMULATED_OCR_BLOCKS_NO_IMAGE_RECOGNITION",
+    "payload": {
+      "evidence_id": "E8021",
+      "version": 2,
+      "source_file": "simulated.png",
+      "file_type": "png",
+      "chunks": [
+        {
+          "chunk_id": "E8021_v2_c0000",
+          "evidence_id": "E8021",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "png",
+          "source_file": "simulated.png",
+          "source": "ocr",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "case_id": "JPG_CONTRACT",
+    "origin": "SIMULATED_OCR_BLOCKS_NO_IMAGE_RECOGNITION",
+    "payload": {
+      "evidence_id": "E8022",
+      "version": 2,
+      "source_file": "simulated.jpg",
+      "file_type": "jpg",
+      "chunks": [
+        {
+          "chunk_id": "E8022_v2_c0000",
+          "evidence_id": "E8022",
+          "version": 2,
+          "chunk_index": 0,
+          "file_type": "jpg",
+          "source_file": "simulated.jpg",
+          "source": "ocr",
+          "chunk_type": "text",
+          "page_start": null,
+          "page_end": null,
+          "heading": null,
+          "text": "사용자 계정 관리 기록. 신규 계정은 업무별 최소권한을 확인하고 부서장의 승인 후 발급했다. 퇴직자 계정은 퇴직 당일 삭제했다. 계정별 신청자, 승인자, 처리일시와 권한 변경 내역을 기록했다.",
+          "block_orders": [
+            1
+          ]
+        }
+      ],
+      "errors": []
+    }
+  }
+]

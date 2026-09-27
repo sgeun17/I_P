@@ -1,0 +1,2456 @@
+{
+  "draft_version": "phase2-checklist-draft-2026-09-27",
+  "status": "DRAFT_FOR_TEAM_REVIEW",
+  "approved": false,
+  "source": {
+    "path": "../controls.json",
+    "sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "basis": "3개 통제항목의 KB와 보유 2023년 안내서 원문을 대조하고 주요 확인사항 누락 및 복합 질문을 보완한 개발 초안. 팀 승인·현행 법규 검토·운영 검증 전."
+  },
+  "scope": {
+    "wbs_date": "2026-09-27",
+    "candidate_count": 5,
+    "sample_control_count": 3,
+    "selection_basis": "기존 개발 테스트 활용 가능성·통제 간 경계·근거 형태의 다양성. 실제 사용 빈도나 중요도 순위 자료는 없음.",
+    "excluded": [
+      "운영 검색 변경",
+      "Phase 2 실행 API 계약 확정",
+      "LLM 실행",
+      "종합 등급 계산"
+    ],
+    "coverage": "일반 안내서의 3개 통제항목 주요 확인사항을 중심으로 보완. 세부 설명의 모든 조건 또는 금융권 추가요건을 포괄하는 확정 체크리스트가 아님."
+  },
+  "priority_candidates": [
+    {
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "draft_action": "샘플 작성",
+      "existing_search_case_ids": [
+        "S01",
+        "M01",
+        "R01"
+      ],
+      "reason": "기존 계정 증적과 검색 테스트를 재사용할 수 있고, 절차 수립과 실제 이행을 구분하기 좋음."
+    },
+    {
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토",
+      "draft_action": "샘플 작성",
+      "existing_search_case_ids": [
+        "S03",
+        "R02"
+      ],
+      "reason": "2.5.1과 가까운 항목이라 계정 처리와 권한 검토를 구분하는 기준을 확인하기 좋음."
+    },
+    {
+      "control_id": "2.9.3",
+      "control_name": "백업 및 복구관리",
+      "draft_action": "샘플 작성",
+      "existing_search_case_ids": [
+        "S05",
+        "M02",
+        "R03"
+      ],
+      "reason": "절차서와 실행 기록을 함께 검토하는 구조, 여러 청크에 흩어진 근거를 확인하기 좋음."
+    },
+    {
+      "control_id": "3.4.1",
+      "control_name": "개인정보 파기",
+      "draft_action": "범위 검토 후보",
+      "existing_search_case_ids": [
+        "S11",
+        "R04"
+      ],
+      "reason": "파기 시점·방법의 근거를 검토하는 사례로 확장 가능. 구체적 기한은 원문과 적용 조건 검토가 먼저 필요함."
+    },
+    {
+      "control_id": "2.2.5",
+      "control_name": "퇴직 및 직무변경 관리",
+      "draft_action": "범위 검토 후보",
+      "existing_search_case_ids": [],
+      "reason": "실제 파일 시험에서 계정 관리와 후보가 겹친 사례가 있고 판단팀 G-MULTI-02도 있음. 인사 절차와 계정 통제의 경계를 검토하기 좋음."
+    }
+  ],
+  "proposed_result_values": [
+    "MET",
+    "NOT_MET",
+    "UNKNOWN"
+  ],
+  "controls": [
+    {
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "requirement": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고 업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록 사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고, 사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+      "coverage_status": "SOURCE_REVIEWED_DRAFT_NOT_APPROVED",
+      "items": [
+        {
+          "item_id": "2.5.1-Q01",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "사용자 등록 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 사용자 등록 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 사용자 등록 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 사용자 등록 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q02",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 사용자 등록 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "사용자 등록 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 사용자 등록 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 사용자 등록 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q03",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "사용자 해지 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 사용자 해지 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 사용자 해지 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 사용자 해지 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q04",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 사용자 해지 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "사용자 해지 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 사용자 해지 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 사용자 해지 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q05",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "접근권한 부여 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 접근권한 부여 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 접근권한 부여 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 접근권한 부여 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q06",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 접근권한 부여 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "접근권한 부여 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 부여 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 접근권한 부여 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q07",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "접근권한 변경 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 접근권한 변경 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 접근권한 변경 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 접근권한 변경 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q08",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 접근권한 변경 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "접근권한 변경 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 변경 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 접근권한 변경 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q09",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "접근권한 말소 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 대상이 식별되는 접근권한 말소 절차서의 해당 부분"
+            ],
+            "met": "검토 범위에 적용되는 접근권한 말소 절차가 문서에 명시됨.",
+            "not_met": "검토 범위의 접근권한 말소 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q10",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록·해지 및 접근권한 부여·변경·말소 절차를 수립·이행하고",
+          "question": "검토 대상 접근권한 말소 처리가 수립된 절차에 따라 이행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "접근권한 말소 절차와 해당 처리 건의 신청·처리 기록 등 대조 가능한 자료"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 말소 처리 건이 적용 절차를 따랐음을 대조할 수 있음.",
+            "not_met": "검토 대상으로 지정한 접근권한 말소 처리 건에서 적용 절차를 어긴 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q11",
+          "control_id": "2.5.1",
+          "source_clause": "업무 목적에 따른 접근권한을 최소한으로 부여할 수 있도록",
+          "question": "검토 대상 계정의 권한이 업무 목적에 필요한 최소 범위로 부여되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상자의 업무 역할, 허용 권한 기준, 실제 권한 내역"
+            ],
+            "met": "업무상 필요한 권한 범위와 실제 권한을 대조했을 때 초과 권한이 없음.",
+            "not_met": "업무상 불필요한 권한이 실제로 부여되어 있음을 확인할 수 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준",
+              "업무 역할",
+              "허용 권한 기준",
+              "실제 권한 목록",
+              "검토 기준일"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q13",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "question": "사용자 등록 및 권한부여 시 사용자의 보안책임이 규정에 명시되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "사용자 보안책임을 명시한 규정"
+            ],
+            "met": "사용자 등록 및 권한부여에 적용되는 규정에 사용자의 보안책임이 명시됨.",
+            "not_met": "해당 보안책임을 규정화하지 않았다는 확인 기록이 있음.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            },
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 92,
+              "printed_page": 88,
+              "section": "세부 설명"
+            }
+          ],
+          "review_note": "보안책임의 규정화 여부. Q14의 실제 고지 여부와 별개이므로 중복 아님."
+        },
+        {
+          "item_id": "2.5.1-Q14",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 등록 및 권한부여 시 사용자에게 보안책임이 있음을 규정화하고 인식시켜야 한다.",
+          "question": "검토 대상 사용자에게 등록 및 권한부여 시 보안책임을 인식시키는 조치가 이루어졌는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "등록·권한부여 과정의 보안책임 안내·확인·교육 등 이행 근거"
+            ],
+            "met": "검토 대상 사용자의 등록·권한부여 과정에서 보안책임을 전달하고 인식시키는 조치가 확인됨.",
+            "not_met": "검토 대상 사용자에게 해당 조치를 수행하지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "인증기준"
+            },
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 92,
+              "printed_page": 88,
+              "section": "세부 설명"
+            }
+          ],
+          "review_note": "보안책임 고지라는 단일 조건. 등록 또는 권한부여의 개별 사건을 지정해 검토하고 적용 사건별 확인이 필요함."
+        },
+        {
+          "item_id": "2.5.1-Q15",
+          "control_id": "2.5.1",
+          "source_clause": "공식적인 사용자 계정 및 접근권한 등록·변경·삭제·해지 절차를 수립·이행하여야 한다.",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "세부 설명"
+            }
+          ],
+          "question": "사용자 계정 변경 절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "사용자 계정 변경 절차"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치"
+            ],
+            "met": "적용 범위의 사용자 계정 변경 절차가 확인됨.",
+            "not_met": "적용 범위에서 계정 변경 절차 미수립 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q16",
+          "control_id": "2.5.1",
+          "source_clause": "공식적인 사용자 계정 및 접근권한 등록·변경·삭제·해지 절차를 수립·이행하여야 한다.",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "세부 설명"
+            }
+          ],
+          "question": "검토 대상 사용자 계정 변경 건이 수립된 절차에 따라 처리되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "변경 절차와 해당 계정 변경 처리 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "변경 건 식별자",
+              "적용 절차 버전"
+            ],
+            "met": "동일 변경 건의 적용 절차와 처리 기록이 일치함.",
+            "not_met": "동일 변경 건에서 적용 절차 위반 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q17",
+          "control_id": "2.5.1",
+          "source_clause": "계정 발급 및 접근권한 부여·변경 시 승인 절차 등을 통한 적절성 검토",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "세부 설명"
+            }
+          ],
+          "question": "검토 대상 계정 발급 또는 권한 부여·변경 건에서 승인 절차 등을 통한 적절성 검토가 수행되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "사건별 신청 정보, 적절성 검토 및 승인 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "검토할 사건 종류 한 가지",
+              "신청자",
+              "검토·승인 주체",
+              "검토 시점·결과"
+            ],
+            "met": "선택한 한 건에 대해 적절성 검토와 승인 주체·시점·결과를 확인할 수 있음.",
+            "not_met": "선택한 한 건에서 필요한 적절성 검토를 생략한 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q18",
+          "control_id": "2.5.1",
+          "source_clause": "직무별 접근권한 분류 체계에 따라 업무상 필요한 최소한의 권한만을 부여",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "업무별 접근권한 분류체계가 정의되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "직무별 접근권한 분류표"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "업무 역할",
+              "허용 권한 범위"
+            ],
+            "met": "검토 대상 업무 역할에 대응하는 허용 권한 범위가 정의됨.",
+            "not_met": "해당 범위에 직무별 접근권한 분류체계가 없다는 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.1-Q19",
+          "control_id": "2.5.1",
+          "source_clause": "전보, 퇴직 등 인사이동 발생 시 지체 없이 접근권한 변경 또는 말소",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "세부 설명"
+            }
+          ],
+          "question": "인사이동으로 불필요해진 접근권한이 지체 없이 변경 또는 말소되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "인사이동 발생 기록과 해당 권한 변경·회수 이력"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "인사이동 효력 시점",
+              "권한 변경·말소 시점",
+              "지체 여부 판단 근거"
+            ],
+            "met": "사건 발생 시점과 권한 처리 시점을 대조해 지체 없는 처리를 확인할 수 있음.",
+            "not_met": "인사이동 뒤 불필요한 권한이 남는 등 처리 지체가 직접 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전.",
+          "applicability_condition": "전보·퇴직 등 해당 인사이동 건이 있음. 임의의 시간 수치를 고정하지 않음."
+        },
+        {
+          "item_id": "2.5.1-Q20",
+          "control_id": "2.5.1",
+          "source_clause": "기본 계정, 시험 계정 등은 제거하거나 추측하기 어려운 계정으로 변경",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "세부 설명"
+            }
+          ],
+          "question": "설치 후 기본 계정 또는 시험 계정이 제거되거나 추측하기 어려운 계정으로 변경되었는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "설치 계정 목록과 조치 결과"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "설치 대상",
+              "기본·시험 계정 식별",
+              "조치 결과"
+            ],
+            "met": "검토 대상 기본·시험 계정의 제거 또는 계정명 변경이 확인됨.",
+            "not_met": "검토 대상 기본·시험 계정이 필요한 조치 없이 유지된 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전.",
+          "applicability_condition": "기본·시험 계정이 있는 설치 대상. 비밀번호 변경만으로 계정 변경을 충족 처리하지 않음."
+        },
+        {
+          "item_id": "2.5.1-Q21",
+          "control_id": "2.5.1",
+          "source_clause": "사용자 및 개인정보취급자별로 고유한 사용자 계정 발급 및 공유 금지",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 91,
+              "printed_page": 87,
+              "section": "세부 설명"
+            }
+          ],
+          "question": "검토 대상 사용자에게 고유한 계정이 발급되어 있는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "사용자별 계정 대응표"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "사용자·계정 대응",
+              "공유계정 예외 적용 여부"
+            ],
+            "met": "개별 사용자와 고유 계정의 대응이 확인됨.",
+            "not_met": "예외가 허용되지 않는 범위에서 사용자별 계정 미발급·무단 공용 계정 사용이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전.",
+          "applicability_condition": "공유계정 예외가 있으면 2.5.2의 사유·승인·책임추적성 검토가 선행되어야 하며 자동 미충족으로 처리하지 않음."
+        }
+      ]
+    },
+    {
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토",
+      "requirement": "정보시스템과 개인정보 및 중요정보에 접근하는 사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고 주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+      "coverage_status": "SOURCE_REVIEWED_DRAFT_NOT_APPROVED",
+      "items": [
+        {
+          "item_id": "2.5.6-Q01",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 사용자 계정 등록 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 사용자 계정 등록 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 사용자 계정 등록 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 사용자 계정 등록 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준",
+              "계정/권한 식별자",
+              "처리 종류·시각·주체",
+              "이벤트별 적용 가능한 신청·승인·등록 정보"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "인증기준"
+            },
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "세부 설명: 책임추적성 이력"
+            }
+          ],
+          "review_note": "계정 이용 이력과 권한 변경 이력은 다른 사건이므로 중복 아님. 적용되는 사건 종류별 책임추적 정보가 있어야 하며 필드명 자체를 의무화하지 않음."
+        },
+        {
+          "item_id": "2.5.6-Q02",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 사용자 계정 이용 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 사용자 계정 이용 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 사용자 계정 이용 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 사용자 계정 이용 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준",
+              "계정/권한 식별자",
+              "처리 종류·시각·주체",
+              "이벤트별 적용 가능한 신청·승인·등록 정보"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "인증기준"
+            },
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "세부 설명: 책임추적성 이력"
+            }
+          ],
+          "review_note": "계정 이용 이력과 권한 변경 이력은 다른 사건이므로 중복 아님. 적용되는 사건 종류별 책임추적 정보가 있어야 하며 필드명 자체를 의무화하지 않음."
+        },
+        {
+          "item_id": "2.5.6-Q03",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 사용자 계정 삭제 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 사용자 계정 삭제 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 사용자 계정 삭제 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 사용자 계정 삭제 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준",
+              "계정/권한 식별자",
+              "처리 종류·시각·주체",
+              "이벤트별 적용 가능한 신청·승인·등록 정보"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "인증기준"
+            },
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "세부 설명: 책임추적성 이력"
+            }
+          ],
+          "review_note": "계정 이용 이력과 권한 변경 이력은 다른 사건이므로 중복 아님. 적용되는 사건 종류별 책임추적 정보가 있어야 하며 필드명 자체를 의무화하지 않음."
+        },
+        {
+          "item_id": "2.5.6-Q04",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 접근권한 부여 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 접근권한 부여 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 부여 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 접근권한 부여 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준",
+              "계정/권한 식별자",
+              "처리 종류·시각·주체",
+              "이벤트별 적용 가능한 신청·승인·등록 정보"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "인증기준"
+            },
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "세부 설명: 책임추적성 이력"
+            }
+          ],
+          "review_note": "계정 이용 이력과 권한 변경 이력은 다른 사건이므로 중복 아님. 적용되는 사건 종류별 책임추적 정보가 있어야 하며 필드명 자체를 의무화하지 않음."
+        },
+        {
+          "item_id": "2.5.6-Q05",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 접근권한 변경 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 접근권한 변경 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 변경 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 접근권한 변경 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준",
+              "계정/권한 식별자",
+              "처리 종류·시각·주체",
+              "이벤트별 적용 가능한 신청·승인·등록 정보"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "인증기준"
+            },
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "세부 설명: 책임추적성 이력"
+            }
+          ],
+          "review_note": "계정 이용 이력과 권한 변경 이력은 다른 사건이므로 중복 아님. 적용되는 사건 종류별 책임추적 정보가 있어야 하며 필드명 자체를 의무화하지 않음."
+        },
+        {
+          "item_id": "2.5.6-Q06",
+          "control_id": "2.5.6",
+          "source_clause": "사용자 계정의 등록·이용·삭제 및 접근권한의 부여·변경·삭제 이력을 남기고",
+          "question": "검토 대상 접근권한 삭제 이력이 기록되어 있는가?",
+          "check_kind": "record",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상·기간의 접근권한 삭제 이력을 확인할 수 있는 대장 또는 로그"
+            ],
+            "met": "검토 대상으로 지정한 접근권한 삭제 활동의 이력이 확인됨.",
+            "not_met": "해당 활동이 있었음에도 접근권한 삭제 이력을 남기지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준",
+              "계정/권한 식별자",
+              "처리 종류·시각·주체",
+              "이벤트별 적용 가능한 신청·승인·등록 정보"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "인증기준"
+            },
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "세부 설명: 책임추적성 이력"
+            }
+          ],
+          "review_note": "계정 이용 이력과 권한 변경 이력은 다른 사건이므로 중복 아님. 적용되는 사건 종류별 책임추적 정보가 있어야 하며 필드명 자체를 의무화하지 않음."
+        },
+        {
+          "item_id": "2.5.6-Q07",
+          "control_id": "2.5.6",
+          "source_clause": "주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "question": "계정 및 접근권한 이력을 정해진 주기에 따라 검토했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적용 검토 주기와 기준일, 대상 기간의 검토 이력"
+            ],
+            "met": "합의된 대상 기간과 적용 주기에 따라 이력 검토가 이행됨.",
+            "not_met": "적용 주기에 따른 검토 기한이 지났고 검토를 이행하지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준",
+              "적용 검토주기",
+              "검토 기준일",
+              "대상 기간",
+              "실제 검토일"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "주기 설정(Q12)과 실제 이행(Q07)은 구분. 안내서의 분기 1회 이상은 권고로 표시되어 있으므로 보편적인 강제 주기로 변환하지 않음."
+        },
+        {
+          "item_id": "2.5.6-Q08",
+          "control_id": "2.5.6",
+          "source_clause": "주기적으로 검토하여 적정성 여부를 점검하여야 한다.",
+          "question": "이력 검토에서 계정 및 접근권한의 적정성 여부를 점검했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토 대상, 적정성 판단 기준 및 점검 결과가 확인되는 기록"
+            ],
+            "met": "계정 및 접근권한의 적정성을 실제 점검한 근거가 있음.",
+            "not_met": "이력 수집만 수행하고 적정성 점검은 수행하지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준",
+              "적용 적정성 기준",
+              "검토 대상 목록",
+              "기준별 실제 점검 결과"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.6-Q09",
+          "control_id": "2.5.6",
+          "source_clause": "적정성 검토 기준, 검토주체, 검토방법, 주기 등을 수립하여 정기적 검토를 이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "계정 및 접근권한의 적정성 검토 기준이 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "적정성 검토 기준이 명시된 검토 절차"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 적정성 검토 기준"
+            ],
+            "met": "검토 범위에 적용되는 적정성 검토 기준를 확인할 수 있음.",
+            "not_met": "검토 범위의 적정성 검토 기준 미정 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.6-Q10",
+          "control_id": "2.5.6",
+          "source_clause": "적정성 검토 기준, 검토주체, 검토방법, 주기 등을 수립하여 정기적 검토를 이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "계정 및 접근권한의 검토주체가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토주체가 명시된 검토 절차"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 검토주체"
+            ],
+            "met": "검토 범위에 적용되는 검토주체를 확인할 수 있음.",
+            "not_met": "검토 범위의 검토주체 미정 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.6-Q11",
+          "control_id": "2.5.6",
+          "source_clause": "적정성 검토 기준, 검토주체, 검토방법, 주기 등을 수립하여 정기적 검토를 이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "계정 및 접근권한의 검토방법이 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토방법이 명시된 검토 절차"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 검토방법"
+            ],
+            "met": "검토 범위에 적용되는 검토방법를 확인할 수 있음.",
+            "not_met": "검토 범위의 검토방법 미정 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.6-Q12",
+          "control_id": "2.5.6",
+          "source_clause": "적정성 검토 기준, 검토주체, 검토방법, 주기 등을 수립하여 정기적 검토를 이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "계정 및 접근권한의 검토주기가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "검토주기가 명시된 검토 절차"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 검토주기"
+            ],
+            "met": "검토 범위에 적용되는 검토주기를 확인할 수 있음.",
+            "not_met": "검토 범위의 검토주기 미정 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.6-Q13",
+          "control_id": "2.5.6",
+          "source_clause": "문제점이 발견된 경우 그에 따른 조치절차를 수립·이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "접근권한 검토에서 발견한 문제점의 조치절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "권한 검토 후속조치 절차"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치"
+            ],
+            "met": "문제 발견 시 소명·원인분석·보완·보고 흐름을 확인할 수 있음.",
+            "not_met": "발견 문제에 대한 조치절차가 없는 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.5.6-Q14",
+          "control_id": "2.5.6",
+          "source_clause": "문제점이 발견된 경우 그에 따른 조치절차를 수립·이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 102,
+              "printed_page": 98,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "접근권한 검토에서 발견한 문제점에 대해 정해진 후속조치를 이행했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "발견 사항과 후속조치 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "발견 사항 식별자",
+              "적용 조치",
+              "조치 시점·결과"
+            ],
+            "met": "검토 대상 문제와 적용 조치절차를 대조해 후속조치 이행이 확인됨.",
+            "not_met": "필요한 후속조치가 이행되지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전.",
+          "applicability_condition": "검토에서 문제점이 발견된 경우"
+        }
+      ]
+    },
+    {
+      "control_id": "2.9.3",
+      "control_name": "백업 및 복구관리",
+      "requirement": "정보시스템의 가용성과 데이터 무결성을 유지하기 위하여 백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다. 아울러 사고 발생 시 적시에 복구할 수 있도록 관리하여야 한다.",
+      "coverage_status": "SOURCE_REVIEWED_DRAFT_NOT_APPROVED",
+      "items": [
+        {
+          "item_id": "2.9.3-Q01",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 대상에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 대상을 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 대상 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 대상 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q02",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 주기에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 주기를 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 주기 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 주기 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q03",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 방법에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 방법을 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 방법 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 방법 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q04",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 보관장소에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 보관장소를 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 보관장소 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 보관장소 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q05",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 보관기간에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 보관기간을 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 보관기간 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 보관기간 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q06",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+          "question": "백업 소산에 관한 절차가 정해져 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "백업 소산을 식별할 수 있는 백업 절차서"
+            ],
+            "met": "적용 범위에 대한 백업 소산 절차가 명시됨.",
+            "not_met": "적용 범위의 백업 소산 절차가 정해지지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 문항에 적용되는 기준"
+            ]
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q09",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "question": "검토 대상 백업에서 정해진 대상 기준을 이행했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "대상에 관한 적용 절차와 해당 백업·보관·소산 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 대상 기준",
+              "해당 실제 기록",
+              "대상 기간·기준일"
+            ],
+            "met": "동일 대상의 대상 기준과 실제 기록을 대조해 이행을 확인할 수 있음.",
+            "not_met": "적용되는 대상 기준을 지키지 않은 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q10",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "question": "검토 대상 백업에서 정해진 주기 기준을 이행했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "주기에 관한 적용 절차와 해당 백업·보관·소산 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 주기 기준",
+              "해당 실제 기록",
+              "대상 기간·기준일"
+            ],
+            "met": "동일 대상의 주기 기준과 실제 기록을 대조해 이행을 확인할 수 있음.",
+            "not_met": "적용되는 주기 기준을 지키지 않은 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q11",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "question": "검토 대상 백업에서 정해진 방법 기준을 이행했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "방법에 관한 적용 절차와 해당 백업·보관·소산 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 방법 기준",
+              "해당 실제 기록",
+              "대상 기간·기준일"
+            ],
+            "met": "동일 대상의 방법 기준과 실제 기록을 대조해 이행을 확인할 수 있음.",
+            "not_met": "적용되는 방법 기준을 지키지 않은 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q12",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "question": "검토 대상 백업에서 정해진 보관장소 기준을 이행했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "보관장소에 관한 적용 절차와 해당 백업·보관·소산 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 보관장소 기준",
+              "해당 실제 기록",
+              "대상 기간·기준일"
+            ],
+            "met": "동일 대상의 보관장소 기준과 실제 기록을 대조해 이행을 확인할 수 있음.",
+            "not_met": "적용되는 보관장소 기준을 지키지 않은 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q13",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "question": "검토 대상 백업에서 정해진 보관기간 기준을 이행했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "보관기간에 관한 적용 절차와 해당 백업·보관·소산 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 보관기간 기준",
+              "해당 실제 기록",
+              "대상 기간·기준일"
+            ],
+            "met": "동일 대상의 보관기간 기준과 실제 기록을 대조해 이행을 확인할 수 있음.",
+            "not_met": "적용되는 보관기간 기준을 지키지 않은 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q14",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "인증기준"
+            }
+          ],
+          "question": "검토 대상 백업에서 정해진 소산 기준을 이행했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "소산에 관한 적용 절차와 해당 백업·보관·소산 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 소산 기준",
+              "해당 실제 기록",
+              "대상 기간·기준일"
+            ],
+            "met": "동일 대상의 소산 기준과 실제 기록을 대조해 이행을 확인할 수 있음.",
+            "not_met": "적용되는 소산 기준을 지키지 않은 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전.",
+          "applicability_condition": "소산 적용 대상과 기준을 먼저 확인. 중요정보 백업매체의 물리적 분리는 Q22에서 별도 확인."
+        },
+        {
+          "item_id": "2.9.3-Q15",
+          "control_id": "2.9.3",
+          "source_clause": "백업 대상, 주기, 방법, 절차 등이 포함된 백업 및 복구절차를 수립·이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "사고 시 사용할 복구절차가 수립되어 있는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "대상 시스템의 복구절차"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치"
+            ],
+            "met": "대상·순서·담당 역할을 확인할 수 있는 복구절차가 있음.",
+            "not_met": "검토 대상 복구절차가 미수립임이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q16",
+          "control_id": "2.9.3",
+          "source_clause": "정기적으로 복구 테스트를 실시",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "정해진 주기에 따라 복구 테스트를 실시했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "복구시험 계획과 실시 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "적용 시험 주기",
+              "시험 대상·시나리오",
+              "시험일",
+              "검토 기준일"
+            ],
+            "met": "적용 주기·대상 기간과 실제 시험일을 대조해 실시 여부가 확인됨.",
+            "not_met": "적용 주기에 수행해야 할 시험 미실시가 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q17",
+          "control_id": "2.9.3",
+          "source_clause": "백업된 정보의 완전성과 정확성, 복구절차의 적절성을 확인",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "복구 테스트에서 백업된 정보의 완전성을 확인했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "완전성 확인 기준과 복구시험 결과"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "시험 대상",
+              "완전성 확인 기준",
+              "비교 결과"
+            ],
+            "met": "대상 시험의 완전성 확인 방법·기대값·실측 결과를 비교한 기록이 있음.",
+            "not_met": "시험에서 완전성 확인을 하지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q18",
+          "control_id": "2.9.3",
+          "source_clause": "백업된 정보의 완전성과 정확성, 복구절차의 적절성을 확인",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "복구 테스트에서 백업된 정보의 정확성을 확인했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "정확성 확인 기준과 복구시험 결과"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "시험 대상",
+              "정확성 확인 기준",
+              "비교 결과"
+            ],
+            "met": "대상 시험의 정확성 확인 방법·기대값·실측 결과를 비교한 기록이 있음.",
+            "not_met": "시험에서 정확성 확인을 하지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q19",
+          "control_id": "2.9.3",
+          "source_clause": "백업된 정보의 완전성과 정확성, 복구절차의 적절성을 확인",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "복구 테스트에서 복구절차의 적절성을 확인했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "복구절차의 적절성 확인 기준과 복구시험 결과"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "시험 대상",
+              "복구절차의 적절성 확인 기준",
+              "비교 결과"
+            ],
+            "met": "대상 시험의 복구절차의 적절성 확인 방법·기대값·실측 결과를 비교한 기록이 있음.",
+            "not_met": "시험에서 복구절차의 적절성 확인을 하지 않았다는 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전."
+        },
+        {
+          "item_id": "2.9.3-Q20",
+          "control_id": "2.9.3",
+          "source_clause": "복구테스트 결과 문제점 발견 시 개선계획 수립 및 이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 143,
+              "printed_page": 139,
+              "section": "세부 설명"
+            }
+          ],
+          "question": "복구 테스트에서 발견한 문제점에 대한 개선계획을 수립했는가?",
+          "check_kind": "procedure",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "복구시험 문제 목록과 개선계획"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "발견 문제 식별자",
+              "개선 담당·조치 계획"
+            ],
+            "met": "발견 문제에 대응하는 개선계획이 확인됨.",
+            "not_met": "발견 문제에 대한 개선계획 미수립 사실이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전.",
+          "applicability_condition": "복구시험에서 문제점이 발견된 경우"
+        },
+        {
+          "item_id": "2.9.3-Q21",
+          "control_id": "2.9.3",
+          "source_clause": "복구테스트 결과 문제점 발견 시 개선계획 수립 및 이행",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 143,
+              "printed_page": 139,
+              "section": "세부 설명"
+            }
+          ],
+          "question": "복구 테스트 문제점에 대한 개선계획을 이행했는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "개선계획과 조치 결과"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "해당 개선계획",
+              "이행 시점",
+              "조치 결과",
+              "검토 기준일"
+            ],
+            "met": "검토 시점에 이행해야 하는 개선조치가 완료됐음이 확인됨.",
+            "not_met": "검토 시점에 이행해야 하는 개선조치의 미이행이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전.",
+          "applicability_condition": "복구시험에서 문제점이 발견되고 이행 대상 개선조치가 있는 경우"
+        },
+        {
+          "item_id": "2.9.3-Q22",
+          "control_id": "2.9.3",
+          "source_clause": "백업매체를 물리적으로 떨어진 장소에 소산",
+          "source_refs": [
+            {
+              "source_id": "KISA-2023",
+              "pdf_page": 142,
+              "printed_page": 138,
+              "section": "주요 확인사항"
+            }
+          ],
+          "question": "중요정보 백업매체를 운영·백업 시스템과 물리적으로 떨어진 장소에 소산하고 있는가?",
+          "check_kind": "implementation",
+          "critical": null,
+          "critical_status": "UNDECIDED",
+          "evidence_rule": {
+            "candidate_evidence": [
+              "운영·백업 시스템 및 소산 장소 정보",
+              "매체·백업정보·반출입일을 확인할 수 있는 소산 기록"
+            ],
+            "required_context": [
+              "검토 대상 시스템·계정 또는 자료",
+              "검토 대상 기간 또는 사건",
+              "증거의 출처·위치",
+              "중요정보 해당 여부",
+              "매체 식별자",
+              "운영·백업 및 소산 장소",
+              "소산 시점"
+            ],
+            "met": "해당 중요정보 백업매체의 실제 소산과 물리적 분리를 확인할 수 있음.",
+            "not_met": "소산해야 할 중요정보 백업매체가 같은 장소에만 보관되는 등 분리 미이행이 확인됨.",
+            "unknown": "필요한 근거, 적용 대상·기준·기간이 확인되지 않거나 판독 불가·상충으로 결론을 낼 수 없는 경우. 조건부 문항의 적용 사건이 없으면 자동 MET/NOT_MET으로 바꾸지 않고 적용 제외 정책 미합의로 남긴다.",
+            "citation_required_for": [
+              "MET",
+              "NOT_MET"
+            ],
+            "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 반복 사건은 건별 검토하며 일부 사례를 조직 전체로 확대하지 않는다."
+          },
+          "review_status": "SOURCE_REVIEWED_DRAFT",
+          "review_note": "9/27 원문 대조에서 누락 또는 복합 조건을 보완한 제안. 팀 승인 전.",
+          "applicability_condition": "중요정보가 저장된 백업매체. 특정 거리 수치를 임의로 고정하지 않음."
+        }
+      ]
+    }
+  ],
+  "source_documents": [
+    {
+      "source_id": "KISA-2023",
+      "path": "../../../ISMP-P 인증기준·제도/ISMS-P 인증기준 안내서(2023.11.23).pdf",
+      "sha256": "72ed9bbb8deee2b57e7e8ba3e19315f46a8d63be2db334ae2fbe82956fcd344e",
+      "page_numbering": "pdf_page는 파일 첫 페이지부터 1, printed_page는 인쇄 쪽수",
+      "currency_status": "보유 2023년 판본 대조. 현재 시행 법규 또는 최신 판본 확인 아님."
+    },
+    {
+      "source_id": "FSI-2023",
+      "path": "../../../ISMP-P 인증기준·제도/금융보안원 - 금융권에 적합한 ISMS-P 인증기준 점검항목 안내서(2023.12.).pdf",
+      "sha256": "3d0b8cd367e673cc72d0218577f6ec394566c8ea5136035803c237f5b7cfc50e",
+      "page_numbering": "pdf_page는 파일 첫 페이지부터 1, printed_page는 인쇄 쪽수",
+      "currency_status": "보유 2023년 판본 대조. 현재 시행 법규 또는 최신 판본 확인 아님."
+    }
+  ],
+  "retired_items": [
+    {
+      "item_id": "2.5.1-Q12",
+      "control_id": "2.5.1",
+      "source_clause": "정보시스템과 개인정보 및 중요정보에 대한 비인가 접근을 통제하고",
+      "question": "검토 범위에서 비인가 접근을 통제하는 조치가 이행되고 있는가?",
+      "check_kind": "implementation",
+      "critical": null,
+      "critical_status": "UNDECIDED",
+      "evidence_rule": {
+        "candidate_evidence": [
+          "보호 대상과 허용 접근 주체를 식별할 수 있는 접근통제 설정·점검 기록"
+        ],
+        "met": "검토 범위에서 허용되지 않은 접근을 제한하는 조치의 이행 근거가 있음.",
+        "not_met": "검토 범위에서 비인가 접근이 허용되는 설정이나 통제 미이행 사실이 확인됨.",
+        "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+        "citation_required_for": [
+          "MET",
+          "NOT_MET"
+        ],
+        "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+        "required_context": [
+          "검토 대상 시스템·계정 또는 자료",
+          "검토 대상 기간 또는 사건",
+          "증거의 출처·위치",
+          "해당 문항에 적용되는 기준"
+        ]
+      },
+      "review_status": "RETIRED_NOT_FOR_EVALUATION",
+      "source_refs": [
+        {
+          "source_id": "KISA-2023",
+          "pdf_page": 91,
+          "printed_page": 87,
+          "section": "인증기준"
+        }
+      ],
+      "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전.",
+      "retirement_reason": "비인가 접근 전체를 묻는 상위 질문으로 최소권한 및 계정 통제와 중복되고 다른 접근통제 항목까지 확장될 수 있어 활성 평가에서 제외. 다른 접근통제 전체를 대체하지 않음.",
+      "replaced_by": [
+        "2.5.1-Q11",
+        "2.5.1-Q17",
+        "2.5.1-Q18",
+        "2.5.1-Q19",
+        "2.5.1-Q20",
+        "2.5.1-Q21"
+      ]
+    },
+    {
+      "item_id": "2.9.3-Q07",
+      "control_id": "2.9.3",
+      "source_clause": "백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다.",
+      "question": "검토 대상 백업이 정해진 절차에 따라 이행되었는가?",
+      "check_kind": "implementation",
+      "critical": null,
+      "critical_status": "UNDECIDED",
+      "evidence_rule": {
+        "candidate_evidence": [
+          "백업 절차와 대상 작업의 실행·보관·소산 기록 등 대조 가능한 자료"
+        ],
+        "met": "검토 대상으로 정한 백업 작업이 적용 절차에 따라 이행되었음을 확인할 수 있음.",
+        "not_met": "검토 대상 백업 작업이 적용 절차를 따르지 않았다는 사실이 확인됨.",
+        "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+        "citation_required_for": [
+          "MET",
+          "NOT_MET"
+        ],
+        "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+        "required_context": [
+          "검토 대상 시스템·계정 또는 자료",
+          "검토 대상 기간 또는 사건",
+          "증거의 출처·위치",
+          "해당 문항에 적용되는 기준"
+        ]
+      },
+      "review_status": "RETIRED_NOT_FOR_EVALUATION",
+      "source_refs": [
+        {
+          "source_id": "KISA-2023",
+          "pdf_page": 142,
+          "printed_page": 138,
+          "section": "인증기준"
+        }
+      ],
+      "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전.",
+      "retirement_reason": "백업 대상·주기·방법·보관장소·보관기간·소산 이행이 섞인 복합 질문을 6개로 분리.",
+      "replaced_by": [
+        "2.9.3-Q09",
+        "2.9.3-Q10",
+        "2.9.3-Q11",
+        "2.9.3-Q12",
+        "2.9.3-Q13",
+        "2.9.3-Q14"
+      ]
+    },
+    {
+      "item_id": "2.9.3-Q08",
+      "control_id": "2.9.3",
+      "source_clause": "사고 발생 시 적시에 복구할 수 있도록 관리하여야 한다.",
+      "question": "사고 발생 시 적시에 복구할 수 있도록 관리하고 있는가?",
+      "check_kind": "implementation",
+      "critical": null,
+      "critical_status": "UNDECIDED",
+      "evidence_rule": {
+        "candidate_evidence": [
+          "복구 절차·복구시험 또는 실제 복구 기록 등 복구 가능성을 확인할 자료"
+        ],
+        "met": "검토 범위의 복구 가능성과 적시성을 뒷받침하는 관리 근거가 있음.",
+        "not_met": "검토 범위에서 필요한 시점에 복구할 수 없는 상태를 방치하고 있다는 사실이 확인됨.",
+        "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함.",
+        "citation_required_for": [
+          "MET",
+          "NOT_MET"
+        ],
+        "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+        "required_context": [
+          "검토 대상 시스템·계정 또는 자료",
+          "검토 대상 기간 또는 사건",
+          "증거의 출처·위치",
+          "해당 문항에 적용되는 기준"
+        ]
+      },
+      "review_status": "RETIRED_NOT_FOR_EVALUATION",
+      "source_refs": [
+        {
+          "source_id": "KISA-2023",
+          "pdf_page": 142,
+          "printed_page": 138,
+          "section": "인증기준"
+        }
+      ],
+      "review_note": "기존 의미 유지. 보유 원문과 대조했으며 팀 승인 전.",
+      "retirement_reason": "적시 복구 가능성 전체를 단일 문항으로 확정할 수 없어 복구절차·시험·확인 결과·개선으로 분리. 개별 문항 통과가 실제 적시 복구 보장을 뜻하지 않음.",
+      "replaced_by": [
+        "2.9.3-Q15",
+        "2.9.3-Q16",
+        "2.9.3-Q17",
+        "2.9.3-Q18",
+        "2.9.3-Q19",
+        "2.9.3-Q20",
+        "2.9.3-Q21"
+      ]
+    }
+  ],
+  "review_summary": {
+    "reviewed_at": "2026-09-27",
+    "reviewer_type": "AI_ASSISTED_SOURCE_REVIEW",
+    "original_question_count": 30,
+    "active_question_count": 54,
+    "new_question_count": 27,
+    "retired_question_count": 3,
+    "team_approved": false,
+    "report": "../reports/source_review_2026-09-27/review.md",
+    "remaining": [
+      "우선 범위·critical·적용 제외·종합 판정 규칙 합의",
+      "금융권 추가요건 및 세부 설명 확장 범위 결정",
+      "현행 법규·적용 대상 확인",
+      "실제 증적과 사람 검토 및 LLM·통합 검증"
+    ]
+  }
+}

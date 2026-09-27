@@ -1,0 +1,172 @@
+{
+  "schema_version": "retriever-0.2",
+  "success": true,
+  "evidence_id": "E8005",
+  "version": 2,
+  "source_file": "menu.txt",
+  "file_type": "txt",
+  "evidence_chunks": [
+    {
+      "chunk_id": "E8005_v2_c0000",
+      "evidence_id": "E8005",
+      "version": 2,
+      "chunk_index": 0,
+      "file_type": "txt",
+      "source_file": "menu.txt",
+      "source": "parser",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": null,
+      "text": "오늘 점심은 김치볶음밥과 달걀국이다.",
+      "block_orders": [
+        1
+      ]
+    }
+  ],
+  "retrieval": {
+    "unit": "document",
+    "top_k": 5,
+    "score_type": "cosine_similarity",
+    "aggregation": "max_chunk_similarity",
+    "query_text_field": "text",
+    "candidates": [
+      {
+        "rank": 1,
+        "control_id": "3.1.7",
+        "control_name": "마케팅 목적의 개인정보 수집·이용",
+        "similarity_score": 0.310392,
+        "best_chunk_id": "E8005_v2_c0000",
+        "matched_chunk_ids": [
+          "E8005_v2_c0000"
+        ]
+      },
+      {
+        "rank": 2,
+        "control_id": "2.1.2",
+        "control_name": "조직의 유지관리",
+        "similarity_score": 0.302703,
+        "best_chunk_id": "E8005_v2_c0000",
+        "matched_chunk_ids": [
+          "E8005_v2_c0000"
+        ]
+      },
+      {
+        "rank": 3,
+        "control_id": "2.9.3",
+        "control_name": "백업 및 복구관리",
+        "similarity_score": 0.301967,
+        "best_chunk_id": "E8005_v2_c0000",
+        "matched_chunk_ids": [
+          "E8005_v2_c0000"
+        ]
+      },
+      {
+        "rank": 4,
+        "control_id": "2.9.5",
+        "control_name": "로그 및 접속기록 점검",
+        "similarity_score": 0.300359,
+        "best_chunk_id": "E8005_v2_c0000",
+        "matched_chunk_ids": [
+          "E8005_v2_c0000"
+        ]
+      },
+      {
+        "rank": 5,
+        "control_id": "1.1.5",
+        "control_name": "정책 수립",
+        "similarity_score": 0.29863,
+        "best_chunk_id": "E8005_v2_c0000",
+        "matched_chunk_ids": [
+          "E8005_v2_c0000"
+        ]
+      }
+    ],
+    "chunk_results": [
+      {
+        "chunk_id": "E8005_v2_c0000",
+        "candidates": [
+          {
+            "rank": 1,
+            "control_id": "3.1.7",
+            "control_name": "마케팅 목적의 개인정보 수집·이용",
+            "similarity_score": 0.310392
+          },
+          {
+            "rank": 2,
+            "control_id": "2.1.2",
+            "control_name": "조직의 유지관리",
+            "similarity_score": 0.302703
+          },
+          {
+            "rank": 3,
+            "control_id": "2.9.3",
+            "control_name": "백업 및 복구관리",
+            "similarity_score": 0.301967
+          },
+          {
+            "rank": 4,
+            "control_id": "2.9.5",
+            "control_name": "로그 및 접속기록 점검",
+            "similarity_score": 0.300359
+          },
+          {
+            "rank": 5,
+            "control_id": "1.1.5",
+            "control_name": "정책 수립",
+            "similarity_score": 0.29863
+          }
+        ]
+      }
+    ]
+  },
+  "candidate_controls": [
+    {
+      "control_id": "3.1.7",
+      "control_name": "마케팅 목적의 개인정보 수집·이용",
+      "requirement": "재화나 서비스의 홍보, 판매 권유, 광고성 정보전송 등 마케팅 목적으로 개인정보를 수집· 이용하는 경우 그 목적을 정보주체가 명확하게 인지할 수 있도록 고지하고 동의를 받아야 한다.",
+      "matched_chunk_ids": [
+        "E8005_v2_c0000"
+      ]
+    },
+    {
+      "control_id": "2.1.2",
+      "control_name": "조직의 유지관리",
+      "requirement": "조직의 각 구성원에게 정보보호와 개인정보보호 관련 역할 및 책임을 할당하고, 그 활동을 평가할 수 있는 체계와 조직 및 조직의 구성원 간 상호 의사소통할 수 있는 체계를 수립하여 운영하여야 한다.",
+      "matched_chunk_ids": [
+        "E8005_v2_c0000"
+      ]
+    },
+    {
+      "control_id": "2.9.3",
+      "control_name": "백업 및 복구관리",
+      "requirement": "정보시스템의 가용성과 데이터 무결성을 유지하기 위하여 백업 대상, 주기, 방법, 보관장소, 보관기간, 소산 등의 절차를 수립·이행하여야 한다. 아울러 사고 발생 시 적시에 복구할 수 있도록 관리하여야 한다.",
+      "matched_chunk_ids": [
+        "E8005_v2_c0000"
+      ]
+    },
+    {
+      "control_id": "2.9.5",
+      "control_name": "로그 및 접속기록 점검",
+      "requirement": "정보시스템의 정상적인 사용을 보장하고 사용자 오·남용(비인가접속, 과다조회 등)을 방지하기 위하여 접근 및 사용에 대한 로그 검토기준을 수립하여 주기적으로 점검하며, 문제 발생 시 사후조치를 적시에 수행하여야 한다.",
+      "matched_chunk_ids": [
+        "E8005_v2_c0000"
+      ]
+    },
+    {
+      "control_id": "1.1.5",
+      "control_name": "정책 수립",
+      "requirement": "정보보호와 개인정보보호 정책 및 시행문서를 수립·작성하며, 이때 조직의 정보보호와 개인정보보호 방침 및 방향을 명확하게 제시하여야 한다. 또한 정책과 시행문서는 경영진의 승인을 받고, 임직원 및 관련자에게 이해하기 쉬운 형태로 전달하여야 한다.",
+      "matched_chunk_ids": [
+        "E8005_v2_c0000"
+      ]
+    }
+  ],
+  "warnings": [],
+  "index": {
+    "collection": "isms_p_controls",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+  },
+  "generated_at": "2026-09-27T19:15:35.723863+09:00"
+}

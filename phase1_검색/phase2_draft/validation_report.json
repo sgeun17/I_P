@@ -1,0 +1,130 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-27T18:43:43.551981+09:00",
+  "draft_version": "phase2-checklist-draft-2026-09-27",
+  "draft_sha256": "d27d2dee7a121d1758257760dbd2aa2e503fa16b0d6c93380709ac05cf0fbd4d",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "candidate_count": 5,
+  "sample_control_count": 3,
+  "original_question_count": 30,
+  "active_question_count": 54,
+  "retired_question_count": 3,
+  "new_question_count": 27,
+  "synthetic_example_count": 9,
+  "pdf_text_verified": true,
+  "checks": [
+    {
+      "check": "원본 KB 해시 일치",
+      "passed": true
+    },
+    {
+      "check": "팀 미승인 초안",
+      "passed": true
+    },
+    {
+      "check": "활성 ID 중복 없음",
+      "passed": true
+    },
+    {
+      "check": "질문 문장 완전 중복 없음",
+      "passed": true
+    },
+    {
+      "check": "기존 ID 보존 및 활성/퇴역 분리",
+      "passed": true
+    },
+    {
+      "check": "퇴역 ID 재사용 없음",
+      "passed": true
+    },
+    {
+      "check": "퇴역 질문 대체 참조 유효",
+      "passed": true
+    },
+    {
+      "check": "선정 후보 ID 중복 없음 및 KB 연결",
+      "passed": true
+    },
+    {
+      "check": "활성 질문 문서와 JSON 동기화",
+      "passed": true
+    },
+    {
+      "check": "요약 수량 일치",
+      "passed": true
+    },
+    {
+      "check": "KB 내용 및 통제항목 연결",
+      "passed": true
+    },
+    {
+      "check": "critical 미정 및 원문 대조 초안 표시",
+      "passed": true
+    },
+    {
+      "check": "판정 근거·컨텍스트·인용 필드",
+      "passed": true
+    },
+    {
+      "check": "출처 파일 및 해시",
+      "passed": true
+    },
+    {
+      "check": "출처 ID 및 쪽수 참조",
+      "passed": true
+    },
+    {
+      "check": "기존 합성 예시 의미·참조 보존",
+      "passed": true
+    },
+    {
+      "check": "검토 보고서 존재",
+      "passed": true
+    },
+    {
+      "check": "54개 활성 질문 source_clause가 참조 원문에 있음",
+      "passed": true
+    },
+    {
+      "check": "2.5.1 KISA-2023 요구사항 원문 일치",
+      "passed": true
+    },
+    {
+      "check": "2.5.1 FSI-2023 요구사항 원문 일치",
+      "passed": true
+    },
+    {
+      "check": "2.5.1 증거 예시 전체 원문 일치",
+      "passed": true
+    },
+    {
+      "check": "2.5.6 KISA-2023 요구사항 원문 일치",
+      "passed": true
+    },
+    {
+      "check": "2.5.6 FSI-2023 요구사항 원문 일치",
+      "passed": true
+    },
+    {
+      "check": "2.5.6 증거 예시 전체 원문 일치",
+      "passed": true
+    },
+    {
+      "check": "2.9.3 KISA-2023 요구사항 원문 일치",
+      "passed": true
+    },
+    {
+      "check": "2.9.3 FSI-2023 요구사항 원문 일치",
+      "passed": true
+    },
+    {
+      "check": "2.9.3 증거 예시 전체 원문 일치",
+      "passed": true
+    }
+  ],
+  "limits": [
+    "보유 원문 대조 및 구조·참조 검증. 팀 승인 또는 최신 법규 확인 아님.",
+    "세부 설명 전체·금융권 추가요건을 모두 구현한 체크리스트 아님.",
+    "실제 증적·LLM·통합 테스트 미실행. 합성 예시는 실행 결과 아님."
+  ]
+}

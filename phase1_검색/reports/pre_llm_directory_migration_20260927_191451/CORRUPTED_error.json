@@ -1,0 +1,8 @@
+{
+  "schema_version": "retriever-0.2",
+  "success": false,
+  "error": {
+    "code": "PREPROCESSING_FAILED",
+    "message": "전처리 오류가 있는 문서는 검색할 수 없습니다."
+  }
+}
