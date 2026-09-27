@@ -2,6 +2,7 @@
 -- ISMS-P 증적 도구 : 테이블 2개 만들기
 -- 실행 방법(터미널):  mysql -u root -p < schema.sql
 -- 주의: 실행하면 기존 테이블과 데이터가 지워지고 새로 만들어집니다.
+--       chunk 표도 함께 지워지므로, 이 파일 다음에 chunk_schema.sql 을 다시 실행하세요.
 --
 -- evidence          : 지금 쓰는 증적 (증적 하나당 한 줄, 항상 최신본)
 -- evidence_history  : 교체되기 전의 옛날 버전들 (교체될 때마다 한 줄씩 쌓임)
@@ -17,6 +18,9 @@ CREATE DATABASE IF NOT EXISTS evidence_db
 
 USE evidence_db;
 
+-- chunk 표가 evidence 를 외래 키로 참조하므로 chunk 를 먼저 지워야 evidence 를 지울 수 있습니다.
+-- (순서가 반대면 "Cannot drop table 'evidence' referenced by a foreign key constraint" 오류)
+DROP TABLE IF EXISTS chunk;
 DROP TABLE IF EXISTS evidence_history;
 DROP TABLE IF EXISTS evidence;
 
