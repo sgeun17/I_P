@@ -25,6 +25,8 @@ import os
 import shutil
 from datetime import datetime
 
+import pymysql
+
 from config import ALLOWED_FILE_TYPES, ID_DIGITS, ID_PREFIX, KST, STORAGE_DIR, VALID_STATUSES
 from db import get_connection
 
@@ -238,6 +240,8 @@ def replace_evidence(evidence_id, temp_file_path, file_name, file_type):
          (언제 교체됐는지는 다음 버전의 uploaded_at 으로 알 수 있음)
       2) evidence 의 그 줄을 새 파일 정보로 덮어씀 (version +1, 상태는 UPLOADED 로 초기화)
       3) 새 파일은 000001_v2.pdf 처럼 저장. 옛날 파일(000001_v1.pdf)도 지우지 않고 남겨둠
+      4) 그 증적의 청크(chunk 표)를 같은 트랜잭션에서 지움
+         (옛 버전 청크가 새 버전인 것처럼 검색에 걸리지 않게. 새 청크는 다시 분석하면 생김)
 
     증적 번호는 그대로라서, 화면과 다른 단계에서는 "같은 증적이 새 파일로 바뀐 것"으로 보입니다.
     """
@@ -291,7 +295,10 @@ def replace_evidence(evidence_id, temp_file_path, file_name, file_type):
                 (version, file_name, file_type, file_size, file_hash, now, evidence_id),
             )
 
-        # ④ 새 파일 저장 (옛날 파일은 그대로 둠)
+            # ④ 옛 버전 청크 지우기 (교체와 한 트랜잭션 → 교체가 취소되면 청크도 그대로)
+            _delete_chunks(cur, evidence_id)
+
+        # ⑤ 새 파일 저장 (옛날 파일은 그대로 둠)
         final_path = _stored_file_path(evidence_id, version, file_type)
         os.makedirs(STORAGE_DIR, exist_ok=True)
         shutil.move(str(temp_file_path), str(final_path))
@@ -319,6 +326,19 @@ def replace_evidence(evidence_id, temp_file_path, file_name, file_type):
         "uploaded_at": _iso(now),
         "status": "UPLOADED",
     }
+
+
+def _delete_chunks(cur, evidence_id):
+    """
+    그 증적의 청크를 지웁니다. chunk 표를 아직 안 만든 환경(chunk_schema.sql 미실행)이면
+    지울 청크도 없으므로 넘어갑니다. (MySQL 은 문장 하나가 실패해도 트랜잭션이 이어집니다)
+    """
+    try:
+        cur.execute("DELETE FROM chunk WHERE evidence_id = %s", (evidence_id,))
+    except pymysql.err.ProgrammingError as e:
+        if e.args and e.args[0] == 1146:        # 1146 = 표가 없음 (Table doesn't exist)
+            return
+        raise
 
 
 # ─────────────────────────────────────────────
