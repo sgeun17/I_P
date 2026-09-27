@@ -3,7 +3,7 @@
   "status": "DRAFT_FOR_TEAM_REVIEW",
   "approved": false,
   "source": {
-    "path": "../controls.json",
+    "path": "../phase1_검색/controls.json",
     "sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
     "basis": "3개 통제항목의 KB와 보유 2023년 안내서 원문을 대조하고 주요 확인사항 누락 및 복합 질문을 보완한 개발 초안. 팀 승인·현행 법규 검토·운영 검증 전."
   },
@@ -2280,14 +2280,14 @@
   "source_documents": [
     {
       "source_id": "KISA-2023",
-      "path": "../../../ISMP-P 인증기준·제도/ISMS-P 인증기준 안내서(2023.11.23).pdf",
+      "path": "../../ISMP-P 인증기준·제도/ISMS-P 인증기준 안내서(2023.11.23).pdf",
       "sha256": "72ed9bbb8deee2b57e7e8ba3e19315f46a8d63be2db334ae2fbe82956fcd344e",
       "page_numbering": "pdf_page는 파일 첫 페이지부터 1, printed_page는 인쇄 쪽수",
       "currency_status": "보유 2023년 판본 대조. 현재 시행 법규 또는 최신 판본 확인 아님."
     },
     {
       "source_id": "FSI-2023",
-      "path": "../../../ISMP-P 인증기준·제도/금융보안원 - 금융권에 적합한 ISMS-P 인증기준 점검항목 안내서(2023.12.).pdf",
+      "path": "../../ISMP-P 인증기준·제도/금융보안원 - 금융권에 적합한 ISMS-P 인증기준 점검항목 안내서(2023.12.).pdf",
       "sha256": "3d0b8cd367e673cc72d0218577f6ec394566c8ea5136035803c237f5b7cfc50e",
       "page_numbering": "pdf_page는 파일 첫 페이지부터 1, printed_page는 인쇄 쪽수",
       "currency_status": "보유 2023년 판본 대조. 현재 시행 법규 또는 최신 판본 확인 아님."
@@ -2445,7 +2445,7 @@
     "new_question_count": 27,
     "retired_question_count": 3,
     "team_approved": false,
-    "report": "../reports/source_review_2026-09-27/review.md",
+    "report": "../phase1_검색/reports/source_review_2026-09-27/review.md",
     "remaining": [
       "우선 범위·critical·적용 제외·종합 판정 규칙 합의",
       "금융권 추가요건 및 세부 설명 확장 범위 결정",

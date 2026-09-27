@@ -5,7 +5,7 @@
 기존 질문 30개를 검토하여 27개 유지, 상위·복합 질문 3개는 퇴역하고 세부 질문 27개를 추가했다. 기존 ID를 다른 질문에 재사용하지 않았다.
 출처는 보유 「ISMS-P 인증기준 안내서(2023.11.23)」이며 아래 질문은 프로젝트의 분해안이다. PDF 쪽수는 파일 첫 페이지부터 1로 센다.
 모든 critical은 미정이고 팀 미승인이다. 사건·기간별 근거가 부족하면 UNKNOWN을 제안한다. 금융권 추가요건과 세부 설명 전체를 포괄하는 확정본이 아니다.
-[검토 결과 및 남은 범위](../reports/source_review_2026-09-27/review.md) · [JSON 원본](checklist_draft.json) · [공통 규칙](README.md)
+[검토 결과 및 남은 범위](../phase1_검색/reports/source_review_2026-09-27/review.md) · [JSON 원본](checklist_draft.json) · [공통 규칙](README.md)
 
 ## 2.5.1 사용자 계정 관리
 

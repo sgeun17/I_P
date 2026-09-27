@@ -1,10 +1,12 @@
 # Phase 2 기준 초안
 
+WBS의 `Phase2 기준` 작업 자료는 이 디렉토리에서 관리한다. 기존 `phase1_검색/phase2_draft/`에서 질문 초안·검토본·합성 사례·검증 도구를 이동했다. Phase1 검색 KB와 과거 원문 대조 결과는 검색 디렉토리의 원본을 참조한다.
+
 ## 9/27 원문 대조 후 현재 상태
 
 선택한 3개 항목의 보유 안내서 원문 대조와 기존 질문 30개 검토를 마쳤다. 주요 확인사항의 누락·복합 질문을 보완해 **활성 54개(20/14/20)**로 수정했다. 기존 질문 27개를 유지·보완하고 3개는 `retired_items`로 이동, 새 ID 27개를 추가했다. 기존 합성 사례 9개는 참조 질문의 의미가 그대로여서 유지했다.
 
-[검토 결과·원문 쪽수·남은 범위](../reports/source_review_2026-09-27/review.md)와 [수정 질문 검토본](checklist_review.md)을 먼저 본다. KB 3개의 요구사항과 증거자료 예시는 원문과 일치하여 운영 `controls.json`과 검색 인덱스는 변경하지 않았다.
+[검토 결과·원문 쪽수·남은 범위](../phase1_검색/reports/source_review_2026-09-27/review.md)와 [수정 질문 검토본](checklist_review.md)을 먼저 본다. KB 3개의 요구사항과 증거자료 예시는 원문과 일치하여 운영 `controls.json`과 검색 인덱스는 변경하지 않았다.
 
 이번 검토는 AI 보조 원문 대조다. 범위·critical·판정·적용 제외 규칙의 팀 합의와 실제 증적 검증은 남아 있다. 일반 안내서의 세부 설명 전체 및 금융권 추가요건을 빠짐없이 구현한 최종 KB로 간주하지 않는다.
 
@@ -51,7 +53,7 @@
 | 3.4.1 개인정보 파기 | 후보만 선정 | 검색 사례 S11·R04. 파기 시점·방법 검토에 활용 가능. 고정 기한을 넣기 전 적용 조건 확인 필요 |
 | 2.2.5 퇴직 및 직무변경 관리 | 후보만 선정 | 파일 시험의 계정 관리와 후보 중첩, 판단팀 G-MULTI-02. 인사 절차와 계정 통제의 경계 검토 가능 |
 
-검색 사례 출처는 `../tests/review_cases.json`, `../tests/relevance_cases.json`이다. 파일 시험은 `../reports/file_pipeline_2026-09-24/`, 판단팀 사례는 `../../phase1_판단/tests/fixtures/goldenset.json`에 있다. 이 자료들은 개발용 자료이며 Phase 2 정답으로 그대로 전환하지 않는다.
+검색 사례 출처는 `../phase1_검색/tests/review_cases.json`, `../phase1_검색/tests/relevance_cases.json`이다. 파일 시험은 `../phase1_검색/reports/file_pipeline_2026-09-24/`, 판단팀 사례는 `../phase1_판단/tests/fixtures/goldenset.json`에 있다. 이 자료들은 개발용 자료이며 Phase 2 정답으로 그대로 전환하지 않는다.
 
 ## 공통 구조 제안
 

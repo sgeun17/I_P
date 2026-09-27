@@ -11,6 +11,7 @@ from datetime import datetime
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+SEARCH = HERE.parent / 'phase1_검색'
 
 
 def load(path):
@@ -33,7 +34,7 @@ def main():
     d = load(draft_path)
     kb_path = (HERE / d['source']['path']).resolve()
     kb = {c['control_id']: c for c in load(kb_path)}
-    baseline = load(HERE.parent / 'reports/source_review_2026-09-27/checklist_before_review.json')
+    baseline = load(SEARCH / 'reports/source_review_2026-09-27/checklist_before_review.json')
     old = {i['item_id']: i for c in baseline['controls'] for i in c['items']}
     items = [i for c in d['controls'] for i in c['items']]
     ids = [i['item_id'] for i in items]
@@ -77,7 +78,7 @@ def main():
             return text_cache[key]
 
         check('54개 활성 질문 source_clause가 참조 원문에 있음', all(any(normalized(i['source_clause']) in page(r['source_id'], r['pdf_page']) for r in i['source_refs']) for i in items))
-        comparison = load(HERE.parent / 'reports/source_review_2026-09-27/kb_comparison.json')
+        comparison = load(SEARCH / 'reports/source_review_2026-09-27/kb_comparison.json')
         for c in comparison['controls']:
             cid = c['control_id']
             for sid, key in [('KISA-2023','general_pdf_pages'),('FSI-2023','financial_pdf_pages')]:

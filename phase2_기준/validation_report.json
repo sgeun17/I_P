@@ -1,8 +1,8 @@
 {
   "status": "PASS",
-  "checked_at": "2026-09-27T18:43:43.551981+09:00",
+  "checked_at": "2026-09-27T19:20:30.378609+09:00",
   "draft_version": "phase2-checklist-draft-2026-09-27",
-  "draft_sha256": "d27d2dee7a121d1758257760dbd2aa2e503fa16b0d6c93380709ac05cf0fbd4d",
+  "draft_sha256": "7850b5e31f528657de89197ce3c608ad0d8d22c555abdb30c4d24cf2e70a57c7",
   "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
   "candidate_count": 5,
   "sample_control_count": 3,
