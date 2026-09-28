@@ -1,8 +1,8 @@
 {
   "status": "PASS",
-  "checked_at": "2026-09-27T19:20:30.378609+09:00",
-  "draft_version": "phase2-checklist-draft-2026-09-27",
-  "draft_sha256": "7850b5e31f528657de89197ce3c608ad0d8d22c555abdb30c4d24cf2e70a57c7",
+  "checked_at": "2026-09-28T20:08:26.254378+09:00",
+  "draft_version": "phase2-checklist-draft-2026-09-28",
+  "draft_sha256": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a",
   "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
   "candidate_count": 5,
   "sample_control_count": 3,
@@ -10,8 +10,29 @@
   "active_question_count": 54,
   "retired_question_count": 3,
   "new_question_count": 27,
-  "synthetic_example_count": 9,
+  "synthetic_example_count": 162,
+  "example_pair_coverage_count": 162,
+  "example_labels_human_approved": false,
+  "llm_executed": false,
   "pdf_text_verified": true,
+  "store_verified": true,
+  "store_import": {
+    "version": "phase2-checklist-draft-2026-09-28",
+    "source_sha256": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a",
+    "approved": false,
+    "status": "DRAFT_FOR_TEAM_REVIEW",
+    "inserted": false,
+    "control_count": 3,
+    "active_question_count": 54,
+    "retired_question_count": 3
+  },
+  "store_tests": {
+    "status": "PASS",
+    "tests_run": 18,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
   "checks": [
     {
       "check": "원본 KB 해시 일치",
@@ -74,7 +95,23 @@
       "passed": true
     },
     {
-      "check": "기존 합성 예시 의미·참조 보존",
+      "check": "기존 합성 예시 9개 원형·참조 보존",
+      "passed": true
+    },
+    {
+      "check": "합성 사례 ID 중복 없음",
+      "passed": true
+    },
+    {
+      "check": "합성 사례 활성 문항 참조·기대값·필수 텍스트",
+      "passed": true
+    },
+    {
+      "check": "전체 활성 문항 MET·NOT_MET·UNKNOWN 사례 확보",
+      "passed": true
+    },
+    {
+      "check": "합성·팀 미승인·실제 증적 및 LLM 미실행 표시",
       "passed": true
     },
     {
@@ -82,7 +119,7 @@
       "passed": true
     },
     {
-      "check": "54개 활성 질문 source_clause가 참조 원문에 있음",
+      "check": "전체 활성 질문 source_clause가 참조 원문에 있음",
       "passed": true
     },
     {
@@ -120,11 +157,206 @@
     {
       "check": "2.9.3 증거 예시 전체 원문 일치",
       "passed": true
+    },
+    {
+      "check": "저장·새 연결 조회 시 통제항목 전체 보존",
+      "passed": true
+    },
+    {
+      "check": "저장·조회 시 출처·초안 상태 보존",
+      "passed": true
+    },
+    {
+      "check": "활성 문항 개별 조회 전체 보존",
+      "passed": true
+    },
+    {
+      "check": "동일 버전 동일 내용 재적재 멱등",
+      "passed": true
+    },
+    {
+      "check": "퇴역 문항 조회 차단 및 대체 문항 안내",
+      "passed": true
+    },
+    {
+      "check": "검수용 초안 사용을 명시하지 않은 조회 차단",
+      "passed": true
+    },
+    {
+      "check": "저장 모듈 버전·ID·오류·원자성 동작 테스트",
+      "passed": true
     }
   ],
   "limits": [
     "보유 원문 대조 및 구조·참조 검증. 팀 승인 또는 최신 법규 확인 아님.",
     "세부 설명 전체·금융권 추가요건을 모두 구현한 체크리스트 아님.",
-    "실제 증적·LLM·통합 테스트 미실행. 합성 예시는 실행 결과 아님."
-  ]
+    "실제 증적 판정·LLM·팀 간 통합 테스트 미실행. 합성 예시는 실행 결과 아님."
+  ],
+  "public_cli_validation": {
+    "status": "PASS",
+    "fresh_process_controls": [
+      "2.5.1",
+      "2.5.6",
+      "2.9.3"
+    ],
+    "fresh_process_question_count": 54,
+    "source_and_draft_state_preserved": true,
+    "unapproved_query_rejected": true,
+    "retired_query_rejected": true
+  },
+  "scope_verification": {
+    "compared_file_count": 74,
+    "phase1_unchanged_file_count": 72,
+    "expected_changes": [
+      "phase2_기준/checklist_draft.json"
+    ],
+    "unexpected_changes": [],
+    "root_readme_unchanged": true,
+    "root_agents_absent": true
+  },
+  "examples_sha256": "21e827229e19dbb6b67f161eee210e4331af36a54b76b765bf5c05c6d9c67f32",
+  "validated_code_sha256": {
+    "checklist_store.py": "b989aa0feafc2eec4d11e1df1695158cc75b04717fa3efe787c2a3433ccf30ab",
+    "validate_draft.py": "aca2798988a190a8f3d5de5672c50a47f8a2f99070c05b7f4873453338b96c44",
+    "tests/test_checklist_store.py": "c413cafeb0861bc57a347f54cd07c3800da64c147027910f71ed3ec1963f06d8"
+  },
+  "repository_sample_input_review": {
+    "status": "INPUT_ADEQUACY_REVIEW_COMPLETE_FURTHER_EVIDENCE_REQUIRED",
+    "reviewed_at": "2026-09-28T20:14:51.082278+09:00",
+    "reviewer_type": "AI_ASSISTED_NOT_HUMAN_APPROVED",
+    "source_parsed_report": "../phase1_검색/reports/repository_documents_2026-09-27/parsed_and_chunks.json",
+    "source_parsed_report_sha256": "8375bf4295cae94d941fa7dcd46b7de0419eaf20316f55d7b176ddab4d9ecb76",
+    "document_count": 6,
+    "chunk_count": 108,
+    "production_provenance_verified": false,
+    "llm_executed": false,
+    "approved_expected_labels_available": false,
+    "files": [
+      {
+        "document_id": "D01",
+        "source_path": "../phase1_입력/uploads/tmp/08504e7811e14a149d97e62e7e9b12d8.docx",
+        "source_sha256": "fc3e1fda214cf6dcab8c96e15d6b8c0d4e260511f2e384602b05ed951179d4f0",
+        "current_file_hash_matches": true,
+        "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+        "document_type": "계획서·내부 관리계획",
+        "chunk_count": 9,
+        "input_review": "권한 최소화·검토 주기·소산·훈련 방향을 기술하지만, 시행일이 2026년 O월 O일이며 참조 절차서와 실제 수행 기록이 없다. 적용 버전·사건별 실행을 확정할 자료로 부족하다."
+      },
+      {
+        "document_id": "D02",
+        "source_path": "../phase1_입력/uploads/tmp/11c56b6802834307958e85389161021f.docx",
+        "source_sha256": "1d46230bf0f16fb0db542300881a3ec2e2f1cffd6940a4ecbe265b4076e14f7d",
+        "current_file_hash_matches": true,
+        "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+        "document_type": "컨설팅 보고서",
+        "chunk_count": 32,
+        "input_review": "백업 보호·퇴직/직무변경 관련 추가 자료가 필요하다는 검토 서술이다. 기초 증적과 사건별 기록이 포함되지 않아 개별 문항의 직접 수행 근거로 확정하지 않는다."
+      },
+      {
+        "document_id": "D03",
+        "source_path": "../phase1_입력/uploads/tmp/55083f17f11c4492b8d004f1261afe32.docx",
+        "source_sha256": "162724606574b80d7db52a06f882d76f06504c6407679d6adb3fc6f67d397d6d",
+        "current_file_hash_matches": true,
+        "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+        "document_type": "컨설팅 결과보고서",
+        "chunk_count": 33,
+        "input_review": "관련 절차·원격지 소산 자료의 파일명이 언급되지만 원자료가 동봉된 것은 아니다. 권한 회수 사건·처리 시점과 백업 매체·장소의 연결은 확인되지 않는다."
+      },
+      {
+        "document_id": "D04",
+        "source_path": "../phase1_입력/uploads/tmp/8ef130fb9f4e4aba8b7bea20f9da330c.docx",
+        "source_sha256": "b8a633312a48f6cc1129222f942be96040dfadd2316077f18c9eb5469a04812f",
+        "current_file_hash_matches": true,
+        "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+        "document_type": "컨설팅 결과보고서",
+        "chunk_count": 29,
+        "input_review": "백업 보호 부족에 대한 보고서 서술을 물리적 분리 미이행으로 바꾸지 않는다. 해당 원자료·매체·실제 장소와 관찰기간 확인이 필요하다."
+      },
+      {
+        "document_id": "D05",
+        "source_path": "../phase1_입력/uploads/tmp/f0fa24c369c24a48a551d32f289cae50.docx",
+        "source_sha256": "f0ae4260fc7feac98f057beecb4915691634905b0ca5e67b27bd07c0b1027f7d",
+        "current_file_hash_matches": true,
+        "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+        "document_type": "이력서",
+        "chunk_count": 2,
+        "input_review": "현재 계정·권한·백업 통제의 조직 운영 증적으로 사용하지 않는다. 대상 자료 부적합을 통제 미충족으로 바꾸지 않는다."
+      },
+      {
+        "document_id": "D06",
+        "source_path": "../phase1_입력/docx_test/test1.docx",
+        "source_sha256": "d05623b89fb29ea830d92accf06a17c55a9cbcc6e1dd3eac5bfa5df2b6d7487d",
+        "current_file_hash_matches": true,
+        "provenance": "PROVIDED_TEST_FIXTURE",
+        "document_type": "알려진 테스트 fixture",
+        "chunk_count": 3,
+        "input_review": "승인 후 계정을 발급한다는 짧은 규칙만 포함한다. 절차 검토 예시로는 쓸 수 있으나 실제 승인·발급 사건, 당시 절차와 날짜가 없다."
+      }
+    ],
+    "representative_traceable_findings": [
+      {
+        "document_id": "D01",
+        "chunk_id": "E0101_v1_c0003",
+        "item_ids_for_review": [
+          "2.5.1-Q11",
+          "2.5.6-Q12"
+        ],
+        "quote": "정보시스템 및 개인정보처리시스템에 대한 접근권한은 최소권한 원칙에 따라 부여하며, 분기 1회 이상 접근권한 현황을 재검토한다.",
+        "page": null,
+        "review_note": "기준 문구는 있지만 대상별 권한표·검토 수행 기록과 현재 적용 효력일이 없다. 이 문구를 실제 이행 완료로 변환하지 않는다."
+      },
+      {
+        "document_id": "D01",
+        "chunk_id": "E0101_v1_c0004",
+        "item_ids_for_review": [
+          "2.9.3-Q06",
+          "2.9.3-Q16",
+          "2.9.3-Q22"
+        ],
+        "quote": "재해복구(DR)센터를 원격지에 구축하여 백업 데이터를 소산 보관하며, 연 1회 이상 DR 모의훈련을 실시하여 RTO/RPO 목표 달성 여부를 검증한다.",
+        "page": null,
+        "review_note": "계획서 문장만으로 실제 소산·물리적 분리·시험 실시를 확정하지 않는다. 매체/장소·훈련 날짜/결과·적용 기준을 연결할 원자료가 필요하다."
+      },
+      {
+        "document_id": "D01",
+        "chunk_id": "E0101_v1_c0008",
+        "item_ids_for_review": [
+          "2.5.6-Q12"
+        ],
+        "quote": "본 계획은 2026년 O월 O일부터 시행한다.",
+        "page": null,
+        "review_note": "현재 적용되는 기준인지 확인할 시행일이 미기재다. 작성 대상연도만으로 효력일을 대신하지 않는다."
+      },
+      {
+        "document_id": "D03",
+        "chunk_id": "E0103_v1_c0018",
+        "item_ids_for_review": [
+          "2.5.1-Q19"
+        ],
+        "quote": "확인된 문제점: 답변에서 언급한 퇴직·직무변경 절차와 실제 계정·권한 회수 수행기록의 연결이 확인되지 않았다.",
+        "page": null,
+        "review_note": "상위 보고서에서 자료 미확인을 설명할 뿐, 특정 인사이동 건의 지연·미회수 사실을 직접 증명하지 않는다. 근거 부족을 NOT_MET으로 바꾸지 않는다."
+      },
+      {
+        "document_id": "D06",
+        "chunk_id": "E0106_v1_c0001",
+        "item_ids_for_review": [
+          "2.5.1-Q01",
+          "2.5.1-Q05",
+          "2.5.1-Q17"
+        ],
+        "quote": "접근통제: 사용자 계정은 승인 후 발급한다",
+        "page": null,
+        "review_note": "알려진 시험 문구다. 승인·발급 사건의 실제 인용과 처리 시점이 없으므로 이행 확인 자료로 쓰지 않는다."
+      }
+    ],
+    "conclusion": "보유 문서의 부분 기준·자료 부족은 검토할 수 있으나, 실제 대상·사건·효력 시점과 수행 기록을 연결한 Phase2 정답 검증 자료는 부족하다. 이 검토에서 문항별 MET/NOT_MET 결과 또는 모델 정확도를 생성하지 않았다.",
+    "next_required_inputs": [
+      "현재 적용되는 계정·권한 절차와 사건별 신청·승인·처리 기록",
+      "권한 검토 대상·기준·주기·수행 결과 및 발견 문제의 후속조치 기록",
+      "백업별 작업·보관·소산 기록과 복구시험 실시·확인 결과",
+      "팀의 범위·critical·적용 제외·종합 판정 합의와 사람 정답 검수",
+      "LLM 서버 주소·모델 설정을 통한 실제 호출 검증"
+    ]
+  }
 }
