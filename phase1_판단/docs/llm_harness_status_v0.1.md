@@ -1,5 +1,79 @@
 # LLM 하네스 구현 상태 v0.1
 
+## 2026-09-29 Ollama 실제 호출부 구현 업데이트
+
+Phase 1 실제 추론 환경을 **Ollama 단일 환경 + OpenAI-compatible API + localhost + Qwen3**로 확정한 뒤, LLM 담당 범위에서 지금 구현 가능한 호출 계층을 추가했다. 다른 팀의 Search/입력/Validator/Review/Phase 2 코드는 수정하지 않았다.
+
+### 이번에 새로 구현한 파일
+
+- `src/llm_config.py`
+  - Ollama base URL/endpoint/timeout을 환경 설정으로 분리
+  - Generation baseline: `temperature=0`, `max_tokens=4096`, `stream=false`, Thinking OFF
+  - OpenAI-compatible thinking 제어를 `reasoning_effort=none`으로 변환
+  - Context Budget Guard를 위한 설정/정확한 tokenizer callback 인터페이스 준비
+- `src/llm_client.py`
+  - `POST /v1/chat/completions` OpenAI-compatible 호출 구현
+  - System/User messages + Pydantic JSON Schema `response_format` 전달
+  - HTTP 응답에서 `choices[0].message.content` 추출
+  - E101 Timeout / E102 연결 실패 / E103 5xx / E104 빈 응답 / E105 잘림 분류
+  - HTTP 4xx는 공통 ErrorCode가 아직 없어 E103으로 위장하지 않고 별도 오류로 보존
+- `src/llm_runner.py`
+  - 실제 LLM 호출과 기존 `RetryPolicy`, `retry_prompt.py` 연결
+  - E101~E105 및 정책이 허용한 E201/E202만 재출력 Prompt로 최대 1회 재시도
+  - 호출 오류가 재시도 후에도 실패하면 E106 반환
+- `configs/llm.env.example`
+  - Ollama/OpenAI-compatible/Qwen3 8B Q4_K_M baseline 설정 예시
+- `requirements-llm.txt`
+  - HTTP transport용 `httpx` 의존성 분리
+- `tests/test_llm_client.py`, `tests/test_llm_runner.py`
+  - 실제 네트워크 없이 MockTransport로 request body, Structured Output, 오류 코드, Retry 연결을 자동 검증
+- `tools/run_ollama_goldenset.py`
+  - Ollama가 설치된 실제 개발 PC에서 1:1 / 1:N / NO_MATCH smoke 3건 또는 골든셋 29건을 호출하고 기존 `eval_goldenset.py`용 JSONL을 생성
+
+### 세부 모델 현재 기준
+
+- 1차 baseline: `qwen3:8b-q4_K_M`, Thinking OFF
+- 품질 비교 후보: `qwen3:14b-q4_K_M`, Thinking OFF
+- 최종 운영 모델/양자화/Thinking ON 여부는 실제 골든셋 평가 후 결정한다.
+- 모델명은 코드에 고정하지 않고 `LLM_MODEL` 또는 실행 인자로 주입한다.
+
+### Context Budget Guard 상태
+
+구조는 구현했다. 다만 현재는 Qwen3의 정확한 runtime tokenizer를 프로젝트 의존성으로 연결하지 않았으므로 **토큰 계산 callback을 주입했을 때만 활성화**한다. 글자 수를 토큰 수처럼 추정하는 휴리스틱은 사용하지 않는다. 따라서 이 항목은 "구조 구현 완료 / 실제 tokenizer 연동 대기" 상태다.
+
+### HTTP 4xx 상태
+
+기존 공통 ErrorCode는 E101~E106까지이며 E103은 명시적으로 모델 서버 5xx다. 따라서 400/404/422 같은 요청 오류를 E103으로 잘못 기록하지 않았다. `LLMRequestRejectedError` 및 `request_error_status`로 별도 보존하며, 공통 ErrorCode 추가 여부는 Validator/공통 계약 담당과 합의가 필요하다.
+
+### 테스트 결과
+
+- 판단팀 `pytest`: **296 PASS**
+- `python src/check.py`: **49 PASS / 0 FAIL**
+- `python -m compileall src tests`: **PASS**
+- 실제 Ollama 서버 호출: **미수행** — 현재 검증 환경의 `localhost:11434`에 Ollama listener가 없어서 실제 inference는 실행하지 못했다.
+
+### 현재 Task 19~34
+
+| # | Task | 현재 상태 | 구현/결정 내용 | 남은 일 |
+|---|---|---|---|---|
+| 19 | LLM 서버 종류 결정 | ✅ 완료 | Ollama 단일 환경 | 실제 개발 PC에서 Ollama 설치/기동 |
+| 20 | 실제 모델 결정 | 🟡 평가 후보 확정 | 8B Q4_K_M baseline / 14B Q4_K_M 비교 | 골든셋 후 최종 선택 |
+| 21 | endpoint/API 규격 | ✅ 완료 | OpenAI-compatible, localhost, `/v1/chat/completions` | 실제 환경에서 접속 확인 |
+| 22 | `llm_client.py` | ✅ 완료 | httpx 기반 Ollama client 구현 | 실제 서버 smoke |
+| 23 | `call_llm()` | ✅ 완료 | messages+model+schema 전송, content 반환 | 실제 서버 smoke |
+| 24 | Generation Config | ✅ 초기 구현 완료 | temp=0, max_tokens=4096, stream=false, thinking=false | 실측 후 최종값 조정 |
+| 25 | Context Budget Guard | 🟡 구조 구현 완료 | 정확한 token counter 주입식 guard | tokenizer 확정/연결 |
+| 26 | Structured Output 실제 강제 | ✅ 코드 구현 완료 | Pydantic Schema→`response_format.json_schema` | 실제 Ollama에서 동작 확인 |
+| 27 | LLM 호출 오류 처리 | 🟡 E101~E106 구현 완료 | 호출/Retry 연결 완료 | HTTP 4xx 공통 오류코드 합의 |
+| 28 | 실제 1:1 테스트 | 🟡 실행 도구 준비 | smoke case 준비 | Ollama 실제 실행 |
+| 29 | 실제 1:N 테스트 | 🟡 실행 도구 준비 | smoke case 준비 | Ollama 실제 실행 |
+| 30 | 실제 NO_MATCH 테스트 | 🟡 실행 도구 준비 | smoke case 준비 | Ollama 실제 실행 |
+| 31 | reason/confidence/Citation 실출력 | 🟡 실행 경로 준비 | 실제 raw response 저장/Validator 연결 가능 | Ollama 실제 실행 후 확인 |
+| 32 | 골든셋 inference 평가 | 🟡 실행 도구 준비 | 29건 runner + 기존 evaluator 연결 | 8B/14B 실제 실행 |
+| 33 | 모델·Prompt 비교/튜닝 | ⏸ 대기 | 비교 기준/도구 준비 | 골든셋 결과 필요 |
+| 34 | Prompt 최종 Freeze | ⏸ 대기 | 현재 v0.4 유지 | 평가·튜닝 완료 후 |
+
+
 ## 2026-09-29 현재 GitHub 연동 재검토
 
 검토 범위는 LLM 담당이 직접 만든 6개 파일(`prompts.py`, `retrieval_adapter.py`, `retry_prompt.py`, `versions.py`, `test_llm_harness_contract.py`, `llm_harness_status_v0.1.md`)로 한정했다. 검색팀·입력팀·Validator/Review·Phase 2 코드는 수정하지 않았다.
