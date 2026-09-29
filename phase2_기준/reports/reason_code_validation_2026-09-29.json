@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-29T22:13:45.020828+09:00",
+  "catalog_version": "phase2-reason-codes-draft-2026-09-29",
+  "catalog_sha256": "6aa0d688f3348b5f7ff7f124fec7094ac21e133bf2338579746f2a0f772e04bc",
+  "mapping_version": "phase2-reason-code-examples-draft-2026-09-29",
+  "mapping_sha256": "81bc702a3132f5c71046188517420da1480cc2a8c21f6d6ad3ff912437036414",
+  "source_files": [
+    {
+      "path": "checklist_draft.json",
+      "sha256": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a"
+    },
+    {
+      "path": "review_examples.json",
+      "sha256": "21e827229e19dbb6b67f161eee210e4331af36a54b76b765bf5c05c6d9c67f32"
+    }
+  ],
+  "source_files_verified": true,
+  "reason_code_count": 13,
+  "mapped_case_count": 162,
+  "boundary_case_count": 2,
+  "active_item_count": 54,
+  "counts_by_result": {
+    "MET": 54,
+    "NOT_MET": 54,
+    "UNKNOWN": 54
+  },
+  "counts_by_code": {
+    "P2_NM_REQUIRED_ACTION_NOT_DONE": 23,
+    "P2_NM_RULE_NOT_DEFINED": 21,
+    "P2_NM_RULE_VIOLATED": 10,
+    "P2_U_EVIDENCE_CONFLICT": 3,
+    "P2_U_EVIDENCE_INSUFFICIENT": 26,
+    "P2_U_EVIDENCE_UNREADABLE": 2,
+    "P2_U_EXCEPTION_UNRESOLVED": 1,
+    "P2_U_NOT_YET_DUE": 1,
+    "P2_U_NO_TRIGGER_EVENT": 3,
+    "P2_U_OBSERVATION_INCOMPLETE": 1,
+    "P2_U_SCOPE_OR_RULE_UNCLEAR": 10,
+    "P2_U_SUBJECT_OR_EVENT_UNLINKED": 9,
+    "P2_U_TIME_OR_VERSION_UNCLEAR": 7
+  },
+  "pending_decision_ids_in_examples": [
+    "PD_CONFLICT_RESOLUTION",
+    "PD_EXCEPTION_POLICY",
+    "PD_NOT_YET_DUE_POLICY",
+    "PD_NO_EVENT_POLICY"
+  ],
+  "approved": false,
+  "human_approved": false,
+  "llm_executed": false,
+  "actual_evidence_used": false,
+  "limits": [
+    "코드 종류·참조·발췌·라벨 보존 등의 구조 검증. 사유 선택의 의미나 실제 증적 판정 정확도를 자동 검증하지 않음.",
+    "합성 예시의 기대값이며 사람 검수·팀 승인 전. 운영 API·종합 판정 규칙을 확정하지 않음."
+  ],
+  "tests": {
+    "suite": "tests/test_reason_codes.py",
+    "tests_run": 15,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": true
+  },
+  "source_preservation": {
+    "checked_file_count": 77,
+    "changed_paths": [],
+    "phase1_code_and_controls_unchanged": true,
+    "original_checklist_questions_and_examples_unchanged": true,
+    "root_readme_unchanged": true,
+    "root_agents_not_created": true,
+    "wbs_unchanged": true,
+    "readme_manual_edit_preserved": true
+  },
+  "implementation_sha256": {
+    "reason_codes.py": "05113d2ac619569a3782525e9472fbe3729ccac97619323e145ddc0ae186e431",
+    "tests/test_reason_codes.py": "bc19c4d0e50f31e081c616772e6dfe7f6b6b9846177a75161abe4424cc4c8029"
+  },
+  "semantic_review": {
+    "reviewer_type": "AI_ASSISTED_INDEPENDENT_REVIEW",
+    "reviewed_case_count": 164,
+    "issues_found": 1,
+    "issues_resolved": 1,
+    "unresolved_issues": 0,
+    "human_approved": false,
+    "resolution": "BC-01 설명에서 기한 전 전체 완료 의무를 추가하는 표현을 제거했다. 현재 도래한 단계는 완료됐으며 잔여 단계의 최종 결과 표현이 미합의라는 경계 제안으로 명시했다.",
+    "limits": "사람의 정답 승인·실제 증적 평가·LLM 성능 검증이 아니다."
+  }
+}

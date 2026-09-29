@@ -1,0 +1,1794 @@
+{
+  "draft_version": "phase2-reason-codes-draft-2026-09-29",
+  "catalog_version": "phase2-reason-codes-draft-2026-09-29",
+  "mapping_version": "phase2-reason-code-examples-draft-2026-09-29",
+  "status": "DRAFT_FOR_TEAM_REVIEW",
+  "approved": false,
+  "purpose": "기존 162개 합성 사례의 기대 판정 사유를 문항·증거 의미별로 수동 검토해 연결한 개발 초안. 실제 증적 판정·실증 성능·LLM 실행 결과·승인된 정답이 아니다.",
+  "metadata": {
+    "reviewed_at": "2026-09-29",
+    "reviewer_type": "AI_ASSISTED_MANUAL_MEANING_REVIEW",
+    "synthetic": true,
+    "human_approved": false,
+    "llm_executed": false,
+    "search_executed": false,
+    "actual_evidence_used": false,
+    "original_case_count": 162,
+    "boundary_case_count": 2,
+    "active_question_count": 54,
+    "coverage": "기존 54문항 × 3기대 판정의 162개 사례를 모두 읽고 연결했다. 기존 사례·라벨은 수정하지 않았다.",
+    "reason_code_order": "UNORDERED_SET_NO_PRIMARY_REASON_PRIORITY",
+    "reason_code_order_note": "배열 순서에 대표 사유·우선순위 의미를 부여하지 않는다. 한 사례에서 직접 뒷받침되는 사유만 연결했으며 전체 실무 분류의 배타성·자동 선택 정책을 확정하지 않는다.",
+    "excerpt_note": "기존 cases의 evidence_excerpt는 원래 evidence_text를 그대로 사용하는 연속 substring이다. boundary_cases의 발췌도 해당 합성 evidence_text의 실제 연속 substring이다.",
+    "boundary_date_note": "BC-01은 9/29 기준 기한 전 사례, BC-02는 10/2를 가정한 별도 합성 관찰기간 사례이다. 실제 미래 관찰·LLM 실행으로 기록하지 않는다.",
+    "numeric_scope_note": "예시 주기·기한·30일 보관은 합성 조직 가정이며 현재 법규·인증기준의 고정 수치를 주장하지 않는다."
+  },
+  "source_files": [
+    {
+      "path": "checklist_draft.json",
+      "sha256": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a"
+    },
+    {
+      "path": "review_examples.json",
+      "sha256": "21e827229e19dbb6b67f161eee210e4331af36a54b76b765bf5c05c6d9c67f32"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "EX-01",
+      "item_id": "2.5.1-Q11",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "업무별 권한 기준에서 가온의 업무에는 조회 권한만 필요하다. 현재 가온의 권한은 조회뿐이다.",
+      "rationale": "업무상 조회 권한만 필요하며 실제 권한도 조회뿐이라는 대조 결과가 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-02",
+      "item_id": "2.5.1-Q11",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "업무별 권한 기준에서 가온의 업무에는 조회 권한만 필요하다. 현재 가온에게 불필요한 삭제 권한도 부여되어 있다.",
+      "rationale": "업무 기준은 조회만 허용하는데 실제 삭제 권한도 부여돼 있다는 두 사실이 최소 범위 기준과 실제 권한의 불일치를 직접 뒷받침한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-03",
+      "item_id": "2.5.1-Q11",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "가온의 계정을 관리하고 있다. 업무별 권한 기준과 현재 권한 내역은 첨부하지 않았다.",
+      "rationale": "업무별 권한 기준과 현재 권한 내역을 첨부하지 않았다고 명시돼 필요한 기준·실제 상태 대조 자료가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-04",
+      "item_id": "2.5.6-Q07",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "8월분 계정 및 접근권한 이력 검토를 8/31 완료했다.",
+      "rationale": "8월분 이력 검토를 적용 예시 월말 기한인 8/31에 완료했다는 기록이 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-05",
+      "item_id": "2.5.6-Q07",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "9/26 현재 8월분 계정 및 접근권한 이력 검토를 아직 수행하지 않았다.",
+      "rationale": "월말 검토가 필요한 8월분을 9/26에도 수행하지 않았다고 직접 확인해 기한이 지난 필요 검토의 미수행이 확인된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-06",
+      "item_id": "2.5.6-Q07",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_TIME_OR_VERSION_UNCLEAR"
+      ],
+      "evidence_excerpt": "계정 및 접근권한 이력 검토를 실시했다. 검토 대상 기간과 수행 날짜는 확인할 수 없다.",
+      "rationale": "검토를 했다는 문장에 대상 기간과 수행 날짜가 없어 8월분·기한 내 이행과 연결할 시간 정보가 불명확하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-07",
+      "item_id": "2.9.3-Q01",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "A서비스 백업 절차: 백업 대상은 고객 DB와 서비스 설정 파일이다.",
+      "rationale": "고객 DB와 서비스 설정 파일이라는 A서비스 백업 대상을 절차에 정의했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-08",
+      "item_id": "2.9.3-Q01",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "A서비스 운영 현황 확인서: 백업 대상을 아직 정하지 않았다.",
+      "rationale": "운영 확인서가 백업 대상을 아직 정하지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-09",
+      "item_id": "2.9.3-Q01",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "A서비스 백업을 수행한다. 백업 대상 목록이 있는 절차서는 제공하지 않았다.",
+      "rationale": "백업을 한다는 문장만 있고 대상 목록이 있는 절차서를 제공하지 않아 정의 내용의 증거가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-010",
+      "item_id": "2.5.1-Q01",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 문서 REG-PROC v1 §2: A시스템 신규 사용자는 업무책임자가 등록을 신청하고 운영자가 신청 대상과 등록 결과를 기록한다.",
+      "rationale": "A시스템 등록의 신청·대상 확인·결과 기록 절차를 명시한 REG-PROC가 있어 절차 수립의 충족 기대값을 유지한다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-011",
+      "item_id": "2.5.1-Q01",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 확인서 REG-AUDIT §1: A시스템은 현재 신규 사용자 등록 절차를 수립하지 않았으며 담당자별로 임의 등록하고 있다.",
+      "rationale": "REG-AUDIT가 사용자 등록 절차 미수립을 직접 확인한다. 절차를 미첨부한 경우와 구별되는 명시적 미수립 사실이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-012",
+      "item_id": "2.5.1-Q01",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 첨부 REG-PROC는 표지만 있고 사용자 등록 부분은 누락됐다. 적용 절차의 내용을 확인할 수 없다.",
+      "rationale": "REG-PROC는 표지만 있고 등록 절차 부분이 빠져 있어 수립된 내용 자체를 확인할 증거가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-013",
+      "item_id": "2.5.1-Q02",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 REG-PROC §2의 신청 확인·결과 기록 단계와 REG-0920 처리 기록을 대조했다. 9/20 09:00 가온의 신청을 확인하고 09:15 계정을 생성했으며 09:16 생성 결과를 신청 건에 기록했다.",
+      "rationale": "REG-0920의 신청 확인→계정 생성→결과 기록 순서와 시각이 적용 예시 절차에 연결된다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-014",
+      "item_id": "2.5.1-Q02",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 REG-0920 처리 확인서 §3: 운영자는 가온 계정을 먼저 생성했고 신청 확인 단계와 결과 기록 단계를 생략했다고 확인했다.",
+      "rationale": "가온의 등록 건에서 신청 확인과 결과 기록을 생략했다고 처리 확인서가 직접 명시한다. 당시 필요한 두 수행 단계의 미실행이 사유다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-015",
+      "item_id": "2.5.1-Q02",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 신청서에는 가온의 등록 요청만 있다. 실제 생성 시각과 신청 확인·결과 기록의 처리 자료는 제공되지 않아 절차 이행을 대조할 수 없다.",
+      "rationale": "등록 신청만 있고 실제 생성·신청 확인·결과 기록의 처리 자료가 없어 절차 이행을 검증할 정보가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-016",
+      "item_id": "2.5.1-Q03",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 계정관리절차 v2 §4: A시스템 사용 종료 요청을 접수해 대상 사용자를 확인하고 계정을 해지한 뒤 처리 결과를 기록한다.",
+      "rationale": "A시스템 사용 종료 요청 접수·대상 확인·해지·결과 기록이 적용 절차에 정의돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-017",
+      "item_id": "2.5.1-Q03",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 관리현황 확인서 §4: A시스템 사용자 해지 절차는 현재 미수립 상태이며 등록 절차만 존재한다고 명시한다.",
+      "rationale": "관리현황 확인서가 A시스템 해지 절차를 미수립이라고 명시한다. 존재하는 등록 절차가 해지 절차를 대신하지 않는다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-018",
+      "item_id": "2.5.1-Q03",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SCOPE_OR_RULE_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 계정관리절차는 다른 B시스템용이다. A시스템에 적용되는 해지 절차인지 확인할 자료가 없다.",
+      "rationale": "제공 절차는 B시스템용이며 A시스템에 적용되는지 확인되지 않아 문서의 적용 범위가 불명확하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-019",
+      "item_id": "2.5.1-Q04",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 END-PROC §4 및 END-0921 이력: 9/21 10:00 종료 대상 다온을 확인하고 10:20 계정을 해지했으며 결과를 종료 요청 건에 남겼다.",
+      "rationale": "END-0921의 종료 대상 확인·해지·결과 기록이 다온의 같은 종료 요청 건에 연결된다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-020",
+      "item_id": "2.5.1-Q04",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 END-0921 점검 확인서: 다온의 이용 종료 요청을 처리하면서 해지 대상 확인과 해지 처리를 모두 생략해 계정이 활성 상태로 남아 있다고 확인했다.",
+      "rationale": "종료 요청을 처리하면서 대상 확인과 해지 처리를 모두 생략했다고 명시돼 있어 필요한 해지 조치 미수행이 직접 확인된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-021",
+      "item_id": "2.5.1-Q04",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SUBJECT_OR_EVENT_UNLINKED"
+      ],
+      "evidence_excerpt": "합성 해지 완료 메일에는 다온이라는 이름만 있다. A시스템 계정 ID와 해당 종료 요청 건이 연결되지 않아 동일 사건의 처리인지 확인할 수 없다.",
+      "rationale": "해지 메일의 이름을 A시스템 계정 ID·END-0921 요청 건과 대응할 수 없어 같은 대상·사건의 자료인지 확인되지 않는다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-022",
+      "item_id": "2.5.1-Q05",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한관리절차 v1 §2: A시스템 권한 신청에 대상 계정과 요청 역할을 기입하고 권한 기준 대조 후 권한을 부여하여 결과를 기록한다.",
+      "rationale": "A시스템 권한 신청·기준 대조·부여·결과 기록의 절차가 명시돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-023",
+      "item_id": "2.5.1-Q05",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 권한 현황 확인서 §2: A시스템은 접근권한 부여 절차를 정하지 않아 운영자 판단만으로 역할을 부여한다고 명시했다.",
+      "rationale": "확인서가 A시스템 권한 부여 절차를 정하지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-024",
+      "item_id": "2.5.1-Q05",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 권한 목록에는 현재 사용자별 역할만 있다. 권한을 어떤 단계로 부여하는지 설명하는 절차 자료가 없다.",
+      "rationale": "현재 사용자별 역할 목록만으로는 역할을 부여하는 절차의 정의 내용을 확인할 수 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-025",
+      "item_id": "2.5.1-Q06",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 GRANT-PROC §2와 GRANT-0922: 9/22 가온의 조회 역할 요청을 업무별 기준에 대조해 적정성을 확인한 뒤 같은 역할을 부여했고 대상 계정과 처리자를 남겼다.",
+      "rationale": "GRANT-0922 요청 역할을 업무별 기준에 대조한 뒤 같은 역할을 부여했다는 기록이 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-026",
+      "item_id": "2.5.1-Q06",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 GRANT-0922 확인서 §1: 운영자가 권한 기준 대조를 하지 않고 가온의 요청 역할을 그대로 부여했다고 명시했다.",
+      "rationale": "권한 기준 대조를 하지 않았다는 확인서의 명시 사실이 당시 필요한 적정성 대조 미수행을 뒷받침한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-027",
+      "item_id": "2.5.1-Q06",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 GRANT-0922 기록에는 권한을 부여했다는 문장만 있다. 요청 역할·적용 절차·기준 대조 여부가 없어 절차 이행 여부를 판단할 수 없다.",
+      "rationale": "부여했다는 문장 외에 요청 역할·적용 절차·대조 여부가 없어 해당 부여 처리의 이행을 확인할 자료가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-028",
+      "item_id": "2.5.1-Q07",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한변경절차 v1 §3: 직무 변경 요청을 접수하고 기존·변경 권한을 업무별 기준과 대조한 다음 권한 변경과 처리 결과 기록을 수행한다.",
+      "rationale": "직무 변경 요청·권한 대조·권한 변경·결과 기록 흐름이 권한변경절차에 정의돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-029",
+      "item_id": "2.5.1-Q07",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 운영 점검표 §3: A시스템의 접근권한 변경 절차는 미수립 상태로 등록돼 있으며 변경 담당자도 임의 처리한다고 확인했다.",
+      "rationale": "운영 점검표가 적용 변경 절차를 미수립 상태라고 직접 확인한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-030",
+      "item_id": "2.5.1-Q07",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_UNREADABLE"
+      ],
+      "evidence_excerpt": "합성 절차서의 권한변경 페이지가 이미지로 첨부됐으나 본문이 흐려 판독할 수 없다. 제목만으로 변경 절차가 정해졌다고 확인할 수 없다.",
+      "rationale": "변경 절차 페이지가 흐려 본문을 판독할 수 없으므로 제목만으로 절차 수립을 판단할 수 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-031",
+      "item_id": "2.5.1-Q08",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 CHG-PROC §3 및 CHG-0923: 9/23 새 업무 기준에 편집 역할이 있음을 대조한 후 기존 조회 역할을 변경했고 변경 전후 역할과 처리자를 같은 건에 기록했다.",
+      "rationale": "CHG-0923에서 새 업무 기준 대조 후 역할을 바꾸고 전후 권한과 처리자를 기록했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-032",
+      "item_id": "2.5.1-Q08",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "합성 CHG-0923 확인서: 직무·권한 대조 단계를 생략한 채 편집 역할로 변경했으며 이를 절차 위반으로 기록했다.",
+      "rationale": "적용 변경 절차가 요구하는 직무·권한 대조를 생략한 채 실제 역할을 변경했으며 확인서도 이를 절차 위반으로 기록한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-033",
+      "item_id": "2.5.1-Q08",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT",
+        "P2_U_TIME_OR_VERSION_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 CHG-0923에는 권한 변경 전후 화면만 있고 직무와 변경 절차 버전이 없다. 적용 단계와 해당 변경 처리를 대조할 수 없다.",
+      "rationale": "변경 전후 화면만 있고 업무·직무 정보와 당시 변경 절차 버전이 빠졌다. 자료 부족과 적용 버전 불명을 함께 식별하되 사유 순위는 정하지 않는다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-034",
+      "item_id": "2.5.1-Q09",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한말소절차 v1 §4: 종료된 업무의 권한을 식별하고 말소 요청의 대상 권한을 제거한 후 권한 잔존 여부와 결과를 기록한다.",
+      "rationale": "종료 업무 권한 식별·제거·잔존 확인과 기록의 말소 절차가 정의돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-035",
+      "item_id": "2.5.1-Q09",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 권한관리 확인서 §4: A시스템 접근권한 말소 절차는 아직 작성하지 않았으며 업무 종료 권한을 제거하는 정해진 흐름이 없다고 확인했다.",
+      "rationale": "확인서가 접근권한 말소 절차를 아직 작성하지 않았다고 직접 확인한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-036",
+      "item_id": "2.5.1-Q09",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 종료 업무 목록은 제공됐으나 말소 대상 식별·제거·확인 단계를 설명하는 적용 절차는 제공되지 않았다.",
+      "rationale": "종료 업무 목록은 있지만 말소 단계가 정의된 적용 절차는 제공되지 않아 정의 내용을 확인할 수 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-037",
+      "item_id": "2.5.1-Q10",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 REVOKE-PROC §4 및 REVOKE-0924: 9/24 종료 업무의 편집 권한을 식별해 제거하고 같은 날 권한 조회로 편집 권한이 남지 않았음을 확인했다.",
+      "rationale": "REVOKE-0924에서 종료 편집 권한을 제거하고 잔존 없음까지 확인한 처리 기록이 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-038",
+      "item_id": "2.5.1-Q10",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 REVOKE-0924 점검서 §2: 종료 업무 권한 제거 요청을 받고도 제거 단계를 수행하지 않았고 편집 권한이 그대로 남아 있다고 명시한다.",
+      "rationale": "요청받은 종료 업무 권한 제거를 수행하지 않았다는 직접 확인이 필요한 말소 조치 미수행의 근거다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-039",
+      "item_id": "2.5.1-Q10",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SUBJECT_OR_EVENT_UNLINKED",
+        "P2_U_TIME_OR_VERSION_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 화면에는 편집 권한이 없다. 화면의 계정 ID와 시각이 잘려 REVOKE-0924 대상·처리 후 상태인지 확인할 수 없다.",
+      "rationale": "화면의 계정 ID와 시각이 잘려 가온의 REVOKE-0924 처리 후 상태인지 연결되지 않는다. 대상 대응과 시각 불명이 모두 실제 자료에 나타난다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-040",
+      "item_id": "2.5.1-Q13",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 사용자 보안규정 v3 §5: A시스템에 등록하고 권한을 부여받은 사용자는 자격정보를 보호하고 권한을 업무 범위에서 사용하며 보안사고를 보고할 책임을 진다고 명시했다.",
+      "rationale": "등록·권한부여 사용자에게 자격정보 보호·업무 범위 사용·사고 보고 책임을 규정에 명시했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-041",
+      "item_id": "2.5.1-Q13",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 보안규정 현황 확인서 §5: A시스템 등록·권한부여 사용자에게 적용되는 보안책임을 규정화하지 않았다고 담당자가 확인했다.",
+      "rationale": "사용자 보안책임을 규정화하지 않았다는 담당자 확인이 규정 미수립의 직접 근거다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-042",
+      "item_id": "2.5.1-Q13",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 교육 안내문에는 보안을 준수하라는 문구만 있다. 등록·권한부여에 적용되는 규정과 사용자의 책임 조항은 확인할 수 없다.",
+      "rationale": "일반 교육 안내문만 있고 등록·권한부여에 적용되는 책임 규정 조항을 확인할 자료가 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-043",
+      "item_id": "2.5.1-Q14",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 온보딩 기록 ONB-0920 §2: 가온에게 계정 공유 금지·권한 오남용 금지·사고 보고 책임을 설명했고 9/20 09:05 가온의 확인 응답을 받은 뒤 등록·권한부여를 진행했다.",
+      "rationale": "가온에게 보안책임을 설명하고 확인 응답을 받은 뒤 등록·권한부여를 진행한 기록이 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-044",
+      "item_id": "2.5.1-Q14",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 ONB-0920 담당자 확인서: 가온의 등록·권한부여 당시 보안책임 설명이나 안내·확인 조치를 전혀 수행하지 않았다고 명시했다.",
+      "rationale": "가온의 등록·권한부여 당시 설명·안내·확인 조치를 전혀 수행하지 않았다는 직접 확인이 인식 조치 미수행의 근거다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-045",
+      "item_id": "2.5.1-Q14",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SUBJECT_OR_EVENT_UNLINKED"
+      ],
+      "evidence_excerpt": "합성 자료에는 전체 직원용 교육자료만 있다. 가온에게 등록·권한부여 과정에서 전달하고 확인했는지 보여 주는 기록은 없다.",
+      "rationale": "직원 전체용 교육자료를 가온의 등록·권한부여 과정에서 전달·확인한 사건과 연결할 기록이 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-046",
+      "item_id": "2.5.1-Q15",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 계정변경절차 v1 §2: 사용자 부서·담당 업무 변경 요청의 대상 계정을 확인하고 계정 속성을 변경한 뒤 변경 내역을 기록한다.",
+      "rationale": "사용자 부서·담당 업무 등 계정 속성 변경의 요청 확인·변경·기록 흐름을 정의했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-047",
+      "item_id": "2.5.1-Q15",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 관리절차 현황표 §2: A시스템 계정 속성 변경 절차는 미수립이라고 확인돼 있고 권한 변경 절차만 정해져 있다.",
+      "rationale": "계정 속성 변경 절차 미수립을 확인했고 별도로 존재하는 권한 변경 절차는 해당 계정 변경 절차와 구별된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-048",
+      "item_id": "2.5.1-Q15",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SCOPE_OR_RULE_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 첨부는 역할 부여·삭제 절차뿐이다. 사용자 계정 속성 변경을 다루는 절차의 존재와 적용 범위를 확인할 수 없다.",
+      "rationale": "제공 문서는 역할 부여·삭제를 다뤄 계정 속성 변경에 적용되는 정의와 범위가 확인되지 않는다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-049",
+      "item_id": "2.5.1-Q16",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 ACCT-PROC §2 및 ACCT-0925: 인사 변경 요청을 확인하고 9/25 다온 계정의 부서 속성을 영업에서 지원으로 바꿨으며 변경 전후 값과 처리자를 남겼다.",
+      "rationale": "ACCT-0925 인사 요청 확인 후 부서 속성을 변경하고 전후 값·처리자를 기록했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-050",
+      "item_id": "2.5.1-Q16",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "합성 ACCT-0925 확인서: 변경 요청 확인 단계를 건너뛰고 부서 속성을 임의로 변경했다고 운영자가 기록했다.",
+      "rationale": "요청 확인을 거치도록 정한 적용 절차와 달리 요청 확인을 건너뛰고 실제 부서 속성을 임의 변경했다고 확인된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-051",
+      "item_id": "2.5.1-Q16",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SUBJECT_OR_EVENT_UNLINKED"
+      ],
+      "evidence_excerpt": "합성 계정 화면의 현재 부서는 지원이다. 변경 요청 건·변경 전 값·처리 내역이 없어 동일 건이 절차를 따랐는지 확인할 수 없다.",
+      "rationale": "현재 부서가 지원이라는 화면만으로는 ACCT-0925 요청·변경 전 값·처리 기록을 연결해 같은 변경 건을 확인할 수 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-052",
+      "item_id": "2.5.1-Q17",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 APR-0922 §3: 업무책임자가 가온의 담당 업무와 편집 역할을 대조해 적정하다고 9/22 09:00 승인했고 운영자는 09:30 해당 역할을 부여했다. 검토자·시각·결과가 기록돼 있다.",
+      "rationale": "APR-0922의 업무 대조·승인 주체·승인 시각·결과를 권한 부여 시각과 대조할 수 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-053",
+      "item_id": "2.5.1-Q17",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 APR-0922 담당 확인서: 요구되는 업무 적절성 검토와 승인 없이 운영자가 편집 역할을 부여했다고 명시한다.",
+      "rationale": "요구되는 업무 적절성 검토와 승인 없이 역할을 부여했다고 직접 명시해 필요한 검토·승인 미수행이 확인된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-054",
+      "item_id": "2.5.1-Q17",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_CONFLICT"
+      ],
+      "evidence_excerpt": "합성 APR-0922 승인 화면 두 장의 동일 건·동일 버전 상태가 각각 승인과 반려로 상충한다. 어떤 상태가 최종 유효한지 확인할 수 없어 정책·증거 우선순위 검토가 필요하다.",
+      "rationale": "동일 건·동일 버전 승인 화면이 승인과 반려로 상충하며 유효한 최종 상태를 가릴 근거가 없다. 상충 해결 방식은 PD_CONFLICT_RESOLUTION에 남긴다.",
+      "pending_decision_ids": [
+        "PD_CONFLICT_RESOLUTION"
+      ]
+    },
+    {
+      "case_id": "EX-055",
+      "item_id": "2.5.1-Q18",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 역할정의표 ROLE-v2 §지원: 지원 담당자는 고객정보 조회 역할, 결제 담당자는 정산 입력 역할을 갖도록 업무 역할과 허용 권한을 구분해 정했다.",
+      "rationale": "지원·결제 업무 역할을 각각 조회·정산 입력 권한에 대응시킨 분류체계가 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-056",
+      "item_id": "2.5.1-Q18",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 분류체계 현황 확인서 §1: A시스템은 직무·업무별 권한 분류체계를 만들지 않아 지원·결제 업무의 허용 권한을 구분하지 않는다고 확인했다.",
+      "rationale": "직무·업무별 권한 분류체계를 만들지 않았다는 현황 확인이 정의 미수립의 직접 근거다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-057",
+      "item_id": "2.5.1-Q18",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SCOPE_OR_RULE_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 권한표는 role_1, role_2라는 이름만 나열한다. 업무 역할과 허용 권한 범위의 대응이 없어 지원 업무의 분류 기준을 판단할 수 없다.",
+      "rationale": "role_1·role_2 이름만 나열돼 있어 업무 역할별 허용 권한이 무엇인지 판정할 분류 기준이 불명확하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-058",
+      "item_id": "2.5.1-Q19",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 인사통보 HR-0923 §1: 9/23 09:00 전보 효력이 발생해 편집 권한이 불필요해졌다. 권한처리 REV-0923 §2는 같은 시각 편집 권한을 말소하고 전보 이후 해당 권한이 남지 않았음을 확인한다.",
+      "rationale": "전보 효력 발생 시각과 불필요 권한 말소 시각을 같은 사건에서 대조해 전보 뒤 잔존 없음이 확인된다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-059",
+      "item_id": "2.5.1-Q19",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "합성 HR-0923 및 지연 확인서 §2: 9/23 전보로 편집 권한이 불필요해졌는데 9/28까지 활성 상태로 방치됐고 운영자가 처리 지연을 확인했다.",
+      "rationale": "전보로 불필요해진 권한이 9/28까지 활성 상태로 방치돼 있고 담당자가 처리 지연을 확인했다. 지체 없는 변경·말소 기준과 실제 잔존 상태가 불일치한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-060",
+      "item_id": "2.5.1-Q19",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_NO_TRIGGER_EVENT"
+      ],
+      "evidence_excerpt": "합성 인사기간 확인서 §1: 검토 기간에는 전보·퇴직 사건이 없었다. 적용 사건이 없으므로 자동 충족으로 처리하지 않으며 적용 제외 정책은 팀 합의 전이다.",
+      "rationale": "검토 기간에 전보·퇴직 사건이 없다고 명시했다. 이행을 대조할 발생 사건이 없는 것이 사유이며 적용 제외 여부는 PD_NO_EVENT_POLICY로 남긴다.",
+      "pending_decision_ids": [
+        "PD_NO_EVENT_POLICY"
+      ]
+    },
+    {
+      "case_id": "EX-061",
+      "item_id": "2.5.1-Q20",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 설치 계정목록 INSTALL-0924 §4와 변경 이력: 설치 직후 기본 계정 admin을 계정 발급기의 난수 생성 기능으로 만든 u73k9x2m 계정명으로 변경했고, 명칭은 기본 이름·장비명·사용자명에서 유추하지 않는 것으로 확인했다. 시험 계정 test는 제거했다. 같은 장비 식별자의 변경 전후 계정 목록과 삭제·변경 기록이 있으며 비밀번호 변경만 한 사례가 아니다.",
+      "rationale": "기본 admin의 난수 계정명 변경과 시험 test 제거가 같은 장비의 전후 목록·변경 이력에 연결된다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-062",
+      "item_id": "2.5.1-Q20",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 INSTALL-0924 확인서 §4: admin과 test 계정을 그대로 유지했고 비밀번호만 변경했으며 계정 제거·추측하기 어려운 계정명 변경은 하지 않았다고 명시했다.",
+      "rationale": "기본·시험 계정을 그대로 유지했고 비밀번호만 바꿨으며 필요한 계정 제거·추측하기 어려운 계정명 변경을 하지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-063",
+      "item_id": "2.5.1-Q20",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SUBJECT_OR_EVENT_UNLINKED"
+      ],
+      "evidence_excerpt": "합성 장비 계정 화면에는 여러 계정명이 있지만 설치 시 기본·시험 계정 목록이 없다. 어떤 계정이 변경되거나 제거됐는지 대응할 수 없다.",
+      "rationale": "설치 시 기본·시험 계정 목록이 없어 현재 여러 계정명을 원래 기본·시험 계정의 변경·제거 사실에 대응할 수 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-064",
+      "item_id": "2.5.1-Q21",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 사용자-계정 발급대장 ISSUE-v1 §3: 가온에게 acct_gaon, 다온에게 acct_daon을 각각 발급했고 각 계정은 해당 개인 사용자에게만 대응한다.",
+      "rationale": "가온·다온 각각 다른 개인 계정을 발급해 사용자와 고유 계정의 대응을 확인할 수 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-065",
+      "item_id": "2.5.1-Q21",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "합성 ISSUE-v1 및 운영 확인서 §3: 해당 업무는 공유계정 예외를 허용하지 않는데 두 사용자에게 고유 계정을 발급하지 않고 무단 공용 계정 support를 사용하게 했다.",
+      "rationale": "공유계정 예외를 허용하지 않는 업무인데 고유 계정 없이 무단 공용 계정을 사용하게 했다고 명시해 적용 계정 기준과 실제 사용 상태가 불일치한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-066",
+      "item_id": "2.5.1-Q21",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EXCEPTION_UNRESOLVED"
+      ],
+      "evidence_excerpt": "합성 공유계정 support 사용 기록만 제공됐다. 공유계정의 업무상 사유·예외 승인·책임추적성 검토가 없어 2.5.2와 연결한 예외 판단을 먼저 해야 한다. 현재 자료만으로 자동 미충족 처리할 수 없다.",
+      "rationale": "공유계정의 사유·예외 승인·책임추적성 검토가 없어 2.5.2와 연결한 예외 판단이 미해결이다. 허용 여부를 단정하지 않고 PD_EXCEPTION_POLICY로 남긴다.",
+      "pending_decision_ids": [
+        "PD_EXCEPTION_POLICY"
+      ]
+    },
+    {
+      "case_id": "EX-067",
+      "item_id": "2.5.6-Q01",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 계정등록 이력 REGISTER-LOG §17: REG-0920에서 가온의 계정 acct_gaon을 9/20 09:15 생성한 처리자 op1, 대상 시스템 A, 활동 등록을 기록했다.",
+      "rationale": "REG-0920 등록 활동의 계정·시각·처리자·대상 시스템·활동을 이력에서 확인한다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-068",
+      "item_id": "2.5.6-Q01",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 REG-0920 점검 확인서 §2: 가온 계정을 실제 생성했으나 등록 이력 기록 기능을 사용하지 않았고 해당 활동 이력을 남기지 않았다고 명시한다.",
+      "rationale": "계정을 실제 생성했으나 등록 활동 이력을 남기지 않았다고 직접 확인하므로 요구된 기록 미수행에 해당한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-069",
+      "item_id": "2.5.6-Q01",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 계정 생성 신청서만 있고 완료 이력은 첨부되지 않았다. 실제 등록 활동의 이력이 존재하는지 알 수 없다.",
+      "rationale": "신청서는 있지만 실제 등록 완료 활동 이력이 첨부되지 않아 이력 존재를 확인할 정보가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-070",
+      "item_id": "2.5.6-Q02",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 이용 이력 USAGE-LOG §23: 9/21 10:00 acct_gaon이 A시스템에 로그인해 고객 조회 기능을 이용한 활동과 결과를 기록했다.",
+      "rationale": "가온 계정의 로그인·조회 이용 시각·활동·결과가 USAGE-LOG에 기록돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-071",
+      "item_id": "2.5.6-Q02",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 USE-0921 확인서 §2: 해당 로그인·조회 활동이 실제 있었으나 이용 이력 수집을 꺼 두어 이력을 남기지 않았다고 명시한다.",
+      "rationale": "실제 로그인·조회가 있었지만 수집을 꺼 이력을 남기지 않았다고 확인해 필요한 이용 이력 기록 미수행이 드러난다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-072",
+      "item_id": "2.5.6-Q02",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SUBJECT_OR_EVENT_UNLINKED"
+      ],
+      "evidence_excerpt": "합성 운영 대시보드는 하루 이용 건수 합계만 제시한다. 가온의 특정 이용 활동과 연결된 이력이 있는지 확인할 수 없다.",
+      "rationale": "하루 이용 건수 합계를 가온의 USE-0921 특정 이용 사건과 연결할 수 없어 대상 활동 기록 여부가 불명확하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-073",
+      "item_id": "2.5.6-Q03",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 계정삭제 이력 DELETE-LOG §9: 9/24 14:00 op1이 A시스템 acct_daon을 삭제한 활동과 처리 결과를 DEL-0924 식별자로 기록했다.",
+      "rationale": "DEL-0924 계정 삭제의 대상·시각·처리자·결과가 삭제 이력에 연결돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-074",
+      "item_id": "2.5.6-Q03",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 DEL-0924 점검서 §3: acct_daon을 실제 삭제했으나 삭제 이력 항목을 기록하지 않았다고 운영자가 확인했다.",
+      "rationale": "계정을 실제 삭제했지만 삭제 이력 항목을 기록하지 않았다고 담당자가 직접 확인한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-075",
+      "item_id": "2.5.6-Q03",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 화면에서 acct_daon을 찾을 수 없지만 삭제 활동의 시각·처리자·활동 이력은 제공되지 않았다. 계정 미존재만으로 삭제 이력 기록을 확인할 수 없다.",
+      "rationale": "현재 계정 미존재 화면 외에 삭제 활동의 시각·처리자·이력을 제공하지 않아 기록 존재를 확인할 자료가 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-076",
+      "item_id": "2.5.6-Q04",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한부여 이력 GRANT-LOG §12: 9/22 09:30 op1이 acct_gaon에 조회 역할을 부여한 대상·시각·역할·결과를 남겼다.",
+      "rationale": "조회 역할 부여 활동의 계정·역할·시각·처리자·결과가 GRANT-LOG에 남아 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-077",
+      "item_id": "2.5.6-Q04",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 GRANT-0922 운영 확인서 §3: 조회 역할을 실제 부여했지만 부여 활동 이력은 전혀 남기지 않았다고 명시한다.",
+      "rationale": "조회 역할을 실제 부여했지만 부여 활동 이력을 전혀 남기지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-078",
+      "item_id": "2.5.6-Q04",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 현재 권한표에는 가온의 조회 역할만 있다. 언제 어떤 부여 활동이 기록됐는지는 확인할 수 없다.",
+      "rationale": "현재 조회 역할만 보이며 부여 활동이 어떤 이력에 기록됐는지 확인할 자료가 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-079",
+      "item_id": "2.5.6-Q05",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한변경 이력 CHANGE-LOG §13: 9/23 11:00 op1이 acct_daon의 역할을 조회에서 편집으로 변경한 전후 값·시각·대상·결과를 남겼다.",
+      "rationale": "역할 변경 전후 값과 대상·시각·결과가 CHANGE-LOG에 기록돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-080",
+      "item_id": "2.5.6-Q05",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 CHG-0923 점검 확인서 §3: 역할 변경은 실제로 수행했으나 변경 이력을 저장하지 않았다고 명시한다.",
+      "rationale": "역할은 실제 변경했으나 변경 이력을 저장하지 않았다고 직접 확인해 필요한 기록 미수행이 드러난다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-081",
+      "item_id": "2.5.6-Q05",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_UNREADABLE",
+        "P2_U_SUBJECT_OR_EVENT_UNLINKED"
+      ],
+      "evidence_excerpt": "합성 변경 이력 이미지의 대상 계정과 변경 전후 값이 판독 불가하다. 다른 사용자의 변경 기록인지도 확인할 수 없다.",
+      "rationale": "이미지의 대상 계정·변경 값이 판독 불가하고 다른 사용자의 기록인지도 확인할 수 없다. 판독 불가와 대상 연결 불명을 모두 자료가 뒷받침한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-082",
+      "item_id": "2.5.6-Q06",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한삭제 이력 REVOKE-LOG §6: 9/24 13:00 op1이 acct_gaon의 편집 역할을 제거한 대상·권한·시각·처리 결과를 남겼다.",
+      "rationale": "편집 역할 삭제의 계정·권한·시각·처리 결과가 REVOKE-LOG에 기록돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-083",
+      "item_id": "2.5.6-Q06",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 REVOKE-0924 확인서 §3: 편집 역할을 실제 제거했지만 권한 삭제 활동 이력은 남기지 않았다고 명시한다.",
+      "rationale": "편집 역할을 실제 제거했지만 해당 권한 삭제 활동 이력을 남기지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-084",
+      "item_id": "2.5.6-Q06",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 이력 보관소에는 9/22 기록만 있다. 검토 대상 9/24 권한 삭제 활동의 기록 유무를 확인할 수 없다.",
+      "rationale": "9/22 자료만 있고 검토 대상 9/24 삭제 활동의 기록은 확인할 수 없어 필요한 기간·활동 증거가 부족하다. 있는 자료의 날짜가 불명인 사례로 확대하지 않는다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-085",
+      "item_id": "2.5.6-Q08",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 REVIEW-AUG §4: 재직자 명부·업무별 허용 역할·계정 및 권한 이력을 대조했고 퇴직 계정 잔존과 초과 편집 권한을 점검해 각 계정의 적정·부적정 결과를 남겼다.",
+      "rationale": "인사 명부·권한표·이력을 대조해 퇴직 계정과 초과 권한의 적정성 결과를 기록했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-086",
+      "item_id": "2.5.6-Q08",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 REVIEW-AUG 담당 확인서 §4: 이력 파일은 수집했지만 재직·업무와 권한의 적정성 점검은 실시하지 않았다고 명시한다.",
+      "rationale": "파일 수집만 하고 재직·업무와 권한의 적정성 점검은 실시하지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-087",
+      "item_id": "2.5.6-Q08",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT",
+        "P2_U_SCOPE_OR_RULE_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 REVIEW-AUG 표에는 적정이라고만 표시돼 있고 대상 계정·점검 기준·비교 내용이 없다. 적정성 점검을 실제 수행한 근거로 볼 수 없다.",
+      "rationale": "적정 표시 외에 대상 계정·점검 기준·비교 내용이 없다. 점검 근거가 부족하고 표시가 어떤 기준에 따른 것인지도 확인되지 않는다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-088",
+      "item_id": "2.5.6-Q09",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한검토계획 v2 §2: 재직 여부, 담당 업무별 허용 권한, 공용·휴면 계정의 승인 상태를 대조하여 초과 권한과 사용 불필요 계정을 식별하도록 적정성 검토 기준을 정했다.",
+      "rationale": "재직·업무별 허용 권한·공용 및 휴면 계정 승인 상태라는 적정성 검토 기준이 정의됐다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-089",
+      "item_id": "2.5.6-Q09",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 검토체계 현황 확인서 §2: A시스템 계정·권한의 적정성을 무엇과 대조할지 정하지 않았고 검토 기준은 미정이라고 명시한다.",
+      "rationale": "무엇과 대조할지 정하지 않았고 검토 기준은 미정이라고 직접 명시해 기준 미수립이 확인된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-090",
+      "item_id": "2.5.6-Q09",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SCOPE_OR_RULE_UNCLEAR",
+        "P2_U_TIME_OR_VERSION_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 검토 결과의 적정·부적정 표시는 있지만 판정 기준이나 적용 버전을 찾을 수 없다. 표시만으로 검토 기준이 정의됐는지 확인할 수 없다.",
+      "rationale": "결과 표시만 있고 판정 기준과 적용 버전을 찾을 수 없다. 기준 정의와 당시 적용 버전 모두 확인되지 않는다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-091",
+      "item_id": "2.5.6-Q10",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한검토계획 v2 §3: A시스템의 업무책임자가 업무 적정성을 검토하고 보안담당자가 결과를 취합·확인하도록 역할을 지정했다.",
+      "rationale": "업무책임자와 보안담당자의 검토·취합 역할을 적용 계획에서 지정했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-092",
+      "item_id": "2.5.6-Q10",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 검토체계 현황 확인서 §3: A시스템 계정·권한 검토를 누가 수행할지 정하지 않았고 부서 간 담당 지정도 없다고 확인했다.",
+      "rationale": "누가 검토할지 정하지 않았고 담당 지정도 없다고 확인해 검토주체 미정이 직접 드러난다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-093",
+      "item_id": "2.5.6-Q10",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 조직도에는 보안담당자가 있으나 A시스템 계정·권한 검토를 맡긴다는 역할 지정은 없다.",
+      "rationale": "보안담당자가 있는 조직도만 제공됐고 해당 검토 역할의 지정 근거는 없어 검토주체 정의를 확인할 정보가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-094",
+      "item_id": "2.5.6-Q11",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한검토계획 v2 §4: 계정·권한 이력을 추출해 인사 명부와 업무별 권한표를 대조하고 이상 항목을 목록화하며 업무책임자가 확인하도록 검토방법을 정했다.",
+      "rationale": "이력 추출·인사 및 업무 권한표 대조·이상 목록·책임자 확인이라는 방법을 정했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-095",
+      "item_id": "2.5.6-Q11",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 검토체계 현황 확인서 §4: 정기 검토를 하겠다는 계획만 있고 이력 대조·점검 방법은 정하지 않았다고 명시한다.",
+      "rationale": "정기 검토 계획만 있고 이력 대조·점검 방법은 정하지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-096",
+      "item_id": "2.5.6-Q11",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 검토계획 §4에는 별첨 방식으로 검토한다고 쓰였으나 별첨이 제공되지 않았다. 어떤 대조·점검 방법인지 확인할 수 없다.",
+      "rationale": "검토 방식이 적힌 별첨이 제공되지 않아 정의된 방법의 내용을 확인할 증거가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-097",
+      "item_id": "2.5.6-Q12",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한검토계획 v2 §5: A시스템 계정·권한 이력을 매월 말일까지 검토하는 주기를 정했다.",
+      "rationale": "매월 말일까지 이력을 검토하는 예시 조직 주기를 명시했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-098",
+      "item_id": "2.5.6-Q12",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 검토체계 확인서 §5: A시스템 검토주기는 현재 정하지 않았으며 일정 담당자도 주기를 미정으로 보고했다.",
+      "rationale": "검토주기를 현재 정하지 않았고 담당자가 미정으로 보고했다고 직접 확인한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-099",
+      "item_id": "2.5.6-Q12",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_CONFLICT"
+      ],
+      "evidence_excerpt": "합성 서로 같은 시기에 적용된다는 계획 v2에는 월별, 운영지침 v2에는 분기별이라고 적혀 있다. 유효 문서·우선순위가 확인되지 않아 적용 주기를 확정할 수 없다.",
+      "rationale": "같은 시기 적용 문서의 월별·분기별 주기가 상충하고 유효 문서·우선순위가 확인되지 않는다. PD_CONFLICT_RESOLUTION에서 상충 처리를 합의해야 한다.",
+      "pending_decision_ids": [
+        "PD_CONFLICT_RESOLUTION"
+      ]
+    },
+    {
+      "case_id": "EX-100",
+      "item_id": "2.5.6-Q13",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 권한 문제조치절차 v1 §2: 이상 권한을 발견하면 업무책임자 소명, 원인분석, 권한 보완, 조치 결과 보고 순서로 처리하고 사건 식별자로 기록하도록 정했다.",
+      "rationale": "발견 문제의 소명·원인분석·보완·결과 보고 흐름을 조치절차에 정의했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-101",
+      "item_id": "2.5.6-Q13",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 조치체계 점검서 §2: A시스템 권한 검토에서 문제를 발견해도 소명·분석·보완·보고 절차를 정하지 않았다고 확인했다.",
+      "rationale": "문제 발견 시 적용할 소명·분석·보완·보고 절차를 정하지 않았다고 직접 확인한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-102",
+      "item_id": "2.5.6-Q13",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 계획에는 문제 조치라는 제목만 있고 소명·원인분석·보완·보고 흐름의 상세 부분이 없다.",
+      "rationale": "문제 조치 제목만 있고 구체적인 흐름 본문이 없어 조치절차 정의를 확인할 자료가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-103",
+      "item_id": "2.5.6-Q14",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 ACL-01 조치기록 §2: 업무책임자 소명으로 업무 종료 사실을 확인하고 잘못 남은 역할을 원인으로 분석했다. 9/1 권한을 제거했으며 9/2 보완 결과를 보안담당자에게 보고했다.",
+      "rationale": "ACL-01의 소명·원인분석·제거·결과 보고를 조치 기한 9/2까지 이행한 기록이 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-104",
+      "item_id": "2.5.6-Q14",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 ACL-01 조치계획 §1은 소명·원인분석·권한 보완·결과 보고의 완료기한을 9/2로 정했다. 9/28 현황 확인서 §2: 초과 편집 권한을 문제로 확인했으나 네 단계 모두 이행하지 않았고 기한을 넘겨 미이행 상태라고 담당자가 명시했다.",
+      "rationale": "9/2 완료가 필요한 조치 네 단계를 9/28에도 전부 이행하지 않았다고 직접 확인한다. 미완료 사실뿐 아니라 적용 기한 경과가 명시돼 있다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-105",
+      "item_id": "2.5.6-Q14",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_NO_TRIGGER_EVENT"
+      ],
+      "evidence_excerpt": "합성 8/31 검토 보고서는 문제 발견 없음으로 기록했다. 적용할 발견 문제와 후속조치가 없으며 적용 제외 처리 정책은 합의 전이다.",
+      "rationale": "검토에서 발견 문제 없음으로 기록돼 있어 적용할 후속조치 사건이 없다. 적용 제외 방식은 PD_NO_EVENT_POLICY 합의 전이다.",
+      "pending_decision_ids": [
+        "PD_NO_EVENT_POLICY"
+      ]
+    },
+    {
+      "case_id": "EX-106",
+      "item_id": "2.9.3-Q02",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 백업절차 v2 §2: 고객 DB는 매일 02:00 증분 백업하고 서비스 설정은 매주 일요일 03:00 전체 백업하도록 주기를 정했다.",
+      "rationale": "고객 DB의 일별·설정 파일의 주별 백업 주기를 예시 절차에 정했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-107",
+      "item_id": "2.9.3-Q02",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 A서비스 백업현황 확인서 §2: 백업 주기를 아직 정하지 않아 작업자가 임의로 실행한다고 명시한다.",
+      "rationale": "적용 백업 주기를 아직 정하지 않아 임의 실행한다고 직접 확인한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-108",
+      "item_id": "2.9.3-Q02",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SCOPE_OR_RULE_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 백업 성공 알림 두 건만 있고 해당 날짜가 적용 주기를 의미하는지 설명하는 절차는 없다.",
+      "rationale": "두 날짜의 성공 알림을 적용 백업 주기 정의로 읽을 근거가 없어 어떤 주기가 기준인지 불명확하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-109",
+      "item_id": "2.9.3-Q03",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 백업절차 v2 §3: 고객 DB는 일관된 스냅샷 기준으로 전체·증분 백업하고 서비스 설정은 파일 단위 전체 백업하도록 방법을 정했다.",
+      "rationale": "대상별 전체·증분·일관된 스냅샷이라는 백업 방법이 절차에 정의돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-110",
+      "item_id": "2.9.3-Q03",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 A서비스 운영 확인서 §3: 백업 수행 도구는 설치돼 있으나 대상별 백업 방법은 아직 정하지 않았다고 명시한다.",
+      "rationale": "도구는 설치했지만 대상별 백업 방법은 아직 정하지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-111",
+      "item_id": "2.9.3-Q03",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SCOPE_OR_RULE_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 자료는 백업 도구 제품 소개서뿐이다. A서비스에 적용할 전체·증분·스냅샷 방법이 정해졌는지 확인할 수 없다.",
+      "rationale": "제품 소개서만으로는 A서비스에 적용되는 백업 방법이 무엇인지 확인되지 않아 기준의 적용 내용이 불명확하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-112",
+      "item_id": "2.9.3-Q04",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 백업절차 v2 §4: A서비스 백업본의 보관장소를 백업 저장소 B01의 전용 경로 /A/customer로 지정했다.",
+      "rationale": "A서비스 백업본의 보관 저장소와 전용 경로를 절차에 지정했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-113",
+      "item_id": "2.9.3-Q04",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 A서비스 백업현황 확인서 §4: 백업본을 어디에 보관할지 정해 놓은 절차가 없고 저장 위치는 임의로 선택한다고 확인했다.",
+      "rationale": "보관장소를 정한 절차가 없고 위치를 임의 선택한다고 직접 확인한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-114",
+      "item_id": "2.9.3-Q04",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SCOPE_OR_RULE_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 저장소 목록에는 B01과 B02가 있으나 A서비스 백업본의 지정 보관장소는 표시되지 않았다.",
+      "rationale": "저장소 두 개가 있다는 사실만으로는 A서비스의 지정 보관장소 기준이 무엇인지 알 수 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-115",
+      "item_id": "2.9.3-Q05",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 백업절차 v2 §5: A서비스 일별 백업본은 생성일로부터 30일 보관하도록 기간을 정했다.",
+      "rationale": "A서비스 백업본의 예시 조직 보관기간 30일을 절차에 정의했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-116",
+      "item_id": "2.9.3-Q05",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 A서비스 현황 확인서 §5: 백업 보관기간은 현재 정하지 않았고 담당자도 기간 미정으로 확인했다.",
+      "rationale": "보관기간을 현재 정하지 않았고 담당자도 미정이라고 직접 확인한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-117",
+      "item_id": "2.9.3-Q05",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SCOPE_OR_RULE_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 저장소 화면에는 9/1 백업본이 남아 있으나 보관기간 규정이 없다. 한 백업본의 현재 나이만으로 정의된 기간을 추론할 수 없다.",
+      "rationale": "백업본이 현재 남아 있는 상태만 있고 적용 보관기간 규정이 없어 기준 기간을 결정할 수 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-118",
+      "item_id": "2.9.3-Q06",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 백업절차 v2 §6: A서비스 고객 DB 백업매체 M001을 밀봉해 지정 소산 장소 C로 이동하고 담당자가 반출입과 수령을 확인하도록 소산 절차를 정했다.",
+      "rationale": "소산 대상 매체·밀봉·지정 장소 이동·반출입 및 수령 확인 절차를 정의했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-119",
+      "item_id": "2.9.3-Q06",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 A서비스 현황 확인서 §6: 중요 백업매체 소산이 필요한 범위이지만 소산 절차는 아직 정하지 않았다고 확인했다.",
+      "rationale": "소산 필요 범위인데 소산 절차를 아직 정하지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-120",
+      "item_id": "2.9.3-Q06",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 자료에는 매체 운송 계약의 제목만 있고 A서비스의 소산 대상·담당·이동·확인 방식은 제공되지 않았다.",
+      "rationale": "운송 계약 제목 외에 A서비스 소산 대상·담당·이동·확인 방식은 제공되지 않아 절차 내용 확인이 어렵다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-121",
+      "item_id": "2.9.3-Q09",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 BK-PROC §1과 BK-0927 목록: 9/27 작업에서 고객 DB와 서비스 설정을 모두 백업했고 두 대상의 작업 ID와 성공 결과를 각각 기록했다.",
+      "rationale": "적용 두 대상인 고객 DB와 서비스 설정을 같은 작업에서 모두 백업한 기록이 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-122",
+      "item_id": "2.9.3-Q09",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "합성 BK-0927 확인서 §1: 적용 대상인 서비스 설정 백업을 생략했으며 고객 DB만 백업한 사실을 명시했다.",
+      "rationale": "두 대상을 포함해야 하는 기준과 달리 설정 파일은 생략하고 고객 DB만 실제 백업한 확인이 있어 대상 기준과 수행 결과가 불일치한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-123",
+      "item_id": "2.9.3-Q09",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 BK-0927 결과에는 작업 성공만 표시된다. 포함된 데이터 대상 목록이 없어 두 대상 모두 백업했는지 대조할 수 없다.",
+      "rationale": "작업 성공 표시만 있고 포함된 데이터 대상 목록이 없어 기준의 두 대상 모두를 백업했는지 확인할 정보가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-124",
+      "item_id": "2.9.3-Q10",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 BK-PROC §2와 실행 이력 §9: 고객 DB를 9/25·9/26·9/27 각각 02:00에 백업했고 대상·일시·결과를 같은 작업 목록에서 확인했다.",
+      "rationale": "검토 기간의 매일 지정 시각에 고객 DB 백업을 수행한 일별 기록이 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-125",
+      "item_id": "2.9.3-Q10",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 실행 확인서 §9: 9/26 고객 DB 일별 백업을 실행하지 않았으며 예시 적용 주기의 작업 한 회가 누락됐다고 명시한다.",
+      "rationale": "일별 백업이 필요한 9/26 작업을 실제 실행하지 않았다고 명시해 필요한 실행 한 회의 미수행이 확인된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-126",
+      "item_id": "2.9.3-Q10",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_TIME_OR_VERSION_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 백업 성공 파일에는 날짜와 시간대가 없다. 어느 날의 작업인지 확인할 수 없어 검토 기간의 주기 이행을 대조할 수 없다.",
+      "rationale": "성공 파일에 날짜·시간대가 없어 어느 날 작업인지 불명확하므로 검토 기간의 일별 이행과 대조할 수 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-127",
+      "item_id": "2.9.3-Q11",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 BK-PROC §3 및 BK-0927 실행 옵션: DB 쓰기 일관성을 확보한 스냅샷 ID SNAP-0927로 백업했고 해당 스냅샷의 완료 시각과 작업 연결을 남겼다.",
+      "rationale": "일관성을 확보한 스냅샷과 실제 BK-0927 작업이 식별자로 연결돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-128",
+      "item_id": "2.9.3-Q11",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "합성 BK-0927 작업 확인서 §3: 기준이 요구하는 일관된 스냅샷을 사용하지 않고 실행 중인 파일을 단순 복사하는 방식으로 대체했다고 확인했다.",
+      "rationale": "기준의 일관된 스냅샷 대신 실행 중 파일 단순 복사를 수행했다고 확인해 적용 방법과 실제 방법이 불일치한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-129",
+      "item_id": "2.9.3-Q11",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 백업 실행 화면에는 성공 상태만 보이고 옵션·스냅샷 ID·수행 방식이 없다. 방법 기준 이행 여부를 확인할 수 없다.",
+      "rationale": "성공 상태만 제공됐고 옵션·스냅샷 ID·방식이 없어 적용 방법 이행을 확인할 증거가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-130",
+      "item_id": "2.9.3-Q12",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 BK-PROC §4와 저장소 목록 §12: BK-0927 백업본이 B01의 /A/customer에 있고 작업 ID·백업본 ID·저장 경로가 연결돼 있다.",
+      "rationale": "BK-0927 백업본의 저장소 ID·전용 경로가 지정 장소 기준에 대응한다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-131",
+      "item_id": "2.9.3-Q12",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "합성 BK-0927 확인서 §4: 지정 B01이 아닌 운영자 개인 노트북에만 해당 백업본을 보관했고 지정 장소에는 보관하지 않았다고 명시한다.",
+      "rationale": "지정 B01에는 보관하지 않고 개인 노트북에만 두었다고 직접 확인해 실제 보관장소가 기준과 불일치한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-132",
+      "item_id": "2.9.3-Q12",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 백업 파일 이름은 BK-0927이지만 저장소 식별자와 전체 경로가 가려져 지정 장소 보관 여부를 확인할 수 없다.",
+      "rationale": "백업 파일 이름은 있지만 저장소 식별자·전체 경로가 가려져 지정 장소에 있다는 필요한 위치 정보가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-133",
+      "item_id": "2.9.3-Q13",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 BK-PROC §5는 BK-0901에 30일 보관을 적용한다. 보관 대장 §13에는 9/1 생성일·백업본 ID·해시가 있고 9/1~9/28 일별 보관 확인기록과 삭제·재생성 없는 변경 이력을 대조할 수 있다. 관찰기간 내 같은 백업본이 계속 보관됐음을 확인했다.",
+      "rationale": "BK-0901의 9/1~9/28 일별 확인과 삭제·재생성 없는 이력이 해당 관찰기간 보관을 뒷받침한다. 9/29 이후나 전체 30일·다른 백업본으로 확대하지 않는다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-134",
+      "item_id": "2.9.3-Q13",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "합성 BK-0901 삭제 확인서 §13: 9/10 보관 중인 백업본을 삭제했으며 적용 30일 보관기간이 지나기 전에 삭제한 사실을 확인했다.",
+      "rationale": "적용 30일이 지나기 전인 9/10에 BK-0901을 삭제했다는 직접 사실이 보관기간 기준과 실제 보관의 불일치를 뒷받침한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-135",
+      "item_id": "2.9.3-Q13",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SUBJECT_OR_EVENT_UNLINKED",
+        "P2_U_TIME_OR_VERSION_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 보관 목록에는 생성일 없는 백업본 ID만 있다. BK-0901과의 대응 및 기간을 확인할 수 없어 보관기간 이행 여부를 판단할 수 없다.",
+      "rationale": "생성일 없는 목록을 BK-0901에 대응할 수 없고 보관 기간도 확인되지 않는다. 대상 연결과 시간 정보 불명이 모두 확인된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-136",
+      "item_id": "2.9.3-Q14",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 BK-PROC §6과 OFFSITE-0927 §1: M001을 9/27 밀봉해 지정 장소 C로 운송했고 담당자가 반출·수령을 매체 ID로 확인했다.",
+      "rationale": "M001의 밀봉·지정 장소 운송·반출·수령 확인을 해당 소산 건에서 대조할 수 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-137",
+      "item_id": "2.9.3-Q14",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 OFFSITE-0927 점검서 §1: M001에 적용되는 소산 절차가 있지만 운송·수령 확인을 수행하지 않았고 해당 매체를 소산하지 않았다고 명시했다.",
+      "rationale": "적용 소산 절차가 있지만 운송·수령 확인을 수행하지 않고 소산하지 않았다고 직접 명시해 필요한 조치의 미실행이 확인된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-138",
+      "item_id": "2.9.3-Q14",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_SCOPE_OR_RULE_UNCLEAR",
+        "P2_U_SUBJECT_OR_EVENT_UNLINKED"
+      ],
+      "evidence_excerpt": "합성 소산 계획에는 검토 대상 매체와 백업정보가 식별되지 않는다. M001이 소산 적용 대상인지와 어떤 절차를 대조할지 확인할 수 없다.",
+      "rationale": "계획의 매체·백업정보가 식별되지 않아 M001에 대응하는지, 소산 대상과 어떤 적용 기준인지 모두 확인되지 않는다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-139",
+      "item_id": "2.9.3-Q15",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 복구절차 REC-PROC v1 §2: 대상 고객 DB와 복구용 백업본을 식별하고 운영 담당자가 백업본 선택→복원→정합성 점검 순서로 수행하며 검증 담당자가 결과를 확인하도록 정했다.",
+      "rationale": "복구 대상·백업본 선택→복원→검증 순서·담당 역할이 절차에 정의돼 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-140",
+      "item_id": "2.9.3-Q15",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 복구 준비현황 확인서 §2: A서비스 고객 DB 장애 시 사용할 복구절차는 아직 수립하지 않았다고 명시한다.",
+      "rationale": "고객 DB 장애에 사용할 복구절차를 아직 수립하지 않았다고 직접 확인한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-141",
+      "item_id": "2.9.3-Q15",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 REC-PROC의 표지에 복구 계획이라고 쓰여 있지만 대상·순서·담당 역할을 설명하는 본문이 빠졌다.",
+      "rationale": "복구 계획 표지만 있고 대상·순서·담당 역할을 다루는 본문이 빠져 절차 내용의 증거가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-142",
+      "item_id": "2.9.3-Q16",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 REC-PLAN §3의 3분기 고객 DB 복원 시나리오를 REC-TEST-0920 §1에서 9/20 실시했다고 기록했고 대상·시험일·시나리오를 확인할 수 있다.",
+      "rationale": "3분기 적용 시험 계획과 9/20 실제 시험 대상·일시·시나리오가 연결된다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-143",
+      "item_id": "2.9.3-Q16",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 9/28 시험 현황 확인서 §1: 예시 계획상 9/25까지 수행해야 하는 3분기 고객 DB 복구 테스트를 아직 실시하지 않았다고 명시한다.",
+      "rationale": "9/25까지 필요한 3분기 시험을 9/28에도 실시하지 않았다고 직접 확인해 기한 경과 후 필요 시험 미수행이 드러난다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-144",
+      "item_id": "2.9.3-Q16",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_TIME_OR_VERSION_UNCLEAR"
+      ],
+      "evidence_excerpt": "합성 시험 계획은 있으나 결과 파일의 시험일과 대상 분기가 비어 있다. 검토 기간의 시험이 실제 실시됐는지 대조할 수 없다.",
+      "rationale": "시험 결과의 시험일·대상 분기가 비어 있어 검토 기간에 해당하는 시험인지 시간 정보가 불명확하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-145",
+      "item_id": "2.9.3-Q17",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 REC-TEST-0920 §4: 완전성 기준은 테이블 12개와 총 10000행의 복원이다. 기대값 목록과 복원 결과 12개·10000행을 대조해 누락 없음으로 기록했다.",
+      "rationale": "테이블·행수 기대값과 실측값을 비교해 완전성 확인을 수행한 기록이 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-146",
+      "item_id": "2.9.3-Q17",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 REC-TEST-0920 담당 확인서 §4: DB 기동 여부만 보고 시험을 종료했고 데이터 테이블·행 누락의 완전성 확인은 실시하지 않았다고 명시한다.",
+      "rationale": "DB 기동만 확인하고 테이블·행 누락의 완전성 확인을 실시하지 않았다고 직접 명시해 필요한 확인 미수행이 드러난다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-147",
+      "item_id": "2.9.3-Q17",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 결과에는 복구 성공이라고만 쓰여 있다. 완전성의 비교 기준·기대값·실측 결과가 없어 완전성을 확인한 근거를 찾을 수 없다.",
+      "rationale": "복구 성공 문장만 있고 완전성 기준·기대값·실측값 비교가 없어 확인 수행의 증거가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-148",
+      "item_id": "2.9.3-Q18",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 REC-TEST-0920 §5: 정확성 기준은 원본 기준시점의 고객 상태 값과 결제 금액 체크섬 일치이다. 원본과 복원 값·체크섬을 대조해 모두 일치한 결과를 기록했다.",
+      "rationale": "기준시점 원본 상태 값·체크섬과 복원 값의 일치를 비교해 정확성을 확인했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-149",
+      "item_id": "2.9.3-Q18",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 REC-TEST-0920 담당 확인서 §5: 테이블 수만 점검하고 실제 값·체크섬의 정확성 비교는 하지 않았다고 명시한다.",
+      "rationale": "테이블 수만 점검했고 값·체크섬의 정확성 비교는 하지 않았다고 직접 확인해 필요한 정확성 점검 미수행이 드러난다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-150",
+      "item_id": "2.9.3-Q18",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 결과에 테이블 12개 복원만 적혀 있다. 원본 대비 값·체크섬 등 정확성 비교 내용은 없어 정확성을 확인했는지 알 수 없다.",
+      "rationale": "테이블 개수 복원 결과만 제공돼 원본 값·체크섬 등 정확성 비교를 수행했는지 확인할 자료가 없다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-151",
+      "item_id": "2.9.3-Q19",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 REC-TEST-0920 §6: 절차의 백업본 선택→복원→검증 단계와 담당 인계가 시험에서 재현됐고 기대 흐름과 실제 단계·인계 결과를 대조해 절차의 적절성을 확인했다.",
+      "rationale": "기대 절차 흐름과 실제 단계·담당 인계·검증 결과를 대조해 적절성을 확인했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-152",
+      "item_id": "2.9.3-Q19",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 REC-TEST-0920 확인서 §6: 자동 복원 성공만 확인했고 정해진 복구절차의 단계·인계·검증 흐름에 대한 적절성 확인은 수행하지 않았다고 명시한다.",
+      "rationale": "자동 복원 성공만 보고 단계·인계·검증 흐름의 절차 적절성 확인을 수행하지 않았다고 직접 명시한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-153",
+      "item_id": "2.9.3-Q19",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 시험 결과에는 DB 복원이 완료됐다는 문장만 있다. 절차 적절성 확인 기준과 단계별 비교 결과가 없어 절차 적절성 검토 여부를 판단할 수 없다.",
+      "rationale": "DB 복원 완료 문장만 있고 절차 적절성 확인 기준·단계별 비교 결과를 제공하지 않아 확인 수행 근거가 부족하다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-154",
+      "item_id": "2.9.3-Q20",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 REC-ISSUE-01 개선계획 §2: 시험 중 검증 단계 설명 누락을 문제로 연결하고 담당자에게 검증 단계·확인 항목을 절차에 추가하는 조치를 배정했으며 목표일과 계획을 기록했다.",
+      "rationale": "REC-ISSUE-01에 대응하는 개선 조치·담당·목표일을 계획으로 기록했다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-155",
+      "item_id": "2.9.3-Q20",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_NOT_DEFINED"
+      ],
+      "evidence_excerpt": "합성 REC-ISSUE-01 관리 확인서 §2: 해당 문제를 확인했으나 담당·조치 계획을 정하지 않았고 개선계획은 미수립 상태라고 명시한다.",
+      "rationale": "발견 문제의 담당·조치 계획을 정하지 않았고 개선계획 미수립이라고 직접 명시해 해당 계획 미정이 확인된다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-156",
+      "item_id": "2.9.3-Q20",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_NO_TRIGGER_EVENT"
+      ],
+      "evidence_excerpt": "합성 REC-TEST-0920은 발견 문제 없음으로 기록됐다. 개선계획을 수립할 발견 문제가 없어 적용 제외 여부를 팀이 정해야 하며 자동 충족으로 보지 않는다.",
+      "rationale": "시험에서 발견 문제 없음으로 기록돼 개선계획의 적용 사건이 없다. 적용 제외 처리는 PD_NO_EVENT_POLICY로 남긴다.",
+      "pending_decision_ids": [
+        "PD_NO_EVENT_POLICY"
+      ]
+    },
+    {
+      "case_id": "EX-157",
+      "item_id": "2.9.3-Q21",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 개선계획 §2는 9/25까지 검증 단계를 보완하도록 정했다. 조치기록 REC-FIX-0924 §1과 절차 v2 §검증에서 9/24 보완·확인 완료를 대조할 수 있다.",
+      "rationale": "기한이 9/25인 보완을 9/24 완료한 조치 결과와 절차 개정을 대조할 수 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-158",
+      "item_id": "2.9.3-Q21",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_REQUIRED_ACTION_NOT_DONE"
+      ],
+      "evidence_excerpt": "합성 9/28 REC-ISSUE-01 현황 확인서 §2: 9/25까지 이행해야 하는 검증 단계 보완을 아직 하지 않았고 계획 기한을 넘겨 미이행 상태라고 명시한다.",
+      "rationale": "9/25까지 필요한 검증 단계 보완을 9/28에도 하지 않았다고 직접 확인해 기한 경과 후 필요 조치 미수행이 드러난다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-159",
+      "item_id": "2.9.3-Q21",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_CONFLICT"
+      ],
+      "evidence_excerpt": "합성 개선계획에는 기한과 조치 내용이 있고 현재 현황은 완료·미완료 두 기록으로 상충한다. 유효 조치 결과와 실제 이행 시점을 확인할 수 없어 증거 우선순위·추가 확인이 필요하다.",
+      "rationale": "동일 문제 현황이 완료·미완료로 상충하며 유효 결과를 가릴 근거가 없다. 실제 시점을 단정하거나 한 기록을 자동 우선하지 않고 PD_CONFLICT_RESOLUTION으로 남긴다.",
+      "pending_decision_ids": [
+        "PD_CONFLICT_RESOLUTION"
+      ]
+    },
+    {
+      "case_id": "EX-160",
+      "item_id": "2.9.3-Q22",
+      "expected_result_draft": "MET",
+      "reason_codes_draft": [],
+      "evidence_excerpt": "합성 자산·소산 기록 OFFSITE-M001 §2: 운영·백업 시스템은 주소 X 건물에 있고 중요정보 고객 DB 백업매체 M001은 별도 주소 Y 건물의 소산 보관소에 9/27 반출·수령됐으며 매체 ID로 연결된다.",
+      "rationale": "중요정보 백업매체의 실제 반출·수령과 운영·백업 장소에서 다른 소산 주소를 연결할 수 있다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-161",
+      "item_id": "2.9.3-Q22",
+      "expected_result_draft": "NOT_MET",
+      "reason_codes_draft": [
+        "P2_NM_RULE_VIOLATED"
+      ],
+      "evidence_excerpt": "합성 OFFSITE-M001 현장 점검서 §2: 중요정보 백업매체 M001이 운영·백업 시스템과 같은 서버실에만 보관돼 있고 별도 장소로 소산하지 않았다고 확인했다.",
+      "rationale": "중요정보 매체를 운영·백업 시스템과 같은 서버실에만 보관한 사실이 직접 확인돼 물리적 분리 소산 기준과 실제 상태가 불일치한다.",
+      "pending_decision_ids": []
+    },
+    {
+      "case_id": "EX-162",
+      "item_id": "2.9.3-Q22",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_EVIDENCE_INSUFFICIENT"
+      ],
+      "evidence_excerpt": "합성 매체 송장에는 M001과 수령 사실이 있지만 운영·백업 시스템 장소와 소산 보관소 주소가 없다. 물리적으로 분리된 장소인지 판단할 수 없다.",
+      "rationale": "매체 수령은 있지만 운영·백업 시스템과 소산 장소 주소가 없어 물리적으로 분리됐는지 확인할 위치 정보가 부족하다.",
+      "pending_decision_ids": []
+    }
+  ],
+  "boundary_cases": [
+    {
+      "case_id": "BC-01",
+      "item_id": "2.5.6-Q14",
+      "assumed_scope": "합성 초안. 검토 기준일은 2026-09-29이다. A시스템의 9/28 권한 검토에서 발견한 ACL-09 문제의 후속조치를 검토한다. 예시 조직의 적용 계획은 소명·원인분석을 9/29까지, 권한 보완·결과 보고를 10/2까지 이행하는 것으로 정했다. 이 날짜와 주기는 조직 사례 가정이며 법규·안내서의 고정 수치가 아니다.",
+      "evidence_text": "합성 ACL-09 조치계획 §2: 소명·원인분석 완료기한 9/29, 권한 보완·결과 보고 완료기한 10/2. 9/29 진행 확인서 §3: 소명과 원인분석은 완료했고 보완 작업은 진행 중이며 보고는 보완 완료 후 10/2까지 수행할 예정이다. 현재 기한이 도래한 단계는 완료됐고, 남은 단계의 기한은 아직 지나지 않았다.",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_NOT_YET_DUE"
+      ],
+      "evidence_excerpt": "현재 기한이 도래한 단계는 완료됐고, 남은 단계의 기한은 아직 지나지 않았다.",
+      "rationale": "9/29 현재 기한이 도래한 선행 단계는 완료됐고 잔여 보완·보고는 10/2 기한 전이다. 현재 문항은 검토 기준일에 이행해야 하는 후속조치의 이행을 확인하며, 아직 기한이 남은 단계를 미수행 위반으로 보지 않는다. 잔여 단계가 있는 사건의 진행 상태·최종 결과 표현은 PD_NOT_YET_DUE_POLICY 합의 전이므로 이 경계 사례의 기대값은 UNKNOWN 초안으로 남긴다. 모든 후속조치를 기한 전에 완료해야 한다는 기준을 추가하지 않는다.",
+      "pending_decision_ids": [
+        "PD_NOT_YET_DUE_POLICY"
+      ]
+    },
+    {
+      "case_id": "BC-02",
+      "item_id": "2.9.3-Q13",
+      "assumed_scope": "합성 초안. 실제 실행 없이 검토 기준일을 2026-10-02로 가정한다. A서비스의 9/1 생성 백업본 BK-0901 한 개에 적용하는 예시 조직 보관기준은 30일이며, 검토 범위는 9/1~9/30 관찰기간의 이행이다. 작성일 9/29의 실제 관찰 결과가 아니며 30일은 법규·안내서의 고정 의무로 일반화하지 않는다.",
+      "evidence_text": "합성 BK-PROC §5: 9/1 생성 백업본 BK-0901은 예시 조직 기준에 따라 30일 보관한다. 제출된 자료는 9/28 생성 최근 백업본 BK-0928의 단일 생성·현재 보관 화면뿐이다. BK-0901의 9/1~9/30 일별 보관 확인·변경 이력이나 적용기간 보관을 대조할 자료는 제공되지 않았다. BK-0901을 조기 삭제했다는 직접 확인도 없다.",
+      "expected_result_draft": "UNKNOWN",
+      "reason_codes_draft": [
+        "P2_U_OBSERVATION_INCOMPLETE"
+      ],
+      "evidence_excerpt": "BK-0901의 9/1~9/30 일별 보관 확인·변경 이력이나 적용기간 보관을 대조할 자료는 제공되지 않았다.",
+      "rationale": "최근 BK-0928 한 건이 보관돼 있다는 자료로는 과거 지정 백업본 BK-0901의 필요한 관찰기간 전체 이행을 확인할 수 없다. 기간 전체의 증거 공백을 OBSERVATION_INCOMPLETE로 식별하며, 실제 조기 삭제가 확인되지 않아 NOT_MET을 부여하지 않는다. 적용 기간이 지난 10/2를 합성 기준일로 두어 기한 전 사유와도 구별했다.",
+      "pending_decision_ids": []
+    }
+  ],
+  "review_summary": {
+    "original_results": {
+      "MET": 54,
+      "NOT_MET": 54,
+      "UNKNOWN": 54
+    },
+    "original_reason_code_counts": {
+      "P2_NM_RULE_VIOLATED": 10,
+      "P2_U_EVIDENCE_INSUFFICIENT": 26,
+      "P2_NM_REQUIRED_ACTION_NOT_DONE": 23,
+      "P2_U_TIME_OR_VERSION_UNCLEAR": 7,
+      "P2_NM_RULE_NOT_DEFINED": 21,
+      "P2_U_SCOPE_OR_RULE_UNCLEAR": 10,
+      "P2_U_SUBJECT_OR_EVENT_UNLINKED": 9,
+      "P2_U_EVIDENCE_UNREADABLE": 2,
+      "P2_U_EVIDENCE_CONFLICT": 3,
+      "P2_U_NO_TRIGGER_EVENT": 3,
+      "P2_U_EXCEPTION_UNRESOLVED": 1
+    },
+    "boundary_reason_code_counts": {
+      "P2_U_NOT_YET_DUE": 1,
+      "P2_U_OBSERVATION_INCOMPLETE": 1
+    },
+    "count_note": "code_counts는 사례에 연결된 코드 출현 수다. 다중 사유를 가진 사례가 있어 코드 합계는 NOT_MET·UNKNOWN 사례 수와 같지 않을 수 있다.",
+    "remaining": [
+      "사람의 사례별 이유 검토 및 승인",
+      "정책 미합의 사유의 처리 방식 결정",
+      "사유 코드 대표값·순서·자동 선택 정책 검토",
+      "실제 증적·판단 LLM·전체 연동 검증"
+    ]
+  }
+}
