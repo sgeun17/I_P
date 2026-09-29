@@ -39,7 +39,7 @@ def test_runner_retries_call_error_with_retry_prompt(mapping_input, good_respons
     try:
         result = run_mapping_llm(
             mapping_input,
-            model="qwen3:8b-q4_K_M",
+            model="qwen3:8b",
             http_client=client,
             retry_policy=policy,
             generation=GenerationConfig(),
@@ -72,7 +72,7 @@ def test_runner_retries_json_parse_error_with_retry_prompt(mapping_input, good_r
     try:
         result = run_mapping_llm(
             mapping_input,
-            model="qwen3:8b-q4_K_M",
+            model="qwen3:8b",
             http_client=client,
             retry_policy=policy,
             sleeper=lambda _: None,
@@ -92,7 +92,7 @@ def test_runner_returns_e106_after_retry_is_exhausted(mapping_input):
     try:
         result = run_mapping_llm(
             mapping_input,
-            model="qwen3:8b-q4_K_M",
+            model="qwen3:8b",
             http_client=client,
             retry_policy=policy,
             sleeper=lambda _: None,
@@ -150,7 +150,7 @@ def test_runner_does_not_retry_non_policy_schema_detail_error(mapping_input):
     try:
         result = run_mapping_llm(
             mapping_input,
-            model="qwen3:8b-q4_K_M",
+            model="qwen3:8b",
             http_client=client,
             retry_policy=policy,
             sleeper=lambda _: None,

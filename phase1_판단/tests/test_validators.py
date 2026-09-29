@@ -13,6 +13,7 @@ from validators import (
     normalize,
     validate,
     validate_citation,
+    validate_citation_warnings,
     validate_citations,
     validate_control_ids,
     validate_reasons,
@@ -145,6 +146,35 @@ def test_페이지_범위_밖이면_실패():
     assert ErrorCode.CITATION_PAGE_MISMATCH in codes(
         validate_citation(citation, {chunk.chunk_id: chunk})
     )
+
+
+def test_페이지형_청크의_page_null은_인용을_무효화하지_않는다():
+    chunk = make_chunk(0, page_start=2, page_end=3)
+    citation = Citation(chunk_id=chunk.chunk_id, page=None, quote="관리자 승인 후 생성한다")
+
+    assert ErrorCode.CITATION_PAGE_MISMATCH not in codes(
+        validate_citation(citation, {chunk.chunk_id: chunk})
+    )
+
+
+def test_페이지형_청크의_page_null은_e407_경고로_남긴다(good, mapping_input):
+    good.mapped_controls[0].citations[0].page = None
+
+    warnings = validate_citation_warnings(good, mapping_input)
+    assert ErrorCode.CITATION_PAGE_MISSING in codes(warnings)
+
+
+def test_page_null_경고는_passed와_검토를_깨지_않는다(mapping_input, versions):
+    """유효한 chunk_id+quote가 있으면 page 누락은 위치 메타데이터 경고다."""
+    from service import build_result
+
+    data = json.loads(GOOD_RESPONSE)
+    data["mapped_controls"][0]["citations"][0]["page"] = None
+    result = build_result(json.dumps(data, ensure_ascii=False), mapping_input, versions)
+
+    assert result.validation.passed
+    assert ErrorCode.CITATION_PAGE_MISSING in codes(result.validation.warnings)
+    assert not result.human_review.required
 
 
 def test_페이지_없는_파일은_page가_null이어야():
@@ -361,6 +391,14 @@ def test_근거가_너무_짧으면_경고(good, mapping_input):
 
 def test_근거가_원문_복붙이면_경고(good, mapping_input):
     good.mapped_controls[0].reason = "사용자 계정은 관리자 승인 후 생성한다."
+    assert ErrorCode.REASON_NOT_SPECIFIC in codes(validate_reasons(good, mapping_input))
+
+
+def test_근거_설명_안에_원문을_따옴표로_재인용해도_경고(good, mapping_input):
+    good.mapped_controls[0].reason = (
+        "계정 관리 활동과 직접 관련된다. "
+        "'사용자 계정은 관리자 승인 후 생성한다.'"
+    )
     assert ErrorCode.REASON_NOT_SPECIFIC in codes(validate_reasons(good, mapping_input))
 
 

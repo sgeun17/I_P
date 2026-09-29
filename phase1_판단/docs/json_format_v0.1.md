@@ -324,7 +324,7 @@ Phase 1은 **연결까지만** 한다. "충족하는가"는 Phase 2의 일이다
     "threshold_profile": "thresholds_v0.4"
   },
   "versions": {
-    "schema_version": "0.3.0",
+    "schema_version": "0.3.1",
     "prompt_version": "phase1_mapping_v0.1",
     "model_name": "qwen2.5-14b-instruct",
     "ruleset_version": "mapping_rules_v0.7",
@@ -398,7 +398,7 @@ required=false → status = NOT_REQUIRED
 
 | 필드 | 설명 |
 |---|---|
-| `schema_version` | 이 JSON 구조의 버전 (`0.3.0`) |
+| `schema_version` | 이 JSON 구조의 버전 (`0.3.1`) |
 | `prompt_version` | 프롬프트 버전 |
 | `model_name` | 사용한 LLM |
 | `ruleset_version` | 판단 규칙 문서 버전 (`mapping_rules_v0.7`) |

@@ -19,7 +19,7 @@ from typing import Any
 
 from models import LLMMappingOutput, MappingInput
 
-PROMPT_VERSION = "phase1_mapping_v0.4"
+PROMPT_VERSION = "phase1_mapping_v0.5"
 RULESET_VERSION = "mapping_rules_v0.7"
 
 
@@ -90,19 +90,22 @@ _BASE_SYSTEM = r"""
 [reason 작성]
 - reason은 왜 그 판단을 했는지 구체적으로 설명한다.
 - 현재 Validator 기준에 맞춰 가능하면 10자 이상으로 쓴다.
-- 증적 원문을 그대로 복사하지 않는다. 원문은 citations에 둔다.
+- reason은 설명/요약만 작성하고 증적 원문을 따옴표로 다시 인용하지 않는다.
+- chunk.text의 긴 부분 문자열을 reason에 그대로 복사하지 않는다. 원문 인용은 citations.quote에만 둔다.
 - control_name만 반복해서 이유처럼 쓰지 않는다.
 - Phase 1에서 적정성/충족 여부를 판정하는 표현을 쓰지 않는다.
 
 [Citation]
 - RELATED로 판단한 candidate_decision에는 실제 원문 citation을 1개 이상 제시한다.
 - mapped_controls의 각 항목에도 citation을 1개 이상 제시한다.
+- 모든 citation 객체는 chunk_id, page, quote 세 필드를 항상 출력한다.
 - quote는 해당 chunk.text에 실제 존재하는 문자열을 그대로 복사한다. 요약·의역·재구성하지 않는다.
+- quote를 옮길 때 공백 수를 임의로 바꾸지 말고 가능한 한 원문 그대로 복사한다.
 - 부분 문자열 인용은 허용된다.
-- chunk_id는 입력 evidence에 존재하는 값을 그대로 쓴다.
+- chunk_id는 입력 evidence에 존재하는 값을 문자 하나까지 그대로 복사한다.
 - pdf는 페이지, xlsx는 시트 번호, pptx는 슬라이드 번호를 page에 쓴다.
-- docx/txt/csv/png/jpg는 page=null이다.
-- 페이지형 청크에서는 page_start <= page <= page_end를 만족해야 한다.
+- 페이지형 청크에서는 page_start <= page <= page_end를 만족하는 정수 page를 반드시 출력한다.
+- docx/txt/csv/png/jpg처럼 page_start/page_end가 null인 청크만 page=null로 출력한다.
 - overlap 때문에 동일 quote가 여러 청크에 있더라도 같은 근거를 중복해서 부풀리지 않는다.
 
 [최종 매핑 절차]
@@ -213,7 +216,9 @@ def build_user_prompt(mapping_input: MappingInput) -> str:
 - control_id와 control_name은 candidates의 값을 그대로 사용한다.
 - RELATED는 실제 chunk.text에서 직접 근거를 인용할 수 있을 때만 사용한다.
 - 검색 순위나 검색 점수를 추측하여 판단하지 않는다.
-- reason은 판단 설명이며 quote의 복사본이 아니다.
+- reason은 판단 설명이며 quote의 복사본이 아니다. 원문을 따옴표로 다시 인용하지 않는다.
+- 모든 citation에는 chunk_id, page, quote 세 필드를 빠짐없이 넣는다.
+- 페이지형 청크는 범위 안의 정수 page, 페이지 없는 청크는 page=null을 사용한다.
 - RELATED가 0개면 NO_MATCH, 1개면 PRIMARY 1개, 2개 이상이면 PRIMARY 1개+나머지 RELATED다.
 - Phase 1에서 적정/미흡/충족 여부를 판정하지 않는다.
 - 최종 출력은 output_schema에 맞는 JSON 객체 하나만 반환한다.

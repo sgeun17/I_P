@@ -129,7 +129,10 @@ def validate_citation(citation: Citation, chunk_map: dict[str, Chunk]) -> list[V
         )
         return issues
 
-    if not chunk.covers_page(citation.page):
+    # page=None 자체는 인용 무효로 만들지 않는다.
+    # 페이지형 청크에서 page가 빠진 경우는 별도 warning(E407)으로 기록하고,
+    # 실제 page 값이 들어왔는데 범위를 벗어난 경우만 E404로 막는다.
+    if citation.page is not None and not chunk.covers_page(citation.page):
         issues.append(
             ValidationIssue(
                 code=ErrorCode.CITATION_PAGE_MISMATCH,
@@ -148,6 +151,48 @@ def validate_citation(citation: Citation, chunk_map: dict[str, Chunk]) -> list[V
         )
 
     return issues
+
+
+def validate_citation_warnings(
+    output: LLMMappingOutput, mapping_input: MappingInput
+) -> list[ValidationIssue]:
+    """Citation 메타데이터의 비차단 경고를 모은다.
+
+    `chunk_id + quote`가 유효하면 근거 자체는 성립한다.
+    따라서 페이지형 청크에서 `page=null`인 경우 인용 전체를 무효화하지 않고
+    E407 경고로 남긴다. 반대로 page 값이 존재하면서 실제 청크 범위를 벗어나면
+    `validate_citation()`의 E404가 blocking issue로 처리한다.
+    """
+    warnings: list[ValidationIssue] = []
+    chunk_map = mapping_input.chunk_map()
+    seen: set[tuple[str, str | None, str]] = set()
+
+    for mapped in output.mapped_controls:
+        for citation in mapped.citations:
+            chunk = chunk_map.get(citation.chunk_id)
+            if chunk is None or chunk.page_start is None:
+                continue
+            if citation.page is not None:
+                continue
+
+            key = (mapped.control_id, citation.chunk_id, normalize(citation.quote))
+            if key in seen:
+                continue
+            seen.add(key)
+            warnings.append(
+                ValidationIssue(
+                    code=ErrorCode.CITATION_PAGE_MISSING,
+                    message=(
+                        "페이지형 청크를 인용했지만 citation.page가 null이다. "
+                        "인용문 자체가 원문과 일치하면 결과를 막지 않고 위치 메타데이터 누락으로 기록한다"
+                    ),
+                    control_id=mapped.control_id,
+                    chunk_id=citation.chunk_id,
+                    field="page",
+                )
+            )
+
+    return warnings
 
 
 def validate_citations(
@@ -336,6 +381,22 @@ def detect_adequacy_judgment(output: LLMMappingOutput) -> list[ValidationIssue]:
 # "관련 있음"(5자) 같은 응답을 거르는 것이 목적이다.
 REASON_MIN_CHARS = 10
 
+# reason 안에서 원문을 따옴표로 다시 인용하는 경우를 잡기 위한 패턴.
+# 이 검사는 결과를 막지 않고 E507 warning으로만 기록한다.
+_REASON_QUOTE_PATTERNS = (
+    re.compile(r'"([^"]+)"'),
+    re.compile(r"'([^']+)'"),
+    re.compile(r"“([^”]+)”"),
+    re.compile(r"‘([^’]+)’"),
+)
+
+
+def _quoted_reason_segments(reason: str) -> list[str]:
+    segments: list[str] = []
+    for pattern in _REASON_QUOTE_PATTERNS:
+        segments.extend(pattern.findall(reason or ""))
+    return [normalize(segment) for segment in segments if normalize(segment)]
+
 
 def validate_reasons(
     output: LLMMappingOutput, mapping_input: MappingInput
@@ -373,6 +434,22 @@ def validate_reasons(
                 )
             )
             return
+
+        # reason 전체가 설명 문장이어도, 그 안에 원문을 따옴표로 다시 붙이는 경우가 있다.
+        # 인용은 citations.quote에만 두므로, 실제 청크 원문과 일치하는 따옴표 구간이 있으면 E507 경고.
+        for segment in _quoted_reason_segments(reason):
+            if len(segment) >= REASON_MIN_CHARS and any(
+                segment in chunk_text for chunk_text in chunk_texts
+            ):
+                issues.append(
+                    ValidationIssue(
+                        code=ErrorCode.REASON_NOT_SPECIFIC,
+                        message=f"근거 안에 증적 원문을 따옴표로 다시 인용했다 ({where})",
+                        control_id=control_id,
+                        field="reason",
+                    )
+                )
+                return
 
         # 통제항목 이름만 되풀이한 것도 근거가 아니다.
         if control_name and text == normalize(control_name):
@@ -450,8 +527,11 @@ def validate(
     rule_issues = validate_rules(output, mapping_input) + detect_adequacy_judgment(output)
     issues += id_issues + citation_issues + rule_issues
 
-    # 근거 품질은 경고로만 남긴다. passed와 검토 전환에 영향을 주지 않는다.
-    warnings = validate_reasons(output, mapping_input)
+    # 근거 품질/비차단 메타데이터 문제는 경고로만 남긴다.
+    # passed와 검토 전환에 영향을 주지 않는다.
+    warnings = validate_citation_warnings(output, mapping_input) + validate_reasons(
+        output, mapping_input
+    )
 
     schema_valid = not any(i.code.value.startswith("E2") for i in issues)
 

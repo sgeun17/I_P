@@ -75,7 +75,12 @@ pdf, xlsx, pptx  →  page_start, page_end 둘 다 1 이상, page_start <= page_
 docx, txt, csv   →  둘 다 null
 ```
 
-Citation 검증은 `page_start <= citation.page <= page_end` 범위 검사다.
+Citation의 `page` 필드는 **필드 자체는 필수지만 값은 null일 수 있다.**
+
+- 페이지형 청크(pdf/xlsx/pptx): 가능하면 `page_start <= citation.page <= page_end`인 정수를 출력한다.
+- 페이지 없는 청크(docx/txt/csv/png/jpg): `page=null`.
+- 페이지형 청크에서 `page=null`이면 quote/chunk_id가 유효한 한 인용 자체를 무효화하지 않고 `E407` 경고로 남긴다.
+- `page` 값이 존재하면서 청크 범위를 벗어난 경우에만 `E404`로 차단한다.
 
 **OCR**
 
@@ -225,7 +230,7 @@ LLM은 검색 점수를 모르므로 판단팀이 붙여준다.
 
 | 필드 | 의미 |
 |---|---|
-| `schema_version` | 이 스키마 버전 (현재 0.2.0) |
+| `schema_version` | 이 스키마 버전 (현재 0.3.1) |
 | `prompt_version` | 사용한 프롬프트 파일 버전 |
 | `model_name` | 모델명 |
 | `ruleset_version` | 판단 규칙 문서 버전 |

@@ -32,7 +32,7 @@ from enums import (
     ReviewStatus,
 )
 
-SCHEMA_VERSION = "0.3.0"
+SCHEMA_VERSION = "0.3.1"
 
 # 증적 번호 표기는 전처리팀 안에서 아직 갈려 있다 (E0001 / 000001 / 정수 1).
 # 어느 쪽으로 정해져도 받을 수 있게 모양만 제한하고, 값 자체는 **문자열로 다룬다.**
@@ -192,10 +192,17 @@ class MappingInput(Base):
 
 
 class Citation(Base):
-    """판단 근거가 되는 원문 인용."""
+    """판단 근거가 되는 원문 인용.
+
+    `page`는 필드 자체는 항상 있어야 하지만 값은 null일 수 있다.
+    - pdf/xlsx/pptx: 가능한 경우 청크 범위 안의 정수
+    - docx/txt/csv/png/jpg: null
+    """
 
     chunk_id: str
-    page: Optional[int] = None
+    page: Optional[int] = Field(
+        description="인용 위치. 페이지형 청크는 정수, 페이지 없는 파일은 null"
+    )
     quote: str = Field(min_length=1, description="청크 text 그대로. 요약·의역 금지")
 
 
@@ -265,10 +272,9 @@ class ValidationResult(Base):
     | | 뜻 | passed에 반영 | 검토 전환 |
     |---|---|---|---|
     | `issues` | 결과가 **틀렸다** | 반영 | 대부분 보낸다 |
-    | `warnings` | 결과는 맞는데 **근거가 부실하다** | 반영 안 함 | 보내지 않는다 |
+    | `warnings` | 결과는 유효하지만 **근거 품질/보조 메타데이터에 개선점이 있다** | 반영 안 함 | 보내지 않는다 |
 
-    근거가 짧다고 사람을 부르면 검토량만 늘고 정확도는 안 오른다.
-    `warnings`는 프롬프트를 고칠 자료로 모은다.
+    근거가 짧거나 보조 위치 정보가 빠졌다는 이유만으로 사람을 부르면 검토량만 늘 수 있다.\n    `warnings`는 프롬프트·출력 품질을 고칠 자료로 모은다.
     """
 
     passed: bool

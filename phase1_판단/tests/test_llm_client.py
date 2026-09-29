@@ -60,12 +60,12 @@ def test_build_request_body_includes_pydantic_schema_and_thinking_off():
     body = build_request_body(
         "system",
         "user",
-        "qwen3:8b-q4_K_M",
+        "qwen3:8b",
         schema,
         generation=GenerationConfig(),
     )
 
-    assert body["model"] == "qwen3:8b-q4_K_M"
+    assert body["model"] == "qwen3:8b"
     assert body["messages"] == [
         {"role": "system", "content": "system"},
         {"role": "user", "content": "user"},
@@ -92,7 +92,7 @@ def test_call_llm_posts_openai_compatible_request_and_returns_content():
         content = call_llm(
             "system",
             "user",
-            "qwen3:8b-q4_K_M",
+            "qwen3:8b",
             get_output_schema(),
             http_client=client,
         )

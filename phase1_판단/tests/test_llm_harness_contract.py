@@ -101,14 +101,14 @@ def test_schema_is_generated_from_same_pydantic_model_as_validator():
     assert LLMMappingOutput.model_json_schema()["title"] == "LLMMappingOutput"
 
 
-def test_prompt_contains_current_v07_rules_v04_image_guidance_and_confidence_definition():
+def test_prompt_contains_current_v07_rules_v05_citation_guidance_and_confidence_definition():
     mapping = mapping_input_from_retriever(_retriever_payload())
     package = build_prompt_package(mapping)
 
     system = package.system
-    assert package.prompt_version == "phase1_mapping_v0.4"
+    assert package.prompt_version == "phase1_mapping_v0.5"
     assert package.ruleset_version == "mapping_rules_v0.7"
-    assert PROMPT_VERSION == "phase1_mapping_v0.4"
+    assert PROMPT_VERSION == "phase1_mapping_v0.5"
     assert RULESET_VERSION == "mapping_rules_v0.7"
     assert "UNCERTAIN" in system
     assert "10자 이상" in system
@@ -120,8 +120,16 @@ def test_prompt_contains_current_v07_rules_v04_image_guidance_and_confidence_def
     # v0.7: PRIMARY 선택이 애매해도 이미 확인된 RELATED를 지우지 않는다.
     assert "RELATED 판단은 그대로 둔다" in system
     assert "UNCERTAIN으로 되돌리지 않는다" in system
-    # v0.4: 입력팀이 추가한 이미지 OCR 청크는 페이지 값이 없다.
-    assert "docx/txt/csv/png/jpg는 page=null" in system
+    # v0.5: Citation 필드를 항상 출력하고 페이지형/비페이지형 규칙을 명확히 한다.
+    assert "모든 citation 객체는 chunk_id, page, quote 세 필드를 항상 출력" in system
+    assert "page_start <= page <= page_end를 만족하는 정수 page를 반드시 출력" in system
+    assert "page_start/page_end가 null인 청크만 page=null" in system
+    assert "원문을 따옴표로 다시 인용하지 않는다" in system
+
+    schema = package.output_schema
+    citation_schema = schema["$defs"]["Citation"]
+    assert "page" in citation_schema["required"]
+    assert set(citation_schema["required"]) == {"chunk_id", "page", "quote"}
 
 
 def test_retry_prompt_only_accepts_retry_policy_errors():

@@ -163,6 +163,7 @@ class ErrorCode(StrEnum):
     CITATION_PAGE_MISMATCH = "E404"
     CITATION_EMPTY_QUOTE = "E405"
     CITATION_FOREIGN_EVIDENCE = "E406"
+    CITATION_PAGE_MISSING = "E407"  # 페이지형 청크인데 citation.page가 null (경고)
 
     # E5xx — 판단 규칙
     PRIMARY_COUNT_INVALID = "E501"

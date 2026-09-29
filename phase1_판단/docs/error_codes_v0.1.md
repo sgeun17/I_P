@@ -75,7 +75,7 @@
 | `E403` | CITATION_QUOTE_NOT_IN_SOURCE | 인용문이 원문에 없음 (지어냄) |
 | `E404` | CITATION_PAGE_MISMATCH | 페이지가 청크와 다름 |
 | `E405` | CITATION_EMPTY_QUOTE | 빈 인용문 |
-| `E406` | CITATION_FOREIGN_EVIDENCE | 다른 증적의 청크를 참조 |
+| `E406` | CITATION_FOREIGN_EVIDENCE | 다른 증적의 청크를 참조 |\n| `E407` | CITATION_PAGE_MISSING | 페이지형 청크인데 `citation.page=null` (비차단 경고) |
 
 ### E5xx — 판단 규칙
 

@@ -1,2 +1,2 @@
-# Phase 1 판단 LLM transport 추가 의존성
+-r requirements.txt
 httpx>=0.27,<1

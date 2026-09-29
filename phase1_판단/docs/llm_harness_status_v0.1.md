@@ -1,5 +1,67 @@
 # LLM 하네스 구현 상태 v0.1
 
+## 2026-09-30 Ollama 실측 + Citation 계약/Validator 정합성 수정
+
+실제 `qwen3:4b` + Ollama 환경에서 smoke 3건과 골든셋 29건을 실행했다.
+
+실측:
+
+```text
+Smoke 3건: 3/3 OK, retries=0
+전체 29건: 29/29 OK, retries=0
+총 약 16분
+평균 약 34초/건
+```
+
+확인된 호출 계약:
+
+- `reasoning_effort=none` 정상
+- `<think>` 블록 미출력
+- `response_format=json_schema` 정상
+- `LLM_BASE_URL=http://localhost:11434/v1`
+- `LLM_ENDPOINT=/chat/completions`
+- 후보 밖 `control_id` 생성 없음
+- NOT_RELATED의 `citations=[]` 규칙 준수
+
+실측 과정에서 Citation 유효율이 16.1%, 검토 전환율이 96.3%로 보였으나,
+quote를 청크 원문과 직접 대조하면 66건 중 65건(98.5%)이 일치했다.
+원인은 모델이 아니라 **Citation.page 계약과 Validator 동작의 불일치**였다.
+
+이번 수정:
+
+- `Citation.page`는 **필수 필드 + nullable**로 변경
+- 출력 Schema 버전 `0.3.0 → 0.3.1`
+- `PROMPT_VERSION phase1_mapping_v0.4 → phase1_mapping_v0.5`
+- 페이지형 청크에서는 page 정수를 강하게 요구
+- 비페이지형 청크는 page=null
+- 페이지형 청크에서 `page=null`이면 인용 무효(E404)가 아니라 **E407 warning**
+- 실제 page 값이 범위를 벗어날 때만 E404 유지
+- reason 내부에 원문을 따옴표로 재인용하는 사례를 E507 warning으로 탐지
+- 실제 Ollama 모델 tag 예시는 `qwen3:8b` 형태로 정리
+- Windows pip CP949 문제를 피하도록 `requirements*.txt`의 한글 주석 제거
+- `requirements.txt`를 추가하고 `requirements-llm.txt`에서 포함
+
+이번 수정은 매핑 판단 의미를 바꾸지 않으므로:
+
+```text
+Ruleset: mapping_rules_v0.7 유지
+Prompt : phase1_mapping_v0.5
+Schema : 0.3.1
+```
+
+검증 결과:
+
+```text
+pytest: 300 PASS
+python src/check.py: 49 PASS / 0 FAIL
+compileall: PASS
+```
+
+`G-MULTI-04`의 잘못된 chunk_id(`c0.0001`)는 기존 E402가 정상 탐지하므로 수정하지 않았다.
+`G-SINGLE-01`의 2.5.1 vs 2.2.5 라벨은 도메인 해석이 필요한 골든셋 검토 사안이므로 자동 수정하지 않았다.
+
+---
+
 ## 2026-09-29 Ollama 실제 호출부 구현 업데이트
 
 Phase 1 실제 추론 환경을 **Ollama 단일 환경 + OpenAI-compatible API + localhost + Qwen3**로 확정한 뒤, LLM 담당 범위에서 지금 구현 가능한 호출 계층을 추가했다. 다른 팀의 Search/입력/Validator/Review/Phase 2 코드는 수정하지 않았다.
@@ -32,8 +94,8 @@ Phase 1 실제 추론 환경을 **Ollama 단일 환경 + OpenAI-compatible API +
 
 ### 세부 모델 현재 기준
 
-- 1차 baseline: `qwen3:8b-q4_K_M`, Thinking OFF
-- 품질 비교 후보: `qwen3:14b-q4_K_M`, Thinking OFF
+- 1차 baseline: `qwen3:8b`, Thinking OFF
+- 품질 비교 후보: `qwen3:14b`, Thinking OFF
 - 최종 운영 모델/양자화/Thinking ON 여부는 실제 골든셋 평가 후 결정한다.
 - 모델명은 코드에 고정하지 않고 `LLM_MODEL` 또는 실행 인자로 주입한다.
 
@@ -47,7 +109,7 @@ Phase 1 실제 추론 환경을 **Ollama 단일 환경 + OpenAI-compatible API +
 
 ### 테스트 결과
 
-- 판단팀 `pytest`: **296 PASS**
+- 판단팀 `pytest`: **300 PASS**
 - `python src/check.py`: **49 PASS / 0 FAIL**
 - `python -m compileall src tests`: **PASS**
 - 실제 Ollama 서버 호출: **미수행** — 현재 검증 환경의 `localhost:11434`에 Ollama listener가 없어서 실제 inference는 실행하지 못했다.
@@ -57,7 +119,7 @@ Phase 1 실제 추론 환경을 **Ollama 단일 환경 + OpenAI-compatible API +
 | # | Task | 현재 상태 | 구현/결정 내용 | 남은 일 |
 |---|---|---|---|---|
 | 19 | LLM 서버 종류 결정 | ✅ 완료 | Ollama 단일 환경 | 실제 개발 PC에서 Ollama 설치/기동 |
-| 20 | 실제 모델 결정 | 🟡 평가 후보 확정 | 8B Q4_K_M baseline / 14B Q4_K_M 비교 | 골든셋 후 최종 선택 |
+| 20 | 실제 모델 결정 | 🟡 평가 후보 확정 | 8B Q4_K_M baseline / 14B 비교 | 골든셋 후 최종 선택 |
 | 21 | endpoint/API 규격 | ✅ 완료 | OpenAI-compatible, localhost, `/v1/chat/completions` | 실제 환경에서 접속 확인 |
 | 22 | `llm_client.py` | ✅ 완료 | httpx 기반 Ollama client 구현 | 실제 서버 smoke |
 | 23 | `call_llm()` | ✅ 완료 | messages+model+schema 전송, content 반환 | 실제 서버 smoke |
@@ -80,10 +142,10 @@ Phase 1 실제 추론 환경을 **Ollama 단일 환경 + OpenAI-compatible API +
 
 현재 다른 팀 코드와 다시 맞춰 본 결과는 다음과 같다.
 
-- 입력팀은 `png`/`jpg` OCR 청크를 지원하며 이미지 청크의 page는 null이다. 현재 `prompts.py`의 `phase1_mapping_v0.4`가 이 규칙을 이미 반영한다.
+- 입력팀은 `png`/`jpg` OCR 청크를 지원하며 이미지 청크의 page는 null이다. 현재 `prompts.py`의 `phase1_mapping_v0.5`가 이 규칙을 이미 반영한다.
 - 검색팀의 공식 `judgment_adapter.py`는 검색 결과를 판단 입력으로 넘기기 전에 KB hash, 후보 순서, 유사도 순서, `matched_chunk_ids`, `best_chunk_id`, ID/명칭 등을 엄격하게 확인한다.
 - 기존 `retrieval_adapter.py`는 정상 입력에서는 같은 `MappingInput`을 만들었지만 일부 비정상 입력(오래된 KB hash, 뒤섞인 candidate_controls 순서, 유사도 순서 오류, 잘못된 best_chunk_id 등)을 검색팀 어댑터보다 느슨하게 받을 수 있었다. 이번 수정에서 판단팀 어댑터도 같은 경계 조건을 추가 확인하도록 보강했다.
-- `mapping_rules_v0.7`의 핵심인 "RELATED 판단 보존 + PRIMARY 불확실성은 confidence/reason으로 표현" 규칙은 유지한다. `PROMPT_VERSION=phase1_mapping_v0.4`, `RULESET_VERSION=mapping_rules_v0.7`이다.
+- `mapping_rules_v0.7`의 핵심인 "RELATED 판단 보존 + PRIMARY 불확실성은 confidence/reason으로 표현" 규칙은 유지한다. `PROMPT_VERSION=phase1_mapping_v0.5`, `RULESET_VERSION=mapping_rules_v0.7`이다.
 - `retry_prompt.py`, `versions.py`, `prompts.py`는 현재 다른 팀 계약과 충돌이 없어 이번 재검토에서 코드 변경하지 않았다.
 
 재검토 결과:
@@ -100,7 +162,7 @@ Phase 1 실제 추론 환경을 **Ollama 단일 환경 + OpenAI-compatible API +
 
 최신 파일 파서·청커→실제 로컬 검색→두 팀의 입력 변환→프롬프트 생성→고정 응답 검증·검토 전환을 확인했다. [실행 결과](../../phase1_검색/reports/pre_llm_2026-09-27/summary.md), [연결 준비 및 변경 사항](../../phase1_검색/handoff/9월27일_LLM연결전_검증.md)을 참고한다. 실제 LLM 호출은 0회다.
 
-PNG/JPG 입력 Enum과 생성 스키마를 최신 입력팀 규격에 맞췄다. 이미지 인용의 page=null 안내를 추가하면서 `PROMPT_VERSION`을 `phase1_mapping_v0.4`로 올렸다. OCR source 보존 수정 후 R207 검토 전환을 확인했다. 원시 OCR confidence는 기존 계약에 추가하지 않았다.
+PNG/JPG 입력 Enum과 생성 스키마를 최신 입력팀 규격에 맞췄다. 이미지 인용의 page=null 안내를 추가하면서 `PROMPT_VERSION`을 `phase1_mapping_v0.5`로 올렸다. OCR source 보존 수정 후 R207 검토 전환을 확인했다. 원시 OCR confidence는 기존 계약에 추가하지 않았다.
 
 사용자 참고안은 Ollama 우선(vLLM 차순위), OpenAI-compatible API, 사양에 따른 Qwen3 모델, Pydantic JSON Schema, localhost다. **아직 확정된 연결 설정이 아니다.** 구체 모델·양자화·포트/경로·생성 설정·인증 여부·Schema 전달 방식은 미정이다. 기존 규격을 사용한다는 방향은 받았지만 저장소에서 실행용 LLM HTTP 계약은 확인하지 못했다. 임의 서버 설치·모델 다운로드·endpoint 고정은 하지 않았다.
 
@@ -169,7 +231,7 @@ System Prompt에도 동일 스키마를 삽입한다. 따라서 스키마 drift�
 - requirement 포함 및 검색 점수 Prompt 미노출
 - Prompt JSON Schema == 검증팀 체크인 Schema
 - v0.7 판단 규칙/llm_confidence 정의 포함
-- `phase1_mapping_v0.4` 이미지 OCR 인용(page=null) 안내 포함
+- `phase1_mapping_v0.5` 이미지 OCR 인용(page=null) 안내 포함
 - 검색팀 계약 drift(KB hash/후보 순서/점수 순서/best chunk 등) 거부
 - RetryPolicy와 재출력 Prompt 일치
 - VersionInfo의 팀별 버전 연결

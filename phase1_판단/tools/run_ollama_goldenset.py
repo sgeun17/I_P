@@ -2,7 +2,7 @@
 
 기본 사용:
     # 환경변수 예시는 configs/llm.env.example 참고
-    set LLM_MODEL=qwen3:8b-q4_K_M        # Windows cmd
+    set LLM_MODEL=qwen3:8b        # Windows cmd
     python tools/run_ollama_goldenset.py --smoke
 
 전체 29건:
@@ -11,8 +11,8 @@
 평가:
     python tools/eval_goldenset.py \
         --responses runs/qwen3-8b-q4.jsonl \
-        --model qwen3:8b-q4_K_M \
-        --prompt phase1_mapping_v0.4
+        --model qwen3:8b \
+        --prompt phase1_mapping_v0.5
 
 이 스크립트는 실제 기업 증적이 아닌 저장소의 합성 골든셋만 사용한다.
 """
