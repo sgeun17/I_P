@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 from pathlib import Path
 
 import pytest
@@ -42,6 +43,39 @@ def test_retriever_failure_does_not_enter_llm_pipeline():
         mapping_input_from_retriever(payload)
 
 
+def test_retrieval_adapter_rejects_current_search_contract_drift():
+    base = _retriever_payload()
+
+    cases = {}
+
+    stale_kb = deepcopy(base)
+    stale_kb["index"]["kb_sha256"] = "0" * 64
+    cases["stale_kb"] = stale_kb
+
+    reordered_details = deepcopy(base)
+    reordered_details["candidate_controls"][0], reordered_details["candidate_controls"][1] = (
+        reordered_details["candidate_controls"][1],
+        reordered_details["candidate_controls"][0],
+    )
+    cases["candidate_order"] = reordered_details
+
+    bad_score_order = deepcopy(base)
+    bad_score_order["retrieval"]["candidates"][0]["similarity_score"] = -1.0
+    cases["score_order"] = bad_score_order
+
+    bad_best_chunk = deepcopy(base)
+    bad_best_chunk["retrieval"]["candidates"][0]["best_chunk_id"] = "missing_chunk"
+    cases["best_chunk"] = bad_best_chunk
+
+    empty_requirement = deepcopy(base)
+    empty_requirement["candidate_controls"][0]["requirement"] = ""
+    cases["requirement"] = empty_requirement
+
+    for name, payload in cases.items():
+        with pytest.raises(RetrievalAdapterError, match=".+"):
+            mapping_input_from_retriever(payload)
+
+
 def test_prompt_uses_actual_chunks_requirements_but_hides_retrieval_scores():
     mapping = mapping_input_from_retriever(_retriever_payload())
     package = build_prompt_package(mapping)
@@ -67,11 +101,15 @@ def test_schema_is_generated_from_same_pydantic_model_as_validator():
     assert LLMMappingOutput.model_json_schema()["title"] == "LLMMappingOutput"
 
 
-def test_prompt_contains_latest_v06_rules_and_confidence_definition():
+def test_prompt_contains_current_v07_rules_v04_image_guidance_and_confidence_definition():
     mapping = mapping_input_from_retriever(_retriever_payload())
     package = build_prompt_package(mapping)
 
     system = package.system
+    assert package.prompt_version == "phase1_mapping_v0.4"
+    assert package.ruleset_version == "mapping_rules_v0.7"
+    assert PROMPT_VERSION == "phase1_mapping_v0.4"
+    assert RULESET_VERSION == "mapping_rules_v0.7"
     assert "UNCERTAIN" in system
     assert "10자 이상" in system
     assert "적정/미흡" in system
@@ -79,6 +117,11 @@ def test_prompt_contains_latest_v06_rules_and_confidence_definition():
     assert "0.70~0.89" in system
     assert "4개 이상이어도" in system
     assert "mapping_type" in system
+    # v0.7: PRIMARY 선택이 애매해도 이미 확인된 RELATED를 지우지 않는다.
+    assert "RELATED 판단은 그대로 둔다" in system
+    assert "UNCERTAIN으로 되돌리지 않는다" in system
+    # v0.4: 입력팀이 추가한 이미지 OCR 청크는 페이지 값이 없다.
+    assert "docx/txt/csv/png/jpg는 page=null" in system
 
 
 def test_retry_prompt_only_accepts_retry_policy_errors():

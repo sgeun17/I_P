@@ -1,5 +1,27 @@
 # LLM 하네스 구현 상태 v0.1
 
+## 2026-09-29 현재 GitHub 연동 재검토
+
+검토 범위는 LLM 담당이 직접 만든 6개 파일(`prompts.py`, `retrieval_adapter.py`, `retry_prompt.py`, `versions.py`, `test_llm_harness_contract.py`, `llm_harness_status_v0.1.md`)로 한정했다. 검색팀·입력팀·Validator/Review·Phase 2 코드는 수정하지 않았다.
+
+현재 다른 팀 코드와 다시 맞춰 본 결과는 다음과 같다.
+
+- 입력팀은 `png`/`jpg` OCR 청크를 지원하며 이미지 청크의 page는 null이다. 현재 `prompts.py`의 `phase1_mapping_v0.4`가 이 규칙을 이미 반영한다.
+- 검색팀의 공식 `judgment_adapter.py`는 검색 결과를 판단 입력으로 넘기기 전에 KB hash, 후보 순서, 유사도 순서, `matched_chunk_ids`, `best_chunk_id`, ID/명칭 등을 엄격하게 확인한다.
+- 기존 `retrieval_adapter.py`는 정상 입력에서는 같은 `MappingInput`을 만들었지만 일부 비정상 입력(오래된 KB hash, 뒤섞인 candidate_controls 순서, 유사도 순서 오류, 잘못된 best_chunk_id 등)을 검색팀 어댑터보다 느슨하게 받을 수 있었다. 이번 수정에서 판단팀 어댑터도 같은 경계 조건을 추가 확인하도록 보강했다.
+- `mapping_rules_v0.7`의 핵심인 "RELATED 판단 보존 + PRIMARY 불확실성은 confidence/reason으로 표현" 규칙은 유지한다. `PROMPT_VERSION=phase1_mapping_v0.4`, `RULESET_VERSION=mapping_rules_v0.7`이다.
+- `retry_prompt.py`, `versions.py`, `prompts.py`는 현재 다른 팀 계약과 충돌이 없어 이번 재검토에서 코드 변경하지 않았다.
+
+재검토 결과:
+
+- 판단팀 pytest: **278 PASS**
+- `src/check.py`: **49 PASS / 0 FAIL**
+- 검색팀의 판단 연동·이미지 계약 단위 테스트: **10 PASS**
+- 검색팀의 `verify_judgment_integration.py`: **PASS**, 실제 LLM 호출 0회
+- 9/27 pre-LLM 검색 산출물 11건을 수정된 `retrieval_adapter.py`로 다시 변환: **11/11 PASS**
+
+전체 검색팀 테스트를 이 환경에서 실행하면 `test_public_function_rejects_preprocessing_failure_without_worker` 1건이 `ENVIRONMENT_ERROR`와 `PREPROCESSING_FAILED` 처리 순서 차이로 실패한다. 이는 `phase1_검색/chunk_retriever.py` 영역이며 LLM 담당 파일에는 손대지 않았다. 또한 실제 BGE/Chroma 전체 재실행은 ZIP에 `data/chroma_kb/chroma.sqlite3`가 없어 수행하지 못했다.
+
 ## 2026-09-27 연결 전 검증 업데이트
 
 최신 파일 파서·청커→실제 로컬 검색→두 팀의 입력 변환→프롬프트 생성→고정 응답 검증·검토 전환을 확인했다. [실행 결과](../../phase1_검색/reports/pre_llm_2026-09-27/summary.md), [연결 준비 및 변경 사항](../../phase1_검색/handoff/9월27일_LLM연결전_검증.md)을 참고한다. 실제 LLM 호출은 0회다.
@@ -18,7 +40,7 @@ PNG/JPG 입력 Enum과 생성 스키마를 최신 입력팀 규격에 맞췄다.
 |---|---|---|
 | 0 공통 계약 확인 | 완료(현재 저장소 기준) | `MappingInput`, `LLMMappingOutput`, retriever-0.2 실제 출력, 오류/재시도 정책을 교차 확인 |
 | 1 System/User Prompt 분리 | 완료 | `src/prompts.py` |
-| 2 1:1·1:N·NO_MATCH 유도 | 완료 | `mapping_rules_v0.6` 반영. 별도 mapping_type은 저장하지 않음 |
+| 2 1:1·1:N·NO_MATCH 유도 | 완료 | `mapping_rules_v0.7` 반영. 별도 mapping_type은 저장하지 않음 |
 | 3 인젝션 방어 | 완료 | 증적을 데이터로 한정 + `service.detect_injection`과 계층형 방어 |
 | 4 후보·청크 Prompt 조립 | 완료 | `src/retrieval_adapter.py`가 실제 `phase1_검색/examples/docx_output.json`을 `MappingInput`으로 변환 |
 | 8 재출력 Prompt | 완료 | `src/retry_prompt.py`, 현재 `RetryPolicy`의 재시도 대상만 허용 |
@@ -72,6 +94,8 @@ System Prompt에도 동일 스키마를 삽입한다. 따라서 스키마 drift�
 - Search -> MappingInput 변환
 - requirement 포함 및 검색 점수 Prompt 미노출
 - Prompt JSON Schema == 검증팀 체크인 Schema
-- v0.6 판단 규칙/llm_confidence 정의 포함
+- v0.7 판단 규칙/llm_confidence 정의 포함
+- `phase1_mapping_v0.4` 이미지 OCR 인용(page=null) 안내 포함
+- 검색팀 계약 drift(KB hash/후보 순서/점수 순서/best chunk 등) 거부
 - RetryPolicy와 재출력 Prompt 일치
 - VersionInfo의 팀별 버전 연결
