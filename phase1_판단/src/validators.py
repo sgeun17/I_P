@@ -167,15 +167,15 @@ def validate_citation_warnings(
     chunk_map = mapping_input.chunk_map()
     seen: set[tuple[str, str | None, str]] = set()
 
-    for mapped in output.mapped_controls:
-        for citation in mapped.citations:
+    for control in [*output.mapped_controls, *output.candidate_decisions]:
+        for citation in control.citations:
             chunk = chunk_map.get(citation.chunk_id)
             if chunk is None or chunk.page_start is None:
                 continue
             if citation.page is not None:
                 continue
 
-            key = (mapped.control_id, citation.chunk_id, normalize(citation.quote))
+            key = (control.control_id, citation.chunk_id, normalize(citation.quote))
             if key in seen:
                 continue
             seen.add(key)
@@ -186,7 +186,7 @@ def validate_citation_warnings(
                         "페이지형 청크를 인용했지만 citation.page가 null이다. "
                         "인용문 자체가 원문과 일치하면 결과를 막지 않고 위치 메타데이터 누락으로 기록한다"
                     ),
-                    control_id=mapped.control_id,
+                    control_id=control.control_id,
                     chunk_id=citation.chunk_id,
                     field="page",
                 )
@@ -203,6 +203,28 @@ def validate_citations(
 
     # 다른 증적·버전의 청크를 인용했는지 본다
     prefix = mapping_input.chunk_id_prefix
+    seen: set[tuple[str, str, int | None, str]] = set()
+
+    def check_citations(control_id: str, citations: list[Citation]) -> None:
+        for citation in citations:
+            # 같은 인용이 두 출력 목록에 반복돼도 한 번만 검사한다.
+            # page가 다르면 반드시 별도로 검사해 잘못된 위치가 숨지 않게 한다.
+            key = (control_id, citation.chunk_id, citation.page, normalize(citation.quote))
+            if key in seen:
+                continue
+            seen.add(key)
+            if not citation.chunk_id.startswith(prefix):
+                issues.append(
+                    ValidationIssue(
+                        code=ErrorCode.CITATION_FOREIGN_EVIDENCE,
+                        message=f"다른 증적·버전의 청크를 인용했다 (기대 접두사 {prefix})",
+                        control_id=control_id,
+                        chunk_id=citation.chunk_id,
+                    )
+                )
+                continue
+            for issue in validate_citation(citation, chunk_map):
+                issues.append(issue.model_copy(update={"control_id": control_id}))
 
     for mapped in output.mapped_controls:
         if not mapped.citations:
@@ -214,19 +236,7 @@ def validate_citations(
                 )
             )
             continue
-        for citation in mapped.citations:
-            if not citation.chunk_id.startswith(prefix):
-                issues.append(
-                    ValidationIssue(
-                        code=ErrorCode.CITATION_FOREIGN_EVIDENCE,
-                        message=f"다른 증적·버전의 청크를 인용했다 (기대 접두사 {prefix})",
-                        control_id=mapped.control_id,
-                        chunk_id=citation.chunk_id,
-                    )
-                )
-                continue
-            for issue in validate_citation(citation, chunk_map):
-                issues.append(issue.model_copy(update={"control_id": mapped.control_id}))
+        check_citations(mapped.control_id, mapped.citations)
 
     # RELATED로 판단했는데 근거가 없는 경우도 잡는다
     for decision in output.candidate_decisions:
@@ -238,6 +248,9 @@ def validate_citations(
                     control_id=decision.control_id,
                 )
             )
+        # RELATED 외에도 출력에 실제 인용이 있으면 그 출처를 검증한다.
+        # UNCERTAIN/NOT_RELATED에 인용을 새로 필수화하지 않는다.
+        check_citations(decision.control_id, decision.citations)
 
     return issues
 

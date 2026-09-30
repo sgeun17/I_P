@@ -378,7 +378,7 @@
     },
     "ValidationResult": {
       "additionalProperties": false,
-      "description": "검증 결과.\n\n`issues`와 `warnings`는 성격이 다르다.\n\n| | 뜻 | passed에 반영 | 검토 전환 |\n|---|---|---|---|\n| `issues` | 결과가 **틀렸다** | 반영 | 대부분 보낸다 |\n| `warnings` | 결과는 맞는데 **근거가 부실하다** | 반영 안 함 | 보내지 않는다 |\n\n근거가 짧다고 사람을 부르면 검토량만 늘고 정확도는 안 오른다.\n`warnings`는 프롬프트를 고칠 자료로 모은다.",
+      "description": "검증 결과.\n\n`issues`와 `warnings`는 성격이 다르다.\n\n| | 뜻 | passed에 반영 | 검토 전환 |\n|---|---|---|---|\n| `issues` | 결과가 **틀렸다** | 반영 | 대부분 보낸다 |\n| `warnings` | 결과는 유효하지만 **근거 품질/보조 메타데이터에 개선점이 있다** | 반영 안 함 | 보내지 않는다 |\n\n근거가 짧거나 보조 위치 정보가 빠졌다는 이유만으로 사람을 부르면 검토량만 늘 수 있다.\n`warnings`는 프롬프트·출력 품질을 고칠 자료로 모은다.",
       "properties": {
         "passed": {
           "title": "Passed",

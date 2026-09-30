@@ -2,6 +2,16 @@
 
 WBS의 Phase2 기준 작업은 이 디렉토리에서 관리한다. 현재 버전은 `phase2-checklist-draft-2026-09-28`이며, **통제항목 3개·활성 질문 54개·퇴역 질문 3개**를 담은 팀 검수용 초안이다. `approved=false`, `critical=null`을 유지한다.
 
+## 9/30 Phase1 결과와 검수용 질문 연결
+
+`phase1_review_adapter.prepare_review_plan()`은 처리가 완료되고 기존 Phase1 확정 게이트를 통과한 결과에서 관련 체크리스트 질문을 조회한다. 검토가 필요 없는 결과는 저장된 검증 플래그 5개가 모두 통과하고 오류가 없어야 한다. 사람이 `APPROVED`/`MODIFIED`로 확정한 결과는 기존 판단팀 정책에 따라 허용하고, 원래 검증 오류가 남았으면 `phase1_validation_overridden_by_review=true`로 표시한다. 수정본의 인용을 재검증한 결과는 아니며 원래 검증 상태도 보존한다.
+
+검색 KB 해시와 선택한 체크리스트 버전의 출처가 일치해야 하며, 미승인 초안 조회에는 `allow_draft=True`를 명시한다.
+
+1:N 매핑 중 하나라도 현재 3개 항목 범위에 없으면 `CHECKLIST_SCOPE_MISSING`으로 전체 계획을 보류하고 누락 ID를 알려준다. 확정된 `NO_MATCH`는 질문 0개의 계획이다. 문항별 MET/NOT_MET/UNKNOWN이나 종합 등급을 계산하지 않는다. 반환 자료는 `review_only=true`, `approved=false`인 내부 검수 계획이며 운영 Phase2 입력·출력 규격은 별도 합의가 필요하다.
+
+이 연결에는 기존 판단팀 Pydantic 모델이 필요하므로 검색팀 `.venv`에서 실행한다. 저장·조회 모듈만 사용할 때는 기존 표준 라이브러리 환경을 그대로 사용할 수 있다. [팀 코드 반영·연결 검증 기록](../phase1_검색/handoff/9월30일_팀코드_반영과_연결검증.md)에 사용법과 변경 범위가 있다.
+
 ## 9/29 사유 코드 초안
 
 WBS O25의 준비 작업으로 **미충족 3종·UNKNOWN 10종, 총 13개 사유 코드**를 제안했다. 기존 162개 사례와 별도 경계 사례 2개에 연결하고 코드 종류·근거 발췌·협의 ID·원본 보존을 검증한다. 검수용 조회와 검증은 `python reason_codes.py list --allow-draft`, `python reason_codes.py validate --allow-draft`로 실행한다.

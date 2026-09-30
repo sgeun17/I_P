@@ -71,8 +71,8 @@ chunk_id == f"{evidence_id}_v{version}_c{chunk_index:04d}"
 **페이지 규칙**
 
 ```
-pdf, xlsx, pptx  →  page_start, page_end 둘 다 1 이상, page_start <= page_end
-docx, txt, csv   →  둘 다 null
+pdf, xlsx, pptx       →  page_start, page_end 둘 다 1 이상, page_start <= page_end
+docx, txt, csv, png, jpg →  둘 다 null
 ```
 
 Citation의 `page` 필드는 **필드 자체는 필수지만 값은 null일 수 있다.**
@@ -103,8 +103,8 @@ Citation의 `page` 필드는 **필드 자체는 필수지만 값은 null일 수 
 | `control_name` | string | O | |
 | `similarity_score` | float (-1 ~ 1) | O | `1 - cosine_distance`. **코사인 유사도 그 자체** |
 | `distance` | float | X | ChromaDB 코사인 거리 |
-| `requirement` | string | X | 요구사항 본문. **현재 검색 결과에 실리지 않는다** |
-| `source_chunk_ids` | string[] | X | 어느 청크 검색에서 나왔는지 |
+| `requirement` | string | X | 요구사항 본문. 현재 검색 결과의 `candidate_controls`에서 전달한다 |
+| `source_chunk_ids` | string[] | X | 검색 결과의 `matched_chunk_ids`를 변환해 전달한다 |
 
 **점수를 관련성 판단에 쓰지 않는다**
 
@@ -112,16 +112,14 @@ BGE-M3 한국어 문장에서는 관련 있어도 0.5~0.6에 몰린다.
 실측에서 계정 삭제 질의에 "백업 및 복구관리"가 0.4988로 5위에 들어왔다.
 **0.5가 넘는다고 관련 있는 것이 아니다.**
 
-**미해결 — 청크별 결과를 어떻게 합칠 것인가**
+**현행 검색 결과 — 문서 단위 후보 집계**
 
-검색은 텍스트 한 덩어리를 받는다. 증적에 청크가 10개면 Top-5가 10벌 나온다.
-`candidate_controls`는 증적 하나당 하나의 목록이므로 **누군가는 합쳐야 한다.**
-
-검색팀이 합쳐주는 것이 맞다고 본다. 우리가 하면 검색 로직을 판단팀이 떠안는다.
-우리가 하게 되면 규칙은 이렇게 잡는다.
-
-> `control_id`별로 묶고, 최고 `similarity_score`를 대표값으로 삼아 상위 K개.
-> 어느 청크에서 나왔는지는 `source_chunk_ids`에 남긴다.
+검색팀 `retriever-0.2`는 각 청크의 검색 결과를 `control_id`별로 묶고,
+청크 유사도의 최댓값을 문서 대표 점수로 삼아 상위 K개를 반환한다
+(`retrieval.unit=document`, `retrieval.aggregation=max_chunk_similarity`).
+`retrieval.candidates`와 `candidate_controls`는 같은 후보 ID·순서이며,
+판단 입력 변환 시 `matched_chunk_ids`를 `source_chunk_ids`로 옮긴다.
+청크별 상세 결과는 검색 원본의 `retrieval.chunk_results`에 남는다.
 
 ---
 
@@ -164,7 +162,7 @@ BGE-M3 한국어 문장에서는 관련 있어도 0.5~0.6에 몰린다.
 | 필드 | 타입 | 필수 | 의미 |
 |---|---|:---:|---|
 | `chunk_id` | string | O | 입력 청크에 실제로 존재해야 한다 |
-| `page` | int \| null | X | 청크의 페이지와 일치해야 한다 |
+| `page` | int \| null | O | 필수 필드이며 값은 null 가능. 페이지형 청크는 범위 내 정수, 비페이지형 청크는 null |
 | `quote` | string | O | **원문 그대로.** 요약·의역 금지 |
 
 `quote`는 정규화(연속 공백 압축) 후 청크 본문에 포함되는지 검사한다.

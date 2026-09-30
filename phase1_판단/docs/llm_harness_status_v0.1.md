@@ -13,6 +13,10 @@ Smoke 3건: 3/3 OK, retries=0
 평균 약 34초/건
 ```
 
+위 `29/29 OK`는 호출 오류 없이 raw 응답을 받은 실행 상태다.
+파싱·검증 전체 통과나 매핑 정확도 100%를 뜻하지 않는다.
+실제 호출은 합성 골든셋의 고정 `MappingInput`을 사용했으므로 검색 결과부터 LLM까지의 통합 성능과도 구분한다.
+
 확인된 호출 계약:
 
 - `reasoning_effort=none` 정상
@@ -59,6 +63,14 @@ compileall: PASS
 
 `G-MULTI-04`의 잘못된 chunk_id(`c0.0001`)는 기존 E402가 정상 탐지하므로 수정하지 않았다.
 `G-SINGLE-01`의 2.5.1 vs 2.2.5 라벨은 도메인 해석이 필요한 골든셋 검토 사안이므로 자동 수정하지 않았다.
+
+### 2026-09-30 후속 인용 검증 범위
+
+- `candidate_decisions[].citations`도 `mapped_controls[].citations`와 동일하게 입력 청크의 원문·페이지 범위·증적 ID/버전 연결을 검사한다. 후보별 판단 근거를 최종 매핑에서 제외했다는 이유로 검증에서 빠뜨리지 않는다.
+- 페이지형 청크의 `page=null`은 두 경로 모두 비차단 `E407` 경고로 남기고, 범위 밖의 실제 page 값은 기존 `E404`로 차단한다.
+- 9/30 실측의 Citation 유효율과 검토 전환율은 당시 검증 계약의 영향을 받았다. 실측 raw 응답 원본을 확보해 수정된 Validator로 다시 평가한 뒤 품질 수치를 갱신해야 한다.
+
+검증 명령: `python -m pytest tests/test_validators.py tests/test_candidate_citations.py tests/test_service.py`, `python src/check.py`.
 
 ---
 

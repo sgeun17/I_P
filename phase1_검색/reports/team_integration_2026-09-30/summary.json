@@ -1,0 +1,109 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-09-30T21:44:36.140084+09:00",
+  "live_llm_calls": 0,
+  "bge_model_loaded": false,
+  "test_only": true,
+  "scope": "저장된 실제 검색 출력과 가상 LLM HTTP 응답으로 연결 동작만 검사",
+  "accuracy_evaluation": false,
+  "protected_files_unchanged_during_run": 12,
+  "cases": [
+    {
+      "scenario": "single",
+      "http_transport": "httpx.MockTransport",
+      "processing_status": "COMPLETED",
+      "validation_passed": true,
+      "issue_codes": [],
+      "evidence_status": "REVIEW_REQUIRED",
+      "review_reasons": [
+        "R202"
+      ],
+      "attempts": 1,
+      "retry_count": 0,
+      "synthetic_review_transition": true,
+      "pending_review_blocked": true,
+      "question_count": 20,
+      "review_only": true
+    },
+    {
+      "scenario": "multiple",
+      "http_transport": "httpx.MockTransport",
+      "processing_status": "COMPLETED",
+      "validation_passed": true,
+      "issue_codes": [],
+      "evidence_status": "REVIEW_REQUIRED",
+      "review_reasons": [
+        "R202",
+        "R205"
+      ],
+      "attempts": 1,
+      "retry_count": 0,
+      "synthetic_review_transition": true,
+      "pending_review_blocked": true,
+      "question_count": 34,
+      "review_only": true
+    },
+    {
+      "scenario": "scope_missing",
+      "http_transport": "httpx.MockTransport",
+      "processing_status": "COMPLETED",
+      "validation_passed": true,
+      "issue_codes": [],
+      "evidence_status": "REVIEW_REQUIRED",
+      "review_reasons": [
+        "R202",
+        "R205"
+      ],
+      "attempts": 1,
+      "retry_count": 0,
+      "synthetic_review_transition": true,
+      "pending_review_blocked": true,
+      "review_plan_blocked": "CHECKLIST_SCOPE_MISSING",
+      "missing_control_ids": [
+        "2.2.5"
+      ]
+    },
+    {
+      "scenario": "no_match",
+      "http_transport": "httpx.MockTransport",
+      "processing_status": "COMPLETED",
+      "validation_passed": true,
+      "issue_codes": [],
+      "evidence_status": "REVIEW_REQUIRED",
+      "review_reasons": [
+        "R202",
+        "R204"
+      ],
+      "attempts": 1,
+      "retry_count": 0,
+      "synthetic_review_transition": true,
+      "pending_review_blocked": true,
+      "question_count": 0,
+      "review_only": true
+    },
+    {
+      "scenario": "candidate_quote_invalid",
+      "http_transport": "httpx.MockTransport",
+      "processing_status": "COMPLETED",
+      "validation_passed": false,
+      "issue_codes": [
+        "E403"
+      ],
+      "evidence_status": "REVIEW_REQUIRED",
+      "review_reasons": [
+        "R104",
+        "R202"
+      ],
+      "attempts": 1,
+      "retry_count": 0,
+      "synthetic_review_transition": false,
+      "review_plan_blocked": "PHASE1_REVIEW_NOT_CONFIRMED"
+    },
+    {
+      "scenario": "http_4xx",
+      "request_error_status": 404,
+      "mapping_result_created": false,
+      "retry_count": 0
+    }
+  ]
+}
