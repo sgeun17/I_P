@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -30,9 +31,25 @@ sys.path.insert(0, str(ROOT / "src"))
 from enums import ErrorCode  # noqa: E402
 from metrics import compute, format_report, make_outcome  # noqa: E402
 from models import MappingInput, VersionInfo  # noqa: E402
+from review_policy import DEFAULT_THRESHOLDS  # noqa: E402
 from service import build_result  # noqa: E402
 
 GOLDENSET_PATH = ROOT / "tests" / "fixtures" / "goldenset.json"
+
+
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def recorded_path(path: Path | None) -> str | None:
+    """결과 파일에 재현 가능한 프로젝트 상대 경로를 기록한다."""
+    if path is None:
+        return None
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(ROOT).as_posix()
+    except ValueError:
+        return resolved.as_posix()
 
 
 def load_responses(path: Path) -> dict[str, dict]:
@@ -129,7 +146,10 @@ def main() -> int:
         payload = {
             "model": args.model,
             "prompt_version": args.prompt,
+            "threshold_profile": DEFAULT_THRESHOLDS.profile_name,
+            "response_file": recorded_path(args.responses),
             "goldenset_version": goldenset["version"],
+            "goldenset_sha256": sha256_file(GOLDENSET_PATH),
             "ruleset_version": goldenset["ruleset_version"],
             "metrics": {k: v for k, v in metrics.__dict__.items()},
             "cases": [

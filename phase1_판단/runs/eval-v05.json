@@ -1,16 +1,19 @@
 {
   "model": "qwen3:4b",
   "prompt_version": "phase1_mapping_v0.5",
+  "threshold_profile": "thresholds_v0.5",
+  "response_file": "runs/qwen3-4b-v05.jsonl",
   "goldenset_version": "goldenset_v0.1",
+  "goldenset_sha256": "ecf38315379f5c8f3982e8e0ec58729c41122b3de35cb77996a88aaedf3655e9",
   "ruleset_version": "mapping_rules_v0.7",
   "metrics": {
     "n": 27,
     "n_excluded_retrieval_miss": 2,
-    "precision": 0.7142857142857143,
-    "recall": 0.8333333333333334,
-    "f1": 0.7692307692307692,
-    "macro_precision": 0.7368421052631579,
-    "macro_recall": 0.8055555555555556,
+    "precision": 0.75,
+    "recall": 0.84,
+    "f1": 0.7924528301886793,
+    "macro_precision": 0.7894736842105263,
+    "macro_recall": 0.8333333333333334,
     "exact_match": 0.7777777777777778,
     "exact_match_with_relation": 0.7777777777777778,
     "primary_accuracy": 0.8333333333333334,
@@ -22,7 +25,7 @@
     "deferred_no_match_rate": 0.0,
     "citation_valid_rate": 0.8928571428571429,
     "invalid_output_rate": 0.037037037037037035,
-    "review_required_rate": 0.7407407407407407,
+    "review_required_rate": 0.6296296296296297,
     "avg_processing_time_ms": 49894.81481481482,
     "by_category": {
       "false_citation": {
@@ -37,20 +40,20 @@
         "exact_match": 0.6666666666666666,
         "precision": 0.0,
         "recall": null,
-        "review_rate": 1.0
+        "review_rate": 0.6666666666666666
       },
       "malformed_json": {
         "n": 1,
         "exact_match": 1.0,
         "precision": 1.0,
         "recall": 1.0,
-        "review_rate": 0.0
+        "review_rate": 1.0
       },
       "multi_mapping": {
-        "n": 5,
-        "exact_match": 0.8,
-        "precision": 0.9090909090909091,
-        "recall": 0.9090909090909091,
+        "n": 6,
+        "exact_match": 0.6666666666666666,
+        "precision": 0.9166666666666666,
+        "recall": 0.8461538461538461,
         "review_rate": 1.0
       },
       "no_match": {
@@ -58,7 +61,7 @@
         "exact_match": 1.0,
         "precision": null,
         "recall": null,
-        "review_rate": 1.0
+        "review_rate": 0.3333333333333333
       },
       "ocr": {
         "n": 2,
@@ -72,7 +75,7 @@
         "exact_match": 0.0,
         "precision": 0.0,
         "recall": 0.0,
-        "review_rate": 0.0
+        "review_rate": 1.0
       },
       "prompt_injection": {
         "n": 1,
@@ -82,26 +85,27 @@
         "review_rate": 1.0
       },
       "single_mapping": {
-        "n": 6,
-        "exact_match": 0.6666666666666666,
-        "precision": 0.7142857142857143,
-        "recall": 0.8333333333333334,
-        "review_rate": 0.5
+        "n": 5,
+        "exact_match": 0.8,
+        "precision": 0.8333333333333334,
+        "recall": 1.0,
+        "review_rate": 0.4
       },
       "uncertain": {
         "n": 3,
         "exact_match": 1.0,
         "precision": null,
         "recall": null,
-        "review_rate": 1.0
+        "review_rate": 0.3333333333333333
       }
     }
   },
   "cases": [
     {
       "test_id": "G-SINGLE-01",
-      "category": "single_mapping",
+      "category": "multi_mapping",
       "gold": [
+        "2.2.5",
         "2.5.1"
       ],
       "predicted": [
@@ -260,7 +264,7 @@
       "gold": [],
       "predicted": [],
       "exact_match": true,
-      "review_required": true,
+      "review_required": false,
       "processing_status": "COMPLETED"
     },
     {
@@ -269,7 +273,7 @@
       "gold": [],
       "predicted": [],
       "exact_match": true,
-      "review_required": true,
+      "review_required": false,
       "processing_status": "COMPLETED"
     },
     {
@@ -287,7 +291,7 @@
       "gold": [],
       "predicted": [],
       "exact_match": true,
-      "review_required": true,
+      "review_required": false,
       "processing_status": "COMPLETED"
     },
     {
@@ -326,7 +330,7 @@
       "gold": [],
       "predicted": [],
       "exact_match": true,
-      "review_required": true,
+      "review_required": false,
       "processing_status": "COMPLETED"
     },
     {
@@ -335,7 +339,7 @@
       "gold": [],
       "predicted": [],
       "exact_match": true,
-      "review_required": true,
+      "review_required": false,
       "processing_status": "COMPLETED"
     },
     {
@@ -379,13 +383,13 @@
       "test_id": "G-BADID-02",
       "category": "out_of_candidate_id",
       "gold": [
-        "2.7.1"
+        "2.7.2"
       ],
       "predicted": [
         "2.5.4"
       ],
       "exact_match": false,
-      "review_required": false,
+      "review_required": true,
       "processing_status": "COMPLETED"
     },
     {
@@ -394,7 +398,7 @@
       "gold": [],
       "predicted": [],
       "exact_match": true,
-      "review_required": true,
+      "review_required": false,
       "processing_status": "COMPLETED"
     },
     {
@@ -407,14 +411,14 @@
         "2.6.4"
       ],
       "exact_match": true,
-      "review_required": false,
+      "review_required": true,
       "processing_status": "COMPLETED"
     },
     {
       "test_id": "G-OCR-01",
       "category": "ocr",
       "gold": [
-        "2.4.1"
+        "2.4.2"
       ],
       "predicted": [
         "2.4.6",
