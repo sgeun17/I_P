@@ -142,7 +142,7 @@ def run(test_id: str):
 def test_정답_응답은_정답과_일치한다():
     o = run("G-SINGLE-01")
     assert o.exact_match and o.exact_match_with_relation
-    assert o.gold.control_ids == {"2.5.1"}
+    assert o.gold.control_ids == {"2.5.1", "2.2.5"}
 
 
 def test_다중매핑_정답():
