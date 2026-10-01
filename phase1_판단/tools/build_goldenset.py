@@ -814,23 +814,23 @@ add(
               "키명: DB-ENC | 생성일: 2026-01-10 | 교체주기: 24개월 | 보관위치: HSM",
               file_type="xlsx", page=1, chunk_type="table", heading="암호키 관리대장"),
     ],
-    candidates=[("2.7.1", 0.5833), ("2.6.4", 0.5211), ("2.5.4", 0.5077), ("2.10.1", 0.4955), ("2.8.1", 0.4822)],
+    candidates=[("2.7.2", 0.5833), ("2.7.1", 0.5511), ("2.6.4", 0.5211), ("2.5.4", 0.5077), ("2.10.1", 0.4955)],
     response=json.dumps({
         "match_status": "MATCHED",
         "candidate_decisions": [
-            {"control_id": "2.7.1", "decision": "RELATED", "llm_confidence": 0.88,
+            {"control_id": "2.7.2", "decision": "RELATED", "llm_confidence": 0.88,
              "reason": "암호키 관리 내역이다.",
              "citations": [{"chunk_id": "E0162_v1_c0000", "page": 1,
                             "quote": "키명: TLS-WEB | 생성일: 2026-01-10 | 교체주기: 12개월 | 보관위치: HSM"}]},
             {"control_id": "2.6.4", "decision": "NOT_RELATED", "llm_confidence": 0.80, "reason": NOT_RELATED_REASON, "citations": []},
             {"control_id": "2.5.4", "decision": "NOT_RELATED", "llm_confidence": 0.80, "reason": NOT_RELATED_REASON, "citations": []},
             {"control_id": "2.10.1", "decision": "NOT_RELATED", "llm_confidence": 0.80, "reason": NOT_RELATED_REASON, "citations": []},
-            {"control_id": "2.8.1", "decision": "NOT_RELATED", "llm_confidence": 0.80, "reason": NOT_RELATED_REASON, "citations": []},
-            {"control_id": "2.7.2", "decision": "RELATED", "llm_confidence": 0.77,
+            {"control_id": "2.7.1", "decision": "NOT_RELATED", "llm_confidence": 0.80, "reason": NOT_RELATED_REASON, "citations": []},
+            {"control_id": "2.7.9", "decision": "RELATED", "llm_confidence": 0.77,
              "reason": "암호키 생성과 보관 절차에 해당한다.", "citations": []},
         ],
         "mapped_controls": [
-            {"control_id": "2.7.1.", "control_name": "암호정책 적용", "relation": "PRIMARY",
+            {"control_id": "2.7.2.", "control_name": "암호키 관리", "relation": "PRIMARY",
              "llm_confidence": 0.88, "reason": "암호키 생성과 교체 주기를 관리한다.",
              "citations": [{"chunk_id": "E0162_v1_c0000", "page": 1,
                             "quote": "키명: TLS-WEB | 생성일: 2026-01-10 | 교체주기: 12개월 | 보관위치: HSM"}]},
@@ -838,17 +838,17 @@ add(
     }, ensure_ascii=False, indent=2),
     expected={
         "match_status": "MATCHED",
-        "controls": [("2.7.1.", "PRIMARY")],
+        "controls": [("2.7.2.", "PRIMARY")],
         "validation_passed": False,
         "error_codes": ["E301"],
         "review_required": True,
         "review_reasons": ["R103"],
     },
-    note="'2.7.1.'은 점이 붙어 KB에 없는 ID다. 보정해서 받아주면 안 된다. "
-         "candidate_decisions의 '2.7.2'도 KB에 없는 ID다.",
+    note="'2.7.2.'은 점이 붙어 KB에 없는 ID다. 보정해서 받아주면 안 된다. "
+         "candidate_decisions의 '2.7.9'도 KB에 없는 ID다.",
     gold={
         "match_status": "MATCHED",
-        "controls": [{"control_id": "2.7.1", "relation": "PRIMARY"}],
+        "controls": [{"control_id": "2.7.2", "relation": "PRIMARY"}],
         "retrieval_miss": False,
     },
 )

@@ -160,8 +160,8 @@ def test_허위인용_사례는_매핑은_맞지만_인용이_깨진다():
 
 def test_표기변형_id는_틀린_것으로_센다():
     o = run("G-BADID-02")
-    assert o.gold.control_ids == {"2.7.1"}
-    assert o.predicted_ids == {"2.7.1."}
+    assert o.gold.control_ids == {"2.7.2"}
+    assert o.predicted_ids == {"2.7.2."}
     assert not o.exact_match, "점 하나 붙었다고 맞다고 보면 안 된다"
 
 

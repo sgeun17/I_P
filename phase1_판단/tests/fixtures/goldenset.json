@@ -2199,7 +2199,7 @@
       "category": "out_of_candidate_id",
       "description": "KB에 없는 ID와 표기가 변형된 ID",
       "response_kind": "faulty",
-      "note": "'2.7.1.'은 점이 붙어 KB에 없는 ID다. 보정해서 받아주면 안 된다. candidate_decisions의 '2.7.2'도 KB에 없는 ID다.",
+      "note": "'2.7.2.'은 점이 붙어 KB에 없는 ID다. 보정해서 받아주면 안 된다. candidate_decisions의 '2.7.9'도 KB에 없는 ID다.",
       "input": {
         "evidence_id": "E0162",
         "version": 1,
@@ -2226,42 +2226,42 @@
         "candidate_controls": [
           {
             "rank": 1,
-            "control_id": "2.7.1",
-            "control_name": "암호정책 적용",
+            "control_id": "2.7.2",
+            "control_name": "암호키 관리",
             "similarity_score": 0.5833
           },
           {
             "rank": 2,
+            "control_id": "2.7.1",
+            "control_name": "암호정책 적용",
+            "similarity_score": 0.5511
+          },
+          {
+            "rank": 3,
             "control_id": "2.6.4",
             "control_name": "데이터베이스 접근",
             "similarity_score": 0.5211
           },
           {
-            "rank": 3,
+            "rank": 4,
             "control_id": "2.5.4",
             "control_name": "비밀번호 관리",
             "similarity_score": 0.5077
           },
           {
-            "rank": 4,
+            "rank": 5,
             "control_id": "2.10.1",
             "control_name": "보안시스템 운영",
             "similarity_score": 0.4955
-          },
-          {
-            "rank": 5,
-            "control_id": "2.8.1",
-            "control_name": "보안 요구사항 정의",
-            "similarity_score": 0.4822
           }
         ]
       },
-      "llm_response": "{\n  \"match_status\": \"MATCHED\",\n  \"candidate_decisions\": [\n    {\n      \"control_id\": \"2.7.1\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.88,\n      \"reason\": \"암호키 관리 내역이다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0162_v1_c0000\",\n          \"page\": 1,\n          \"quote\": \"키명: TLS-WEB | 생성일: 2026-01-10 | 교체주기: 12개월 | 보관위치: HSM\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.6.4\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.8,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.5.4\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.8,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.10.1\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.8,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.8.1\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.8,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.7.2\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.77,\n      \"reason\": \"암호키 생성과 보관 절차에 해당한다.\",\n      \"citations\": []\n    }\n  ],\n  \"mapped_controls\": [\n    {\n      \"control_id\": \"2.7.1.\",\n      \"control_name\": \"암호정책 적용\",\n      \"relation\": \"PRIMARY\",\n      \"llm_confidence\": 0.88,\n      \"reason\": \"암호키 생성과 교체 주기를 관리한다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0162_v1_c0000\",\n          \"page\": 1,\n          \"quote\": \"키명: TLS-WEB | 생성일: 2026-01-10 | 교체주기: 12개월 | 보관위치: HSM\"\n        }\n      ]\n    }\n  ]\n}",
+      "llm_response": "{\n  \"match_status\": \"MATCHED\",\n  \"candidate_decisions\": [\n    {\n      \"control_id\": \"2.7.2\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.88,\n      \"reason\": \"암호키 관리 내역이다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0162_v1_c0000\",\n          \"page\": 1,\n          \"quote\": \"키명: TLS-WEB | 생성일: 2026-01-10 | 교체주기: 12개월 | 보관위치: HSM\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.6.4\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.8,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.5.4\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.8,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.10.1\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.8,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.7.1\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.8,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.7.9\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.77,\n      \"reason\": \"암호키 생성과 보관 절차에 해당한다.\",\n      \"citations\": []\n    }\n  ],\n  \"mapped_controls\": [\n    {\n      \"control_id\": \"2.7.2.\",\n      \"control_name\": \"암호키 관리\",\n      \"relation\": \"PRIMARY\",\n      \"llm_confidence\": 0.88,\n      \"reason\": \"암호키 생성과 교체 주기를 관리한다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0162_v1_c0000\",\n          \"page\": 1,\n          \"quote\": \"키명: TLS-WEB | 생성일: 2026-01-10 | 교체주기: 12개월 | 보관위치: HSM\"\n        }\n      ]\n    }\n  ]\n}",
       "gold": {
         "match_status": "MATCHED",
         "controls": [
           {
-            "control_id": "2.7.1",
+            "control_id": "2.7.2",
             "relation": "PRIMARY"
           }
         ],
@@ -2271,7 +2271,7 @@
         "match_status": "MATCHED",
         "controls": [
           {
-            "control_id": "2.7.1.",
+            "control_id": "2.7.2.",
             "relation": "PRIMARY"
           }
         ],
