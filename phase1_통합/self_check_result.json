@@ -1,0 +1,56 @@
+{
+  "ready": false,
+  "checks": [
+    {
+      "name": "input_main",
+      "ok": true,
+      "detail": "/mnt/data/phase1_work/integrated/phase1_integrated_delivery/phase1_입력/main.py"
+    },
+    {
+      "name": "input_pipeline",
+      "ok": true,
+      "detail": "/mnt/data/phase1_work/integrated/phase1_integrated_delivery/phase1_입력/pipeline.py"
+    },
+    {
+      "name": "search_retriever",
+      "ok": true,
+      "detail": "/mnt/data/phase1_work/integrated/phase1_integrated_delivery/phase1_검색/chunk_retriever.py"
+    },
+    {
+      "name": "search_judgment_pipeline",
+      "ok": true,
+      "detail": "/mnt/data/phase1_work/integrated/phase1_integrated_delivery/phase1_검색/judgment_pipeline.py"
+    },
+    {
+      "name": "judgment_service",
+      "ok": true,
+      "detail": "/mnt/data/phase1_work/integrated/phase1_integrated_delivery/phase1_판단/src/service.py"
+    },
+    {
+      "name": "judgment_schema",
+      "ok": true,
+      "detail": "/mnt/data/phase1_work/integrated/phase1_integrated_delivery/phase1_판단/schemas/phase1_mapping_result.schema.json"
+    },
+    {
+      "name": "bge_m3_model",
+      "ok": false,
+      "detail": "/mnt/data/phase1_work/integrated/phase1_integrated_delivery/phase1_검색/models/bge-m3"
+    },
+    {
+      "name": "chroma_index",
+      "ok": false,
+      "detail": "/mnt/data/phase1_work/integrated/phase1_integrated_delivery/phase1_검색/data/chroma"
+    },
+    {
+      "name": "judgment_model_env",
+      "ok": false,
+      "detail": "PHASE1_JUDGMENT_MODEL 미설정"
+    },
+    {
+      "name": "input_db_env",
+      "ok": false,
+      "detail": "/mnt/data/phase1_work/integrated/phase1_integrated_delivery/phase1_입력/database/.env"
+    }
+  ],
+  "note": "파일/설정 존재 여부 점검이며 DB·BGE-M3·LLM 실제 연결 성공까지 보장하지는 않습니다."
+}
