@@ -335,7 +335,14 @@ def validate_rules(output: LLMMappingOutput, mapping_input: MappingInput) -> lis
 # 원문에 있는 단어로 모델을 탓하면 안 된다.
 # (1) 맥락과 무관하게 감사 판정 어휘인 것
 ADEQUACY_PATTERNS = [
-    r"부?적정(하|합|함|성)",
+    # "적정하다/적정함"은 판정이다. 그런데 **"적정성"은 아니다.**
+    #
+    # "접근권한 적정성을 검토하고 결과를 기록한다"는 증적 원문에 흔히 나오는
+    # 업무 설명이고, '적정성 검토'는 ISMS-P 인증기준 본문의 표준 용어다.
+    # 명사형 뒤에 점검 활동이 오면 판정이 아니라 업무를 말하는 것이므로 뺀다.
+    # (검색팀 2026-10-01 전달 J-LLM-01에서 실제 오탐으로 보고됨)
+    r"부?적정(하|합|함)",
+    r"부?적정성(?!\s*[을를이가에의]?\s*(검토|점검|평가|확인|심사|여부|기준|절차))",
     r"부?적합(하|합|함|판정)",
     r"위반(이|을|으로|하|사항|된)",
     r"결함",
@@ -352,8 +359,20 @@ ADEQUACY_PATTERNS = [
 _SUBJECT = r"(통제(항목)?|인증\s*기준|요구\s*사항)"
 _VERDICT = r"((미|불)?충족|미흡|불충분)"
 
+# 뒤에 "나타나지 않는다·없다"가 오면 판정이 아니라 **관련성 설명**이다.
+#
+#   "통제항목의 요구사항을 충족하는 활동이 명확히 나타나지 않는다"
+#
+# NOT_RELATED를 설명하는 가장 자연스러운 문장인데, 위 패턴이 '요구사항…충족'까지만
+# 보고 끊어서 통째로 걸렸다. qwen3:4b 실측에서 G-TRAP-02 한 사례에만 3건 발생했다.
+# 부정이 '충족'이 아니라 '나타나다'에 붙는 경우만 뺀다.
+# "요구사항을 충족하지 않는다"는 여전히 판정이므로 그대로 잡힌다.
+_NOT_PRESENT = r"((나타나|보이|확인되|드러나|포함되|언급되)지\s*않|없(다|으며|음|고|어|는)|찾을\s*수\s*없)"
+
 _ADEQUACY_RE = re.compile("|".join(ADEQUACY_PATTERNS))
-_SCOPED_RE = re.compile(rf"{_SUBJECT}[^.。]{{0,20}}{_VERDICT}")
+_SCOPED_RE = re.compile(
+    rf"{_SUBJECT}[^.。]{{0,20}}{_VERDICT}(?![^.。]{{0,30}}{_NOT_PRESENT})"
+)
 
 
 def detect_adequacy_judgment(output: LLMMappingOutput) -> list[ValidationIssue]:
