@@ -1,0 +1,51 @@
+{
+  "note": "실제 조직 증적이 아닌 Phase 2 판단 하네스 개발용 합성 fixture",
+  "control_id": "2.5.6",
+  "item_id": "2.5.6-Q07",
+  "phase1_result": {
+    "mapped_controls": [
+      {
+        "control_id": "2.5.6",
+        "citations": [
+          {
+            "chunk_id": "e0001_v1_c0002",
+            "page": 2,
+            "quote": "2026년 9월 계정 및 접근권한 정기 검토를 수행하였다."
+          }
+        ]
+      }
+    ]
+  },
+  "chunks": [
+    {
+      "chunk_id": "e0001_v1_c0001",
+      "text": "검토 대상은 운영계정과 관리자 계정으로 정한다.",
+      "page_start": 1,
+      "page_end": 1,
+      "heading": "검토 범위",
+      "source_file": "synthetic_access_review.pdf",
+      "file_type": "pdf",
+      "source": "parser"
+    },
+    {
+      "chunk_id": "e0001_v1_c0002",
+      "text": "2026년 9월 계정 및 접근권한 정기 검토를 수행하였다.",
+      "page_start": 2,
+      "page_end": 2,
+      "heading": "검토 결과",
+      "source_file": "synthetic_access_review.pdf",
+      "file_type": "pdf",
+      "source": "parser"
+    },
+    {
+      "chunk_id": "e0001_v1_c0003",
+      "text": "검토 결과 발견된 과다권한 계정은 별도 조치대장에서 추적한다.",
+      "page_start": 3,
+      "page_end": 3,
+      "heading": "후속 조치",
+      "source_file": "synthetic_access_review.pdf",
+      "file_type": "pdf",
+      "source": "parser"
+    }
+  ]
+}
