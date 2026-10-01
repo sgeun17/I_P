@@ -1,162 +1,33 @@
-# ISMS-P 증적 검색 첫 버전
+# Phase1 검색
 
-## 9/30 추가: 최신 판단팀 호출부 연결
+증적 청크로 관련 ISMS-P 통제항목 후보를 검색하고 판단팀 입력으로 전달한다. 최상위에는 현재 연결에서 사용하는 코드·KB·실행 파일·설치 설정을 둔다.
 
-`judgment_pipeline.run_judgment()`가 검색 출력 검증·변환부터 판단팀의 LLM 호출·재시도, 인용 검증과 검토 상태까지 연결합니다. 모델명은 호출자가 지정하고 서버 설정은 기존 판단팀 설정을 사용합니다. HTTP 4xx는 `JudgmentRequestError`로 중단해 빈 응답이나 `NO_MATCH`로 오인하지 않습니다.
+## 먼저 사용할 파일
 
-판단팀 후보별 인용 검증 누락도 수정했습니다. 확인한 연결 동작은 저장된 검색 출력과 가상 HTTP 응답을 이용한 검사이며 실제 LLM 성능 수치가 아닙니다. [변경 범위·사용법·검증 결과](handoff/9월30일_팀코드_반영과_연결검증.md)를 확인하세요.
-
-## 9/27 추가: BGE-M3 모델 재사용
-
-`chunk_retriever.retrieve()`는 첫 유효 요청에서 검색 프로세스와 BGE-M3를 초기화하고, 같은 호출 프로그램의 후속 요청에서 재사용합니다. 기존 호출 인자와 `retriever-0.2` 출력 형식은 유지됩니다. 동시 요청은 직렬 처리하고, 대기시간을 포함한 제한시간 초과·통신 오류 시 다음 요청에서 새 프로세스를 시작합니다. 프로그램 종료 또는 `close_retriever()` 호출로 모델 메모리를 해제합니다.
-
-별도 프로그램·서버 프로세스마다 모델 하나를 사용합니다. 명령행 실행을 매번 새로 시작하면 모델도 매번 로드되므로, 상시 연동에서는 계속 실행 중인 프로그램에서 `retrieve()`를 반복 호출하세요. KB·색인을 변경할 때는 검색 요청을 멈추고 `close_retriever()`로 프로세스를 정리한 뒤 재색인합니다.
-
-- [적용 범위·사용법·변경 파일](handoff/9월27일_BGE모델_재사용.md)
-- [실제 BGE-M3 로딩 횟수·시간 검사](reports/model_reuse_2026-09-27_v2/summary.md)
-
-## 9/26 추가: Phase 2 기준 초안
-
-Phase2 기준 작업은 WBS 구분에 따라 `../phase2_기준/`에서 관리합니다. 우선 후보 5개와 공통 체크리스트 구조, 원문 대조 후 3개 항목의 활성 질문 54개를 검토용으로 준비했습니다. [초안 안내](../phase2_기준/README.md)와 [질문 검토본](../phase2_기준/checklist_review.md)을 확인하세요. 아직 팀 합의 전이며 운영 검색에 적용되지 않습니다.
-
-## 9/25 추가: Phase 1 검수와 관련 없음 정책 점검
-
-KB 101개 재검사·재색인·재시작 검증을 완료하고 검수용 스냅샷을 남겼습니다. 관련·무관·애매 증적 30건(기존 20건+신규 10건)을 분석한 결과, 관련·무관 검색 점수가 겹쳐 운영용 점수 필터는 추가하지 않았습니다. 최신 판단팀의 NO_MATCH·불확실·호출 실패 정책 및 프롬프트 입력 연결을 확인했으며 실제 LLM 호출은 별도입니다.
-
-- [오늘 결과와 판단팀에 전달할 답변](handoff/9월25일_Phase1_검수와_무관증적정책.md)
-- [관련성 점수·가상 임계값 비교](reports/relevance_2026-09-25/summary.md)
-- [검수용 KB 스냅샷](releases/phase1-review-2026-09-25/README.md)
-
-## 9/24 추가: 판단팀 코드와 연결
-
-`judgment_adapter.py`가 검색 출력을 판단팀 `MappingInput`으로 변환합니다. 문서 Top-5의 순위·점수와 요구사항을 한 후보 객체로 합치고, 원문 청크와 KB 해시를 보존합니다. 실제 검색 출력 26건이 판단팀 입력 모델을 통과했고, 고정 응답 6종으로 실제 판단팀 검증·검토 코드도 실행했습니다. 실제 LLM 호출은 별도입니다.
-
-- [연결 결과·사용법·판단팀 확인 요청](handoff/판단팀_코드확인_연결결과.md)
-- [바로 전달할 판단 입력 JSON](examples/judgment_mapping_input.json)
-- [연동 실행 보고서](reports/judgment_integration_2026-09-24/summary.md)
-
-## 9/24 추가: 파일 기반 검색 검사와 판단팀 연동 자료
-
-입력팀 원본 파서·청커를 직접 호출해 DOCX·TXT·CSV 파일부터 검색 JSON까지 검사했습니다. 제공 DOCX 1건과 합성 파일 7건에서 정상 검색 6건, 빈 파일·손상 입력의 의도된 거부 2건을 확인했습니다. UTF-8/CP949 동일 본문의 검색 결과도 일치했습니다. 업로드 서버·판단 모델 실행은 포함하지 않습니다.
-
-- [8건 파일 기반 검사 결과](reports/file_pipeline_2026-09-24/summary.md)
-- [판단팀 연동 확인 자료와 재실행 방법](handoff/9월24일_판단팀_연동확인.md)
-- [검색 샘플 검토 메모](handoff/9월24일_샘플검토메모.md)
-
-## 9/23 추가: 전처리 청크 검색과 팀 인계
-
-`05_search_chunks.cmd`는 입력팀 DOCX 샘플의 실제 청크를 받아 전체 101개 ChromaDB에서 검색하고 **문서 전체 Top-5**를 반환합니다. 결과는 `reports/chunk_search_result.json`의 **retrieval.candidates**에서 봅니다. 청크별 상세 후보는 retrieval.chunk_results에 있습니다. 입력팀 소스는 수정하지 않았고 현재 출력의 필드 차이는 명시적 호환 모드로 경고와 함께 처리합니다.
-
-- [진행 현황](handoff/검색팀_진행현황.md)
-- [입력팀 확인·수정 요청](handoff/입력팀_확인수정요청.md)
-- [판단팀 인계·실행·입출력 안내](handoff/판단팀_검색모듈_인계.md)
-- [청크 연결 검증 결과](reports/chunk_integration_result.md)
-- [현재 KB 101개 검증](reports/kb_validation_result.md)
-- [검토 샘플 20건 검색 결과](reports/review_evaluation.md)
-
-새 연동은 `chunk_retriever.retrieve()` 또는 `chunk_retriever.py --input ... --output ...`을 사용합니다. 기존 한 줄 검색 실행 파일은 그대로 유지됩니다. `retriever-0.2`는 검색팀 제안 규격이며 팀 간 최종 합의와 독립 정답 검수·실제 증적 품질 평가는 남아 있습니다. 문서 점수는 해당 통제항목의 청크별 유사도 중 최댓값입니다.
-
-## 9/22 추가: 전체 101개 ChromaDB 색인
-
-`04_index_chroma.cmd`를 더블클릭하면 현재 KB 101개를 `data/chroma_kb`의 `isms_p_controls` 컬렉션에 저장·색인하고 검증합니다. 실행 절차와 재색인 방법은 [전체 KB 색인 안내](ChromaDB_전체색인_안내.md)에 있습니다. 결과는 `reports/chroma_index_result.md`, DB에서 조회한 전체 벡터 사본은 `data/chroma_kb_vectors_view.json`입니다. KB 최종 버전 고정과 검색 품질 평가는 별도 작업입니다.
-
-## 9/21 추가: ChromaDB 샘플 구동 확인
-
-`03_check_chroma.cmd`를 실행하면 실제 BGE-M3로 샘플 10개를 ChromaDB에 저장하고 검색·프로세스 재시작 후 데이터 유지를 검사합니다. 자세한 절차는 [ChromaDB 실행 안내](ChromaDB_실행안내.md), 성공 결과는 `reports/chroma_sample_result.md`에서 확인합니다. 아래의 기존 `02_search.cmd` 검색은 벡터 파일 직접 비교 방식입니다.
-
-증적 내용을 한 줄 입력하면 관련 통제항목 5개를 보여줍니다.
-`controls.json`의 이름, 요구사항, 키워드, 증거자료 예시를 합쳐 BGE-M3로 비교합니다.
-
-## 처음 사용하는 방법
-
-1. 인터넷이 되는 환경에서 이 폴더의 **`01_setup.cmd`를 더블클릭**합니다.
-2. 설치와 모델 다운로드, 101개 통제항목 준비가 끝날 때까지 기다립니다. 수 GB의 여유 공간이 필요하며 컴퓨터와 네트워크에 따라 시간이 걸립니다.
-3. 완료되면 **`02_search.cmd`를 더블클릭**합니다.
-4. `증적 내용 >` 옆에 아래와 같은 문장을 입력하고 Enter를 누릅니다.
-
-```text
-퇴직자의 계정을 퇴직 당일 삭제하고 처리 이력을 기록했다.
-```
-
-모델이 계산한 실제 순위와 유사도 점수가 표시됩니다. 다른 문장을 계속 입력할 수 있고, `exit`를 입력하면 종료합니다.
-
-다음부터는 `02_search.cmd`만 실행하면 됩니다. 첫 모델 로딩에는 시간이 걸리지만, 같은 창에서 다음 검색은 모델을 다시 불러오지 않습니다.
-
-### 설치가 하는 일
-
-- Python 3.10~3.12를 찾습니다. 없다면 이 컴퓨터에 있는 Codex의 Python을 사용합니다.
-- 이 폴더 안에 `.venv`를 만들고 필요한 라이브러리를 설치합니다.
-- 공식 `BAAI/bge-m3` 모델을 `models/bge-m3`에 내려받고, 받은 모델 버전을 기록합니다.
-- KB를 벡터로 바꾸어 `data/control_embeddings.npz`에 저장합니다.
-
-이 컴퓨터에는 일반 Python이 없어서 Codex에 포함된 Python을 사용할 수 있도록 했습니다. 다른 컴퓨터에서 두 Python 모두 없다면 Python 3.12 설치 후 다시 실행하세요. Windows 실행 정책 우회 옵션은 해당 설치 프로세스에만 적용되며 시스템 정책을 바꾸지 않습니다.
-
-다운로드가 끊겼다면 `01_setup.cmd`를 다시 실행할 수 있습니다. 이미 받은 파일과 큰 파일의 일부는 보존하며, 빠진 파일만 자동으로 여러 번 이어받습니다. 설치 오류가 나면 창에 표시된 오류 내용을 확인하세요. CPU 실행이 기본이므로 NVIDIA 그래픽카드는 필수가 아닙니다.
-
-## 파일 안내
-
-| 파일 | 역할 |
+| 파일 | 용도 |
 |---|---|
-| `controls.json` | 검색 대상인 101개 통제항목 |
-| `retriever.py` | KB 읽기, 임베딩, 유사도 비교, 결과 출력 |
-| `01_setup.cmd` / `setup.ps1` | 최초 설치 및 모델 준비 |
-| `02_search.cmd` | 검색 창 실행 |
-| `requirements.txt` | 설치할 라이브러리 범위 |
-| `tests/test_retriever.py` | 데이터 연결과 계산을 확인하는 테스트 |
+| [chunk_retriever.py](chunk_retriever.py) | 청크 입력 → 통제항목 후보 검색. 반복 요청에는 `LocalDocumentRetriever`로 모델 재사용 |
+| [judgment_pipeline.py](judgment_pipeline.py) | 검색 결과를 판단팀 호출·응답 검증으로 연결 |
+| [judgment_adapter.py](judgment_adapter.py) | 검색 결과를 판단팀 입력 형식으로 변환 |
+| [controls.json](controls.json) | 검색 대상 통제항목 101개의 KB |
+| [01_setup.cmd](01_setup.cmd) | 검색 실행 환경 준비 |
+| [04_index_chroma.cmd](04_index_chroma.cmd) | 전체 KB 색인 |
+| [05_search_chunks.cmd](05_search_chunks.cmd) | 샘플 청크 검색 실행 |
 
-현재 폴더의 `controls.json`을 사용합니다. 상위 개발 폴더에도 같은 이름의 파일이 있지만 자동으로 동기화하지 않으므로, 이후 검색 KB 수정은 **이 폴더의 파일**에 반영해 주세요.
+`retriever.py`, `chroma_index.py`, `chroma_sample.py`, `worker_client.py`는 현재 실행 코드가 참조하는 모듈이다. `chroma_sample.py`는 전체 색인에서도 공통 함수를 사용하므로 단순한 폐기 샘플이 아니다. `02_search.cmd`는 기존 한 줄 검색 진입점이며, `validate_kb.py`는 KB 검증 도구다.
 
-## 코드로 실행하기
+## 폴더 안내
 
-이 폴더에서 PowerShell을 열면 아래 명령으로도 실행할 수 있습니다. 가상환경을 별도로 활성화할 필요가 없습니다.
+| 폴더 | 내용 |
+|---|---|
+| [docs](docs/) | 실행 안내와 이전 작업 이력 |
+| [tools](tools/) | Chroma 샘플 점검 실행 파일·검수 스냅샷 기록 도구 |
+| [tests](tests/) | 자동 테스트와 연결 검사 |
+| [schemas](schemas/) / [examples](examples/) | 청크 입출력 규격과 샘플 |
+| [reports](reports/) / [handoff](handoff/) | 실행 결과와 팀 전달 자료 |
+| [releases](releases/) | 과거 검수 스냅샷. 운영 최종 승인본을 의미하지 않음 |
+| `data/`, `models/`, `.venv/` | 실행 데이터·모델·환경. 실행에 필요하므로 유지 |
 
-```powershell
-# 문장 하나 검색
-.\.venv\Scripts\python.exe retriever.py "VPN을 이용해 외부에서 내부 시스템에 접속했다."
+Chroma 샘플 점검은 [tools/03_check_chroma.cmd](tools/03_check_chroma.cmd)에서 실행한다. 상세 사용법은 [전체 색인 안내](docs/ChromaDB_전체색인_안내.md), [샘플 실행 안내](docs/ChromaDB_실행안내.md), [기존 작업 이력](docs/작업이력.md)을 참고한다.
 
-# JSON schema.md의 retrieval.candidates 형식으로 출력
-.\.venv\Scripts\python.exe retriever.py "분기별 접근권한 검토 결과" --json --evidence-id EVID-001
-
-# 후보 수 변경
-.\.venv\Scripts\python.exe retriever.py "백업 데이터를 복구 시험했다." --top-k 3
-
-# KB 구조만 검사 (모델 로딩/다운로드 없음)
-.\.venv\Scripts\python.exe retriever.py --validate
-
-# 테스트 실행 (모델 다운로드 없음)
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
-
-파이썬 코드 안에서는 다음과 같이 사용할 수 있습니다.
-
-```python
-from retriever import Retriever
-
-retriever = Retriever()  # 프로그램 시작 시 한 번 생성
-result = retriever.search(
-    "분기마다 사용자의 접근권한을 검토했다.",
-    top_k=5,
-    evidence_id="EVID-001",
-)
-print(result)
-```
-
-## 기존 한 줄 검색(retriever.py)의 내부 처리 순서
-
-`controls.json → 검색 문장 101개 → BGE-M3 벡터 → 증적 벡터와 코사인 유사도 비교 → Top-5`
-
-- 이름, 요구사항, 키워드, 증거자료를 모두 사용합니다. 키워드만 정확히 일치시키는 검색은 아닙니다.
-- 증적과 통제항목 모두 동일한 모델로 변환합니다.
-- 101개 벡터를 전부 비교하므로 별도 Vector DB는 사용하지 않습니다.
-- KB 내용/순서, 모델 파일의 크기·수정 시각, 주요 라이브러리 버전이 바뀌면 저장된 벡터를 다시 만듭니다.
-- 모델 입력 한도를 넘는 글은 오류로 알립니다. 파일 업로드, OCR, 자동 청킹, LLM 최종 판단은 후속 단계입니다.
-- 관련성이 낮은 글도 설정한 수만큼 후보가 나옵니다. 관련성 판단 임계값은 아직 정하지 않았습니다.
-- 유사도는 정답일 확률이나 LLM의 confidence가 아닙니다.
-
-## 로컬 실행과 확인 범위
-
-검색은 `local_files_only=True`와 오프라인 설정으로 로컬 모델을 사용합니다. 인터넷 접속은 최초 설치 및 `--prepare`의 모델 다운로드에 필요합니다. 폐쇄망에서는 같은 운영체제·Python 버전에 맞는 라이브러리와 모델을 사전에 반입해 설치해야 합니다. `.venv` 폴더는 다른 컴퓨터로 단순 복사하는 방식의 배포를 권장하지 않습니다.
-
-코드 검증은 실제 101개 KB와 계산용 테스트 벡터를 사용합니다. 테스트용 가짜 모델은 캐시 및 입출력 검사용이며 BGE-M3의 검색 품질을 입증하지 않습니다. 이 컴퓨터에서는 BGE-M3 모델 다운로드, 101개 KB 벡터 생성, 예시 검색까지 실행했습니다. 실제 증적 사례를 더 모아 정답이 Top-5에 들어오는지 계속 확인해야 합니다.
-
-참고: [BGE-M3 공식 모델](https://huggingface.co/BAAI/bge-m3), [Sentence Transformers 공식 문서](https://sbert.net/docs/package_reference/sentence_transformer/model.html)
+이번 폴더 정리에서는 검색 로직·KB·모델을 변경하지 않았다. 테스트 도구나 설치 설정도 실제로 사용하므로 파일명이 오래됐다는 이유로 보관 폴더로 옮기지 않는다.

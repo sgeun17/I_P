@@ -12,7 +12,7 @@ sys.path.insert(0, str(HERE))
 from checklist_store import ChecklistStore
 from judgment_review import JudgmentReviewError, check_review_output, prepare_judgment_review
 from reason_codes import ReasonCatalog, ReasonCodeError
-from verify_chapter2_review_flow import CATALOG, FULL, fixed_response, make_request
+from tools.verify_chapter2_review_flow import CATALOG, FULL, fixed_response, make_request
 
 
 class Chapter2CatalogTests(unittest.TestCase):

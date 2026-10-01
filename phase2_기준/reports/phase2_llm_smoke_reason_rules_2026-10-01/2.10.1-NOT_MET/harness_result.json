@@ -1,0 +1,25 @@
+{
+  "raw_response": "{\n  \"item_id\": \"2.10.1-Q03\",\n  \"control_id\": \"2.10.1\",\n  \"result\": \"NOT_MET\",\n  \"reason\": \"2026년 9월30일까지 월간 운영현황 점검 의무가 있었으나, 담당자는 해당 점검을 수행하지 않았음을 10월1일 확인하였다.\",\n  \"reason_codes\": [\"P2_NM_REQUIRED_ACTION_NOT_DONE\"],\n  \"citations\": [\n    {\n      \"chunk_id\": \"SYN-CHAPTER2_v1_c0000\",\n      \"page\": null,\n      \"quote\": \"공식 확인서: 가상 A시스템 FW-A는 2026년 9월30일까지 월간 운영현황 점검 의무가 있었으나, 담당자는 해당 점검을 수행하지 않았음을 10월1일 확인하였다.\"\n    }\n  ]\n}",
+  "parsed_output": {
+    "item_id": "2.10.1-Q03",
+    "control_id": "2.10.1",
+    "result": "NOT_MET",
+    "reason": "2026년 9월30일까지 월간 운영현황 점검 의무가 있었으나, 담당자는 해당 점검을 수행하지 않았음을 10월1일 확인하였다.",
+    "reason_codes": [
+      "P2_NM_REQUIRED_ACTION_NOT_DONE"
+    ],
+    "citations": [
+      {
+        "chunk_id": "SYN-CHAPTER2_v1_c0000",
+        "page": null,
+        "quote": "공식 확인서: 가상 A시스템 FW-A는 2026년 9월30일까지 월간 운영현황 점검 의무가 있었으나, 담당자는 해당 점검을 수행하지 않았음을 10월1일 확인하였다."
+      }
+    ]
+  },
+  "attempts": 1,
+  "retry_count": 0,
+  "final_error_code": null,
+  "validation_messages": [],
+  "request_error_status": null,
+  "request_error_message": null
+}

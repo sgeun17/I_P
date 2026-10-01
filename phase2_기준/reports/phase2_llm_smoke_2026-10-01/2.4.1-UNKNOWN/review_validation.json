@@ -1,0 +1,56 @@
+{
+  "contract_version": "phase2-judgment-review-0.1",
+  "review_only": true,
+  "approved": false,
+  "human_approved": false,
+  "llm_executed": false,
+  "llm_execution_scope": "THIS_FUNCTION_ONLY",
+  "review_required": true,
+  "response_origin": "CALLER_PROVIDED_SOURCE_UNVERIFIED",
+  "partial_review": true,
+  "phase1_validation_overridden_by_review": false,
+  "phase1_validation_scope": "STORED_RESULT_ONLY",
+  "validation": {
+    "passed": true,
+    "schema_valid": true,
+    "question_coverage_valid": true,
+    "reasons_valid": true,
+    "citations_valid": true,
+    "semantic_judgment_checked": false,
+    "issues": [],
+    "warnings": [
+      {
+        "code": "REVIEW_CONTEXT_INCOMPLETE",
+        "message": "검토 대상·시점·적용 정보의 확인이 필요합니다.",
+        "fields": [
+          "applicable_basis",
+          "effective_basis"
+        ]
+      }
+    ]
+  },
+  "parsed_output": {
+    "checklist_version": "phase2-checklist-chapter2-full-draft-2026-10-01-r3",
+    "catalog_version": "phase2-reason-codes-chapter2-full-draft-2026-10-01-r3",
+    "evidence_id": "SYN-CHAPTER2",
+    "version": 1,
+    "item_results": [
+      {
+        "item_id": "2.4.1-Q02",
+        "control_id": "2.4.1",
+        "result": "UNKNOWN",
+        "reason": "제출된 자료는 가상 B시스템의 B실을 대상으로 하며, 가상 A시스템 장소와의 대응표가 없다는 내용만 포함되어 있다. 검토 대상은 '가상 A시스템'이며, 해당 시스템의 보관·처리 장소가 물리적 보호구역 지정기준에 따라 지정되었는지에 대한 직접적인 근거가 제공되지 않았다. 따라서 대상·기간·사건의 연결 정보가 불충분하여 판단이 불가능하다.",
+        "reason_codes": [
+          "P2_U_SUBJECT_OR_EVENT_UNLINKED"
+        ],
+        "citations": [
+          {
+            "chunk_id": "SYN-CHAPTER2_v1_c0000",
+            "page": null,
+            "quote": "제출된 2026년 3분기 보호구역 지정대장은 가상 B시스템의 B실을 대상으로 한다. 가상 A시스템 장소와의 대응표는 없다."
+          }
+        ]
+      }
+    ]
+  }
+}

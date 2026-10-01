@@ -1,0 +1,102 @@
+{
+  "started_at_utc": "2026-10-01T12:42:43.218982+00:00",
+  "model": "qwen3:14b",
+  "generation": {
+    "temperature": 0,
+    "max_tokens": 1024,
+    "stream": false,
+    "thinking": false,
+    "thinking_effort": "medium",
+    "seed": null
+  },
+  "retry_policy": {
+    "max_retries": 1,
+    "timeout_seconds": 60
+  },
+  "base_url": "http://127.0.0.1:11435/v1",
+  "prompt_version": "phase2_grounding_v0.1-dev",
+  "output_schema_origin": "ItemJudgment.model_json_schema()",
+  "review_only": true,
+  "human_approved": false,
+  "synthetic": true,
+  "actual_evidence_used": false,
+  "llm_executed": true,
+  "checklist_version": "phase2-checklist-chapter2-full-draft-2026-10-01-r3",
+  "catalog_version": "phase2-reason-codes-chapter2-full-draft-2026-10-01-r3",
+  "source_sha256": {
+    "phase2_기준\\chapter2_full_checklist_draft.json": "6e791ee40cd4920822e9093a9f9e8a3e3d053359cc7a6bafccc6cfd4af7e9765",
+    "phase2_기준\\chapter2_reason_codes_draft.json": "799d37627b9db7b4df672be03d3da05bb4c81cfc05f144020c101d48427c4336",
+    "phase2_기준\\chapter2_review_cases.json": "9a77861427575588562380300c896d3ba72b58af6660e7416236f4592a0cdfb9",
+    "phase2_기준\\run_phase2_llm_smoke.py": "edc9098ab463061fa225367e75b4b1ac4a9520db1361846a4df8e6362561b950",
+    "phase2_기준\\checklist_draft.json": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a",
+    "phase2_기준\\reason_codes_draft.json": "8db7384ce67e496aeaa00441d69eaf032abd1a9ad6caaed8e03044a87da45ae4",
+    "phase2_기준\\judgment_review.py": "483b99bd1c380a4f1a8379529d0187793c4d55f14ab920f3f5769cc57392f84f",
+    "phase2_기준\\reason_codes.py": "ec7dac43c78da79e4a81a245b280cd56e99ec1bc18d7346225210a478eca1d7f",
+    "phase2_기준\\checklist_store.py": "032840baa2c0c1961e653f6c377139dc57563cfc50273e8e1da4cd9c5c4fe877",
+    "phase2_판단\\src\\checklist_adapter.py": "0664869cf0eb217e9e5d478311547e6ef9fe1b1e834571a0a4cdd4072eccf8fa",
+    "phase2_판단\\src\\context_builder.py": "28e383f639a90afdaa6ca6e81bb51ee698f99bca82f6440556c9b423288f745d",
+    "phase2_판단\\src\\draft_contract.py": "d3c15baf4fd4a34fd51ecf75d54c724387fe3f70db56abe008cebb772e4c90ff",
+    "phase2_판단\\src\\grounding_prompts.py": "88f973e74ea474d92aef339929fc136c62f7c131e560552b948f2e37d435c34e",
+    "phase2_판단\\src\\judgment_harness.py": "daa3399e45981fd33859bac666491485f201ff9b4d2dd1aa49e15f79e3a46e26",
+    "phase2_판단\\src\\phase1_runtime.py": "966849ab2c68a24b661b047d9e9f44fb3d157da2f9b99a5a1eac66c8cad6f057",
+    "phase2_판단\\src\\remediation_guides.py": "406c07e1d38f07ca064f1210aa526eb34f17650531f1c6269c6ecd68c1041603",
+    "phase2_판단\\src\\versions.py": "826f7776876f225c9c119f8c378664e64a1bd7507a9e561742b2ea79e76ced91",
+    "phase2_판단\\src\\__init__.py": "bfebc756c926099a307c497dc6c6d31ed224c025285f387849aaba8bf4015e4e",
+    "phase1_판단\\src\\check.py": "d77b006f39286461fc14c078c241d8eacec20a266bdc93b549564e8b870faef9",
+    "phase1_판단\\src\\enums.py": "530f1f8ee7be81594c3ed9634fbd0218195f6e2f6fbac03aaed4a0934946c0ac",
+    "phase1_판단\\src\\kb.py": "66da8d6e13b6a37b581d9b55f4a22a6dd19946d9454394ab60cbc8716b8d0eb4",
+    "phase1_판단\\src\\llm_client.py": "77f45b448e909ca0d770d455cf9cf002547e393d55cafda4549e0abab7f5bed2",
+    "phase1_판단\\src\\llm_config.py": "1094305708787fff3e48322a6cd17a683bc9b912e9e04e04eb0be14e296e8c07",
+    "phase1_판단\\src\\llm_runner.py": "89e122e2156d9893d81c4f94a73d5eb1762f852b53c5a7d0e78c6e4c43f301bc",
+    "phase1_판단\\src\\metrics.py": "2cfa6e459cf380dddccb078c5454bdcc29b5c433ea57a983f4a2fbd2146e860f",
+    "phase1_판단\\src\\models.py": "856989921b5e82c98c185250607463c57c5663b5ab9e2a42c76d74a755c93fdd",
+    "phase1_판단\\src\\output_parser.py": "657c5dd7c62bc9b054bd00c4e4176f8f677ea4e6b4a66aa2a731249164355b45",
+    "phase1_판단\\src\\prompts.py": "92dbecebd8252d630eb0581ee012a42c74802bb8c7962f9daa8181473dcbc59d",
+    "phase1_판단\\src\\retrieval_adapter.py": "107e1abca637324d32851dd2929c16b750cb84113a5c65b76ba9900123c6ad8b",
+    "phase1_판단\\src\\retry_prompt.py": "24d6d8adf5fc5a89f85833f879ee0e2ed735b44494b8fd83b1c3262cddb5fe7b",
+    "phase1_판단\\src\\review.py": "a8a7ec0af7f225baf61e41524514182f55d071139c55aa261556714882ffd4a4",
+    "phase1_판단\\src\\review_policy.py": "00afe6e4b2e0e5f5d9fd2250af4441f9df798ebd216227f5f70c4199d942dc8a",
+    "phase1_판단\\src\\service.py": "44f28502f8822f82db80c41aee712cccc7811ffa0b2ea4ce9a323c08a1bb75e0",
+    "phase1_판단\\src\\validators.py": "e2481378e4b9cc7cacd96caabfb4226b5100bdf6ac5d040fa0468b39617ee94b",
+    "phase1_판단\\src\\versions.py": "5a2a071f1f2b4b1d06c1b46fddd29ca4e2ece8391e7e71821ddf0d8b32e09d93"
+  },
+  "expected_label_origin": "AI_DRAFT_NOT_HUMAN_APPROVED",
+  "limits": [
+    "대표 3문항·가상 9사례이며 700문항 정확도나 실제 증적 성능이 아니다.",
+    "기대 판정·기대 사유·기대 사유 설명은 모델 입력에 포함하지 않는다.",
+    "사유 코드 기대값 포함 여부는 진단 지표이며 복수 유효 사유를 오답으로 단정하지 않는다.",
+    "정확한 Qwen tokenizer 전체 예산 검사는 미연결이다.",
+    "Phase1 확정 매핑은 합성 fixture이며 실제 검색·매핑 성능을 검사하지 않는다.",
+    "검증기의 llm_executed=false는 검증 함수 자체의 역할 표시이며 실제 호출은 이 보고서에 기록한다."
+  ],
+  "server_version": {
+    "version": "0.35.0"
+  },
+  "model_metadata": {
+    "name": "qwen3:14b",
+    "model": "qwen3:14b",
+    "modified_at": "2026-10-01T06:34:37.216914167Z",
+    "size": 9276198565,
+    "digest": "bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen3",
+      "families": [
+        "qwen3"
+      ],
+      "parameter_size": "14.8B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 40960,
+      "embedding_length": 5120
+    },
+    "capabilities": [
+      "completion",
+      "tools",
+      "thinking"
+    ]
+  },
+  "server_ps_before": {
+    "models": []
+  }
+}

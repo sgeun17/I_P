@@ -1,0 +1,324 @@
+{
+  "contract_version": "phase2-judgment-review-0.1",
+  "review_only": true,
+  "approved": false,
+  "checklist_version": "phase2-checklist-chapter2-full-draft-2026-10-01-r3",
+  "checklist_source_sha256": "6e791ee40cd4920822e9093a9f9e8a3e3d053359cc7a6bafccc6cfd4af7e9765",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "catalog_version": "phase2-reason-codes-chapter2-full-draft-2026-10-01-r3",
+  "catalog_sha256": "799d37627b9db7b4df672be03d3da05bb4c81cfc05f144020c101d48427c4336",
+  "evidence_id": "SYN-CHAPTER2",
+  "version": 1,
+  "source_phase1_result": {
+    "evidence_id": "SYN-CHAPTER2",
+    "version": 1,
+    "processing_status": "COMPLETED",
+    "match_status": "MATCHED",
+    "mapped_controls": [
+      {
+        "control_id": "2.1.1",
+        "control_name": "정책의 유지관리",
+        "relation": "PRIMARY",
+        "llm_confidence": 0.9,
+        "reason": "해당 합성 사례 문항의 ID로 만든 시험용 매핑이다.",
+        "citations": [
+          {
+            "chunk_id": "SYN-CHAPTER2_v1_c0000",
+            "page": null,
+            "quote": "공식 확인서: 가상 A시스템은 2026년 3분기 정책·시행문서의 정기 타당성 검토 절차 수립 대상이다. 보안책임자는 해당 절차를 수립하지 않았음을 확인하였다."
+          }
+        ],
+        "similarity_score": 0.0
+      }
+    ],
+    "candidate_decisions": [],
+    "validation": {
+      "passed": true,
+      "schema_valid": true,
+      "control_ids_valid": true,
+      "citations_valid": true,
+      "rules_valid": true,
+      "issues": [],
+      "warnings": []
+    },
+    "human_review": {
+      "required": false,
+      "status": "NOT_REQUIRED",
+      "reasons": [],
+      "threshold_profile": null,
+      "reviewer_id": null,
+      "reviewed_at": null,
+      "review_note": null
+    },
+    "versions": {
+      "schema_version": "0.3.1",
+      "prompt_version": "SYNTHETIC_FIXTURE_NOT_EXECUTED",
+      "model_name": "NOT_CALLED",
+      "ruleset_version": "SYNTHETIC_FIXTURE",
+      "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+      "embedding_model_revision": null
+    },
+    "llm_raw_response_ref": null,
+    "trace_id": "synthetic-2.1.1",
+    "created_at": "2026-10-01T21:42:50.236672+09:00",
+    "processing_time_ms": null
+  },
+  "phase1_validation_overridden_by_review": false,
+  "phase1_validation_scope": "STORED_RESULT_ONLY",
+  "mapped_control_ids": [
+    "2.1.1"
+  ],
+  "available_question_count": 9,
+  "partial_review": true,
+  "context": {
+    "subject": "가상 A시스템",
+    "period_or_event": "2026년 3분기",
+    "applicable_basis": null,
+    "effective_basis": null
+  },
+  "questions": [
+    {
+      "item_id": "2.1.1-Q01",
+      "control_id": "2.1.1",
+      "source_clause": "정보보호 및 개인정보보호 관련 정책과 시행문서의 정기 타당성 검토 절차 수립",
+      "question": "정보보호 및 개인정보보호 정책·시행문서의 정기 타당성 검토 절차가 수립되어 있는가?",
+      "check_kind": "procedure",
+      "critical": null,
+      "critical_status": "UNDECIDED",
+      "evidence_rule": {
+        "candidate_evidence": [
+          "효력 있는 정책·시행문서 검토 절차",
+          "검토 주기·담당자·방법·후속조치가 포함된 문서"
+        ],
+        "met": "동일 범위의 정책·시행문서를 대상으로 검토 시기, 역할, 방법과 후속조치를 정한 유효한 절차가 확인됨.",
+        "not_met": "적용 대상과 절차 수립 의무가 확인되고 검토 절차를 수립하지 않았다는 공식 확인 또는 무절차 운영 방침이 직접 확인됨.",
+        "unknown": "필요한 근거가 미제출·누락·판독 불가이거나 적용 의무·예외·대상·기간이 확인되지 않으면 UNKNOWN이다. 검토 대상 사건이 없거나 이행 시기가 아직 도래하지 않은 경우에는 적용 제외 처리 합의 전까지 UNKNOWN으로 남긴다. 동일 대상·기간·사건 및 당시 효력 있는 절차·기준을 연결하여 대조한다. 서로 다른 대상·시점 자료를 단순 상충으로 보거나 최신 작성일만으로 우선하지 않으며, 동일 범위의 상충이 해소되지 않으면 UNKNOWN이다. 자료 미제출 또는 조회되지 않은 기록만으로 미이행을 확정하지 않는다.",
+        "citation_required_for": [
+          "MET",
+          "NOT_MET"
+        ],
+        "scope_rule": "근거에 확인되는 동일한 정책·조직·인력·자산·외부자·계약·사건과 검토 기간에 한정하여 판단한다. 표본을 조직 전체로 확대하지 않는다. 당시 효력 있는 기준과 예외 승인 범위를 확인한다. 2023년 안내서의 법령·수치·예시는 현재 법령 또는 모든 대상의 고정 의무로 자동 적용하지 않는다. 동일 자료를 다른 통제에서 공유해도 결과를 자동 복사하거나 중복 가중치를 합산하지 않는다.",
+        "required_context": [
+          "검토 대상 정책·부서·인력·자산·외부자·계약의 식별 정보(개인정보는 가명·마스킹)",
+          "검토 대상 기간 또는 사건과 이행 시기",
+          "증거의 출처·위치와 확인 범위",
+          "당시 적용 기준·절차·계약과 효력 시점 또는 버전",
+          "자료 간 동일 대상·기간·사건 연결 정보"
+        ]
+      },
+      "review_status": "SOURCE_REVIEWED_DRAFT",
+      "source_refs": [
+        {
+          "source_id": "KISA-2023",
+          "pdf_page": 53,
+          "printed_page": 49,
+          "section": "세부 설명"
+        }
+      ],
+      "review_note": "보유 2023년 KISA 일반 안내서 원문 대조. 팀 승인·현행 법규 확인·실제 운영 판정 전. 개인정보는 가명·마스킹한 메타정보로 확인하며 실제 비밀값·불필요한 개인정보를 요구하지 않는다. ",
+      "applicability_condition": null
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "SYN-CHAPTER2_v1_c0000",
+      "evidence_id": "SYN-CHAPTER2",
+      "version": 1,
+      "chunk_index": 0,
+      "file_type": "txt",
+      "source_file": "synthetic.txt",
+      "chunk_type": "text",
+      "page_start": null,
+      "page_end": null,
+      "heading": null,
+      "text": "공식 확인서: 가상 A시스템은 2026년 3분기 정책·시행문서의 정기 타당성 검토 절차 수립 대상이다. 보안책임자는 해당 절차를 수립하지 않았음을 확인하였다.",
+      "block_orders": [
+        0
+      ],
+      "source": "parser"
+    }
+  ],
+  "reason_definitions": [
+    {
+      "code": "P2_NM_RULE_NOT_DEFINED",
+      "result": "NOT_MET",
+      "label": "절차·기준 미수립 확인",
+      "use_when": "적용 대상의 필수 절차·규정·분류·기준·주기 등이 미수립 상태라는 직접 확인이 있다.",
+      "do_not_use_when": "절차서가 첨부되지 않았다는 사실만으로 사용하지 않는다.",
+      "required_context": [
+        "검토 대상·시점",
+        "해당 문항에서 요구하는 절차·기준",
+        "미수립을 직접 확인한 문구·위치"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_NM_REQUIRED_ACTION_NOT_DONE",
+      "result": "NOT_MET",
+      "label": "필수 행동 미수행 확인",
+      "use_when": "당시 해당 대상·사건에 필요한 실행·기록·검토·개선 행동을 하지 않았다는 직접 확인이 있다.",
+      "do_not_use_when": "실행 기록을 제출하지 않았거나 사건·의무가 아직 발생하지 않은 경우에 사용하지 않는다.",
+      "required_context": [
+        "적용 사건·기간",
+        "당시 이행 의무와 기한이 있는 경우 그 기한",
+        "미수행을 직접 확인한 문구·위치"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_NM_RULE_VIOLATED",
+      "result": "NOT_MET",
+      "label": "적용 기준과 불일치 확인",
+      "use_when": "해당 대상·사건의 실제 상태 또는 처리 방법이 당시 적용되는 문항 기준과 다르다는 직접 확인이 있다.",
+      "do_not_use_when": "적용 기준·실제 상태·사건 연결 중 하나라도 확인되지 않으면 사용하지 않는다. 내부 기준만으로 원문 요구를 대체하지 않는다.",
+      "required_context": [
+        "당시 적용 기준·효력",
+        "같은 대상·사건의 실제 상태·처리",
+        "불일치를 직접 확인한 문구·위치"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_EVIDENCE_INSUFFICIENT",
+      "result": "UNKNOWN",
+      "label": "근거 자료·내용 부족",
+      "use_when": "필요한 자료가 없거나 일부만 제공되어 문항을 확인할 정보가 부족하다.",
+      "do_not_use_when": "자료 미첨부를 실제 미수행 또는 미수립으로 바꾸지 않는다.",
+      "required_context": [
+        "필요한 정보",
+        "제공된 정보와 확인되지 않은 정보"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_SCOPE_OR_RULE_UNCLEAR",
+      "result": "UNKNOWN",
+      "label": "적용 범위·기준 불명",
+      "use_when": "제공된 자료의 적용 대상·범위 또는 문항에 적용할 기준을 확정할 수 없다.",
+      "do_not_use_when": "기준이 존재하지 않는다는 직접 확인과 구분한다. 금융권 추가요건 등을 임의로 적용하지 않는다.",
+      "required_context": [
+        "검토 대상·범위",
+        "확인되지 않은 적용 관계·기준"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_SUBJECT_OR_EVENT_UNLINKED",
+      "result": "UNKNOWN",
+      "label": "대상·사건 자료 연결 불명",
+      "use_when": "계정·매체·백업본·처리 사건 등과 제공 자료가 같은 대상을 설명하는지 연결되지 않는다.",
+      "do_not_use_when": "확인된 개별 사건을 조직 전체로 확대하지 않는다.",
+      "required_context": [
+        "검토 대상·사건 식별자",
+        "자료에 식별된 대상·사건",
+        "확인되지 않은 대응 관계"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_TIME_OR_VERSION_UNCLEAR",
+      "result": "UNKNOWN",
+      "label": "시점·기간·효력 불명",
+      "use_when": "수행일·검토기간·효력일·당시 적용 버전을 확인하지 못해 해당 시점의 이행을 대조할 수 없다.",
+      "do_not_use_when": "문서가 오래됐다는 이유만으로 사용하지 않는다. 임의의 최신성 일수 또는 최신 작성일 우선 규칙을 만들지 않는다.",
+      "required_context": [
+        "검토 기준일·대상 기간",
+        "자료의 작성·수행·효력 시점 또는 버전",
+        "확인되지 않은 시간 관계"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_EVIDENCE_UNREADABLE",
+      "result": "UNKNOWN",
+      "label": "근거 판독 불가",
+      "use_when": "필요한 근거 내용이 흐림·손상·가림 등의 이유로 읽히지 않는다.",
+      "do_not_use_when": "제목·파일명·다른 읽히는 부분만으로 필요한 본문 내용을 추측하지 않는다.",
+      "required_context": [
+        "판독이 필요한 부분",
+        "판독 불가한 위치·내용"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_EVIDENCE_CONFLICT",
+      "result": "UNKNOWN",
+      "label": "동일 범위 근거 상충",
+      "use_when": "동일 대상·사건·적용 시점의 근거가 서로 상충하고 유효 근거를 정할 정보가 없다.",
+      "do_not_use_when": "대상·시점이 다른 자료를 곧바로 상충으로 취급하지 않는다. 작성일이 최신이라는 이유만으로 우선하지 않는다.",
+      "required_context": [
+        "동일 대상·사건·시점 연결",
+        "서로 상충하는 근거",
+        "해소되지 않은 유효성·우선권"
+      ],
+      "pending_decision_id": "PD_CONFLICT_RESOLUTION"
+    },
+    {
+      "code": "P2_U_NO_TRIGGER_EVENT",
+      "result": "UNKNOWN",
+      "label": "검토 대상 사건 없음",
+      "use_when": "해당 기간에 조건부 이행을 검토할 인사 사건·발견 문제 등이 없다고 확인되었고 적용 제외 처리가 미합의다.",
+      "do_not_use_when": "사건 없음과 사건 자료 미제공을 혼동하지 않는다. 자동 MET·NOT_MET·N/A를 부여하지 않는다.",
+      "required_context": [
+        "해당 문항의 이행 발생 조건",
+        "검토 기간",
+        "사건이 없다는 직접 확인"
+      ],
+      "pending_decision_id": "PD_NO_EVENT_POLICY"
+    },
+    {
+      "code": "P2_U_EXCEPTION_UNRESOLVED",
+      "result": "UNKNOWN",
+      "label": "예외 적용 검토 미완료",
+      "use_when": "공유계정 등 예외의 적용 가능성·승인·책임추적성을 확인하지 못해 일반 기준만으로 결론을 내릴 수 없다.",
+      "do_not_use_when": "공유계정 존재만으로 자동 NOT_MET이나 예외 승인을 부여하지 않는다.",
+      "required_context": [
+        "예외 관련 문항·범위",
+        "업무상 사유·승인·책임추적성 중 확인되지 않은 정보"
+      ],
+      "pending_decision_id": "PD_EXCEPTION_POLICY"
+    },
+    {
+      "code": "P2_U_NOT_YET_DUE",
+      "result": "UNKNOWN",
+      "label": "이행 기한 미도래",
+      "use_when": "확인된 적용 기한이 검토 기준일 이후이고 아직 이행 완료를 확인하지 못했으며 중간 상태 처리가 미합의다.",
+      "do_not_use_when": "기한 이전의 미완료를 기한 위반으로 보지 않는다. 기한이 남았다는 이유만으로 MET을 부여하지 않는다.",
+      "required_context": [
+        "검토 기준일",
+        "해당 사건의 적용 기한",
+        "현재 진행·완료 상태"
+      ],
+      "pending_decision_id": "PD_NOT_YET_DUE_POLICY"
+    },
+    {
+      "code": "P2_U_OBSERVATION_INCOMPLETE",
+      "result": "UNKNOWN",
+      "label": "필요 관찰기간 미확인",
+      "use_when": "적용 의무·대상 기간은 확인되었지만 일부 시점·일부 백업본 자료만 있어 검토 대상 전체의 기간 이행을 확인할 수 없다.",
+      "do_not_use_when": "최근 백업 한 건 또는 한 시점의 존재를 전체 보관기간 이행으로 확대하지 않는다. 문서 나이만으로 사용하지 않는다.",
+      "required_context": [
+        "검토 대상·적용 의무 기간",
+        "실제 확인 가능한 관찰 구간",
+        "확인되지 않은 구간·대상"
+      ],
+      "pending_decision_id": null
+    }
+  ],
+  "source_documents": [
+    {
+      "source_id": "KISA-2023",
+      "path": "../../ISMP-P 인증기준·제도/ISMS-P 인증기준 안내서(2023.11.23).pdf",
+      "sha256": "72ed9bbb8deee2b57e7e8ba3e19315f46a8d63be2db334ae2fbe82956fcd344e",
+      "page_numbering": "pdf_page는 파일 첫 페이지부터 1, printed_page는 인쇄 쪽수",
+      "currency_status": "보유 2023년 판본 대조. 현재 시행 법규 또는 최신 판본 확인 아님."
+    },
+    {
+      "source_id": "FSI-2023",
+      "path": "../../ISMP-P 인증기준·제도/금융보안원 - 금융권에 적합한 ISMS-P 인증기준 점검항목 안내서(2023.12.).pdf",
+      "sha256": "3d0b8cd367e673cc72d0218577f6ec394566c8ea5136035803c237f5b7cfc50e",
+      "page_numbering": "pdf_page는 파일 첫 페이지부터 1, printed_page는 인쇄 쪽수",
+      "currency_status": "보유 2023년 판본 대조. 현재 시행 법규 또는 최신 판본 확인 아님."
+    }
+  ]
+}

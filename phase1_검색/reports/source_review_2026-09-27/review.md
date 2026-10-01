@@ -131,8 +131,8 @@ WBS 전체 완료나 Phase 1 최종 버전 고정으로 표시하지 않았다.
 
 ## 다음에 이어볼 파일
 
-- [수정된 질문 검토본](../../../phase2_기준/checklist_review.md)
+- [수정된 질문 검토본](../../../phase2_기준/docs/checklist_review.md)
 - [체크리스트 JSON](../../../phase2_기준/checklist_draft.json)
-- [검증 결과](../../../phase2_기준/validation_report.json)
+- [검증 결과](../../../phase2_기준/reports/validation_report.json)
 
 각 문항의 원문 참조는 프로젝트 질문의 해석을 추적하기 위한 것이며 공식 인증 판정이나 승인된 정답이 아니다.

@@ -1,0 +1,25 @@
+{
+  "raw_response": "{\n  \"item_id\": \"2.4.1-Q02\",\n  \"control_id\": \"2.4.1\",\n  \"result\": \"MET\",\n  \"reason\": \"대상 자산의 실제 보관 장소(A실)가 당시 유효한 지정기준에 따라 제한구역으로 지정되었고, 지정대장의 장소 ID가 자산 목록과 일치하여 구역 지정이 확인됨.\",\n  \"reason_codes\": [\"P2_NM_RULE_VIOLATED\"],\n  \"citations\": [\n    {\n      \"chunk_id\": \"SYN-CHAPTER2_v1_c0000\",\n      \"page\": null,\n      \"quote\": \"가상 A시스템의 2026년 3분기 자산·장소 전수 목록에는 개인정보 보관실 A실 한 곳이 있다. 당시 유효한 지정기준에 따라 A실을 제한구역으로 지정했고 지정대장의 장소 ID가 자산 목록과 일치한다.\"\n    }\n  ]\n}",
+  "parsed_output": {
+    "item_id": "2.4.1-Q02",
+    "control_id": "2.4.1",
+    "result": "MET",
+    "reason": "대상 자산의 실제 보관 장소(A실)가 당시 유효한 지정기준에 따라 제한구역으로 지정되었고, 지정대장의 장소 ID가 자산 목록과 일치하여 구역 지정이 확인됨.",
+    "reason_codes": [
+      "P2_NM_RULE_VIOLATED"
+    ],
+    "citations": [
+      {
+        "chunk_id": "SYN-CHAPTER2_v1_c0000",
+        "page": null,
+        "quote": "가상 A시스템의 2026년 3분기 자산·장소 전수 목록에는 개인정보 보관실 A실 한 곳이 있다. 당시 유효한 지정기준에 따라 A실을 제한구역으로 지정했고 지정대장의 장소 ID가 자산 목록과 일치한다."
+      }
+    ]
+  },
+  "attempts": 1,
+  "retry_count": 0,
+  "final_error_code": null,
+  "validation_messages": [],
+  "request_error_status": null,
+  "request_error_message": null
+}

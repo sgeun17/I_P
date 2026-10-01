@@ -1,0 +1,25 @@
+{
+  "raw_response": "{\n  \"item_id\": \"2.4.1-Q02\",\n  \"control_id\": \"2.4.1\",\n  \"result\": \"NOT_MET\",\n  \"reason\": \"지정 의무가 있는 보관·처리 장소가 구역 지정에서 누락된 사실이 확인됨. 적용 의무와 동일 대상·사건·기간이 확인되는 직접 근거가 필요하며 자료 미제출만으로 판단하지 않는다.\",\n  \"reason_codes\": [\"P2_NM_RULE_VIOLATED\"],\n  \"citations\": [\n    {\n      \"chunk_id\": \"SYN-CHAPTER2_v1_c0000\",\n      \"page\": null,\n      \"quote\": \"제출된 2026년 3분기 보호구역 지정대장은 가상 B시스템의 B실을 대상으로 한다. 가상 A시스템 장소와의 대응표는 없다.\"\n    }\n  ]\n}",
+  "parsed_output": {
+    "item_id": "2.4.1-Q02",
+    "control_id": "2.4.1",
+    "result": "NOT_MET",
+    "reason": "지정 의무가 있는 보관·처리 장소가 구역 지정에서 누락된 사실이 확인됨. 적용 의무와 동일 대상·사건·기간이 확인되는 직접 근거가 필요하며 자료 미제출만으로 판단하지 않는다.",
+    "reason_codes": [
+      "P2_NM_RULE_VIOLATED"
+    ],
+    "citations": [
+      {
+        "chunk_id": "SYN-CHAPTER2_v1_c0000",
+        "page": null,
+        "quote": "제출된 2026년 3분기 보호구역 지정대장은 가상 B시스템의 B실을 대상으로 한다. 가상 A시스템 장소와의 대응표는 없다."
+      }
+    ]
+  },
+  "attempts": 1,
+  "retry_count": 0,
+  "final_error_code": null,
+  "validation_messages": [],
+  "request_error_status": null,
+  "request_error_message": null
+}

@@ -8,7 +8,7 @@ if not exist ".venv\Scripts\python.exe" (
 )
 ".venv\Scripts\python.exe" -c "import chromadb" >nul 2>&1
 if errorlevel 1 (
-  echo Run 03_check_chroma.cmd to install ChromaDB first.
+  echo Run tools\03_check_chroma.cmd to install ChromaDB first.
   pause
   exit /b 1
 )

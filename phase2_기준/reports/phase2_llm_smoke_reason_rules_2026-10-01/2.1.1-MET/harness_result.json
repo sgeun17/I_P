@@ -1,0 +1,23 @@
+{
+  "raw_response": "{\n  \"item_id\": \"2.1.1-Q01\",\n  \"control_id\": \"2.1.1\",\n  \"result\": \"MET\",\n  \"reason\": \"정보보호 및 개인정보보호 정책·시행문서의 정기 타당성 검토 절차가 수립되어 있으며, 검토 주기, 담당자, 방법, 후속조치가 포함된 문서가 확인되었다.\",\n  \"reason_codes\": [],\n  \"citations\": [\n    {\n      \"chunk_id\": \"SYN-CHAPTER2_v1_c0000\",\n      \"page\": null,\n      \"quote\": \"가상 A시스템의 2026년 3분기에 유효한 정책 검토 절차: 정보보호 및 개인정보보호 정책과 시행문서를 매년 9월 보안책임자가 법령·환경변화와 대조하고 검토 결과 및 개정 조치를 기록한다.\"\n    }\n  ]\n}",
+  "parsed_output": {
+    "item_id": "2.1.1-Q01",
+    "control_id": "2.1.1",
+    "result": "MET",
+    "reason": "정보보호 및 개인정보보호 정책·시행문서의 정기 타당성 검토 절차가 수립되어 있으며, 검토 주기, 담당자, 방법, 후속조치가 포함된 문서가 확인되었다.",
+    "reason_codes": [],
+    "citations": [
+      {
+        "chunk_id": "SYN-CHAPTER2_v1_c0000",
+        "page": null,
+        "quote": "가상 A시스템의 2026년 3분기에 유효한 정책 검토 절차: 정보보호 및 개인정보보호 정책과 시행문서를 매년 9월 보안책임자가 법령·환경변화와 대조하고 검토 결과 및 개정 조치를 기록한다."
+      }
+    ]
+  },
+  "attempts": 1,
+  "retry_count": 0,
+  "final_error_code": null,
+  "validation_messages": [],
+  "request_error_status": null,
+  "request_error_message": null
+}

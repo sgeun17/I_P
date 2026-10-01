@@ -1,0 +1,23 @@
+{
+  "raw_response": "{\n  \"item_id\": \"2.10.1-Q03\",\n  \"control_id\": \"2.10.1\",\n  \"result\": \"MET\",\n  \"reason\": \"2026년 3분기 동안 가상 A시스템의 방화벽 FW-A에 대해 매월 말 운영점검이 수행되었으며, 7월31일, 8월31일, 9월30일의 점검 결과가 기록되어 있다.\",\n  \"reason_codes\": [],\n  \"citations\": [\n    {\n      \"chunk_id\": \"SYN-CHAPTER2_v1_c0000\",\n      \"page\": null,\n      \"quote\": \"가상 A시스템 방화벽 FW-A의 2026년 3분기 운영점검은 매월 말 실시하도록 정해져 있다. 7월31일·8월31일·9월30일 점검 결과에 장비 ID, 운영현황과 수행자 서명이 모두 기록돼 있다.\"\n    }\n  ]\n}",
+  "parsed_output": {
+    "item_id": "2.10.1-Q03",
+    "control_id": "2.10.1",
+    "result": "MET",
+    "reason": "2026년 3분기 동안 가상 A시스템의 방화벽 FW-A에 대해 매월 말 운영점검이 수행되었으며, 7월31일, 8월31일, 9월30일의 점검 결과가 기록되어 있다.",
+    "reason_codes": [],
+    "citations": [
+      {
+        "chunk_id": "SYN-CHAPTER2_v1_c0000",
+        "page": null,
+        "quote": "가상 A시스템 방화벽 FW-A의 2026년 3분기 운영점검은 매월 말 실시하도록 정해져 있다. 7월31일·8월31일·9월30일 점검 결과에 장비 ID, 운영현황과 수행자 서명이 모두 기록돼 있다."
+      }
+    ]
+  },
+  "attempts": 1,
+  "retry_count": 0,
+  "final_error_code": null,
+  "validation_messages": [],
+  "request_error_status": null,
+  "request_error_message": null
+}

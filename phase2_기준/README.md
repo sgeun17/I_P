@@ -1,235 +1,55 @@
 # Phase2 기준
 
-WBS의 Phase2 기준 작업은 이 디렉토리에서 관리한다. 기본 연결 버전은 `phase2-checklist-draft-2026-09-28`이며, **통제항목 3개·활성 질문 54개·퇴역 질문 3개**를 담은 팀 검수용 초안이다. 별도의 2장 전체 초안은 **64개 항목·700문항**으로 확장했다. 이전 첫 묶음 13개·210문항도 보존했다. 모두 `approved=false`, `critical=null`을 유지한다.
+현재 작업 범위는 **2장 보호대책 요구사항 64개 통제항목·700문항**이다. 현재본은 `2026-10-01-r3`이며 팀 검수용 초안(`approved=false`)이다. 파일 정리가 내용 승인이나 최종 확정을 의미하지 않는다.
 
-## 10/1 기존 적용 조건 검토 (r3)
-
-[기존 조건 440문항 검토](reports/existing_applicability_review_2026-10-01.md): 40문항의 조건을 보완하고 397문항을 유지했으며 3문항의 범위 해석 확인사항을 남겼다. 전체 700문항 중 조건 명시 480문항은 유지된다. 절차·통제가 이미 준비돼 있어야 검사한다는 전제를 보완하고 절차 준비와 실제 사건 검사의 범위를 구분했다. `met`·`not_met`·`unknown` 내용 검토는 보류했으며 질문·ID·판정 기준은 유지했다. 현재 전체 체크리스트·전용 카탈로그는 `-r3`다. 이전 보고서는 해당 버전 당시 기록이다.
-
-[현재 연결 검사](reports/chapter2_review_flow_2026-10-01-r3.json)를 참조한다.
-
-## 10/1 적용 조건 보완 (r2)
-
-적용 조건이 없던 260문항을 검토하여 40문항에 기존 `applicability_condition`을 채웠다. 현재 조건 명시 480문항, 미명시 220문항이다. 질문·ID·충족/미충족/판단불가 기준과 critical은 그대로 유지했다. 수행 의무가 도래했지만 미수행한 회차도 검사 대상에 포함하며, 사건 미발생·기한 미도래를 자동 충족 처리하지 않는다. 전체 체크리스트와 전용 카탈로그는 `-r2` 버전으로 연결한다. 이전 검증 보고서는 당시 버전의 기록이다.
-
-[반영 및 연결 검증](reports/applicability_condition_applied_2026-10-01.json) · [r2 전체 연결 검사](reports/chapter2_review_flow_2026-10-01-r2.json)
-
-## 10/1 전체 700문항 검수 입력·사유 코드 연결
-
-전체 버전을 명시적으로 선택하면 **64개 항목·700문항**을 Phase1 확정 결과의 ID와 연결해 검수 입력을 만들고 제공된 응답을 검사할 수 있다. 기본 카탈로그와 기존 54문항 연결은 유지한다. 아래 이전 작업 기록의 “새 버전 사유 코드·판단 입력 연결 미완료”는 이번에 검수 경로에 한해 보완했다. 실제 Phase2 LLM 호출·운영 승인·전체 문항 정답 검수는 남아 있다.
-
-[전체 버전 사유 카탈로그](chapter2_reason_codes_draft.json)는 기존 13개 코드의 의미를 그대로 재사용하며 전체 체크리스트의 버전·파일 해시에 연결한다. `ReasonCatalog()` 기본값은 기존 버전이므로 전체 초안에는 아래처럼 별도 카탈로그를 지정한다. 버전 또는 해시를 섞으면 거부한다. 코드를 자동으로 골라주거나 critical·종합 등급을 결정하지 않는다.
-
-```python
-from pathlib import Path
-from checklist_store import ChecklistStore
-from reason_codes import ReasonCatalog
-from judgment_review import prepare_judgment_review, check_review_output
-
-# phase2_기준 폴더에서 실행. phase1_result, chunks, response는 호출자가 제공한다.
-# 아래 DB는 검수 전용이며 기존 기본 DB를 변경하지 않는다.
-store = ChecklistStore(Path("data/chapter2_review.sqlite3"))
-store.import_draft(Path("chapter2_full_checklist_draft.json"))
-catalog = ReasonCatalog(Path("chapter2_reason_codes_draft.json"))
-request = prepare_judgment_review(
-    phase1_result, store, "phase2-checklist-chapter2-full-draft-2026-10-01-r3",
-    chunks, catalog=catalog, allow_draft=True,
-)
-checked = check_review_output(
-    request, response, store, catalog=catalog, allow_draft=True,
-)
-```
-
-[검사 결과](reports/chapter2_review_flow_2026-10-01.json): 64개 항목·700문항을 자료 부족 UNKNOWN 고정 응답으로 연결 확인했다. [대표 합성 사례](chapter2_review_cases.json)는 절차(2.1.1-Q01)·실행(2.4.1-Q02)·기록(2.10.1-Q03) 각 3개 결과, 총 9건이다. 이 중 MET/NOT_MET 6건에서는 원문에 없는 인용으로 바꾸면 거부되는 것도 확인했다. 기대값을 직접 응답으로 넣었으므로 LLM 정확도·의미상 정답률이 아니다. 전체 700문항의 결과별 정답셋은 아직 없다. `reason_codes.py validate`는 전체 카탈로그에 기존 54문항 사례를 잘못 적용하는 것을 `EXAMPLE_SET_UNAVAILABLE`로 거부한다.
-
-재현: 검색팀 가상환경 Python으로 `verify_chapter2_review_flow.py`를 실행한다. 기본 실행은 임시 DB만 사용하고 파일을 저장하지 않는다. `--output reports/새파일.json`을 지정하면 새 보고서만 저장할 수 있다. Phase2 테스트 **97개·하위 검사 248개 통과**. 미승인 접근, 원본 변경, 카탈로그 혼합, 문항 누락도 검사했다.
-
-WBS Q13/Q26의 전체 ID·버전 연결은 검수 경로에서 확인했다. O25 사유 코드의 팀 확정, critical 지정, 700문항 전반의 의미 검수, 실제 LLM·운영 인터페이스 연결은 계속 미완료다.
-
-## 10/1 2장 전체 질문 1차 초안
-
-**2장 64개 항목·700문항의 1차 초안**을 별도 버전으로 구성했다. 남은 51개 항목에 490문항을 추가하고 이전 13개·210문항과 퇴역 3개를 그대로 보존했다. [전체 질문·판정 조건](chapter2_full_review.md)과 [전체 JSON](chapter2_full_checklist_draft.json)을 확인한다. 작성용 중간 JSON 5개는 전체 JSON과 내용 보존을 대조한 뒤 정리했으며, `drafts/`에는 출처 검토 문서만 남겼다.
-
-보유 2023년 일반 안내서 주요 확인사항 195개와 선택한 세부 조건을 문항에 연결했다. 700문항의 엄격 형식·원문 문구와 전체 ID·원본 연결을 대조하고, 임시 DB에서 모든 항목·문항 및 과거 버전의 조회를 확인했다. [검증 기록](reports/chapter2_full_validation_2026-10-01.json)은 실제 증적 판정이나 LLM 성능 측정 결과가 아니다.
-
-현재 질문 미작성 항목은 0개다. 질문·적용 조건·critical의 담당자 검토와 새 버전의 사유 코드·가상 사례·판단 입력 연결은 남아 있다. 기본 연결은 기존 3개·54문항이며 전체 초안이 자동으로 판단에 사용되지는 않는다. 범위 제안과 첫 묶음의 아래 기록은 각 작성 시점의 이력이다.
-
-## 10/1 2장 첫 묶음 질문 작성
-
-2.5·2.9의 미작성 10개 항목에 **156문항**을 작성하고 기존 3개·54문항과 퇴역 3개를 원형 보존해 `phase2-checklist-chapter2-batch1-draft-2026-10-01`로 묶었다. 첫 묶음 작성 시점에는 2장 64개 중 **13개 항목·210문항의 1차 초안**이 있었고 나머지 51개 항목은 미작성이었다. 이후 위의 전체 초안으로 64개 항목의 1차 질문을 작성했다.
-
-[질문과 충족·미충족·판단불가 조건](chapter2_batch1_review.md), [새 체크리스트 JSON](chapter2_batch1_checklist_draft.json)을 확인한다. 계정·인증·권한 4개 항목은 65문항, 운영관리 6개 항목은 91문항이다. 원문의 주요 확인사항 29개와 선택한 세부 조건을 분해한 문항 수이며 세부 설명 전체·금융 추가요건을 구현한 최종본은 아니다.
-
-210문항의 엄격 형식과 임시 DB 저장·조회, 기존 버전 및 활성/퇴역 ID 보존을 확인했다. 신규 156문항의 원문 문구·쪽수와 주요 확인사항 연결도 대조했다. [검증 기록](reports/chapter2_batch1_validation_2026-10-01.json)은 실제 증적 판정이나 LLM 정확도 측정 결과가 아니다.
-
-기본 질문·사유 카탈로그·162개 가상 사례·판단 연결은 기존 3개 항목 버전을 유지한다. 새 버전은 질문 초안의 별도 적재·조회까지이며 신규 사유/사례 연결과 판단 입력 동기화가 다음 작업이다. 질문 작성 중 보완한 승인 범위 확인은 새 2.5.5-Q04의 기준 데이터이고 판단팀 코드를 수정한 것은 아니다.
-
-## 10/1 전체 작성 범위 제안
-
-사용자 제안에 따라 현재 검색 KB의 **2장 보호대책 요구사항 전체 64개 항목·12개 영역**을 작성 범위 초안으로 정리했다. 제안 당시 기존 3개 항목의 54문항을 재사용하고 61개 항목을 추가 작성할 계획이었다. 첫 묶음 10개 항목 작성 시점에는 미작성 항목이 51개였으며, 이후 위의 전체 초안으로 64개 항목·700문항의 1차 질문을 작성했다. 빈도·중요도 상위 항목을 조사해 선정한 범위는 아니다.
-
-[범위와 영역별 진행 상태](chapter2_scope_review.md), [전체 ID·원문·문항 작성 현황](chapter2_scope_draft.json)을 확인한다. 기존 작업을 활용하는 작성 순서에 따라 2.5·2.9의 미작성 10개 항목 초안을 추가했다. 기본 판단 연결은 기존 3개 항목 버전이다. 전체 64개 질문의 1차 초안은 작성했으며 버전 동기화와 팀 검수는 남아 있다.
-
-## 10/1 문항 판단의 검수용 입출력·응답 검증
-
-`judgment_review.py`는 기존 확정 Phase1 결과의 문항 조회에 동일 증적·버전의 청크와 검토 정보를 연결한다. 질문·사유 코드의 버전과 원본 해시를 대조하고, 응답 검사 때 저장소에서 입력을 다시 준비해 질문·근거 조건의 변경을 확인한다. 미지원 통제항목이 섞인 1:N은 전체 보류하며, 확정 `NO_MATCH`는 판단 문항이 없으므로 실행 입력을 만들지 않는다.
-
-제공된 응답에서 문항별 결과가 정확히 하나씩 있는지, 사유 코드가 판정 종류와 맞는지, 인용의 청크·원문·페이지가 맞는지 검사한다. MET/NOT_MET은 인용이 필요하고 UNKNOWN은 인용이 있으면 모두 검사한다. 페이지형 청크의 `page=null`은 기존 판단팀 정책대로 경고를 남긴다. 형식 오류와 허위 인용을 UNKNOWN 판정으로 바꾸지 않는다.
-
-이 함수는 LLM을 호출하지 않는다. `llm_executed=false`의 범위는 `llm_execution_scope=THIS_FUNCTION_ONLY`이고, 제공된 응답의 생성 출처까지 보증하지 않는다. `validation.passed`는 형식·참조 검증 통과이고, 실제 충족 여부가 맞는지는 `semantic_judgment_checked=false`로 남긴다. 결과는 항상 `review_only=true`, `approved=false`, `human_approved=false`, `review_required=true`다. 입력의 검토 정보가 미기재이면 경고를 남기고, 입력되어 있어도 실제 적용 관계가 확인됐다고 간주하지 않는다.
-
-```python
-from judgment_review import prepare_judgment_review, check_review_output
-
-# phase1_result, chunks, provided_response는 호출자가 준비한 자료다.
-request = prepare_judgment_review(
-    phase1_result, store, "phase2-checklist-draft-2026-09-28", chunks,
-    item_ids=["2.5.1-Q01"],  # 생략하면 확정 매핑의 모든 문항
-    context={"subject": "검토 대상 시스템", "period_or_event": "검토 대상 기간"},
-    allow_draft=True,
-)
-checked = check_review_output(request, provided_response, store, allow_draft=True)
-# parsed_output은 형식만 통과한 응답도 보존한다. validation.passed를 확인한다.
-```
-
-`item_ids`를 지정하면 `partial_review`와 전체 조회 문항 수를 함께 남긴다. 내부 입력에는 원래 Phase1 결과와 검증 이력도 보존하므로 그대로 LLM 메시지에 넣는 규격은 아니다. 응답 필드는 `checklist_version`, `catalog_version`, `evidence_id`, `version`, `item_results`이고 문항별로 `item_id`, `control_id`, `result`, `reason`, `reason_codes`, `citations`를 받는다. [Pydantic 입력 스키마](schemas/phase2_judgment_review_input.schema.json)와 [응답 스키마](schemas/phase2_judgment_review_output.schema.json)는 팀 합의 전의 검수용 버전이다.
-
-현재 범위는 **한 증적·버전의 청크**다. 여러 문서의 대상·사건·효력 연결, 실제 Phase2 LLM 호출, 운영 API/저장, critical·종합 등급은 별도 구현·협의가 필요하다. 기존 질문·사유 코드·승인 상태와 Phase1 팀 코드는 바꾸지 않는다. 테스트는 검색팀 Python 환경으로 `python -m unittest discover -s tests -p test_judgment_review.py -v`를 실행한다.
-
-새 검증 테스트 33개와 기존 테스트를 합친 Phase2 전체 **90개가 통과**했다. 두 JSON Schema의 규격도 검사했다. 고정 응답을 사용한 코드 동작 검증이며 실제 LLM의 판정 성능을 측정한 결과는 아니다.
-
-실제 자료가 없는 상태에서는 `verify_synthetic_review_flow.py`로 기존 가상 사례를 연결할 수 있다. **54문항의 162개 사례**를 한 문항씩 부분 검토 입력으로 만들고, 기존 기대값을 고정 응답으로 제공해 형식·사유·인용을 검사했다. 162개 모두 통과했으며 원본 사례·기준의 해시는 유지했다. 기대값을 답으로 넣는 검사라 모델 정확도나 판정 정답률을 측정한 결과가 아니다. Phase1 매핑과 확정 상태도 합성 fixture이고, 실제 파일·파서·검색·LLM·조직 증적은 사용하지 않았다. [실행 범위와 Q01의 가상 예시 3개](reports/synthetic_review_flow_2026-10-01.json)를 확인한다.
-
-이 디렉토리에서 검색팀 Python 환경으로 `python verify_synthetic_review_flow.py`를 실행하면 요약을 출력한다. `--output reports/synthetic_review_flow_2026-10-01.json`을 지정하면 실행 기록도 저장한다. 요청에는 가상 원문·가정 범위·문항 기준과 일반 사유 정의를 넣고, 사례의 기대값·사유 해설은 고정 응답에만 넣는다. 가정 범위는 그대로 보존하며 대상·기간·효력을 자동 추출하거나 확인했다고 표시하지 않는다.
-
-## 9/30 첫 문항의 샘플 적용 검토
-
-`2.5.1-Q01`을 기존 D01 계획서의 9개 청크에 직접 대입했다. 사용자 등록 절차의 직접 내용과 적용 효력을 확인할 자료가 부족해 잠정 `UNKNOWN`으로 기록했다. 원본 해시와 인용 2개를 대조했다. 실제 LLM·Phase1 확정 매핑·운영 Phase2 판정을 실행한 결과는 아니며 질문·팀 승인 상태는 유지했다. [근거·판정 조건·다음 확인 자료](reports/q01_sample_review_2026-09-30.md)를 본다.
-
-## 9/30 Phase1 결과와 검수용 질문 연결
-
-`phase1_review_adapter.prepare_review_plan()`은 처리가 완료되고 기존 Phase1 확정 게이트를 통과한 결과에서 관련 체크리스트 질문을 조회한다. 검토가 필요 없는 결과는 저장된 검증 플래그 5개가 모두 통과하고 오류가 없어야 한다. 사람이 `APPROVED`/`MODIFIED`로 확정한 결과는 기존 판단팀 정책에 따라 허용하고, 원래 검증 오류가 남았으면 `phase1_validation_overridden_by_review=true`로 표시한다. 수정본의 인용을 재검증한 결과는 아니며 원래 검증 상태도 보존한다.
-
-검색 KB 해시와 선택한 체크리스트 버전의 출처가 일치해야 하며, 미승인 초안 조회에는 `allow_draft=True`를 명시한다.
-
-1:N 매핑 중 하나라도 현재 3개 항목 범위에 없으면 `CHECKLIST_SCOPE_MISSING`으로 전체 계획을 보류하고 누락 ID를 알려준다. 확정된 `NO_MATCH`는 질문 0개의 계획이다. 문항별 MET/NOT_MET/UNKNOWN이나 종합 등급을 계산하지 않는다. 반환 자료는 `review_only=true`, `approved=false`인 내부 검수 계획이며 운영 Phase2 입력·출력 규격은 별도 합의가 필요하다.
-
-이 연결에는 기존 판단팀 Pydantic 모델이 필요하므로 검색팀 `.venv`에서 실행한다. 저장·조회 모듈만 사용할 때는 기존 표준 라이브러리 환경을 그대로 사용할 수 있다. [팀 코드 반영·연결 검증 기록](../phase1_검색/handoff/9월30일_팀코드_반영과_연결검증.md)에 사용법과 변경 범위가 있다.
-
-## 9/29 사유 코드 초안
-
-WBS O25의 준비 작업으로 **미충족 3종·UNKNOWN 10종, 총 13개 사유 코드**를 제안했다. 기존 162개 사례와 별도 경계 사례 2개에 연결하고 코드 종류·근거 발췌·협의 ID·원본 보존을 검증한다. 검수용 조회와 검증은 `python reason_codes.py list --allow-draft`, `python reason_codes.py validate --allow-draft`로 실행한다.
-
-[reason_code_review.md](reason_code_review.md)에 코드별 의미와 팀 결정 사항이 있다. [reason_codes_draft.json](reason_codes_draft.json)은 코드 정의, [reason_code_examples.json](reason_code_examples.json)은 사례별 연결이다. 상태는 `DRAFT_FOR_TEAM_REVIEW`, `approved=false`다. 기존 질문·사례와 Phase1 코드는 바꾸지 않는다. O25는 초안 준비까지이며 경계 합의·출력 계약·최종 고정은 남아 있다. 실행 기록은 [사유 코드 검증 보고서](reports/reason_code_validation_2026-09-29.json)를 본다.
-
-## 9/28 작업 결과
-
-- **전체 문항의 검토 사례 준비:** 기존 9개를 보존하고 153개를 추가했다. 54개 질문마다 MET·NOT_MET·UNKNOWN 1개씩, 총 162개다. 합성 자료와 AI 보조 기대값이며 실제 증적 판정 결과나 모델 정확도가 아니다.
-- **판정 근거 보완:** 계정 처리 사건과 당시 절차 연결, 기본·시험 계정 변경의 추측 가능성, 후속조치 기한과 기준일, 백업 보관 관찰기간을 명확히 했다. 질문·ID·원문·출처는 유지했다. 여러 자료를 함께 볼 때 대상·사건·효력 시점을 확인하도록 했다.
-- **로컬 저장·조회 구현:** JSON을 버전별 SQLite KB로 저장하고 통제항목 ID 또는 문항 ID로 조회한다. 원문과 출처, 미승인 상태를 보존한다. 동일 버전 덮어쓰기, 문항 ID 재사용, 퇴역 문항 부활과 이력 유실을 거부한다. 적재 중 원본이 바뀌면 해당 버전의 적재 전체를 취소한다.
-- **검증:** 원문 PDF·ID·사례·저장 후 조회를 검사하고, 버전 충돌·오류 처리·적재 취소 등의 동작 테스트를 실행한다. 최신 결과는 [validation_report.json](validation_report.json)에 기록한다.
-
-이번 작업은 검수용 KB 저장·조회까지다. 최종 범위·critical·적용 제외·종합 판정 규칙의 팀 합의와 실제 증적·LLM 검증은 남아 있다.
-
-### 보유 샘플 6개 추가 확인
-
-기존 DOCX 검사 자료의 고유 6개 문서·108청크를 확인하고 현재 원본 해시 6개를 대조했다. 입력 정보 검토와 대표 문항별 원문 인용을 [validation_report.json](validation_report.json)의 `repository_sample_input_review`에 기록했다. LLM 호출이나 정답 승인을 수행한 결과는 아니다.
-
-| 기존 샘플 | 확인한 정보와 부족한 점 |
-|---|---|
-| D01 계획서·내부 관리계획 | 최소권한·권한 검토 주기·소산·훈련 문구는 있지만 시행일이 `2026년 O월 O일`로 미기재다. 참조 절차서와 사건별 실제 수행 기록이 없다. |
-| D02~D04 컨설팅 보고서 | 백업 보호·권한 회수 등의 추가 증적 필요성을 설명한다. 언급된 원자료가 포함된 것으로 보거나 자료 미확인을 직접 미이행으로 바꾸지 않는다. |
-| D05 이력서 | 현재 3개 항목의
-조직 운영 증적으로 쓰지 않는다. |
-| D06 테스트 fixture | 승인 후 계정 발급이라는 규칙 예시만 있으며 실제 신청·승인·처리 사건의 기록은 없다. |
-
-현재 자료로 입력 정보의 부족은 확인했으나 실제 조직의 충족 여부를 검증할 자료는 부족하다. 다음 단계에는 대상·사건·적용 버전·시점이 연결된 권한 처리/검토 기록, 백업/소산 기록, 복구시험 결과와 사람 검수 정답이 필요하다. 출처 미확인 문서와 테스트 fixture를 운영 정확도 평가 표본으로 집계하지 않는다.
-
-## 먼저 볼 파일
+## 먼저 사용할 파일
 
 | 파일 | 용도 |
 |---|---|
-| [checklist_review.md](checklist_review.md) | 54개 질문과 원문 쪽수, 이번에 보완한 판정 경계 |
-| [checklist_draft.json](checklist_draft.json) | 질문·원문·출처·문항별 근거 규칙의 원본 |
-| [review_examples.json](review_examples.json) | 162개 합성 사례와 팀 미승인 기대값 |
-| [checklist_store.py](checklist_store.py) | 버전별 로컬 저장 및 통제항목/문항 조회 |
-| [validate_draft.py](validate_draft.py) | 원본 연결·참조·사례·선택적 PDF/DB 검증 |
-| [tests/test_checklist_store.py](tests/test_checklist_store.py) | 저장·조회 동작 테스트 |
-| [validation_report.json](validation_report.json) | 실행한 검증의 범위와 결과 |
+| [chapter2_full_checklist_draft.json](chapter2_full_checklist_draft.json) | 현재 700문항과 문항별 MET·NOT_MET·UNKNOWN 기준 |
+| [chapter2_reason_codes_draft.json](chapter2_reason_codes_draft.json) | 현재본에 연결된 사유 코드 13종 |
+| [checklist_store.py](checklist_store.py) | 기준 JSON 저장·통제항목 및 문항 조회 |
+| [judgment_review.py](judgment_review.py) | 검수 입력 생성·응답의 구조, 사유 코드, 인용 검사 |
+| [phase1_review_adapter.py](phase1_review_adapter.py) | 확정된 Phase1 결과를 질문 조회에 연결 |
+| [reason_codes.py](reason_codes.py) | 사유 코드 조회·호환 검사 |
+| [run_phase2_llm_smoke.py](run_phase2_llm_smoke.py) | 현재 700문항 기준 중 대표 3문항·가상 9사례의 로컬 LLM 검수 |
 
-## WBS와 완료 범위
+질문을 읽기 편한 문서는 [현재 전체 질문·기준](docs/chapter2_full_review.md)에 있다.
 
-기준은 프로젝트 `WBS.xlsx`의 `WBS` 시트, 2026-09-28(N열)·9/29(O열)이다. 담당자는 채은·유빈이다. WBS 파일의 완료 표시를 바꾸지는 않았다.
+## 호환 때문에 최상위에 남긴 파일
 
-| WBS | 작업 | 현재 준비한 것 | 남은 단계 |
-|---|---|---|---|
-| N23 | 우선 항목 질문 1차 완료 | 선택한 3개 항목의 54개 질문·근거 보완 | 담당자 범위 확정과 질문 승인 |
-| N24 | 샘플 증적으로 판정 가능성 검토 | 전 문항 162개 합성 사례·기대값, 보유 6개 문서의 입력 정보 부족 검토 | 실제 수행 증적 확보·사람 검수·실행 검증 |
-| N25 | 경계 사례 합의 | 사건 없음·근거 부족·상충·기한·관찰기간의 경계 사례 준비 | 팀 합의 |
-| N26 | KB 변환·ID 유효성 검사 | 버전 KB 적재·활성/퇴역 ID·원본 연결 검사 | 검수용 로컬 범위에서 구현·검증 |
-| O25 (9/29) | 사유 코드 고정 | 13개 사유 코드 초안·162개 기존 사례 연결·경계 사례 2개·검수용 검증 | 경계 의미·출력 계약 협의와 코드 승인·고정 |
-| O26 (9/29) | 로컬 저장·조회 연결 | 통제항목 ID 및 문항 ID 조회를 선행 구현 | 판단팀 연결과 운영 저장 방식은 별도 협의 |
+`checklist_draft.json`, `reason_codes_draft.json`, `review_examples.json`, `reason_code_examples.json`은 **이전 54문항의 실제 연결·검증에 계속 사용**한다. 판단팀이 앞의 두 파일을 직접 읽고 사유 카탈로그가 원본 위치와 해시를 검증하므로 사용하지 않는 파일로 분류하지 않았다. 판단팀의 기존 코드는 수정하지 않았다.
 
-우선 후보 5개 중 질문이 작성된 것은 `2.5.1 사용자 계정 관리`, `2.5.6 접근권한 검토`, `2.9.3 백업 및 복구관리`다. `3.4.1 개인정보 파기`, `2.2.5 퇴직 및 직무변경 관리`는 후보로만 남아 있다. 개발용 선정 제안이며 실제 사용 빈도·공식 중요도 순위에 대한 검증 결과는 아니다.
+기본 저장·사유 조회 경로는 기존 54문항이다. 전체 700문항을 사용할 때는 위의 `chapter2_full_checklist_draft.json`과 `chapter2_reason_codes_draft.json`을 명시적으로 선택한다. 새 LLM 검수 실행기는 이 전체 버전을 선택한다.
 
-## 로컬 저장·조회 사용
+## 폴더 안내
 
-아래 명령은 이 디렉토리에서 실행한다. 저장·조회는 Python 표준 라이브러리만 사용한다.
-
-```powershell
-python checklist_store.py import-draft
-python checklist_store.py list-versions
-python checklist_store.py get-control --version phase2-checklist-draft-2026-09-28 --control-id 2.5.1 --allow-draft
-python checklist_store.py get-item --version phase2-checklist-draft-2026-09-28 --item-id 2.5.1-Q11 --allow-draft
-```
-
-기본 DB는 `data/checklists.sqlite3`다. 재생성 가능한 로컬 산출물이라 Git에서 제외한다. 다른 DB를 쓰려면 하위 명령 앞에 `--database <경로>`를 지정한다. 동일 버전·동일 파일의 재적재는 추가 행 없이 성공한다. 같은 버전의 파일 내용이 달라지면 `VERSION_CONFLICT`로 거부하므로 새 `draft_version`이 필요하다.
-
-파이썬 호출 예:
-
-```python
-from checklist_store import ChecklistStore
-
-store = ChecklistStore()
-result = store.get_control(
-    "phase2-checklist-draft-2026-09-28", "2.5.1", allow_draft=True
-)
-questions = result["control"]["items"]
-```
-
-`allow_draft=True`/`--allow-draft`는 검수용 초안을 읽겠다는 명시이며 승인을 부여하지 않는다. 반환값은 `status`, `approved`, 버전·파일 해시, 원본 출처와 질문을 포함한다. 조회 결과에는 합성 사례와 예상 정답을 섞지 않는다. 퇴역 ID를 조회하면 `RETIRED_ITEM`과 대체 ID를 반환하고 활성 질문으로 사용하지 않는다.
-
-이 모듈은 기준을 저장·조회하며 증적 판정이나 종합 등급 계산은 수행하지 않는다. 현재 Phase1 판단의 관련성 판정과 Phase2 충족 판정은 역할이 다르다. 팀 API와 운영 DB를 자동으로 바꾸는 연결은 하지 않았다.
-
-## 검증 실행
-
-```powershell
-python validate_draft.py
-python validate_draft.py --verify-pdf --verify-store
-python -m unittest discover -s tests -v
-```
-
-기본 검증은 해시·필드·활성/퇴역 ID·질문 문서 동기화·전체 사례 참조를 검사한다. `--verify-pdf`는 `pypdf`가 필요하며 보유 PDF의 문구·예시를 대조한다. `--verify-store`는 기본 로컬 DB에 적재하고 전 문항을 다시 조회하며 저장 모듈 동작 테스트도 실행한다. 원본 KB·질문·증적 문서·검색 인덱스는 수정하지 않는다.
-
-검증 성공은 구조·보존·코드 동작 확인이다. 팀 승인, 현행 법규 검토, 실제 증적의 충족 여부, LLM 판정 성능을 의미하지 않는다. 합성 사례의 기대값은 사람 검수가 필요하다.
-
-## 실제 증적 검토에 필요한 자료
-
-문항별로 파일 54개를 만드는 대신 다음 자료를 묶어 동일 대상·사건·기간으로 연결할 수 있어야 한다.
-
-| 자료 묶음 | 연결할 정보 |
+| 폴더 | 내용 |
 |---|---|
-| 계정·권한 절차와 직무 기준 | 적용 범위, 버전·효력일, 보안책임 규정, 직무별 허용 권한 |
-| 개별 계정·권한 처리 | 사건 ID, 신청·승인·처리 기록, 당시 절차, 처리 시점·변경 전후 상태 |
-| 계정 현황과 활동 이력 | 사용자·계정 대응, 기본·시험 계정 조치, 등록·이용·삭제 및 권한 변경 이력 |
-| 권한 검토와 후속조치 | 기준·주체·방법·주기, 수행 일자·결과, 발견 문제·조치 기한·기준일·실제 완료 |
-| 백업 정책과 실행·보관 | 백업 식별자·생성일, 적용 기준, 작업 결과, 관찰기간, 만료·삭제·소산 장소 |
-| 복구시험과 개선 | 시험 대상·시나리오·날짜, 완전성·정확성·절차 적절성의 확인, 발견 문제·개선 이행 |
+| [archive](archive/) | 현재 실행에 사용하지 않는 210문항 중간본과 범위 제안 자료 |
+| [docs](docs/) | 현재·이전 질문 설명, 사유 코드 설명, 기존 작업 이력 |
+| [tools](tools/) | 기준 구조 검증·합성 사례 연결 검사 |
+| [tests](tests/) | 자동 테스트. 대표 가상 사례는 `tests/fixtures/` |
+| [schemas](schemas/) | 검수용 입출력 JSON Schema |
+| [reports](reports/) | 과거 검사 결과·실제 LLM 호출 기록 |
+| [drafts](drafts/) | 기준 작성에 사용한 원문 검토 기록 |
+| `data/` | 검수용 로컬 저장소 |
 
-`required_context`는 판정에 필요한 정보이며 특정 파일명·열 이름을 강제하는 필수 서식이 아니다. MET/NOT_MET은 직접 근거와 인용이 필요하다. 자료가 없다는 이유만으로 NOT_MET을 부여하지 않고, 사건 없음·적용 여부 불명·해소되지 않은 상충은 현재 UNKNOWN 초안으로 남긴다. 확인한 일부 사건의 결과를 조직 전체로 확대하지 않는다. 주기·기한·거리·문자 수 등의 기준을 임의로 고정하지 않는다.
+## 실행
 
-## 작업 이력과 남은 결정
+아래 명령은 `phase2_기준`에서 실행한다.
 
-9/26 최초 후보 5개와 3개 항목 질문 30개를 작성했다. 9/27 보유 원문과 대조해 27개를 유지·보완하고 복합 질문 3개를 퇴역, 새 질문 27개를 추가해 활성 54개로 정리했다. [원문 대조 기록](../phase1_검색/reports/source_review_2026-09-27/review.md)은 그 시점의 결과를 보존한다. 9/28에는 질문의 의미를 유지하고 근거 규칙·전 문항 사례·로컬 저장·조회를 보완했다.
+```powershell
+# 파일 연결·자동 테스트
+& '../phase1_검색/.venv/Scripts/python.exe' -B -m pytest tests -q -p no:cacheprovider
 
-남은 결정은 우선 범위와 critical, 사건 없음·공유계정 예외·상충·UNKNOWN의 최종 처리 및 종합 결과 규칙이다. 실제 증적의 범위·시점을 확인하고 기대값을 사람에게 검수받은 뒤 LLM·팀 통합 검증으로 이어간다. 일반 안내서의 세부 설명 전체와 금융권 추가요건을 모두 구현한 최종 체크리스트로 간주하지 않는다.
+# 전체 기준 700문항과 대표 9사례의 고정 응답 연결 검사 (LLM 호출 없음)
+& '../phase1_검색/.venv/Scripts/python.exe' -B -X utf8 tools/verify_chapter2_review_flow.py
+
+# 실제 호출 전 입력 준비 확인
+& '../phase1_검색/.venv/Scripts/python.exe' -B -X utf8 run_phase2_llm_smoke.py --prepare-only
+```
+
+실제 LLM 호출 방법과 관찰한 오류는 [10/1 검증 보고서](reports/phase2_llm_test_review_2026-10-01.md)에 있다. 합성 사례 첫 시험이며 실제 조직 증적 검증·전체 700문항 성능 평가·팀 승인은 남아 있다. `critical`과 예외 정책, 사유 코드 확정은 보류 상태다.
+
+이전 설명과 검증 이력은 [작업 이력](docs/작업이력.md)에 보존했다. 실행 당시 보고서와 소스 사본의 경로·해시는 과거 상태의 기록이다.

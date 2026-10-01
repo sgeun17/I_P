@@ -1,0 +1,54 @@
+{
+  "contract_version": "phase2-judgment-review-0.1",
+  "review_only": true,
+  "approved": false,
+  "human_approved": false,
+  "llm_executed": false,
+  "llm_execution_scope": "THIS_FUNCTION_ONLY",
+  "review_required": true,
+  "response_origin": "CALLER_PROVIDED_SOURCE_UNVERIFIED",
+  "partial_review": true,
+  "phase1_validation_overridden_by_review": false,
+  "phase1_validation_scope": "STORED_RESULT_ONLY",
+  "validation": {
+    "passed": true,
+    "schema_valid": true,
+    "question_coverage_valid": true,
+    "reasons_valid": true,
+    "citations_valid": true,
+    "semantic_judgment_checked": false,
+    "issues": [],
+    "warnings": [
+      {
+        "code": "REVIEW_CONTEXT_INCOMPLETE",
+        "message": "검토 대상·시점·적용 정보의 확인이 필요합니다.",
+        "fields": [
+          "applicable_basis",
+          "effective_basis"
+        ]
+      }
+    ]
+  },
+  "parsed_output": {
+    "checklist_version": "phase2-checklist-chapter2-full-draft-2026-10-01-r3",
+    "catalog_version": "phase2-reason-codes-chapter2-full-draft-2026-10-01-r3",
+    "evidence_id": "SYN-CHAPTER2",
+    "version": 1,
+    "item_results": [
+      {
+        "item_id": "2.10.1-Q03",
+        "control_id": "2.10.1",
+        "result": "MET",
+        "reason": "2026년 3분기 동안 가상 A시스템 방화벽 FW-A의 운영점검이 매월 말에 실시되었으며, 7월31일, 8월31일, 9월30일의 점검 결과가 기록되어 있다. 이는 해당 기간에 대상 보안시스템 운영현황 점검 의무가 이행되었음을 확인할 수 있다.",
+        "reason_codes": [],
+        "citations": [
+          {
+            "chunk_id": "SYN-CHAPTER2_v1_c0000",
+            "page": null,
+            "quote": "가상 A시스템 방화벽 FW-A의 2026년 3분기 운영점검은 매월 말 실시하도록 정해져 있다. 7월31일·8월31일·9월30일 점검 결과에 장비 ID, 운영현황과 수행자 서명이 모두 기록돼 있다."
+          }
+        ]
+      }
+    ]
+  }
+}

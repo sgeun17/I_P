@@ -1,0 +1,25 @@
+{
+  "raw_response": "{\n  \"item_id\": \"2.1.1-Q01\",\n  \"control_id\": \"2.1.1\",\n  \"result\": \"NOT_MET\",\n  \"reason\": \"적용 대상의 필수 절차·규정·분류·기준·주기 등이 미수립 상태라는 직접 확인이 있다.\",\n  \"reason_codes\": [\"P2_NM_RULE_NOT_DEFINED\"],\n  \"citations\": [\n    {\n      \"chunk_id\": \"SYN-CHAPTER2_v1_c0000\",\n      \"page\": null,\n      \"quote\": \"공식 확인서: 가상 A시스템은 2026년 3분기 정책·시행문서의 정기 타당성 검토 절차 수립 대상이다. 보안책임자는 해당 절차를 수립하지 않았음을 확인하였다.\"\n    }\n  ]\n}",
+  "parsed_output": {
+    "item_id": "2.1.1-Q01",
+    "control_id": "2.1.1",
+    "result": "NOT_MET",
+    "reason": "적용 대상의 필수 절차·규정·분류·기준·주기 등이 미수립 상태라는 직접 확인이 있다.",
+    "reason_codes": [
+      "P2_NM_RULE_NOT_DEFINED"
+    ],
+    "citations": [
+      {
+        "chunk_id": "SYN-CHAPTER2_v1_c0000",
+        "page": null,
+        "quote": "공식 확인서: 가상 A시스템은 2026년 3분기 정책·시행문서의 정기 타당성 검토 절차 수립 대상이다. 보안책임자는 해당 절차를 수립하지 않았음을 확인하였다."
+      }
+    ]
+  },
+  "attempts": 1,
+  "retry_count": 0,
+  "final_error_code": null,
+  "validation_messages": [],
+  "request_error_status": null,
+  "request_error_message": null
+}

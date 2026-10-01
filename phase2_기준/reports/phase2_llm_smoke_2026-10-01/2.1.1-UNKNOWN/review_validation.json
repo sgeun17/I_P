@@ -1,0 +1,56 @@
+{
+  "contract_version": "phase2-judgment-review-0.1",
+  "review_only": true,
+  "approved": false,
+  "human_approved": false,
+  "llm_executed": false,
+  "llm_execution_scope": "THIS_FUNCTION_ONLY",
+  "review_required": true,
+  "response_origin": "CALLER_PROVIDED_SOURCE_UNVERIFIED",
+  "partial_review": true,
+  "phase1_validation_overridden_by_review": false,
+  "phase1_validation_scope": "STORED_RESULT_ONLY",
+  "validation": {
+    "passed": true,
+    "schema_valid": true,
+    "question_coverage_valid": true,
+    "reasons_valid": true,
+    "citations_valid": true,
+    "semantic_judgment_checked": false,
+    "issues": [],
+    "warnings": [
+      {
+        "code": "REVIEW_CONTEXT_INCOMPLETE",
+        "message": "검토 대상·시점·적용 정보의 확인이 필요합니다.",
+        "fields": [
+          "applicable_basis",
+          "effective_basis"
+        ]
+      }
+    ]
+  },
+  "parsed_output": {
+    "checklist_version": "phase2-checklist-chapter2-full-draft-2026-10-01-r3",
+    "catalog_version": "phase2-reason-codes-chapter2-full-draft-2026-10-01-r3",
+    "evidence_id": "SYN-CHAPTER2",
+    "version": 1,
+    "item_results": [
+      {
+        "item_id": "2.1.1-Q01",
+        "control_id": "2.1.1",
+        "result": "UNKNOWN",
+        "reason": "필요한 자료가 없거나 일부만 제공되어 문항을 확인할 정보가 부족하다. 증적에 정책 검토 절차서가 첨부되지 않았다는 내용만 제공되었으며, 검토 절차가 수립되었는지에 대한 직접적인 정보는 확인되지 않았다.",
+        "reason_codes": [
+          "P2_U_EVIDENCE_INSUFFICIENT"
+        ],
+        "citations": [
+          {
+            "chunk_id": "SYN-CHAPTER2_v1_c0000",
+            "page": null,
+            "quote": "가상 A시스템의 2026년 3분기 자료 제출 목록에는 정책 검토 절차서가 첨부되지 않았다."
+          }
+        ]
+      }
+    ]
+  }
+}

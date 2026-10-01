@@ -1,0 +1,20 @@
+{
+  "shape_and_citation_checks": {
+    "schema_valid": 9,
+    "question_coverage_valid": 9,
+    "reasons_valid": 7,
+    "citations_valid": 9
+  },
+  "http_request_count": 9,
+  "server_context_length": 4096,
+  "reported_prompt_tokens_range": [
+    3766,
+    3922
+  ],
+  "reported_total_tokens_range": [
+    3942,
+    4162
+  ],
+  "reported_total_exceeds_server_context_count": 3,
+  "exact_pre_call_budget_checked": false
+}

@@ -1,0 +1,25 @@
+{
+  "raw_response": "{\n  \"item_id\": \"2.4.1-Q02\",\n  \"control_id\": \"2.4.1\",\n  \"result\": \"NOT_MET\",\n  \"reason\": \"2026년 3분기 가상 A시스템의 개인정보 보관 장소 A실은 유효한 기준상 제한구역 지정 대상이지만, 실제 보호구역으로 지정하지 않았다는 사실이 확인되었다. 이는 물리적 보호구역 지정기준에 따라 보호구역을 누락 없이 지정하지 못한 것으로 판단된다.\",\n  \"reason_codes\": [\"P2_NM_RULE_VIOLATED\"],\n  \"citations\": [\n    {\n      \"chunk_id\": \"SYN-CHAPTER2_v1_c0000\",\n      \"page\": null,\n      \"quote\": \"공식 현장 확인: 가상 A시스템의 2026년 3분기 개인정보 보관 장소 A실은 유효한 기준상 제한구역 지정 대상이나 실제 보호구역으로 지정하지 않았다.\"\n    }\n  ]\n}",
+  "parsed_output": {
+    "item_id": "2.4.1-Q02",
+    "control_id": "2.4.1",
+    "result": "NOT_MET",
+    "reason": "2026년 3분기 가상 A시스템의 개인정보 보관 장소 A실은 유효한 기준상 제한구역 지정 대상이지만, 실제 보호구역으로 지정하지 않았다는 사실이 확인되었다. 이는 물리적 보호구역 지정기준에 따라 보호구역을 누락 없이 지정하지 못한 것으로 판단된다.",
+    "reason_codes": [
+      "P2_NM_RULE_VIOLATED"
+    ],
+    "citations": [
+      {
+        "chunk_id": "SYN-CHAPTER2_v1_c0000",
+        "page": null,
+        "quote": "공식 현장 확인: 가상 A시스템의 2026년 3분기 개인정보 보관 장소 A실은 유효한 기준상 제한구역 지정 대상이나 실제 보호구역으로 지정하지 않았다."
+      }
+    ]
+  },
+  "attempts": 1,
+  "retry_count": 0,
+  "final_error_code": null,
+  "validation_messages": [],
+  "request_error_status": null,
+  "request_error_message": null
+}

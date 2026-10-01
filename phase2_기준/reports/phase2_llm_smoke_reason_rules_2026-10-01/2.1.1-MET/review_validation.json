@@ -1,0 +1,54 @@
+{
+  "contract_version": "phase2-judgment-review-0.1",
+  "review_only": true,
+  "approved": false,
+  "human_approved": false,
+  "llm_executed": false,
+  "llm_execution_scope": "THIS_FUNCTION_ONLY",
+  "review_required": true,
+  "response_origin": "CALLER_PROVIDED_SOURCE_UNVERIFIED",
+  "partial_review": true,
+  "phase1_validation_overridden_by_review": false,
+  "phase1_validation_scope": "STORED_RESULT_ONLY",
+  "validation": {
+    "passed": true,
+    "schema_valid": true,
+    "question_coverage_valid": true,
+    "reasons_valid": true,
+    "citations_valid": true,
+    "semantic_judgment_checked": false,
+    "issues": [],
+    "warnings": [
+      {
+        "code": "REVIEW_CONTEXT_INCOMPLETE",
+        "message": "검토 대상·시점·적용 정보의 확인이 필요합니다.",
+        "fields": [
+          "applicable_basis",
+          "effective_basis"
+        ]
+      }
+    ]
+  },
+  "parsed_output": {
+    "checklist_version": "phase2-checklist-chapter2-full-draft-2026-10-01-r3",
+    "catalog_version": "phase2-reason-codes-chapter2-full-draft-2026-10-01-r3",
+    "evidence_id": "SYN-CHAPTER2",
+    "version": 1,
+    "item_results": [
+      {
+        "item_id": "2.1.1-Q01",
+        "control_id": "2.1.1",
+        "result": "MET",
+        "reason": "정보보호 및 개인정보보호 정책·시행문서의 정기 타당성 검토 절차가 수립되어 있으며, 검토 주기, 담당자, 방법, 후속조치가 포함된 문서가 확인되었다.",
+        "reason_codes": [],
+        "citations": [
+          {
+            "chunk_id": "SYN-CHAPTER2_v1_c0000",
+            "page": null,
+            "quote": "가상 A시스템의 2026년 3분기에 유효한 정책 검토 절차: 정보보호 및 개인정보보호 정책과 시행문서를 매년 9월 보안책임자가 법령·환경변화와 대조하고 검토 결과 및 개정 조치를 기록한다."
+          }
+        ]
+      }
+    ]
+  }
+}
