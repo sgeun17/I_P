@@ -1,0 +1,93 @@
+{
+  "model": "qwen3:14b",
+  "prompt_version": "phase1_mapping_v0.5",
+  "goldenset_version": "goldenset_v0.1",
+  "ruleset_version": "mapping_rules_v0.7",
+  "metrics": {
+    "n": 3,
+    "n_excluded_retrieval_miss": 0,
+    "precision": 0.8,
+    "recall": 1.0,
+    "f1": 0.888888888888889,
+    "macro_precision": 0.75,
+    "macro_recall": 1.0,
+    "exact_match": 0.6666666666666666,
+    "exact_match_with_relation": 0.6666666666666666,
+    "primary_accuracy": 0.5,
+    "no_match_accuracy": 1.0,
+    "no_match_accuracy_strict": 1.0,
+    "false_match_rate": 0.0,
+    "missed_match_rate": 0.0,
+    "uncertain_rate": 0.0,
+    "deferred_no_match_rate": 0.0,
+    "citation_valid_rate": 1.0,
+    "invalid_output_rate": 0.0,
+    "review_required_rate": 1.0,
+    "avg_processing_time_ms": 12402.333333333334,
+    "by_category": {
+      "multi_mapping": {
+        "n": 1,
+        "exact_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "review_rate": 1.0
+      },
+      "no_match": {
+        "n": 1,
+        "exact_match": 1.0,
+        "precision": null,
+        "recall": null,
+        "review_rate": 1.0
+      },
+      "single_mapping": {
+        "n": 1,
+        "exact_match": 0.0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "review_rate": 1.0
+      }
+    }
+  },
+  "cases": [
+    {
+      "test_id": "G-SINGLE-01",
+      "category": "single_mapping",
+      "gold": [
+        "2.5.1"
+      ],
+      "predicted": [
+        "2.2.5",
+        "2.5.1"
+      ],
+      "exact_match": false,
+      "review_required": true,
+      "processing_status": "COMPLETED"
+    },
+    {
+      "test_id": "G-MULTI-01",
+      "category": "multi_mapping",
+      "gold": [
+        "2.5.1",
+        "2.5.5",
+        "2.5.6"
+      ],
+      "predicted": [
+        "2.5.1",
+        "2.5.5",
+        "2.5.6"
+      ],
+      "exact_match": true,
+      "review_required": true,
+      "processing_status": "COMPLETED"
+    },
+    {
+      "test_id": "G-NOMATCH-01",
+      "category": "no_match",
+      "gold": [],
+      "predicted": [],
+      "exact_match": true,
+      "review_required": true,
+      "processing_status": "COMPLETED"
+    }
+  ]
+}

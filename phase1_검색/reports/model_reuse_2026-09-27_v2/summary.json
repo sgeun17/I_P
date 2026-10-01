@@ -153,5 +153,11 @@
     "첫 유효 요청에서 모델을 로드한다. 호출 프로그램이 종료되면 모델 메모리를 해제한다.",
     "시간은 이 PC와 3청크 DOCX 샘플에서 측정한 값이며 모든 문서의 응답시간을 보장하지 않는다.",
     "실제 서버·업로드 API·DB·화면·LLM 전체 연동 성능 평가는 포함하지 않는다."
-  ]
+  ],
+  "prior_attempt": {
+    "status": "VERIFICATION_ASSERTION_FAILED",
+    "reason": "검사 도구가 호환 입력의 정수 증적 ID 1을 변환된 문자열 000001과 직접 비교했다. 기존 변환 규격을 검사 도구에 반영해 별도 출력 경로로 재실행한다.",
+    "runtime_failure_confirmed": false,
+    "complete_result": "summary.json"
+  }
 }

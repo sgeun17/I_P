@@ -1,0 +1,1377 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-01T13:31:06.664462+09:00",
+  "review_only": true,
+  "approved": false,
+  "human_approved": false,
+  "draft_version": "phase2-checklist-chapter2-batch1-draft-2026-10-01",
+  "draft_sha256": "a347a5eba0e65b6901cc324d5de8c00aa4de75ec16c873a0c6d6b2c71ca73146",
+  "control_count": 13,
+  "new_control_count": 10,
+  "remaining_chapter2_control_count": 51,
+  "active_question_count": 210,
+  "new_question_count": 156,
+  "preserved_question_count": 54,
+  "retired_question_count": 3,
+  "strict_question_schema_valid_count": 210,
+  "source_clause_verified_count": 156,
+  "major_check_coverage_count": 29,
+  "source_pdf_pages_verified": [
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    138,
+    139,
+    140,
+    141,
+    144,
+    145,
+    146,
+    147,
+    148,
+    149,
+    150,
+    151
+  ],
+  "temporary_store_verified": true,
+  "all_control_and_item_queries_match": true,
+  "previous_version_preserved": true,
+  "retired_ids_blocked": true,
+  "explicit_draft_use_required": true,
+  "original_file_hashes_preserved": {
+    "checklist_draft.json": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a",
+    "review_examples.json": "21e827229e19dbb6b67f161eee210e4331af36a54b76b765bf5c05c6d9c67f32",
+    "reason_codes_draft.json": "8db7384ce67e496aeaa00441d69eaf032abd1a9ad6caaed8e03044a87da45ae4",
+    "reason_code_examples.json": "d9b826ce41db2fb4e247df5de0d66cc8983ccb868482a7452258c52f5f4f84ea"
+  },
+  "default_catalog_version_preserved": true,
+  "llm_executed": false,
+  "actual_evidence_used": false,
+  "model_accuracy_measured": false,
+  "human_question_approval_performed": false,
+  "scope": "기준 데이터 구조·원문 참조·로컬 저장/조회 확인",
+  "per_control_counts": {
+    "2.5.1": 20,
+    "2.5.2": 10,
+    "2.5.3": 14,
+    "2.5.4": 22,
+    "2.5.5": 19,
+    "2.5.6": 14,
+    "2.9.1": 11,
+    "2.9.2": 25,
+    "2.9.3": 20,
+    "2.9.4": 19,
+    "2.9.5": 14,
+    "2.9.6": 6,
+    "2.9.7": 16
+  },
+  "source_clause_checks": [
+    {
+      "item_id": "2.5.2-Q01",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.2-Q02",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.2-Q03",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.2-Q04",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.2-Q05",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.2-Q06",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.2-Q07",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.2-Q08",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.2-Q09",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.2-Q10",
+      "matching_pdf_pages": [
+        93
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q01",
+      "matching_pdf_pages": [
+        95
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q02",
+      "matching_pdf_pages": [
+        95
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q03",
+      "matching_pdf_pages": [
+        96
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q04",
+      "matching_pdf_pages": [
+        96
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q05",
+      "matching_pdf_pages": [
+        95
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q06",
+      "matching_pdf_pages": [
+        95
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q07",
+      "matching_pdf_pages": [
+        97
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q08",
+      "matching_pdf_pages": [
+        96
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q09",
+      "matching_pdf_pages": [
+        95
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q10",
+      "matching_pdf_pages": [
+        95
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q11",
+      "matching_pdf_pages": [
+        96
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q12",
+      "matching_pdf_pages": [
+        96
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q13",
+      "matching_pdf_pages": [
+        96
+      ]
+    },
+    {
+      "item_id": "2.5.3-Q14",
+      "matching_pdf_pages": [
+        96
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q01",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q02",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q03",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q04",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q05",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q06",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q07",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q08",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q09",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q10",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q11",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q12",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q13",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q14",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q15",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q16",
+      "matching_pdf_pages": [
+        98
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q17",
+      "matching_pdf_pages": [
+        99
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q18",
+      "matching_pdf_pages": [
+        99
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q19",
+      "matching_pdf_pages": [
+        99
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q20",
+      "matching_pdf_pages": [
+        99
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q21",
+      "matching_pdf_pages": [
+        99
+      ]
+    },
+    {
+      "item_id": "2.5.4-Q22",
+      "matching_pdf_pages": [
+        99
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q01",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q02",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q03",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q04",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q05",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q06",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q07",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q08",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q09",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q10",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q11",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q12",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q13",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q14",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q15",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q16",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q17",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q18",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.5.5-Q19",
+      "matching_pdf_pages": [
+        100
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q01",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q02",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q03",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q04",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q05",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q06",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q07",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q08",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q09",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q10",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.1-Q11",
+      "matching_pdf_pages": [
+        138
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q01",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q02",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q03",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q04",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q05",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q06",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q07",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q08",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q09",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q10",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q11",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q12",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q13",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q14",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q15",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q16",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q17",
+      "matching_pdf_pages": [
+        141
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q18",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q19",
+      "matching_pdf_pages": [
+        141
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q20",
+      "matching_pdf_pages": [
+        140
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q21",
+      "matching_pdf_pages": [
+        141
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q22",
+      "matching_pdf_pages": [
+        141
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q23",
+      "matching_pdf_pages": [
+        141
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q24",
+      "matching_pdf_pages": [
+        141
+      ]
+    },
+    {
+      "item_id": "2.9.2-Q25",
+      "matching_pdf_pages": [
+        141
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q01",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q02",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q03",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q04",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q05",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q06",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q07",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q08",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q09",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q10",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q11",
+      "matching_pdf_pages": [
+        144
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q12",
+      "matching_pdf_pages": [
+        145
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q13",
+      "matching_pdf_pages": [
+        145
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q14",
+      "matching_pdf_pages": [
+        145
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q15",
+      "matching_pdf_pages": [
+        145
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q16",
+      "matching_pdf_pages": [
+        145
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q17",
+      "matching_pdf_pages": [
+        145
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q18",
+      "matching_pdf_pages": [
+        145
+      ]
+    },
+    {
+      "item_id": "2.9.4-Q19",
+      "matching_pdf_pages": [
+        145
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q01",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q02",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q03",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q04",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q05",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q06",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q07",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q08",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q09",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q10",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q11",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q12",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q13",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.5-Q14",
+      "matching_pdf_pages": [
+        147
+      ]
+    },
+    {
+      "item_id": "2.9.6-Q01",
+      "matching_pdf_pages": [
+        149
+      ]
+    },
+    {
+      "item_id": "2.9.6-Q02",
+      "matching_pdf_pages": [
+        149
+      ]
+    },
+    {
+      "item_id": "2.9.6-Q03",
+      "matching_pdf_pages": [
+        149
+      ]
+    },
+    {
+      "item_id": "2.9.6-Q04",
+      "matching_pdf_pages": [
+        149
+      ]
+    },
+    {
+      "item_id": "2.9.6-Q05",
+      "matching_pdf_pages": [
+        149
+      ]
+    },
+    {
+      "item_id": "2.9.6-Q06",
+      "matching_pdf_pages": [
+        149
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q01",
+      "matching_pdf_pages": [
+        150
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q02",
+      "matching_pdf_pages": [
+        150
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q03",
+      "matching_pdf_pages": [
+        150
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q04",
+      "matching_pdf_pages": [
+        150
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q05",
+      "matching_pdf_pages": [
+        150
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q06",
+      "matching_pdf_pages": [
+        150
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q07",
+      "matching_pdf_pages": [
+        151
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q08",
+      "matching_pdf_pages": [
+        150
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q09",
+      "matching_pdf_pages": [
+        150
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q10",
+      "matching_pdf_pages": [
+        151
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q11",
+      "matching_pdf_pages": [
+        150
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q12",
+      "matching_pdf_pages": [
+        151
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q13",
+      "matching_pdf_pages": [
+        151
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q14",
+      "matching_pdf_pages": [
+        151
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q15",
+      "matching_pdf_pages": [
+        151
+      ]
+    },
+    {
+      "item_id": "2.9.7-Q16",
+      "matching_pdf_pages": [
+        151
+      ]
+    }
+  ],
+  "major_check_coverage": [
+    {
+      "control_id": "2.5.2",
+      "source_text": "정보시스템 및 개인정보처리시스템에서 사용자 및 개인정보취급자를 유일하게 구분할 수 있는 식별자를 할당하고 추측 가능한 식별자의 사용을 제한하고 있는가?",
+      "item_ids": [
+        "2.5.2-Q01",
+        "2.5.2-Q02",
+        "2.5.2-Q03"
+      ],
+      "pdf_page": 93
+    },
+    {
+      "control_id": "2.5.2",
+      "source_text": "불가피한 사유로 동일한 식별자를 공유하여 사용하는 경우 그 사유와 타당성을 검토하고 보완대책을 마련하여 책임자의 승인을 받고 있는가?",
+      "item_ids": [
+        "2.5.2-Q05",
+        "2.5.2-Q06",
+        "2.5.2-Q07",
+        "2.5.2-Q08"
+      ],
+      "pdf_page": 93
+    },
+    {
+      "control_id": "2.5.3",
+      "source_text": "정보시스템 및 개인정보처리시스템에 대한 접근은 사용자 인증, 로그인 횟수 제한, 불법 로그인 시도 경고 등 안전한 사용자 인증 절차에 따라 통제하고 있는가?",
+      "item_ids": [
+        "2.5.3-Q01",
+        "2.5.3-Q02",
+        "2.5.3-Q03",
+        "2.5.3-Q04",
+        "2.5.3-Q05",
+        "2.5.3-Q06"
+      ],
+      "pdf_page": 95
+    },
+    {
+      "control_id": "2.5.3",
+      "source_text": "정보통신망을 통하여 외부에서 개인정보처리시스템에 접속하려는 경우에는 법적 요구사항에 따라 안전한 인증수단 또는 안전한 접속수단을 적용하고 있는가?",
+      "item_ids": [
+        "2.5.3-Q11",
+        "2.5.3-Q12"
+      ],
+      "pdf_page": 95
+    },
+    {
+      "control_id": "2.5.4",
+      "source_text": "정보시스템에 대한 안전한 사용자 비밀번호 관리절차 및 작성규칙을 수립·이행하고 있는가?",
+      "item_ids": [
+        "2.5.4-Q01",
+        "2.5.4-Q02",
+        "2.5.4-Q03",
+        "2.5.4-Q04",
+        "2.5.4-Q05",
+        "2.5.4-Q06",
+        "2.5.4-Q07",
+        "2.5.4-Q08",
+        "2.5.4-Q09",
+        "2.5.4-Q10",
+        "2.5.4-Q11",
+        "2.5.4-Q12",
+        "2.5.4-Q13",
+        "2.5.4-Q14",
+        "2.5.4-Q15",
+        "2.5.4-Q16"
+      ],
+      "pdf_page": 98
+    },
+    {
+      "control_id": "2.5.4",
+      "source_text": "정보주체(이용자)가 안전한 비밀번호를 이용할 수 있도록 비밀번호 작성규칙을 수립· 이행하고 있는가?",
+      "item_ids": [
+        "2.5.4-Q17",
+        "2.5.4-Q18",
+        "2.5.4-Q19",
+        "2.5.4-Q20"
+      ],
+      "pdf_page": 98
+    },
+    {
+      "control_id": "2.5.4",
+      "source_text": "개인정보취급자 또는 정보주체의 인증수단을 안전하게 적용하고 관리하고 있는가?",
+      "item_ids": [
+        "2.5.4-Q01",
+        "2.5.4-Q02",
+        "2.5.4-Q03",
+        "2.5.4-Q17",
+        "2.5.4-Q18",
+        "2.5.4-Q21",
+        "2.5.4-Q22"
+      ],
+      "pdf_page": 98
+    },
+    {
+      "control_id": "2.5.5",
+      "source_text": "관리자 권한 등 특수권한은 최소한의 인원에게만 부여될 수 있도록 공식적인 권한 신청 및 승인 절차를 수립·이행하고 있는가?",
+      "item_ids": [
+        "2.5.5-Q01",
+        "2.5.5-Q02",
+        "2.5.5-Q03",
+        "2.5.5-Q04",
+        "2.5.5-Q05",
+        "2.5.5-Q06",
+        "2.5.5-Q07",
+        "2.5.5-Q08",
+        "2.5.5-Q09",
+        "2.5.5-Q10",
+        "2.5.5-Q11",
+        "2.5.5-Q12"
+      ],
+      "pdf_page": 100
+    },
+    {
+      "control_id": "2.5.5",
+      "source_text": "특수 목적을 위하여 부여한 계정 및 권한을 식별하고 별도 목록으로 관리하는 등 통제절차를 수립·이행하고 있는가?",
+      "item_ids": [
+        "2.5.5-Q13",
+        "2.5.5-Q14",
+        "2.5.5-Q15",
+        "2.5.5-Q16",
+        "2.5.5-Q17",
+        "2.5.5-Q18",
+        "2.5.5-Q19"
+      ],
+      "pdf_page": 100
+    },
+    {
+      "control_id": "2.9.1",
+      "source_text": "정보시스템 관련 자산(하드웨어, 운영체제, 상용 소프트웨어 패키지 등) 변경에 관한 절차를 수립·이행하고 있는가?",
+      "item_ids": [
+        "2.9.1-Q01",
+        "2.9.1-Q02",
+        "2.9.1-Q03",
+        "2.9.1-Q06",
+        "2.9.1-Q07",
+        "2.9.1-Q08",
+        "2.9.1-Q09"
+      ],
+      "pdf_page": 138
+    },
+    {
+      "control_id": "2.9.1",
+      "source_text": "정보시스템 관련 자산 변경을 수행하기 전 성능 및 보안에 미치는 영향을 분석하고 있는가?",
+      "item_ids": [
+        "2.9.1-Q04",
+        "2.9.1-Q05"
+      ],
+      "pdf_page": 138
+    },
+    {
+      "control_id": "2.9.2",
+      "source_text": "정보시스템의 가용성 보장을 위하여 성능 및 용량을 지속적으로 모니터링할 수 있는 절차를 수립·이행하고 있는가?",
+      "item_ids": [
+        "2.9.2-Q01",
+        "2.9.2-Q02",
+        "2.9.2-Q03",
+        "2.9.2-Q04",
+        "2.9.2-Q05",
+        "2.9.2-Q06",
+        "2.9.2-Q07",
+        "2.9.2-Q08",
+        "2.9.2-Q09"
+      ],
+      "pdf_page": 140
+    },
+    {
+      "control_id": "2.9.2",
+      "source_text": "정보시스템 성능 및 용량 요구사항(임계치)을 초과하는 경우에 대한 대응절차를 수립· 이행하고 있는가?",
+      "item_ids": [
+        "2.9.2-Q10",
+        "2.9.2-Q11",
+        "2.9.2-Q12"
+      ],
+      "pdf_page": 140
+    },
+    {
+      "control_id": "2.9.2",
+      "source_text": "정보시스템 장애를 즉시 인지하고 대응하기 위한 절차를 수립·이행하고 있는가?",
+      "item_ids": [
+        "2.9.2-Q13",
+        "2.9.2-Q14",
+        "2.9.2-Q15",
+        "2.9.2-Q16",
+        "2.9.2-Q17",
+        "2.9.2-Q18",
+        "2.9.2-Q20",
+        "2.9.2-Q24",
+        "2.9.2-Q25"
+      ],
+      "pdf_page": 140
+    },
+    {
+      "control_id": "2.9.2",
+      "source_text": "장애 발생 시 절차에 따라 조치하고 장애조치보고서 등을 통하여 장애조치내역을 기록하여 관리하고 있는가?",
+      "item_ids": [
+        "2.9.2-Q17",
+        "2.9.2-Q18",
+        "2.9.2-Q19",
+        "2.9.2-Q20"
+      ],
+      "pdf_page": 140
+    },
+    {
+      "control_id": "2.9.2",
+      "source_text": "심각도가 높은 장애의 경우 원인분석을 통한 재발방지 대책을 마련하고 있는가?",
+      "item_ids": [
+        "2.9.2-Q21",
+        "2.9.2-Q22",
+        "2.9.2-Q23"
+      ],
+      "pdf_page": 140
+    },
+    {
+      "control_id": "2.9.4",
+      "source_text": "서버, 응용프로그램, 보안시스템, 네트워크시스템 등 정보시스템에 대한 로그관리 절차를 수립하고 이에 따라 필요한 로그를 생성하여 보관하고 있는가?",
+      "item_ids": [
+        "2.9.4-Q01",
+        "2.9.4-Q02",
+        "2.9.4-Q03",
+        "2.9.4-Q04",
+        "2.9.4-Q05",
+        "2.9.4-Q06",
+        "2.9.4-Q07"
+      ],
+      "pdf_page": 144
+    },
+    {
+      "control_id": "2.9.4",
+      "source_text": "정보시스템의 로그기록은 위 ·변조 및 도난, 분실되지 않도록 안전하게 보관하고 로그기록에 대한 접근권한은 최소화하여 부여하고 있는가?",
+      "item_ids": [
+        "2.9.4-Q08",
+        "2.9.4-Q09",
+        "2.9.4-Q10",
+        "2.9.4-Q11"
+      ],
+      "pdf_page": 144
+    },
+    {
+      "control_id": "2.9.4",
+      "source_text": "개인정보처리시스템에 대한 접속기록은 법적 요구사항을 준수할 수 있도록 필요한 항목을 모두 포함하여 일정기간 안전하게 보관하고 있는가?",
+      "item_ids": [
+        "2.9.4-Q12",
+        "2.9.4-Q13",
+        "2.9.4-Q14",
+        "2.9.4-Q15",
+        "2.9.4-Q16",
+        "2.9.4-Q17",
+        "2.9.4-Q18",
+        "2.9.4-Q19",
+        "2.9.4-Q08",
+        "2.9.4-Q09",
+        "2.9.4-Q10",
+        "2.9.4-Q11"
+      ],
+      "pdf_page": 144
+    },
+    {
+      "control_id": "2.9.5",
+      "source_text": "정보시스템 관련 오류, 오·남용(비인가접속, 과다조회 등), 부정행위 등 이상징후를 인지할 수 있도록 로그 검토 주기, 대상, 방법 등을 포함한 로그 검토 및 모니터링 절차를 수립·이행하고 있는가?",
+      "item_ids": [
+        "2.9.5-Q01",
+        "2.9.5-Q02",
+        "2.9.5-Q03",
+        "2.9.5-Q04",
+        "2.9.5-Q05",
+        "2.9.5-Q06",
+        "2.9.5-Q07"
+      ],
+      "pdf_page": 147
+    },
+    {
+      "control_id": "2.9.5",
+      "source_text": "로그 검토 및 모니터링 결과를 책임자에게 보고하고 이상징후 발견 시 절차에 따라 대응하고 있는가?",
+      "item_ids": [
+        "2.9.5-Q08",
+        "2.9.5-Q09",
+        "2.9.5-Q12",
+        "2.9.5-Q13",
+        "2.9.5-Q14"
+      ],
+      "pdf_page": 147
+    },
+    {
+      "control_id": "2.9.5",
+      "source_text": "개인정보처리시스템의 접속기록은 관련 법령에서 정한 주기에 따라 정기적으로 점검하고 있는가?",
+      "item_ids": [
+        "2.9.5-Q10",
+        "2.9.5-Q11"
+      ],
+      "pdf_page": 147
+    },
+    {
+      "control_id": "2.9.6",
+      "source_text": "정보시스템의 시간을 표준시간으로 동기화하고 있는가?",
+      "item_ids": [
+        "2.9.6-Q01",
+        "2.9.6-Q02"
+      ],
+      "pdf_page": 149
+    },
+    {
+      "control_id": "2.9.6",
+      "source_text": "시간 동기화가 정상적으로 이루어지고 있는지 주기적으로 점검하고 있는가?",
+      "item_ids": [
+        "2.9.6-Q03",
+        "2.9.6-Q04",
+        "2.9.6-Q05"
+      ],
+      "pdf_page": 149
+    },
+    {
+      "control_id": "2.9.7",
+      "source_text": "정보자산의 안전한 재사용 및 폐기에 대한 절차를 수립·이행하고 있는가?",
+      "item_ids": [
+        "2.9.7-Q01",
+        "2.9.7-Q02",
+        "2.9.7-Q03",
+        "2.9.7-Q04"
+      ],
+      "pdf_page": 150
+    },
+    {
+      "control_id": "2.9.7",
+      "source_text": "정보자산 및 저장매체를 재사용 및 폐기하는 경우 개인정보 및 중요정보를 복구되지 않는 방법으로 처리하고 있는가?",
+      "item_ids": [
+        "2.9.7-Q05",
+        "2.9.7-Q06"
+      ],
+      "pdf_page": 150
+    },
+    {
+      "control_id": "2.9.7",
+      "source_text": "자체적으로 정보자산 및 저장매체를 폐기할 경우 관리대장을 통하여 폐기이력을 남기고 폐기확인 증적을 함께 보관하고 있는가?",
+      "item_ids": [
+        "2.9.7-Q07",
+        "2.9.7-Q08",
+        "2.9.7-Q09",
+        "2.9.7-Q10",
+        "2.9.7-Q11"
+      ],
+      "pdf_page": 150
+    },
+    {
+      "control_id": "2.9.7",
+      "source_text": "외부업체를 통하여 정보자산 및 저장매체를 폐기할 경우 폐기 절차를 계약서에 명시하고 완전히 폐기하였는지 여부를 확인하고 있는가?",
+      "item_ids": [
+        "2.9.7-Q12",
+        "2.9.7-Q13",
+        "2.9.7-Q14",
+        "2.9.7-Q15"
+      ],
+      "pdf_page": 150
+    },
+    {
+      "control_id": "2.9.7",
+      "source_text": "정보시스템, PC 등 유지보수, 수리 과정에서 저장매체 교체, 복구 등 발생 시 저장매체 내 정보를 보호하기 위한 대책을 마련하고 있는가?",
+      "item_ids": [
+        "2.9.7-Q16"
+      ],
+      "pdf_page": 150
+    }
+  ],
+  "limits": [
+    "팀 승인·현행 법규 확인·실제 증적 및 LLM 판정 품질 검증 전",
+    "새 버전의 사유 카탈로그·가상 사례·기본 판단 연결 미전환"
+  ]
+}

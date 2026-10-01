@@ -1,0 +1,1849 @@
+{
+  "status": "SYNTHETIC_FIXED_RESPONSE_FLOW_CHECK",
+  "review_only": true,
+  "synthetic": true,
+  "approved": false,
+  "human_approved": false,
+  "actual_evidence_used": false,
+  "llm_executed": false,
+  "search_executed": false,
+  "parser_executed": false,
+  "semantic_judgment_checked": false,
+  "model_accuracy_measured": false,
+  "phase1_mapping_origin": "SYNTHETIC_FIXTURE_FROM_CASE_ITEM_ID",
+  "phase1_confirmation_is_operational": false,
+  "response_origin": "SYNTHETIC_EXPECTED_DRAFT_FIXTURE",
+  "expected_labels_used_as_fixed_response": true,
+  "context_construction": "VERBATIM_CASE_ASSUMED_SCOPE_ONLY_OTHER_FIELDS_UNSET",
+  "checked_at": "2026-10-01T00:57:11.264146+09:00",
+  "source_sha256": {
+    "checklist_draft.json": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a",
+    "review_examples.json": "21e827229e19dbb6b67f161eee210e4331af36a54b76b765bf5c05c6d9c67f32",
+    "reason_codes_draft.json": "8db7384ce67e496aeaa00441d69eaf032abd1a9ad6caaed8e03044a87da45ae4",
+    "reason_code_examples.json": "d9b826ce41db2fb4e247df5de0d66cc8983ccb868482a7452258c52f5f4f84ea"
+  },
+  "sources_unchanged": true,
+  "case_count": 162,
+  "question_count": 54,
+  "counts_by_provided_result": {
+    "MET": 54,
+    "NOT_MET": 54,
+    "UNKNOWN": 54
+  },
+  "provided_response_validation_passed_count": 162,
+  "provided_response_validation_failed_count": 0,
+  "limitations": [
+    "기대 판정값을 고정 응답으로 사용하므로 판정 정확도나 모델 성능을 평가하지 않는다.",
+    "Phase1 매핑·검증 통과·NOT_REQUIRED는 합성 fixture 상태이며 실제 승인·매핑이 아니다.",
+    "증적 원문·파일명은 합성이다. 실제 파일 또는 파서를 실행하지 않는다.",
+    "합성 가정 범위를 subject에 보존하며 대상·기간·효력을 자동 추출하지 않는다.",
+    "한 문항씩 부분 검토하며 통제항목 전체 또는 조직의 판정을 계산하지 않는다."
+  ],
+  "q01_examples": [
+    {
+      "case_id": "EX-010",
+      "assumed_scope": "합성 초안. 별도 날짜가 적힌 경우를 제외한 검토 기준일은 2026-09-28이다. A시스템의 2026-09-28 적용 사용자 등록 절차를 검토한다.",
+      "synthetic_text": "합성 문서 REG-PROC v1 §2: A시스템 신규 사용자는 업무책임자가 등록을 신청하고 운영자가 신청 대상과 등록 결과를 기록한다.",
+      "provided_result_draft": "MET",
+      "rationale_draft": "A시스템 등록의 신청·대상 확인·결과 기록 절차를 명시한 REG-PROC가 있어 절차 수립의 충족 기대값을 유지한다. MET은 미충족·미확정 사유를 부여하지 않아 사유 코드 배열을 비운다. 이 자료의 지정 범위에 한정한 합성 기대값이다."
+    },
+    {
+      "case_id": "EX-011",
+      "assumed_scope": "합성 초안. 별도 날짜가 적힌 경우를 제외한 검토 기준일은 2026-09-28이다. A시스템의 2026-09-28 적용 사용자 등록 절차를 검토한다.",
+      "synthetic_text": "합성 확인서 REG-AUDIT §1: A시스템은 현재 신규 사용자 등록 절차를 수립하지 않았으며 담당자별로 임의 등록하고 있다.",
+      "provided_result_draft": "NOT_MET",
+      "rationale_draft": "REG-AUDIT가 사용자 등록 절차 미수립을 직접 확인한다. 절차를 미첨부한 경우와 구별되는 명시적 미수립 사실이다."
+    },
+    {
+      "case_id": "EX-012",
+      "assumed_scope": "합성 초안. 별도 날짜가 적힌 경우를 제외한 검토 기준일은 2026-09-28이다. A시스템의 2026-09-28 적용 사용자 등록 절차를 검토한다.",
+      "synthetic_text": "합성 첨부 REG-PROC는 표지만 있고 사용자 등록 부분은 누락됐다. 적용 절차의 내용을 확인할 수 없다.",
+      "provided_result_draft": "UNKNOWN",
+      "rationale_draft": "REG-PROC는 표지만 있고 등록 절차 부분이 빠져 있어 수립된 내용 자체를 확인할 증거가 부족하다."
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "EX-01",
+      "item_id": "2.5.1-Q11",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-02",
+      "item_id": "2.5.1-Q11",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-03",
+      "item_id": "2.5.1-Q11",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-04",
+      "item_id": "2.5.6-Q07",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-05",
+      "item_id": "2.5.6-Q07",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-06",
+      "item_id": "2.5.6-Q07",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-07",
+      "item_id": "2.9.3-Q01",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-08",
+      "item_id": "2.9.3-Q01",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-09",
+      "item_id": "2.9.3-Q01",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-010",
+      "item_id": "2.5.1-Q01",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-011",
+      "item_id": "2.5.1-Q01",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-012",
+      "item_id": "2.5.1-Q01",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-013",
+      "item_id": "2.5.1-Q02",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-014",
+      "item_id": "2.5.1-Q02",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-015",
+      "item_id": "2.5.1-Q02",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-016",
+      "item_id": "2.5.1-Q03",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-017",
+      "item_id": "2.5.1-Q03",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-018",
+      "item_id": "2.5.1-Q03",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-019",
+      "item_id": "2.5.1-Q04",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-020",
+      "item_id": "2.5.1-Q04",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-021",
+      "item_id": "2.5.1-Q04",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-022",
+      "item_id": "2.5.1-Q05",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-023",
+      "item_id": "2.5.1-Q05",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-024",
+      "item_id": "2.5.1-Q05",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-025",
+      "item_id": "2.5.1-Q06",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-026",
+      "item_id": "2.5.1-Q06",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-027",
+      "item_id": "2.5.1-Q06",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-028",
+      "item_id": "2.5.1-Q07",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-029",
+      "item_id": "2.5.1-Q07",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-030",
+      "item_id": "2.5.1-Q07",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-031",
+      "item_id": "2.5.1-Q08",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-032",
+      "item_id": "2.5.1-Q08",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-033",
+      "item_id": "2.5.1-Q08",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-034",
+      "item_id": "2.5.1-Q09",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-035",
+      "item_id": "2.5.1-Q09",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-036",
+      "item_id": "2.5.1-Q09",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-037",
+      "item_id": "2.5.1-Q10",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-038",
+      "item_id": "2.5.1-Q10",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-039",
+      "item_id": "2.5.1-Q10",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-040",
+      "item_id": "2.5.1-Q13",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-041",
+      "item_id": "2.5.1-Q13",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-042",
+      "item_id": "2.5.1-Q13",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-043",
+      "item_id": "2.5.1-Q14",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-044",
+      "item_id": "2.5.1-Q14",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-045",
+      "item_id": "2.5.1-Q14",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-046",
+      "item_id": "2.5.1-Q15",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-047",
+      "item_id": "2.5.1-Q15",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-048",
+      "item_id": "2.5.1-Q15",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-049",
+      "item_id": "2.5.1-Q16",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-050",
+      "item_id": "2.5.1-Q16",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-051",
+      "item_id": "2.5.1-Q16",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-052",
+      "item_id": "2.5.1-Q17",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-053",
+      "item_id": "2.5.1-Q17",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-054",
+      "item_id": "2.5.1-Q17",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-055",
+      "item_id": "2.5.1-Q18",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-056",
+      "item_id": "2.5.1-Q18",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-057",
+      "item_id": "2.5.1-Q18",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-058",
+      "item_id": "2.5.1-Q19",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-059",
+      "item_id": "2.5.1-Q19",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-060",
+      "item_id": "2.5.1-Q19",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-061",
+      "item_id": "2.5.1-Q20",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-062",
+      "item_id": "2.5.1-Q20",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-063",
+      "item_id": "2.5.1-Q20",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-064",
+      "item_id": "2.5.1-Q21",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-065",
+      "item_id": "2.5.1-Q21",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-066",
+      "item_id": "2.5.1-Q21",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-067",
+      "item_id": "2.5.6-Q01",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-068",
+      "item_id": "2.5.6-Q01",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-069",
+      "item_id": "2.5.6-Q01",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-070",
+      "item_id": "2.5.6-Q02",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-071",
+      "item_id": "2.5.6-Q02",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-072",
+      "item_id": "2.5.6-Q02",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-073",
+      "item_id": "2.5.6-Q03",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-074",
+      "item_id": "2.5.6-Q03",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-075",
+      "item_id": "2.5.6-Q03",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-076",
+      "item_id": "2.5.6-Q04",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-077",
+      "item_id": "2.5.6-Q04",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-078",
+      "item_id": "2.5.6-Q04",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-079",
+      "item_id": "2.5.6-Q05",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-080",
+      "item_id": "2.5.6-Q05",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-081",
+      "item_id": "2.5.6-Q05",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-082",
+      "item_id": "2.5.6-Q06",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-083",
+      "item_id": "2.5.6-Q06",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-084",
+      "item_id": "2.5.6-Q06",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-085",
+      "item_id": "2.5.6-Q08",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-086",
+      "item_id": "2.5.6-Q08",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-087",
+      "item_id": "2.5.6-Q08",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-088",
+      "item_id": "2.5.6-Q09",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-089",
+      "item_id": "2.5.6-Q09",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-090",
+      "item_id": "2.5.6-Q09",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-091",
+      "item_id": "2.5.6-Q10",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-092",
+      "item_id": "2.5.6-Q10",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-093",
+      "item_id": "2.5.6-Q10",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-094",
+      "item_id": "2.5.6-Q11",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-095",
+      "item_id": "2.5.6-Q11",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-096",
+      "item_id": "2.5.6-Q11",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-097",
+      "item_id": "2.5.6-Q12",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-098",
+      "item_id": "2.5.6-Q12",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-099",
+      "item_id": "2.5.6-Q12",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-100",
+      "item_id": "2.5.6-Q13",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-101",
+      "item_id": "2.5.6-Q13",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-102",
+      "item_id": "2.5.6-Q13",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-103",
+      "item_id": "2.5.6-Q14",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-104",
+      "item_id": "2.5.6-Q14",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-105",
+      "item_id": "2.5.6-Q14",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-106",
+      "item_id": "2.9.3-Q02",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-107",
+      "item_id": "2.9.3-Q02",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-108",
+      "item_id": "2.9.3-Q02",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-109",
+      "item_id": "2.9.3-Q03",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-110",
+      "item_id": "2.9.3-Q03",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-111",
+      "item_id": "2.9.3-Q03",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-112",
+      "item_id": "2.9.3-Q04",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-113",
+      "item_id": "2.9.3-Q04",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-114",
+      "item_id": "2.9.3-Q04",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-115",
+      "item_id": "2.9.3-Q05",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-116",
+      "item_id": "2.9.3-Q05",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-117",
+      "item_id": "2.9.3-Q05",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-118",
+      "item_id": "2.9.3-Q06",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-119",
+      "item_id": "2.9.3-Q06",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-120",
+      "item_id": "2.9.3-Q06",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-121",
+      "item_id": "2.9.3-Q09",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-122",
+      "item_id": "2.9.3-Q09",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-123",
+      "item_id": "2.9.3-Q09",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-124",
+      "item_id": "2.9.3-Q10",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-125",
+      "item_id": "2.9.3-Q10",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-126",
+      "item_id": "2.9.3-Q10",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-127",
+      "item_id": "2.9.3-Q11",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-128",
+      "item_id": "2.9.3-Q11",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-129",
+      "item_id": "2.9.3-Q11",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-130",
+      "item_id": "2.9.3-Q12",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-131",
+      "item_id": "2.9.3-Q12",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-132",
+      "item_id": "2.9.3-Q12",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-133",
+      "item_id": "2.9.3-Q13",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-134",
+      "item_id": "2.9.3-Q13",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-135",
+      "item_id": "2.9.3-Q13",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-136",
+      "item_id": "2.9.3-Q14",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-137",
+      "item_id": "2.9.3-Q14",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-138",
+      "item_id": "2.9.3-Q14",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-139",
+      "item_id": "2.9.3-Q15",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-140",
+      "item_id": "2.9.3-Q15",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-141",
+      "item_id": "2.9.3-Q15",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-142",
+      "item_id": "2.9.3-Q16",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-143",
+      "item_id": "2.9.3-Q16",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-144",
+      "item_id": "2.9.3-Q16",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-145",
+      "item_id": "2.9.3-Q17",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-146",
+      "item_id": "2.9.3-Q17",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-147",
+      "item_id": "2.9.3-Q17",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-148",
+      "item_id": "2.9.3-Q18",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-149",
+      "item_id": "2.9.3-Q18",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-150",
+      "item_id": "2.9.3-Q18",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-151",
+      "item_id": "2.9.3-Q19",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-152",
+      "item_id": "2.9.3-Q19",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-153",
+      "item_id": "2.9.3-Q19",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-154",
+      "item_id": "2.9.3-Q20",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-155",
+      "item_id": "2.9.3-Q20",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-156",
+      "item_id": "2.9.3-Q20",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-157",
+      "item_id": "2.9.3-Q21",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-158",
+      "item_id": "2.9.3-Q21",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-159",
+      "item_id": "2.9.3-Q21",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-160",
+      "item_id": "2.9.3-Q22",
+      "provided_result_draft": "MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-161",
+      "item_id": "2.9.3-Q22",
+      "provided_result_draft": "NOT_MET",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    },
+    {
+      "case_id": "EX-162",
+      "item_id": "2.9.3-Q22",
+      "provided_result_draft": "UNKNOWN",
+      "partial_review": true,
+      "provided_response_validation_passed": true,
+      "issue_codes": [],
+      "warning_codes": [
+        "REVIEW_CONTEXT_INCOMPLETE"
+      ]
+    }
+  ]
+}

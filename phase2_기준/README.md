@@ -1,6 +1,66 @@
 # Phase2 기준
 
-WBS의 Phase2 기준 작업은 이 디렉토리에서 관리한다. 현재 버전은 `phase2-checklist-draft-2026-09-28`이며, **통제항목 3개·활성 질문 54개·퇴역 질문 3개**를 담은 팀 검수용 초안이다. `approved=false`, `critical=null`을 유지한다.
+WBS의 Phase2 기준 작업은 이 디렉토리에서 관리한다. 기본 연결 버전은 `phase2-checklist-draft-2026-09-28`이며, **통제항목 3개·활성 질문 54개·퇴역 질문 3개**를 담은 팀 검수용 초안이다. 별도의 2장 전체 초안은 **64개 항목·700문항**으로 확장했다. 이전 첫 묶음 13개·210문항도 보존했다. 모두 `approved=false`, `critical=null`을 유지한다.
+
+## 10/1 2장 전체 질문 1차 초안
+
+**2장 64개 항목·700문항의 1차 초안**을 별도 버전으로 구성했다. 남은 51개 항목에 490문항을 추가하고 이전 13개·210문항과 퇴역 3개를 그대로 보존했다. [전체 질문·판정 조건](chapter2_full_review.md)과 [전체 JSON](chapter2_full_checklist_draft.json)을 확인한다. 작성용 중간 JSON 5개는 전체 JSON과 내용 보존을 대조한 뒤 정리했으며, `drafts/`에는 출처 검토 문서만 남겼다.
+
+보유 2023년 일반 안내서 주요 확인사항 195개와 선택한 세부 조건을 문항에 연결했다. 700문항의 엄격 형식·원문 문구와 전체 ID·원본 연결을 대조하고, 임시 DB에서 모든 항목·문항 및 과거 버전의 조회를 확인했다. [검증 기록](reports/chapter2_full_validation_2026-10-01.json)은 실제 증적 판정이나 LLM 성능 측정 결과가 아니다.
+
+현재 질문 미작성 항목은 0개다. 질문·적용 조건·critical의 담당자 검토와 새 버전의 사유 코드·가상 사례·판단 입력 연결은 남아 있다. 기본 연결은 기존 3개·54문항이며 전체 초안이 자동으로 판단에 사용되지는 않는다. 범위 제안과 첫 묶음의 아래 기록은 각 작성 시점의 이력이다.
+
+## 10/1 2장 첫 묶음 질문 작성
+
+2.5·2.9의 미작성 10개 항목에 **156문항**을 작성하고 기존 3개·54문항과 퇴역 3개를 원형 보존해 `phase2-checklist-chapter2-batch1-draft-2026-10-01`로 묶었다. 첫 묶음 작성 시점에는 2장 64개 중 **13개 항목·210문항의 1차 초안**이 있었고 나머지 51개 항목은 미작성이었다. 이후 위의 전체 초안으로 64개 항목의 1차 질문을 작성했다.
+
+[질문과 충족·미충족·판단불가 조건](chapter2_batch1_review.md), [새 체크리스트 JSON](chapter2_batch1_checklist_draft.json)을 확인한다. 계정·인증·권한 4개 항목은 65문항, 운영관리 6개 항목은 91문항이다. 원문의 주요 확인사항 29개와 선택한 세부 조건을 분해한 문항 수이며 세부 설명 전체·금융 추가요건을 구현한 최종본은 아니다.
+
+210문항의 엄격 형식과 임시 DB 저장·조회, 기존 버전 및 활성/퇴역 ID 보존을 확인했다. 신규 156문항의 원문 문구·쪽수와 주요 확인사항 연결도 대조했다. [검증 기록](reports/chapter2_batch1_validation_2026-10-01.json)은 실제 증적 판정이나 LLM 정확도 측정 결과가 아니다.
+
+기본 질문·사유 카탈로그·162개 가상 사례·판단 연결은 기존 3개 항목 버전을 유지한다. 새 버전은 질문 초안의 별도 적재·조회까지이며 신규 사유/사례 연결과 판단 입력 동기화가 다음 작업이다. 질문 작성 중 보완한 승인 범위 확인은 새 2.5.5-Q04의 기준 데이터이고 판단팀 코드를 수정한 것은 아니다.
+
+## 10/1 전체 작성 범위 제안
+
+사용자 제안에 따라 현재 검색 KB의 **2장 보호대책 요구사항 전체 64개 항목·12개 영역**을 작성 범위 초안으로 정리했다. 제안 당시 기존 3개 항목의 54문항을 재사용하고 61개 항목을 추가 작성할 계획이었다. 첫 묶음 10개 항목 작성 시점에는 미작성 항목이 51개였으며, 이후 위의 전체 초안으로 64개 항목·700문항의 1차 질문을 작성했다. 빈도·중요도 상위 항목을 조사해 선정한 범위는 아니다.
+
+[범위와 영역별 진행 상태](chapter2_scope_review.md), [전체 ID·원문·문항 작성 현황](chapter2_scope_draft.json)을 확인한다. 기존 작업을 활용하는 작성 순서에 따라 2.5·2.9의 미작성 10개 항목 초안을 추가했다. 기본 판단 연결은 기존 3개 항목 버전이다. 전체 64개 질문의 1차 초안은 작성했으며 버전 동기화와 팀 검수는 남아 있다.
+
+## 10/1 문항 판단의 검수용 입출력·응답 검증
+
+`judgment_review.py`는 기존 확정 Phase1 결과의 문항 조회에 동일 증적·버전의 청크와 검토 정보를 연결한다. 질문·사유 코드의 버전과 원본 해시를 대조하고, 응답 검사 때 저장소에서 입력을 다시 준비해 질문·근거 조건의 변경을 확인한다. 미지원 통제항목이 섞인 1:N은 전체 보류하며, 확정 `NO_MATCH`는 판단 문항이 없으므로 실행 입력을 만들지 않는다.
+
+제공된 응답에서 문항별 결과가 정확히 하나씩 있는지, 사유 코드가 판정 종류와 맞는지, 인용의 청크·원문·페이지가 맞는지 검사한다. MET/NOT_MET은 인용이 필요하고 UNKNOWN은 인용이 있으면 모두 검사한다. 페이지형 청크의 `page=null`은 기존 판단팀 정책대로 경고를 남긴다. 형식 오류와 허위 인용을 UNKNOWN 판정으로 바꾸지 않는다.
+
+이 함수는 LLM을 호출하지 않는다. `llm_executed=false`의 범위는 `llm_execution_scope=THIS_FUNCTION_ONLY`이고, 제공된 응답의 생성 출처까지 보증하지 않는다. `validation.passed`는 형식·참조 검증 통과이고, 실제 충족 여부가 맞는지는 `semantic_judgment_checked=false`로 남긴다. 결과는 항상 `review_only=true`, `approved=false`, `human_approved=false`, `review_required=true`다. 입력의 검토 정보가 미기재이면 경고를 남기고, 입력되어 있어도 실제 적용 관계가 확인됐다고 간주하지 않는다.
+
+```python
+from judgment_review import prepare_judgment_review, check_review_output
+
+# phase1_result, chunks, provided_response는 호출자가 준비한 자료다.
+request = prepare_judgment_review(
+    phase1_result, store, "phase2-checklist-draft-2026-09-28", chunks,
+    item_ids=["2.5.1-Q01"],  # 생략하면 확정 매핑의 모든 문항
+    context={"subject": "검토 대상 시스템", "period_or_event": "검토 대상 기간"},
+    allow_draft=True,
+)
+checked = check_review_output(request, provided_response, store, allow_draft=True)
+# parsed_output은 형식만 통과한 응답도 보존한다. validation.passed를 확인한다.
+```
+
+`item_ids`를 지정하면 `partial_review`와 전체 조회 문항 수를 함께 남긴다. 내부 입력에는 원래 Phase1 결과와 검증 이력도 보존하므로 그대로 LLM 메시지에 넣는 규격은 아니다. 응답 필드는 `checklist_version`, `catalog_version`, `evidence_id`, `version`, `item_results`이고 문항별로 `item_id`, `control_id`, `result`, `reason`, `reason_codes`, `citations`를 받는다. [Pydantic 입력 스키마](schemas/phase2_judgment_review_input.schema.json)와 [응답 스키마](schemas/phase2_judgment_review_output.schema.json)는 팀 합의 전의 검수용 버전이다.
+
+현재 범위는 **한 증적·버전의 청크**다. 여러 문서의 대상·사건·효력 연결, 실제 Phase2 LLM 호출, 운영 API/저장, critical·종합 등급은 별도 구현·협의가 필요하다. 기존 질문·사유 코드·승인 상태와 Phase1 팀 코드는 바꾸지 않는다. 테스트는 검색팀 Python 환경으로 `python -m unittest discover -s tests -p test_judgment_review.py -v`를 실행한다.
+
+새 검증 테스트 33개와 기존 테스트를 합친 Phase2 전체 **90개가 통과**했다. 두 JSON Schema의 규격도 검사했다. 고정 응답을 사용한 코드 동작 검증이며 실제 LLM의 판정 성능을 측정한 결과는 아니다.
+
+실제 자료가 없는 상태에서는 `verify_synthetic_review_flow.py`로 기존 가상 사례를 연결할 수 있다. **54문항의 162개 사례**를 한 문항씩 부분 검토 입력으로 만들고, 기존 기대값을 고정 응답으로 제공해 형식·사유·인용을 검사했다. 162개 모두 통과했으며 원본 사례·기준의 해시는 유지했다. 기대값을 답으로 넣는 검사라 모델 정확도나 판정 정답률을 측정한 결과가 아니다. Phase1 매핑과 확정 상태도 합성 fixture이고, 실제 파일·파서·검색·LLM·조직 증적은 사용하지 않았다. [실행 범위와 Q01의 가상 예시 3개](reports/synthetic_review_flow_2026-10-01.json)를 확인한다.
+
+이 디렉토리에서 검색팀 Python 환경으로 `python verify_synthetic_review_flow.py`를 실행하면 요약을 출력한다. `--output reports/synthetic_review_flow_2026-10-01.json`을 지정하면 실행 기록도 저장한다. 요청에는 가상 원문·가정 범위·문항 기준과 일반 사유 정의를 넣고, 사례의 기대값·사유 해설은 고정 응답에만 넣는다. 가정 범위는 그대로 보존하며 대상·기간·효력을 자동 추출하거나 확인했다고 표시하지 않는다.
+
+## 9/30 첫 문항의 샘플 적용 검토
+
+`2.5.1-Q01`을 기존 D01 계획서의 9개 청크에 직접 대입했다. 사용자 등록 절차의 직접 내용과 적용 효력을 확인할 자료가 부족해 잠정 `UNKNOWN`으로 기록했다. 원본 해시와 인용 2개를 대조했다. 실제 LLM·Phase1 확정 매핑·운영 Phase2 판정을 실행한 결과는 아니며 질문·팀 승인 상태는 유지했다. [근거·판정 조건·다음 확인 자료](reports/q01_sample_review_2026-09-30.md)를 본다.
 
 ## 9/30 Phase1 결과와 검수용 질문 연결
 

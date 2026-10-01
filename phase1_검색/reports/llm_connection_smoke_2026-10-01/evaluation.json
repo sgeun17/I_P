@@ -1,0 +1,769 @@
+{
+  "report_version": "phase1-ollama-smoke-2026-10-01",
+  "created_at_utc": "2026-10-01T07:03:11.004642+00:00",
+  "status": "connection_verified_judgment_team_review_required",
+  "scope": "3 synthetic Phase1 mapping fixtures, 2 input conditions; not live retrieval or Phase2 adequacy assessment",
+  "model": "qwen3:14b",
+  "endpoint": "http://127.0.0.1:11435/v1/chat/completions",
+  "generation": {
+    "temperature": 0.0,
+    "max_tokens": 4096,
+    "stream": false,
+    "thinking": false,
+    "thinking_effort": "medium",
+    "seed": null
+  },
+  "timeout_seconds": 60.0,
+  "versions": {
+    "schema_version": "0.3.1",
+    "prompt_version": "phase1_mapping_v0.5",
+    "model_name": "qwen3:14b",
+    "ruleset_version": "mapping_rules_v0.7",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_model_revision": null
+  },
+  "source_sha256": {
+    "goldenset": "b2e82492fea5ef677504d8b11b0400c17787a8486967a2467ef3019f95fa65b9",
+    "controls": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "validator_at_execution": "e2481378e4b9cc7cacd96caabfb4226b5100bdf6ac5d040fa0468b39617ee94b",
+    "validator_current": "e2481378e4b9cc7cacd96caabfb4226b5100bdf6ac5d040fa0468b39617ee94b"
+  },
+  "runs": {
+    "original_fixture": {
+      "responses_file": "../../../phase1_판단/runs/qwen3-14b-smoke-2026-10-01.jsonl",
+      "responses_sha256": "11bbf8848ddd1575a5e9582538ab56655fa672ed80a828cc7b945e535b91ec44",
+      "case_count": 3,
+      "call_success_count": 3,
+      "cases": [
+        {
+          "test_id": "G-SINGLE-01",
+          "description": "퇴직자 계정 삭제 요청서 → 2.5.1 하나",
+          "input_sha256": "0d51931f4e42f7cb99f4185589f2ee523576aebf026382d7093576e18a00b30f",
+          "candidate_requirements_present": 0,
+          "candidate_count": 5,
+          "call_error": null,
+          "attempts": 1,
+          "retry_count": 0,
+          "processing_time_ms": 15861,
+          "expected": {
+            "match_status": "MATCHED",
+            "controls": [
+              {
+                "control_id": "2.5.1",
+                "relation": "PRIMARY"
+              }
+            ],
+            "processing_status": "COMPLETED",
+            "validation_passed": true,
+            "error_codes": [],
+            "review_required": false,
+            "review_reasons": []
+          },
+          "gold": {
+            "match_status": "MATCHED",
+            "controls": [
+              {
+                "control_id": "2.5.1",
+                "relation": "PRIMARY"
+              }
+            ],
+            "retrieval_miss": false
+          },
+          "predicted": [
+            {
+              "control_id": "2.2.5",
+              "relation": "PRIMARY"
+            },
+            {
+              "control_id": "2.5.1",
+              "relation": "RELATED"
+            }
+          ],
+          "exact_match": false,
+          "prompt_citations_field_omissions": [],
+          "validation": {
+            "passed": true,
+            "schema_valid": true,
+            "control_ids_valid": true,
+            "citations_valid": true,
+            "rules_valid": true,
+            "issues": [],
+            "warnings": []
+          },
+          "human_review": {
+            "required": true,
+            "status": "PENDING",
+            "reasons": [
+              "R205"
+            ],
+            "threshold_profile": "thresholds_v0.4",
+            "reviewer_id": null,
+            "reviewed_at": null,
+            "review_note": null
+          }
+        },
+        {
+          "test_id": "G-MULTI-01",
+          "description": "계정·권한 지침서 → 2.5.1 PRIMARY + 2.5.5 + 2.5.6",
+          "input_sha256": "7a0ba9fae92039aa1f76105138492a26ef26158dae9efffdaa083ddf733bf9d8",
+          "candidate_requirements_present": 0,
+          "candidate_count": 5,
+          "call_error": null,
+          "attempts": 1,
+          "retry_count": 0,
+          "processing_time_ms": 15974,
+          "expected": {
+            "match_status": "MATCHED",
+            "controls": [
+              {
+                "control_id": "2.5.1",
+                "relation": "PRIMARY"
+              },
+              {
+                "control_id": "2.5.5",
+                "relation": "RELATED"
+              },
+              {
+                "control_id": "2.5.6",
+                "relation": "RELATED"
+              }
+            ],
+            "processing_status": "COMPLETED",
+            "validation_passed": true,
+            "error_codes": [],
+            "review_required": true,
+            "review_reasons": [
+              "R205"
+            ]
+          },
+          "gold": {
+            "match_status": "MATCHED",
+            "controls": [
+              {
+                "control_id": "2.5.1",
+                "relation": "PRIMARY"
+              },
+              {
+                "control_id": "2.5.5",
+                "relation": "RELATED"
+              },
+              {
+                "control_id": "2.5.6",
+                "relation": "RELATED"
+              }
+            ],
+            "retrieval_miss": false
+          },
+          "predicted": [
+            {
+              "control_id": "2.5.1",
+              "relation": "PRIMARY"
+            },
+            {
+              "control_id": "2.5.5",
+              "relation": "RELATED"
+            },
+            {
+              "control_id": "2.5.6",
+              "relation": "RELATED"
+            }
+          ],
+          "exact_match": true,
+          "prompt_citations_field_omissions": [],
+          "validation": {
+            "passed": true,
+            "schema_valid": true,
+            "control_ids_valid": true,
+            "citations_valid": true,
+            "rules_valid": true,
+            "issues": [],
+            "warnings": []
+          },
+          "human_review": {
+            "required": true,
+            "status": "PENDING",
+            "reasons": [
+              "R205"
+            ],
+            "threshold_profile": "thresholds_v0.4",
+            "reviewer_id": null,
+            "reviewed_at": null,
+            "review_note": null
+          }
+        },
+        {
+          "test_id": "G-NOMATCH-01",
+          "description": "회식비 정산 내역 → 관련 통제항목 없음",
+          "input_sha256": "fb838aeac8452447d9d6bc3add7cf396233819d061b50f87105cbdab56f327fc",
+          "candidate_requirements_present": 0,
+          "candidate_count": 5,
+          "call_error": null,
+          "attempts": 1,
+          "retry_count": 0,
+          "processing_time_ms": 5372,
+          "expected": {
+            "match_status": "NO_MATCH",
+            "controls": [],
+            "processing_status": "COMPLETED",
+            "validation_passed": true,
+            "error_codes": [],
+            "review_required": true,
+            "review_reasons": [
+              "R204"
+            ]
+          },
+          "gold": {
+            "match_status": "NO_MATCH",
+            "controls": [],
+            "retrieval_miss": false
+          },
+          "predicted": [],
+          "exact_match": true,
+          "prompt_citations_field_omissions": [
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.5.1"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.4.6"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.9.2"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.3.1"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.11.1"
+            }
+          ],
+          "validation": {
+            "passed": true,
+            "schema_valid": true,
+            "control_ids_valid": true,
+            "citations_valid": true,
+            "rules_valid": true,
+            "issues": [],
+            "warnings": []
+          },
+          "human_review": {
+            "required": true,
+            "status": "PENDING",
+            "reasons": [
+              "R204"
+            ],
+            "threshold_profile": "thresholds_v0.4",
+            "reviewer_id": null,
+            "reviewed_at": null,
+            "review_note": null
+          }
+        }
+      ],
+      "metrics": {
+        "n": 3,
+        "n_excluded_retrieval_miss": 0,
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "macro_precision": 0.75,
+        "macro_recall": 1.0,
+        "exact_match": 0.6666666666666666,
+        "exact_match_with_relation": 0.6666666666666666,
+        "primary_accuracy": 0.5,
+        "no_match_accuracy": 1.0,
+        "no_match_accuracy_strict": 1.0,
+        "false_match_rate": 0.0,
+        "missed_match_rate": 0.0,
+        "uncertain_rate": 0.0,
+        "deferred_no_match_rate": 0.0,
+        "citation_valid_rate": 1.0,
+        "invalid_output_rate": 0.0,
+        "review_required_rate": 1.0,
+        "avg_processing_time_ms": 12402.333333333334,
+        "by_category": {
+          "multi_mapping": {
+            "n": 1,
+            "exact_match": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "review_rate": 1.0
+          },
+          "no_match": {
+            "n": 1,
+            "exact_match": 1.0,
+            "precision": null,
+            "recall": null,
+            "review_rate": 1.0
+          },
+          "single_mapping": {
+            "n": 1,
+            "exact_match": 0.0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "review_rate": 1.0
+          }
+        }
+      }
+    },
+    "master_kb_requirements_added": {
+      "responses_file": "../../../phase1_판단/runs/qwen3-14b-smoke-requirements-2026-10-01.jsonl",
+      "responses_sha256": "06871382de9ad1e0c514c699e63686f8037f00a5b81e20f33eac941584bbb2e3",
+      "case_count": 3,
+      "call_success_count": 3,
+      "cases": [
+        {
+          "test_id": "G-SINGLE-01",
+          "description": "퇴직자 계정 삭제 요청서 → 2.5.1 하나",
+          "input_sha256": "5cb6ea61c339727b060e9cb328dd696f3074621aed42df2cf37c01dc1d235113",
+          "candidate_requirements_present": 5,
+          "candidate_count": 5,
+          "call_error": null,
+          "attempts": 1,
+          "retry_count": 0,
+          "processing_time_ms": 16782,
+          "expected": {
+            "match_status": "MATCHED",
+            "controls": [
+              {
+                "control_id": "2.5.1",
+                "relation": "PRIMARY"
+              }
+            ],
+            "processing_status": "COMPLETED",
+            "validation_passed": true,
+            "error_codes": [],
+            "review_required": false,
+            "review_reasons": []
+          },
+          "gold": {
+            "match_status": "MATCHED",
+            "controls": [
+              {
+                "control_id": "2.5.1",
+                "relation": "PRIMARY"
+              }
+            ],
+            "retrieval_miss": false
+          },
+          "predicted": [
+            {
+              "control_id": "2.5.6",
+              "relation": "PRIMARY"
+            },
+            {
+              "control_id": "2.2.5",
+              "relation": "RELATED"
+            }
+          ],
+          "exact_match": false,
+          "prompt_citations_field_omissions": [
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.5.1"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.5.2"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.5.5"
+            }
+          ],
+          "validation": {
+            "passed": true,
+            "schema_valid": true,
+            "control_ids_valid": true,
+            "citations_valid": true,
+            "rules_valid": true,
+            "issues": [],
+            "warnings": [
+              {
+                "code": "E507",
+                "message": "근거 안에 증적 원문을 따옴표로 다시 인용했다 (candidate_decisions.reason)",
+                "control_id": "2.5.6",
+                "chunk_id": null,
+                "field": "reason"
+              },
+              {
+                "code": "E507",
+                "message": "근거 안에 증적 원문을 따옴표로 다시 인용했다 (candidate_decisions.reason)",
+                "control_id": "2.2.5",
+                "chunk_id": null,
+                "field": "reason"
+              },
+              {
+                "code": "E507",
+                "message": "근거 안에 증적 원문을 따옴표로 다시 인용했다 (mapped_controls.reason)",
+                "control_id": "2.5.6",
+                "chunk_id": null,
+                "field": "reason"
+              },
+              {
+                "code": "E507",
+                "message": "근거 안에 증적 원문을 따옴표로 다시 인용했다 (mapped_controls.reason)",
+                "control_id": "2.2.5",
+                "chunk_id": null,
+                "field": "reason"
+              }
+            ]
+          },
+          "human_review": {
+            "required": true,
+            "status": "PENDING",
+            "reasons": [
+              "R205"
+            ],
+            "threshold_profile": "thresholds_v0.4",
+            "reviewer_id": null,
+            "reviewed_at": null,
+            "review_note": null
+          }
+        },
+        {
+          "test_id": "G-MULTI-01",
+          "description": "계정·권한 지침서 → 2.5.1 PRIMARY + 2.5.5 + 2.5.6",
+          "input_sha256": "25d8941e249216e169864fd2b2d5f8f7e525efc3957ca2ad1a5ea40b5e07ba7b",
+          "candidate_requirements_present": 5,
+          "candidate_count": 5,
+          "call_error": null,
+          "attempts": 1,
+          "retry_count": 0,
+          "processing_time_ms": 18011,
+          "expected": {
+            "match_status": "MATCHED",
+            "controls": [
+              {
+                "control_id": "2.5.1",
+                "relation": "PRIMARY"
+              },
+              {
+                "control_id": "2.5.5",
+                "relation": "RELATED"
+              },
+              {
+                "control_id": "2.5.6",
+                "relation": "RELATED"
+              }
+            ],
+            "processing_status": "COMPLETED",
+            "validation_passed": true,
+            "error_codes": [],
+            "review_required": true,
+            "review_reasons": [
+              "R205"
+            ]
+          },
+          "gold": {
+            "match_status": "MATCHED",
+            "controls": [
+              {
+                "control_id": "2.5.1",
+                "relation": "PRIMARY"
+              },
+              {
+                "control_id": "2.5.5",
+                "relation": "RELATED"
+              },
+              {
+                "control_id": "2.5.6",
+                "relation": "RELATED"
+              }
+            ],
+            "retrieval_miss": false
+          },
+          "predicted": [
+            {
+              "control_id": "2.5.1",
+              "relation": "PRIMARY"
+            },
+            {
+              "control_id": "2.5.5",
+              "relation": "RELATED"
+            },
+            {
+              "control_id": "2.5.6",
+              "relation": "RELATED"
+            }
+          ],
+          "exact_match": true,
+          "prompt_citations_field_omissions": [],
+          "validation": {
+            "passed": false,
+            "schema_valid": true,
+            "control_ids_valid": true,
+            "citations_valid": true,
+            "rules_valid": false,
+            "issues": [
+              {
+                "code": "E505",
+                "message": "Phase 1에서 적정성 판정으로 읽히는 표현을 썼다: '적정성' (candidate_decisions.reason)",
+                "control_id": "2.5.6",
+                "chunk_id": null,
+                "field": "reason"
+              },
+              {
+                "code": "E505",
+                "message": "Phase 1에서 적정성 판정으로 읽히는 표현을 썼다: '적정성' (mapped_controls.reason)",
+                "control_id": "2.5.6",
+                "chunk_id": null,
+                "field": "reason"
+              }
+            ],
+            "warnings": []
+          },
+          "human_review": {
+            "required": true,
+            "status": "PENDING",
+            "reasons": [
+              "R102",
+              "R205"
+            ],
+            "threshold_profile": "thresholds_v0.4",
+            "reviewer_id": null,
+            "reviewed_at": null,
+            "review_note": null
+          }
+        },
+        {
+          "test_id": "G-NOMATCH-01",
+          "description": "회식비 정산 내역 → 관련 통제항목 없음",
+          "input_sha256": "75e8b9259f0d43da483bc050dc5a01f02d2f484aff71509f7d9b0a723d62981e",
+          "candidate_requirements_present": 5,
+          "candidate_count": 5,
+          "call_error": null,
+          "attempts": 1,
+          "retry_count": 0,
+          "processing_time_ms": 5631,
+          "expected": {
+            "match_status": "NO_MATCH",
+            "controls": [],
+            "processing_status": "COMPLETED",
+            "validation_passed": true,
+            "error_codes": [],
+            "review_required": true,
+            "review_reasons": [
+              "R204"
+            ]
+          },
+          "gold": {
+            "match_status": "NO_MATCH",
+            "controls": [],
+            "retrieval_miss": false
+          },
+          "predicted": [],
+          "exact_match": true,
+          "prompt_citations_field_omissions": [
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.5.1"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.4.6"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.9.2"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.3.1"
+            },
+            {
+              "field": "candidate_decisions",
+              "control_id": "2.11.1"
+            }
+          ],
+          "validation": {
+            "passed": true,
+            "schema_valid": true,
+            "control_ids_valid": true,
+            "citations_valid": true,
+            "rules_valid": true,
+            "issues": [],
+            "warnings": []
+          },
+          "human_review": {
+            "required": true,
+            "status": "PENDING",
+            "reasons": [
+              "R204"
+            ],
+            "threshold_profile": "thresholds_v0.4",
+            "reviewer_id": null,
+            "reviewed_at": null,
+            "review_note": null
+          }
+        }
+      ],
+      "metrics": {
+        "n": 3,
+        "n_excluded_retrieval_miss": 0,
+        "precision": 0.6,
+        "recall": 0.75,
+        "f1": 0.6666666666666665,
+        "macro_precision": 0.5,
+        "macro_recall": 0.5,
+        "exact_match": 0.6666666666666666,
+        "exact_match_with_relation": 0.6666666666666666,
+        "primary_accuracy": 0.5,
+        "no_match_accuracy": 1.0,
+        "no_match_accuracy_strict": 1.0,
+        "false_match_rate": 0.0,
+        "missed_match_rate": 0.0,
+        "uncertain_rate": 0.0,
+        "deferred_no_match_rate": 0.0,
+        "citation_valid_rate": 1.0,
+        "invalid_output_rate": 0.0,
+        "review_required_rate": 1.0,
+        "avg_processing_time_ms": 13474.666666666666,
+        "by_category": {
+          "multi_mapping": {
+            "n": 1,
+            "exact_match": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "review_rate": 1.0
+          },
+          "no_match": {
+            "n": 1,
+            "exact_match": 1.0,
+            "precision": null,
+            "recall": null,
+            "review_rate": 1.0
+          },
+          "single_mapping": {
+            "n": 1,
+            "exact_match": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "review_rate": 1.0
+          }
+        }
+      }
+    }
+  },
+  "metadata_snapshot": {
+    "version": {
+      "version": "0.35.0"
+    },
+    "tags": {
+      "models": [
+        {
+          "name": "qwen3:14b",
+          "model": "qwen3:14b",
+          "modified_at": "2026-10-01T06:34:37.216914167Z",
+          "size": 9276198565,
+          "digest": "bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3",
+            "families": [
+              "qwen3"
+            ],
+            "parameter_size": "14.8B",
+            "quantization_level": "Q4_K_M",
+            "context_length": 40960,
+            "embedding_length": 5120
+          },
+          "capabilities": [
+            "completion",
+            "tools",
+            "thinking"
+          ]
+        }
+      ]
+    },
+    "ps": {
+      "models": [
+        {
+          "name": "qwen3:14b",
+          "model": "qwen3:14b",
+          "size": 9646353939,
+          "digest": "bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3",
+            "families": [
+              "qwen3"
+            ],
+            "parameter_size": "14.8B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-10-01T07:05:14.896069349Z",
+          "size_vram": 9646353939,
+          "context_length": 4096
+        }
+      ]
+    }
+  },
+  "finalized_at_utc": "2026-10-01T07:10:19.884435+00:00",
+  "existing_judgment_code_change_retained": false,
+  "attempted_fix_status": "Stopped on user direction; only our temporary validator/test edits reverted. No post-fix verification and no fix applied.",
+  "findings": [
+    {
+      "id": "J-LLM-01",
+      "priority": "high",
+      "status": "unfixed_team_review",
+      "type": "validator_false_positive",
+      "case": "G-MULTI-01",
+      "condition": "master_kb_requirements_added",
+      "observed": "E505 twice in candidate_decisions.reason/mapped_controls.reason for neutral 접근권한 적정성을 검토 activity description",
+      "location": "phase1_판단/src/validators.py:337",
+      "suggestion": "Distinguish neutral review activity from actual adequacy verdict; test genuine verdicts in the same reason. No replacement patch is applied."
+    },
+    {
+      "id": "J-LLM-02",
+      "priority": "high",
+      "status": "unfixed_team_review",
+      "type": "semantic_mapping_mismatch",
+      "case": "G-SINGLE-01",
+      "condition": "master_kb_requirements_added",
+      "observed": "2.5.1 NOT_RELATED; 2.5.6 PRIMARY; 2.2.5 RELATED. Gold expects only 2.5.1 PRIMARY. Evidence has account deletion but no access-right review activity.",
+      "inference": "The model may conflate partial activity relevance with complete requirement satisfaction. This is an interpretation of the response, not a proven causal diagnosis."
+    },
+    {
+      "id": "J-LLM-03",
+      "priority": "medium",
+      "status": "expert_adjudication_required",
+      "type": "gold_mapping_boundary",
+      "case": "G-SINGLE-01",
+      "observed": "Original fixture expects only 2.5.1. Master 2.2.5 also includes retirement account/access recovery.",
+      "suggestion": "Independently review whether 2.2.5 RELATED is allowed and what PRIMARY selection rule applies; preserve current gold until adjudicated."
+    },
+    {
+      "id": "J-LLM-04",
+      "priority": "medium",
+      "status": "unfixed_team_review",
+      "type": "evaluation_input_gap",
+      "observed": "Original smoke fixture lacks requirement on all 15 candidates; production retrieval adapter requires a nonempty requirement. Supplemental adds unchanged master requirements and saves full inputs.",
+      "suggestion": "Align evaluation input with actual handoff contract without silently changing gold labels."
+    },
+    {
+      "id": "J-LLM-05",
+      "priority": "low",
+      "status": "contract_review",
+      "type": "optional_fields_and_reason_warning",
+      "observed": "Missing citations arrays: original5, supplemental8. Pydantic supplies defaults; supplemental SINGLE also has4 E507 warnings for quotes copied into reason.",
+      "suggestion": "Decide how to align prompt required empty arrays with schema defaults; review reason formatting separately from semantic/citation accuracy."
+    }
+  ],
+  "limitations": [
+    "3 distinct synthetic cases, 2 conditions, 6 total real calls; not 6 independent cases.",
+    "No live retrieval, OCR pipeline, full29-case run, repeated-run stability, or Phase2 adequacy assessment measured.",
+    "Ollama /api/ps reports context_length4096; exact prompt token budget/truncation not checked.",
+    "Call success and valid citations do not prove correct mappings or audit compliance.",
+    "There is no human adjudication of the disputed gold mapping boundary."
+  ],
+  "connectivity_issue": {
+    "status": "resolved",
+    "observed": "SSH forwarding destination127.0.0.1:11434 refused connection; server curl also refused. User started ollama service, then version/model APIs and6 real calls succeeded."
+  }
+}

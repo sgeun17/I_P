@@ -1,0 +1,184 @@
+{
+  "as_of": "2026-10-01",
+  "result": "PASS",
+  "review_only": true,
+  "human_approved": false,
+  "draft_version": "phase2-checklist-chapter2-full-draft-2026-10-01",
+  "draft_path": "chapter2_full_checklist_draft.json",
+  "draft_sha256": "1ebb7a60c3a253bf5a6d88af5b24a7845f97331307b5562c6d78dd74286a0a48",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "source_inventory_sha256": "1ca3fb737162298fb177789e37bf6a59a34fcb84435cc0707718947a607e3035",
+  "control_count": 64,
+  "active_question_count": 700,
+  "retired_question_count": 3,
+  "new_control_count": 51,
+  "new_question_count": 490,
+  "preserved_control_count": 13,
+  "preserved_question_count": 210,
+  "strict_schema_valid_question_count": 700,
+  "literal_source_clause_valid_question_count": 700,
+  "source_review_control_count": 64,
+  "major_check_exact_text_and_map_count": 195,
+  "new_major_check_count": 157,
+  "source_pdf_hashes_match": true,
+  "existing_control_objects_unchanged": true,
+  "retired_items_unchanged": true,
+  "all_control_and_question_store_roundtrips_match": true,
+  "historical_versions_preserved": true,
+  "retired_item_reads_rejected": true,
+  "unapproved_draft_reads_rejected": true,
+  "temporary_database_only": true,
+  "default_database_modified": false,
+  "store_imports": [
+    {
+      "version": "phase2-checklist-draft-2026-09-28",
+      "source_sha256": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a",
+      "approved": false,
+      "status": "DRAFT_FOR_TEAM_REVIEW",
+      "inserted": true,
+      "control_count": 3,
+      "active_question_count": 54,
+      "retired_question_count": 3
+    },
+    {
+      "version": "phase2-checklist-chapter2-batch1-draft-2026-10-01",
+      "source_sha256": "a347a5eba0e65b6901cc324d5de8c00aa4de75ec16c873a0c6d6b2c71ca73146",
+      "approved": false,
+      "status": "DRAFT_FOR_TEAM_REVIEW",
+      "inserted": true,
+      "control_count": 13,
+      "active_question_count": 210,
+      "retired_question_count": 3
+    },
+    {
+      "version": "phase2-checklist-chapter2-full-draft-2026-10-01",
+      "source_sha256": "1ebb7a60c3a253bf5a6d88af5b24a7845f97331307b5562c6d78dd74286a0a48",
+      "approved": false,
+      "status": "DRAFT_FOR_TEAM_REVIEW",
+      "inserted": true,
+      "control_count": 64,
+      "active_question_count": 700,
+      "retired_question_count": 3
+    }
+  ],
+  "default_reason_catalog_still_loads": true,
+  "author_bundles": [
+    {
+      "sha256": "15535eea08ed1cbd88619f39108b3a5938c01dcbf67fa8731aca288cd3b5b8c7",
+      "control_count": 13,
+      "question_count": 97,
+      "original_path": "drafts/chapter2_remaining/management_controls.json",
+      "current_content_path": "chapter2_full_checklist_draft.json",
+      "disposition": "Intermediate file removed after verifying controls and source_review preserved in consolidated draft."
+    },
+    {
+      "sha256": "601a21cac826f7b6b89d08dab9b66a8a976cd02e019ad3ef2a3159c0ea7d4e5c",
+      "control_count": 16,
+      "question_count": 161,
+      "original_path": "drafts/chapter2_remaining/infrastructure_controls.json",
+      "current_content_path": "chapter2_full_checklist_draft.json",
+      "disposition": "Intermediate file removed after verifying controls and source_review preserved in consolidated draft."
+    },
+    {
+      "sha256": "c4066c2184407264a98937a647e2f69cbf0f27ee1e94bc9c7cfc8f92cfaf400b",
+      "control_count": 22,
+      "question_count": 232,
+      "original_path": "drafts/chapter2_remaining/security_controls.json",
+      "current_content_path": "chapter2_full_checklist_draft.json",
+      "disposition": "Intermediate file removed after verifying controls and source_review preserved in consolidated draft."
+    }
+  ],
+  "groups": [
+    {
+      "group_id": "2.1",
+      "group_name": "정책·조직·자산 관리",
+      "control_count": 3,
+      "question_count": 22
+    },
+    {
+      "group_id": "2.2",
+      "group_name": "인적 보안",
+      "control_count": 6,
+      "question_count": 43
+    },
+    {
+      "group_id": "2.3",
+      "group_name": "외부자 보안",
+      "control_count": 4,
+      "question_count": 32
+    },
+    {
+      "group_id": "2.4",
+      "group_name": "물리 보안",
+      "control_count": 7,
+      "question_count": 47
+    },
+    {
+      "group_id": "2.5",
+      "group_name": "인증 및 권한관리",
+      "control_count": 6,
+      "question_count": 99
+    },
+    {
+      "group_id": "2.6",
+      "group_name": "접근통제",
+      "control_count": 7,
+      "question_count": 87
+    },
+    {
+      "group_id": "2.7",
+      "group_name": "암호화 적용",
+      "control_count": 2,
+      "question_count": 27
+    },
+    {
+      "group_id": "2.8",
+      "group_name": "정보시스템 도입 및 개발 보안",
+      "control_count": 6,
+      "question_count": 59
+    },
+    {
+      "group_id": "2.9",
+      "group_name": "시스템 및 서비스 운영관리",
+      "control_count": 7,
+      "question_count": 111
+    },
+    {
+      "group_id": "2.10",
+      "group_name": "시스템 및 서비스 보안관리",
+      "control_count": 9,
+      "question_count": 99
+    },
+    {
+      "group_id": "2.11",
+      "group_name": "사고 예방 및 대응",
+      "control_count": 5,
+      "question_count": 56
+    },
+    {
+      "group_id": "2.12",
+      "group_name": "재해복구",
+      "control_count": 2,
+      "question_count": 18
+    }
+  ],
+  "not_verified": [
+    "실제 조직 증적의 충족 여부",
+    "실제 LLM 실행·정확도",
+    "팀 최종 범위·질문·critical 승인",
+    "최신 법규·금융 추가요건",
+    "신규 버전 사유·가상 사례·판단 입력 연결"
+  ],
+  "protected_existing_file_hashes_verified": {
+    "checklist_draft.json": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a",
+    "review_examples.json": "21e827229e19dbb6b67f161eee210e4331af36a54b76b765bf5c05c6d9c67f32",
+    "reason_codes_draft.json": "8db7384ce67e496aeaa00441d69eaf032abd1a9ad6caaed8e03044a87da45ae4",
+    "reason_code_examples.json": "d9b826ce41db2fb4e247df5de0d66cc8983ccb868482a7452258c52f5f4f84ea",
+    "chapter2_batch1_checklist_draft.json": "a347a5eba0e65b6901cc324d5de8c00aa4de75ec16c873a0c6d6b2c71ca73146",
+    "../phase1_검색/controls.json": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "../README.md": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "progress_and_review_document_counts_match": true,
+  "new_review_question_card_count": 490,
+  "review_document_links_exist": true
+}

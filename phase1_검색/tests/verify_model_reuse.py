@@ -32,7 +32,7 @@ def sha(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output-dir', default='reports/model_reuse_2026-09-27')
+    parser.add_argument('--output-dir', default='reports/model_reuse_latest')
     args = parser.parse_args()
     caller_cwd = Path.cwd()
     assert caller_cwd != ROOT, '다른 폴더에서 호출하는 검사를 실행하세요.'
@@ -40,7 +40,7 @@ def main():
     if out.exists():
         raise ValueError('이전 결과를 보존하도록 새 출력 경로를 사용하세요.')
     out.mkdir(parents=True)
-    baseline = read(ROOT / 'reports/pre_llm_directory_migration_20260927_191451/summary.json')['code_sha256']
+    baseline = read(ROOT / 'reports/directory_migration_baseline_2026-09-27.json')['code_sha256']
     external = {k: sha(ROOT.parent / k) for k in baseline
                 if k.replace('\\', '/').startswith(('phase1_입력/', 'phase1_판단/'))}
     assert len(external) == 43 and all(v == baseline[k] for k, v in external.items())

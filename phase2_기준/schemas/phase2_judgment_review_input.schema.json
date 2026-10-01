@@ -1,0 +1,554 @@
+{
+  "$defs": {
+    "Chunk": {
+      "additionalProperties": false,
+      "description": "전처리팀이 넘겨주는 증적 청크. 필드 이름과 순서는 그쪽 규격을 따른다.",
+      "properties": {
+        "chunk_id": {
+          "minLength": 1,
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "evidence_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        },
+        "chunk_index": {
+          "minimum": 0,
+          "title": "Chunk Index",
+          "type": "integer"
+        },
+        "file_type": {
+          "$ref": "#/$defs/FileType"
+        },
+        "source_file": {
+          "minLength": 1,
+          "title": "Source File",
+          "type": "string"
+        },
+        "chunk_type": {
+          "$ref": "#/$defs/ChunkType"
+        },
+        "page_start": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Start"
+        },
+        "page_end": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page End"
+        },
+        "heading": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Heading"
+        },
+        "text": {
+          "maxLength": 800,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "block_orders": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Block Orders",
+          "type": "array"
+        },
+        "source": {
+          "$ref": "#/$defs/ChunkSource",
+          "default": "parser"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "evidence_id",
+        "version",
+        "chunk_index",
+        "file_type",
+        "source_file",
+        "chunk_type",
+        "text",
+        "block_orders"
+      ],
+      "title": "Chunk",
+      "type": "object"
+    },
+    "ChunkSource": {
+      "enum": [
+        "parser",
+        "ocr"
+      ],
+      "title": "ChunkSource",
+      "type": "string"
+    },
+    "ChunkType": {
+      "enum": [
+        "text",
+        "table"
+      ],
+      "title": "ChunkType",
+      "type": "string"
+    },
+    "EvidenceRule": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_evidence": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Candidate Evidence",
+          "type": "array"
+        },
+        "met": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Met",
+          "type": "string"
+        },
+        "not_met": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Not Met",
+          "type": "string"
+        },
+        "unknown": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Unknown",
+          "type": "string"
+        },
+        "citation_required_for": {
+          "items": {
+            "enum": [
+              "MET",
+              "NOT_MET",
+              "UNKNOWN"
+            ],
+            "type": "string"
+          },
+          "title": "Citation Required For",
+          "type": "array"
+        },
+        "scope_rule": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Scope Rule",
+          "type": "string"
+        },
+        "required_context": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Required Context",
+          "type": "array"
+        }
+      },
+      "required": [
+        "candidate_evidence",
+        "met",
+        "not_met",
+        "unknown",
+        "citation_required_for",
+        "scope_rule",
+        "required_context"
+      ],
+      "title": "EvidenceRule",
+      "type": "object"
+    },
+    "FileType": {
+      "enum": [
+        "pdf",
+        "docx",
+        "xlsx",
+        "pptx",
+        "txt",
+        "csv",
+        "png",
+        "jpg"
+      ],
+      "title": "FileType",
+      "type": "string"
+    },
+    "ReviewContext": {
+      "additionalProperties": false,
+      "description": "호출자가 제공한 검토 정보. 실제 적용 관계의 확인 완료를 뜻하지 않는다.",
+      "properties": {
+        "subject": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subject"
+        },
+        "period_or_event": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Period Or Event"
+        },
+        "applicable_basis": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Applicable Basis"
+        },
+        "effective_basis": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective Basis"
+        }
+      },
+      "title": "ReviewContext",
+      "type": "object"
+    },
+    "ReviewQuestion": {
+      "additionalProperties": false,
+      "properties": {
+        "item_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Item Id",
+          "type": "string"
+        },
+        "control_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Control Id",
+          "type": "string"
+        },
+        "source_clause": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Source Clause",
+          "type": "string"
+        },
+        "question": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Question",
+          "type": "string"
+        },
+        "check_kind": {
+          "enum": [
+            "procedure",
+            "implementation",
+            "record"
+          ],
+          "title": "Check Kind",
+          "type": "string"
+        },
+        "critical": {
+          "title": "Critical",
+          "type": "null"
+        },
+        "critical_status": {
+          "const": "UNDECIDED",
+          "title": "Critical Status",
+          "type": "string"
+        },
+        "evidence_rule": {
+          "$ref": "#/$defs/EvidenceRule"
+        },
+        "review_status": {
+          "const": "SOURCE_REVIEWED_DRAFT",
+          "title": "Review Status",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceReference"
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "review_note": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Review Note",
+          "type": "string"
+        },
+        "applicability_condition": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Applicability Condition"
+        }
+      },
+      "required": [
+        "item_id",
+        "control_id",
+        "source_clause",
+        "question",
+        "check_kind",
+        "critical",
+        "critical_status",
+        "evidence_rule",
+        "review_status",
+        "source_refs",
+        "review_note"
+      ],
+      "title": "ReviewQuestion",
+      "type": "object"
+    },
+    "SourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "pdf_page": {
+          "minimum": 1,
+          "title": "Pdf Page",
+          "type": "integer"
+        },
+        "printed_page": {
+          "minimum": 1,
+          "title": "Printed Page",
+          "type": "integer"
+        },
+        "section": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Section",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "pdf_page",
+        "printed_page",
+        "section"
+      ],
+      "title": "SourceReference",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "phase2-judgment-review-0.1",
+      "default": "phase2-judgment-review-0.1",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "review_only": {
+      "const": true,
+      "default": true,
+      "title": "Review Only",
+      "type": "boolean"
+    },
+    "approved": {
+      "const": false,
+      "default": false,
+      "title": "Approved",
+      "type": "boolean"
+    },
+    "checklist_version": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Checklist Version",
+      "type": "string"
+    },
+    "checklist_source_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Checklist Source Sha256",
+      "type": "string"
+    },
+    "kb_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Kb Sha256",
+      "type": "string"
+    },
+    "catalog_version": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Catalog Version",
+      "type": "string"
+    },
+    "catalog_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Catalog Sha256",
+      "type": "string"
+    },
+    "evidence_id": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "version": {
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "source_phase1_result": {
+      "additionalProperties": true,
+      "title": "Source Phase1 Result",
+      "type": "object"
+    },
+    "phase1_validation_overridden_by_review": {
+      "title": "Phase1 Validation Overridden By Review",
+      "type": "boolean"
+    },
+    "phase1_validation_scope": {
+      "const": "STORED_RESULT_ONLY",
+      "title": "Phase1 Validation Scope",
+      "type": "string"
+    },
+    "mapped_control_ids": {
+      "items": {
+        "minLength": 1,
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "title": "Mapped Control Ids",
+      "type": "array"
+    },
+    "available_question_count": {
+      "minimum": 1,
+      "title": "Available Question Count",
+      "type": "integer"
+    },
+    "partial_review": {
+      "title": "Partial Review",
+      "type": "boolean"
+    },
+    "context": {
+      "$ref": "#/$defs/ReviewContext"
+    },
+    "questions": {
+      "items": {
+        "$ref": "#/$defs/ReviewQuestion"
+      },
+      "minItems": 1,
+      "title": "Questions",
+      "type": "array"
+    },
+    "chunks": {
+      "items": {
+        "$ref": "#/$defs/Chunk"
+      },
+      "minItems": 1,
+      "title": "Chunks",
+      "type": "array"
+    },
+    "reason_definitions": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Reason Definitions",
+      "type": "array"
+    },
+    "source_documents": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Source Documents",
+      "type": "array"
+    }
+  },
+  "required": [
+    "checklist_version",
+    "checklist_source_sha256",
+    "kb_sha256",
+    "catalog_version",
+    "catalog_sha256",
+    "evidence_id",
+    "version",
+    "source_phase1_result",
+    "phase1_validation_overridden_by_review",
+    "phase1_validation_scope",
+    "mapped_control_ids",
+    "available_question_count",
+    "partial_review",
+    "context",
+    "questions",
+    "chunks",
+    "reason_definitions",
+    "source_documents"
+  ],
+  "title": "JudgmentReviewInput",
+  "type": "object"
+}

@@ -1,0 +1,140 @@
+{
+  "$defs": {
+    "ItemJudgment": {
+      "additionalProperties": false,
+      "properties": {
+        "item_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Item Id",
+          "type": "string"
+        },
+        "control_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Control Id",
+          "type": "string"
+        },
+        "result": {
+          "enum": [
+            "MET",
+            "NOT_MET",
+            "UNKNOWN"
+          ],
+          "title": "Result",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Reason",
+          "type": "string"
+        },
+        "reason_codes": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Reason Codes",
+          "type": "array"
+        },
+        "citations": {
+          "items": {
+            "$ref": "#/$defs/ReviewCitation"
+          },
+          "title": "Citations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "item_id",
+        "control_id",
+        "result",
+        "reason",
+        "reason_codes",
+        "citations"
+      ],
+      "title": "ItemJudgment",
+      "type": "object"
+    },
+    "ReviewCitation": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Page"
+        },
+        "quote": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "page",
+        "quote"
+      ],
+      "title": "ReviewCitation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "checklist_version": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Checklist Version",
+      "type": "string"
+    },
+    "catalog_version": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Catalog Version",
+      "type": "string"
+    },
+    "evidence_id": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "version": {
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "item_results": {
+      "items": {
+        "$ref": "#/$defs/ItemJudgment"
+      },
+      "title": "Item Results",
+      "type": "array"
+    }
+  },
+  "required": [
+    "checklist_version",
+    "catalog_version",
+    "evidence_id",
+    "version",
+    "item_results"
+  ],
+  "title": "JudgmentReviewOutput",
+  "type": "object"
+}

@@ -1,0 +1,143 @@
+{
+  "status": "AI_ASSISTED_SAMPLE_REVIEW_DRAFT",
+  "checked_at": "2026-09-30T23:48:38.786975+09:00",
+  "review_only": true,
+  "human_approved": false,
+  "llm_executed": false,
+  "phase2_runner_executed": false,
+  "phase1_mapping_confirmed": false,
+  "selection_method": "MANUALLY_SELECTED_Q01_FOR_CRITERION_REVIEW",
+  "selection_note": "Q01을 직접 지정해 기준 적용을 검토했다. 실제 검색→LLM 확정→Phase2 실행 결과가 아니다.",
+  "source": {
+    "document_id": "D01",
+    "document_title": "2026년도 정보보호계획 및 내부 관리계획",
+    "business_document_number": "ISMS-P-PLAN-001",
+    "source_file": "phase1_입력/uploads/tmp/08504e7811e14a149d97e62e7e9b12d8.docx",
+    "source_sha256": "fc3e1fda214cf6dcab8c96e15d6b8c0d4e260511f2e384602b05ed951179d4f0",
+    "current_source_hash_matches": true,
+    "provenance": "REPOSITORY_UPLOAD_PROVENANCE_NOT_VERIFIED",
+    "production_provenance_verified": false,
+    "mapping_input_path": "phase1_검색/reports/repository_documents_2026-09-27/D01_mapping_input.json",
+    "mapping_input_sha256": "0513e5b876746d2beb3f1ad4320b637dfeefee50eadfc47478b8d0f5c00c4ef5",
+    "parsed_report_path": "phase1_검색/reports/repository_documents_2026-09-27/parsed_and_chunks.json",
+    "parsed_report_sha256": "8375bf4295cae94d941fa7dcd46b7de0419eaf20316f55d7b176ddab4d9ecb76",
+    "evidence_id": "E0101",
+    "evidence_version": 1,
+    "evidence_identifiers_are_test_assignments": true,
+    "chunk_count_reviewed": 9,
+    "stored_search_candidate_ids": [
+      "1.1.2",
+      "2.11.5",
+      "1.1.3",
+      "1.1.1",
+      "2.1.2"
+    ],
+    "business_document_revision_confirmed": false,
+    "effective_date_confirmed": false
+  },
+  "criterion": {
+    "draft_version": "phase2-checklist-draft-2026-09-28",
+    "draft_sha256": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a",
+    "approved": false,
+    "item_id": "2.5.1-Q01",
+    "control_id": "2.5.1",
+    "question": "사용자 등록 절차가 수립되어 있는가?",
+    "check_kind": "procedure",
+    "rules_used": {
+      "candidate_evidence": [
+        "적용 대상이 식별되는 사용자 등록 절차서의 해당 부분"
+      ],
+      "met": "검토 범위에 적용되는 사용자 등록 절차가 문서에 명시됨.",
+      "not_met": "검토 범위의 사용자 등록 절차가 미수립 상태임을 명시한 확인 기록이 있음.",
+      "unknown": "필요한 근거가 없거나, 적용 범위·기준·기간이 불명확하거나, 판독 불가·상충 근거로 결론을 낼 수 없는 경우. 검토 대상 사건이 없고 적용 제외 규칙도 미합의인 경우 포함. 자료를 함께 대조할 때는 동일 대상·기간·사건의 근거인지와 자료별 작성·효력 시점 또는 적용 버전을 확인한다. 서로 다른 시점·대상의 자료를 단순 상충으로 보거나, 작성일이 최신이라는 이유만으로 우선하지 않는다. 동일 범위의 상충을 해소할 근거가 없으면 UNKNOWN으로 남긴다. 검토 대상 사건의 부재와 자료 미제출을 구분하며, 해당 사건이 없거나 수행 의무가 아직 도래하지 않았다는 이유만으로 MET/NOT_MET을 부여하지 않는다.",
+      "citation_required_for": [
+        "MET",
+        "NOT_MET"
+      ],
+      "scope_rule": "자료에 나타난 검토 대상·기간에 한정한다. 일부 사례의 충족을 조직 전체의 충족으로 확대하지 않는다. 반복 사건은 건별로 검토한다. 원문에 없는 조건을 내부 절차만으로 충분하다고 간주하지 않는다.",
+      "required_context": [
+        "검토 대상 시스템·계정 또는 자료",
+        "검토 대상 기간 또는 사건",
+        "증거의 출처·위치",
+        "해당 문항에 적용되는 기준",
+        "자료별 대상·기간·사건 연결 정보(여러 자료를 함께 검토하는 경우)",
+        "자료별 작성·효력 시점 또는 적용 버전(시점별 기준·기록을 대조하는 경우)"
+      ]
+    },
+    "source_refs": [
+      {
+        "source_id": "KISA-2023",
+        "pdf_page": 91,
+        "printed_page": 87,
+        "section": "인증기준"
+      }
+    ],
+    "critical": null,
+    "critical_status": "UNDECIDED"
+  },
+  "provisional_result": "UNKNOWN",
+  "provisional_reason_codes": [
+    "P2_U_EVIDENCE_INSUFFICIENT",
+    "P2_U_TIME_OR_VERSION_UNCLEAR"
+  ],
+  "decision_notes": {
+    "met_not_confirmed": "D01에는 권한 관리 방향과 다른 기준의 신청·승인 절차 참조가 있다. 적용되는 사용자 등록 절차 자체의 내용을 확인할 근거는 부족하다.",
+    "not_met_not_confirmed": "사용자 등록 절차가 미수립 상태라는 직접 기록이 없다. 자료 미확인을 절차 미수립으로 바꾸지 않는다.",
+    "unknown_basis": "사용자 등록 절차의 직접 내용과 적용 범위·효력 시점 확인 자료가 부족하다.",
+    "scope_note": "조직과 대상연도는 식별되나, 참조한 권한 기준을 사용자 등록 절차로 간주할 적용 관계를 확인해야 한다. 특정 시스템 ID나 별도 파일 형식을 새 필수 조건으로 만들지 않는다.",
+    "procedure_vs_implementation": "Q01은 절차 수립 문항이다. 실제 계정 발급 이행 기록을 Q01의 새 필수 조건으로 추가하지 않는다."
+  },
+  "citations": [
+    {
+      "chunk_id": "E0101_v1_c0003",
+      "page": null,
+      "quote": "개인정보취급자 지정 및 권한 부여는 「특수권한 관리기준(ISMS-P-ACC-STD-001)」의 신청·승인 절차에 따르며, 퇴직·직무변경 시 지체없이 권한을 회수한다.",
+      "heading": "3. 내부 관리계획",
+      "source_block_hits": [
+        {
+          "block_order": 15,
+          "block_type": "paragraph"
+        }
+      ],
+      "review_note": "권한 부여·회수와 참조 기준을 설명한다. 사용자 등록 절차의 직접 내용을 확인한 것으로 확대하지 않는다."
+    },
+    {
+      "chunk_id": "E0101_v1_c0008",
+      "page": null,
+      "quote": "본 계획은 2026년 O월 O일부터 시행한다.",
+      "heading": "6. 부칙",
+      "source_block_hits": [
+        {
+          "block_order": 38,
+          "block_type": "paragraph"
+        }
+      ],
+      "review_note": "실제 시행일이 미기재여서 현재 적용 효력 시점을 이 문구만으로 확인할 수 없다."
+    }
+  ],
+  "next_evidence_to_check": [
+    "검토 범위에 적용되는 사용자 등록 절차의 실제 내용. 기존 문서의 해당 부분 또는 연결된 자료로 확인할 수 있으며 별도 파일 제출을 강제하지 않는다.",
+    "참조한 ISMS-P-ACC-STD-001을 사용할 경우, 사용자 등록 절차를 포함하는지와 이번 검토 범위에 적용되는지 확인.",
+    "해당 절차의 실제 적용 시점·버전 또는 효력을 확인할 수 있는 정보."
+  ],
+  "scope_limits": [
+    "D01 한 문서의 9개 청크만 검토했다. 참조 기준이 저장소 전체에 없다고 단정하지 않는다.",
+    "검토 기준일에 시행일이 적용되는지 판단할 원문 정보가 없다. 문서 대상연도만으로 효력일을 대신하지 않는다.",
+    "입력 evidence version=1은 업무 문서의 개정 버전을 증명하지 않는다.",
+    "검수용 잠정 결과이며 운영 판정, 사람 승인 정답 또는 LLM 성능 평가로 사용하지 않는다."
+  ],
+  "checks": {
+    "source_docx_hash_matches_manifest": true,
+    "mapping_chunks_match_parsed_snapshot": true,
+    "all_document_chunks_reviewed": 9,
+    "citation_count": 2,
+    "all_quotes_exactly_in_chunks_and_parser_blocks": true,
+    "docx_page_values_remain_null": true,
+    "protected_files_unchanged": 9
+  },
+  "reason_catalog": {
+    "version": "phase2-reason-codes-draft-2026-09-29",
+    "sha256": "8db7384ce67e496aeaa00441d69eaf032abd1a9ad6caaed8e03044a87da45ae4",
+    "approved": false
+  }
+}

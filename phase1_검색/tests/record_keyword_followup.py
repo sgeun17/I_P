@@ -40,7 +40,7 @@ def main():
     labels = read(labels_path)
     base_labels = read(ROOT / 'tests/source_reviewed_cases_2026-09-27.json')
     fingerprints = read(docs_dir / 'source_fingerprints_before.json')
-    baseline = read(ROOT / 'reports/pre_llm_directory_migration_20260927_191451/summary.json')['code_sha256']
+    baseline = read(ROOT / 'reports/directory_migration_baseline_2026-09-27.json')['code_sha256']
     external = {k: v for k, v in fingerprints.items()
                 if k.replace('\\', '/').startswith(('phase1_입력/', 'phase1_판단/'))}
     assert len(external) == 43

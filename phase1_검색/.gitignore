@@ -4,3 +4,5 @@ data/
 __pycache__/
 tests/__pycache__/
 .cache/
+
+.pytest_cache/
