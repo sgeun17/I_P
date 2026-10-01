@@ -1,0 +1,91 @@
+{
+  "version": "chapter2-review-cases-draft-2026-10-01",
+  "synthetic": true,
+  "approved": false,
+  "human_approved": false,
+  "llm_executed": false,
+  "scope": "절차·실행·기록의 신규 대표 문항3개, 결과별3개 사례. 전체700문항 정답셋이 아님.",
+  "cases": [
+    {
+      "case_id": "2.1.1-MET",
+      "control_id": "2.1.1",
+      "item_id": "2.1.1-Q01",
+      "expected_result_draft": "MET",
+      "evidence_text": "가상 A시스템의 2026년 3분기에 유효한 정책 검토 절차: 정보보호 및 개인정보보호 정책과 시행문서를 매년 9월 보안책임자가 법령·환경변화와 대조하고 검토 결과 및 개정 조치를 기록한다.",
+      "rationale": "해당 대상과 시점에 검토 시기·담당자·방법·후속조치를 정한 절차가 있다.",
+      "reason_code": null
+    },
+    {
+      "case_id": "2.1.1-NOT_MET",
+      "control_id": "2.1.1",
+      "item_id": "2.1.1-Q01",
+      "expected_result_draft": "NOT_MET",
+      "evidence_text": "공식 확인서: 가상 A시스템은 2026년 3분기 정책·시행문서의 정기 타당성 검토 절차 수립 대상이다. 보안책임자는 해당 절차를 수립하지 않았음을 확인하였다.",
+      "rationale": "적용 의무와 미수립을 직접 확인했다.",
+      "reason_code": "P2_NM_RULE_NOT_DEFINED"
+    },
+    {
+      "case_id": "2.1.1-UNKNOWN",
+      "control_id": "2.1.1",
+      "item_id": "2.1.1-Q01",
+      "expected_result_draft": "UNKNOWN",
+      "evidence_text": "가상 A시스템의 2026년 3분기 자료 제출 목록에는 정책 검토 절차서가 첨부되지 않았다.",
+      "rationale": "미제출만으로 절차 미수립을 단정할 수 없다.",
+      "reason_code": "P2_U_EVIDENCE_INSUFFICIENT"
+    },
+    {
+      "case_id": "2.4.1-MET",
+      "control_id": "2.4.1",
+      "item_id": "2.4.1-Q02",
+      "expected_result_draft": "MET",
+      "evidence_text": "가상 A시스템의 2026년 3분기 자산·장소 전수 목록에는 개인정보 보관실 A실 한 곳이 있다. 당시 유효한 지정기준에 따라 A실을 제한구역으로 지정했고 지정대장의 장소 ID가 자산 목록과 일치한다.",
+      "rationale": "전체 지정 대상 장소와 당시 기준·지정 내역이 연결돼 있다.",
+      "reason_code": null
+    },
+    {
+      "case_id": "2.4.1-NOT_MET",
+      "control_id": "2.4.1",
+      "item_id": "2.4.1-Q02",
+      "expected_result_draft": "NOT_MET",
+      "evidence_text": "공식 현장 확인: 가상 A시스템의 2026년 3분기 개인정보 보관 장소 A실은 유효한 기준상 제한구역 지정 대상이나 실제 보호구역으로 지정하지 않았다.",
+      "rationale": "지정 의무와 실제 지정 누락을 같은 장소에서 직접 확인했다.",
+      "reason_code": "P2_NM_REQUIRED_ACTION_NOT_DONE"
+    },
+    {
+      "case_id": "2.4.1-UNKNOWN",
+      "control_id": "2.4.1",
+      "item_id": "2.4.1-Q02",
+      "expected_result_draft": "UNKNOWN",
+      "evidence_text": "제출된 2026년 3분기 보호구역 지정대장은 가상 B시스템의 B실을 대상으로 한다. 가상 A시스템 장소와의 대응표는 없다.",
+      "rationale": "다른 대상의 지정 내역으로 A시스템 이행을 확정할 수 없다.",
+      "reason_code": "P2_U_SUBJECT_OR_EVENT_UNLINKED"
+    },
+    {
+      "case_id": "2.10.1-MET",
+      "control_id": "2.10.1",
+      "item_id": "2.10.1-Q03",
+      "expected_result_draft": "MET",
+      "evidence_text": "가상 A시스템 방화벽 FW-A의 2026년 3분기 운영점검은 매월 말 실시하도록 정해져 있다. 7월31일·8월31일·9월30일 점검 결과에 장비 ID, 운영현황과 수행자 서명이 모두 기록돼 있다.",
+      "rationale": "도래한 세 점검 회차의 대상과 실제 수행 결과가 확인된다.",
+      "reason_code": null
+    },
+    {
+      "case_id": "2.10.1-NOT_MET",
+      "control_id": "2.10.1",
+      "item_id": "2.10.1-Q03",
+      "expected_result_draft": "NOT_MET",
+      "evidence_text": "공식 확인서: 가상 A시스템 FW-A는 2026년 9월30일까지 월간 운영현황 점검 의무가 있었으나, 담당자는 해당 점검을 수행하지 않았음을 10월1일 확인하였다.",
+      "rationale": "도래한 동일 대상의 필수 점검 미수행을 직접 확인했다.",
+      "reason_code": "P2_NM_REQUIRED_ACTION_NOT_DONE"
+    },
+    {
+      "case_id": "2.10.1-UNKNOWN",
+      "control_id": "2.10.1",
+      "item_id": "2.10.1-Q03",
+      "expected_result_draft": "UNKNOWN",
+      "evidence_text": "가상 A시스템 FW-A의 운영현황 점검 결과표에는 수행일과 대상 점검 회차가 기재돼 있지 않다.",
+      "rationale": "요구된 2026년 3분기 점검에 해당하는지 확인할 수 없다.",
+      "reason_code": "P2_U_TIME_OR_VERSION_UNCLEAR"
+    }
+  ]
+}

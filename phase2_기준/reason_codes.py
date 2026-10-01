@@ -20,6 +20,7 @@ DEFAULT_CATALOG = HERE / "reason_codes_draft.json"
 DEFAULT_EXAMPLES = HERE / "reason_code_examples.json"
 RESULTS = {"MET", "NOT_MET", "UNKNOWN"}
 SOURCE_NAMES = {"checklist_draft.json", "review_examples.json"}
+CHECKLIST_SOURCES = {"checklist_draft.json", "chapter2_full_checklist_draft.json"}
 
 
 class ReasonCodeError(ValueError):
@@ -72,7 +73,7 @@ class ReasonCatalog:
             _require(actual_hash == source["sha256"], "SOURCE_CHANGED", f"원본 해시가 다릅니다: {source['path']}")
             self._sources[source["path"]] = value
             self._source_hashes[source["path"]] = actual_hash
-        checklist = self._sources["checklist_draft.json"]
+        checklist = self._sources[self.checklist_source]
         _require(checklist.get("draft_version") == self._data["checklist_version"], "SOURCE_CHANGED", "체크리스트 버전이 다릅니다.")
         _require(checklist.get("approved") is False and checklist.get("status") == "DRAFT_FOR_TEAM_REVIEW", "INVALID_SOURCE", "체크리스트는 미승인 검수용 초안이어야 합니다.")
 
@@ -87,11 +88,16 @@ class ReasonCatalog:
         rules = _object(data.get("assignment_rules"), "INVALID_CATALOG")
         _require(rules.get("met_reason_codes") == [] and rules.get("not_met_requires_direct_confirmation") is True and rules.get("evidence_missing_is_not_failure") is True and rules.get("multiple_codes_allowed") is True and rules.get("code_order_is_priority") is False and rules.get("classification_automated") is False, "INVALID_CATALOG", "근거 구분·검수용 사유 연결 규칙이 올바르지 않습니다.")
         sources = _array(data.get("source_files"), "INVALID_CATALOG")
-        _require(len(sources) == len(SOURCE_NAMES), "INVALID_CATALOG", "체크리스트와 원래 합성 사례의 출처가 필요합니다.")
+        self.checklist_source = data.get("checklist_source", "checklist_draft.json")
+        _require(isinstance(self.checklist_source, str) and self.checklist_source in CHECKLIST_SOURCES,
+                 "INVALID_CATALOG", "지원하는 체크리스트 파일을 명시해야 합니다.")
+        # 기존 카탈로그의 사례 계약은 유지한다. 전체 초안은 독립적인 버전·해시를 사용한다.
+        source_names = SOURCE_NAMES if self.checklist_source == "checklist_draft.json" else {self.checklist_source}
+        _require(len(sources) == len(source_names), "INVALID_CATALOG", "카탈로그에 맞는 원본 출처가 필요합니다.")
         for source in sources:
             source = _object(source, "INVALID_CATALOG")
-            _require(_text(source.get("path")) and source["path"] in SOURCE_NAMES and isinstance(source.get("sha256"), str) and re.fullmatch(r"[0-9a-f]{64}", source["sha256"]), "INVALID_CATALOG", "출처 파일명 또는 SHA-256이 유효하지 않습니다.")
-        _require({x["path"] for x in sources} == SOURCE_NAMES, "INVALID_CATALOG", "출처가 중복되거나 누락되었습니다.")
+            _require(_text(source.get("path")) and source["path"] in source_names and isinstance(source.get("sha256"), str) and re.fullmatch(r"[0-9a-f]{64}", source["sha256"]), "INVALID_CATALOG", "출처 파일명 또는 SHA-256이 유효하지 않습니다.")
+        _require({x["path"] for x in sources} == source_names, "INVALID_CATALOG", "출처가 중복되거나 누락되었습니다.")
         decisions = _array(data.get("pending_decisions"), "INVALID_CATALOG")
         self._decisions = {}
         for decision in decisions:
@@ -171,6 +177,8 @@ class ReasonCatalog:
 
     def validate_examples(self, examples_path=None, *, allow_draft=False):
         self._allow(allow_draft)
+        _require(self.checklist_source == "checklist_draft.json", "EXAMPLE_SET_UNAVAILABLE",
+                 "전체 700문항의 정답 사례는 아직 없습니다. 기존 54문항 사례를 전체 검증으로 사용하지 않습니다.")
         path = Path(examples_path) if examples_path is not None else self.path.parent / DEFAULT_EXAMPLES.name
         mapping, mapping_hash = _read(path)
         _require(mapping.get("approved") is False and mapping.get("status") == "DRAFT_FOR_TEAM_REVIEW" and _text(mapping.get("mapping_version")), "INVALID_EXAMPLE_SET", "사유 연결은 버전이 있는 팀 미승인 검수용 초안이어야 합니다.")
@@ -244,7 +252,7 @@ def main():
             result = catalog.validate_examples(args.examples, allow_draft=args.allow_draft)
             if args.report is not None:
                 protected = {catalog.path.resolve(), (args.examples or catalog.path.parent / DEFAULT_EXAMPLES.name).resolve()}
-                protected.update((catalog.path.parent / name).resolve() for name in SOURCE_NAMES)
+                protected.update((catalog.path.parent / name).resolve() for name in catalog._source_hashes)
                 _require(args.report.resolve() not in protected, "INVALID_REPORT_PATH", "검증 보고서로 원본 JSON을 덮어쓸 수 없습니다.")
                 args.report.parent.mkdir(parents=True, exist_ok=True)
                 args.report.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

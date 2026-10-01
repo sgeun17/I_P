@@ -2,6 +2,38 @@
 
 WBS의 Phase2 기준 작업은 이 디렉토리에서 관리한다. 기본 연결 버전은 `phase2-checklist-draft-2026-09-28`이며, **통제항목 3개·활성 질문 54개·퇴역 질문 3개**를 담은 팀 검수용 초안이다. 별도의 2장 전체 초안은 **64개 항목·700문항**으로 확장했다. 이전 첫 묶음 13개·210문항도 보존했다. 모두 `approved=false`, `critical=null`을 유지한다.
 
+## 10/1 전체 700문항 검수 입력·사유 코드 연결
+
+전체 버전을 명시적으로 선택하면 **64개 항목·700문항**을 Phase1 확정 결과의 ID와 연결해 검수 입력을 만들고 제공된 응답을 검사할 수 있다. 기본 카탈로그와 기존 54문항 연결은 유지한다. 아래 이전 작업 기록의 “새 버전 사유 코드·판단 입력 연결 미완료”는 이번에 검수 경로에 한해 보완했다. 실제 Phase2 LLM 호출·운영 승인·전체 문항 정답 검수는 남아 있다.
+
+[전체 버전 사유 카탈로그](chapter2_reason_codes_draft.json)는 기존 13개 코드의 의미를 그대로 재사용하며 전체 체크리스트의 버전·파일 해시에 연결한다. `ReasonCatalog()` 기본값은 기존 버전이므로 전체 초안에는 아래처럼 별도 카탈로그를 지정한다. 버전 또는 해시를 섞으면 거부한다. 코드를 자동으로 골라주거나 critical·종합 등급을 결정하지 않는다.
+
+```python
+from pathlib import Path
+from checklist_store import ChecklistStore
+from reason_codes import ReasonCatalog
+from judgment_review import prepare_judgment_review, check_review_output
+
+# phase2_기준 폴더에서 실행. phase1_result, chunks, response는 호출자가 제공한다.
+# 아래 DB는 검수 전용이며 기존 기본 DB를 변경하지 않는다.
+store = ChecklistStore(Path("data/chapter2_review.sqlite3"))
+store.import_draft(Path("chapter2_full_checklist_draft.json"))
+catalog = ReasonCatalog(Path("chapter2_reason_codes_draft.json"))
+request = prepare_judgment_review(
+    phase1_result, store, "phase2-checklist-chapter2-full-draft-2026-10-01",
+    chunks, catalog=catalog, allow_draft=True,
+)
+checked = check_review_output(
+    request, response, store, catalog=catalog, allow_draft=True,
+)
+```
+
+[검사 결과](reports/chapter2_review_flow_2026-10-01.json): 64개 항목·700문항을 자료 부족 UNKNOWN 고정 응답으로 연결 확인했다. [대표 합성 사례](chapter2_review_cases.json)는 절차(2.1.1-Q01)·실행(2.4.1-Q02)·기록(2.10.1-Q03) 각 3개 결과, 총 9건이다. 이 중 MET/NOT_MET 6건에서는 원문에 없는 인용으로 바꾸면 거부되는 것도 확인했다. 기대값을 직접 응답으로 넣었으므로 LLM 정확도·의미상 정답률이 아니다. 전체 700문항의 결과별 정답셋은 아직 없다. `reason_codes.py validate`는 전체 카탈로그에 기존 54문항 사례를 잘못 적용하는 것을 `EXAMPLE_SET_UNAVAILABLE`로 거부한다.
+
+재현: 검색팀 가상환경 Python으로 `verify_chapter2_review_flow.py`를 실행한다. 기본 실행은 임시 DB만 사용하고 파일을 저장하지 않는다. `--output reports/새파일.json`을 지정하면 새 보고서만 저장할 수 있다. Phase2 테스트 **97개·하위 검사 248개 통과**. 미승인 접근, 원본 변경, 카탈로그 혼합, 문항 누락도 검사했다.
+
+WBS Q13/Q26의 전체 ID·버전 연결은 검수 경로에서 확인했다. O25 사유 코드의 팀 확정, critical 지정, 700문항 전반의 의미 검수, 실제 LLM·운영 인터페이스 연결은 계속 미완료다.
+
 ## 10/1 2장 전체 질문 1차 초안
 
 **2장 64개 항목·700문항의 1차 초안**을 별도 버전으로 구성했다. 남은 51개 항목에 490문항을 추가하고 이전 13개·210문항과 퇴역 3개를 그대로 보존했다. [전체 질문·판정 조건](chapter2_full_review.md)과 [전체 JSON](chapter2_full_checklist_draft.json)을 확인한다. 작성용 중간 JSON 5개는 전체 JSON과 내용 보존을 대조한 뒤 정리했으며, `drafts/`에는 출처 검토 문서만 남겼다.

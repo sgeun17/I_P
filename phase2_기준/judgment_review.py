@@ -192,7 +192,7 @@ def prepare_judgment_review(phase1_result, store: ChecklistStore, checklist_vers
     catalog = _catalog_or_default(catalog)
     listing, catalog_document = _catalog_snapshot(catalog)
     source = next(row for row in catalog_document["source_files"]
-                  if row["path"] == "checklist_draft.json")
+                  if row["path"] == catalog.checklist_source)
     _require(catalog_document["checklist_version"] == checklist_version
              and source["sha256"] == plan["checklist_source_sha256"],
              "CATALOG_CHECKLIST_MISMATCH", "체크리스트 버전·해시와 사유 코드 출처가 다릅니다.")
