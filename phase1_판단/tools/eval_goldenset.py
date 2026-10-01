@@ -15,6 +15,10 @@
 
 **LLM 응답은 가공하지 말고 그대로 넣는다.** 코드블록이든 앞뒤 설명이든
 우리 파서가 처리한다. 미리 다듬으면 실제 파싱 실패율을 못 잰다.
+
+`--out`으로 저장하는 결과에는 숫자만 넣지 않는다. 어느 응답 파일, 어느
+골든셋(해시), 어느 임계값 프로파일로 잰 숫자인지 같이 적는다. 그게 없으면
+나중에 두 측정을 비교할 때 무엇이 달라서 숫자가 달라졌는지 알 수 없다.
 """
 
 from __future__ import annotations
@@ -38,7 +42,33 @@ GOLDENSET_PATH = ROOT / "tests" / "fixtures" / "goldenset.json"
 
 
 def sha256_file(path: Path) -> str:
+    """파일 내용의 해시. 어느 골든셋으로 잰 숫자인지 결과에 남기려고 쓴다.
+
+    골든셋 라벨을 고쳐도 `version` 문자열("goldenset_v0.1")은 그대로 남는다.
+    실제로 라벨 3건을 고친 뒤, 저장된 측정 결과만 보고는 수정 전인지 후인지
+    구분할 수 없었다. 버전 문자열을 올리는 건 사람이 잊을 수 있지만 해시는
+    잊을 수가 없다. `kb_sha256`을 쓰는 것과 같은 이유다.
+    """
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+# 저장된 응답이 무효가 된 사례. 실제 LLM 응답으로 잴 때만 제외한다.
+#
+# 케이스의 후보 목록을 고치면, 그 전에 저장해 둔 응답은 "모델이 본 적도 없는
+# 후보를 골랐어야 한다"고 채점하게 된다. 모델 잘못이 아닌 것을 오답으로 세면
+# 정확도가 실제보다 낮게 나온다.
+#
+# **해당 모델로 다시 돌린 뒤에는 이 목록을 비운다.** 안 비우면 멀쩡한 사례가
+# 조용히 측정에서 빠진 채로 남는다.
+#
+#   G-OCR-01: 후보 목록을 2.4.2 중심으로 다시 짰다(커밋 070f126). 그 전에 저장된
+#             응답에는 2.4.2가 후보에 아예 없었다.
+#
+# `--self-test`에는 적용하지 않는다. 자기 점검은 골든셋이 들고 있는 응답을 쓰므로
+# 후보를 고치면 응답도 같이 바뀌어 어긋날 일이 없다.
+STALE_RESPONSES = {
+    "G-OCR-01",
+}
 
 
 def recorded_path(path: Path | None) -> str | None:
@@ -76,6 +106,8 @@ def main() -> int:
     parser.add_argument("--prompt", default="unknown", help="프롬프트 버전 (결과에 기록)")
     parser.add_argument("--include-retrieval-miss", action="store_true",
                         help="정답이 후보 밖인 사례도 분모에 포함")
+    parser.add_argument("--include-stale", action="store_true",
+                        help=f"응답이 무효가 된 사례도 분모에 포함 ({', '.join(sorted(STALE_RESPONSES))})")
     parser.add_argument("--out", type=Path, help="결과를 JSON으로 저장할 경로")
     args = parser.parse_args()
 
@@ -84,6 +116,11 @@ def main() -> int:
 
     goldenset = json.loads(GOLDENSET_PATH.read_text(encoding="utf-8"))
     cases = goldenset["cases"]
+
+    # 판정에 쓰는 임계값을 변수로 묶어 둔다. 결과에 기록하는 프로파일 이름과
+    # 실제로 판정에 쓴 값이 어긋나는 것을 막으려는 것이다.
+    thresholds = DEFAULT_THRESHOLDS
+    skip_stale = set() if (args.self_test or args.include_stale) else STALE_RESPONSES
 
     responses = load_responses(args.responses) if args.responses else {}
     versions = VersionInfo(
@@ -95,11 +132,15 @@ def main() -> int:
 
     outcomes = []
     missing: list[str] = []
+    stale: list[str] = []
 
     for case in cases:
         if args.self_test:
             row = {"raw_response": case["llm_response"]}
         else:
+            if case["test_id"] in skip_stale:
+                stale.append(case["test_id"])
+                continue
             row = responses.get(case["test_id"])
             if row is None:
                 missing.append(case["test_id"])
@@ -112,16 +153,23 @@ def main() -> int:
             mapping_input,
             versions,
             call_error=ErrorCode(error_code) if error_code else None,
+            thresholds=thresholds,
             processing_time_ms=row.get("processing_time_ms"),
         )
         outcomes.append(make_outcome(case, result))
 
     if missing:
         print(f"경고: 응답이 없는 사례 {len(missing)}건 — {', '.join(missing)}\n", file=sys.stderr)
+    if stale:
+        print(f"제외: 저장된 응답이 무효가 된 사례 {len(stale)}건 — {', '.join(stale)}\n"
+              f"      (후보 목록을 고친 뒤라 모델이 정답을 볼 수 없었다. "
+              f"다시 돌리면 STALE_RESPONSES를 비운다. 포함하려면 --include-stale)\n",
+              file=sys.stderr)
 
     metrics = compute(outcomes, exclude_retrieval_miss=not args.include_retrieval_miss)
 
-    title = f"Phase 1 판단 평가 — {args.model} / {args.prompt}"
+    title = (f"Phase 1 판단 평가 — {args.model} / {args.prompt}"
+             f" / {thresholds.profile_name}")
     print(format_report(metrics, title))
 
     if args.self_test:
@@ -146,11 +194,12 @@ def main() -> int:
         payload = {
             "model": args.model,
             "prompt_version": args.prompt,
-            "threshold_profile": DEFAULT_THRESHOLDS.profile_name,
+            "threshold_profile": thresholds.profile_name,
             "response_file": recorded_path(args.responses),
             "goldenset_version": goldenset["version"],
             "goldenset_sha256": sha256_file(GOLDENSET_PATH),
             "ruleset_version": goldenset["ruleset_version"],
+            "excluded_stale": sorted(stale),
             "metrics": {k: v for k, v in metrics.__dict__.items()},
             "cases": [
                 {

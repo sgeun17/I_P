@@ -40,18 +40,15 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tools"))
 
 import eval_goldenset as E  # noqa: E402
+from eval_goldenset import STALE_RESPONSES  # noqa: E402  (목록의 원본은 그쪽이다)
 from enums import ErrorCode  # noqa: E402
 from models import MappingInput, VersionInfo  # noqa: E402
 from review_policy import Thresholds  # noqa: E402
 from service import build_result  # noqa: E402
 
 
-# 저장된 응답이 무효가 된 케이스. 해당 모델을 다시 돌리면 지운다.
-STALE_RESPONSES = {
-    # G-OCR-01: 후보 목록을 2.4.2 중심으로 다시 짰다(커밋 070f126). 그 전에 저장된
-    #           응답에는 2.4.2가 후보에 아예 없었다. 4b/8b를 다시 돌리면 지운다.
-    "G-OCR-01",
-}
+# STALE_RESPONSES는 tools/eval_goldenset.py가 원본이다. 여기서 따로 들고 있으면
+# 두 도구가 다른 모집단으로 세게 되고, 숫자가 어긋나도 아무도 모른다.
 
 
 @dataclass(frozen=True)
