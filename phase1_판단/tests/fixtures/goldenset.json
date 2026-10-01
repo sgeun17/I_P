@@ -7,8 +7,8 @@
   "counts": {
     "total": 29,
     "by_category": {
-      "single_mapping": 6,
-      "multi_mapping": 5,
+      "multi_mapping": 6,
+      "single_mapping": 5,
       "no_match": 3,
       "keyword_trap": 3,
       "uncertain": 3,
@@ -103,7 +103,7 @@
           }
         ]
       },
-      "llm_response": "{\n  \"match_status\": \"MATCHED\",\n  \"candidate_decisions\": [\n    {\n      \"control_id\": \"2.5.1\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.92,\n      \"reason\": \"계정 삭제 요청과 승인, 처리 기록이 문서의 전체 내용이다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0101_v1_c0001\",\n          \"page\": 1,\n          \"quote\": \"해당 계정은 퇴직일 당일 즉시 비활성화한 후 관리자 승인을 거쳐 삭제하였다\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.5.6\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.5.2\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.2.5\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0101_v1_c0001\",\n          \"page\": 1,\n          \"quote\": \"해당 계정은 퇴직일 당일 즉시 비활성화한 후 관리자 승인을 거쳐 삭제하였다\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.5.5\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    }\n  ],\n  \"mapped_controls\": [\n    {\n      \"control_id\": \"2.5.1\",\n      \"control_name\": \"사용자 계정 관리\",\n      \"relation\": \"PRIMARY\",\n      \"llm_confidence\": 0.92,\n      \"reason\": \"계정 삭제 요청과 승인, 처리 기록이 문서의 전체 내용이다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0101_v1_c0001\",\n          \"page\": 1,\n          \"quote\": \"해당 계정은 퇴직일 당일 즉시 비활성화한 후 관리자 승인을 거쳐 삭제하였다\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.2.5\",\n      \"control_name\": \"퇴직 및 직무변경 관리\",\n      \"relation\": \"RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"퇴직일 당일 계정 비활성화와 권한 회수 절차가 기록되어 있다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0101_v1_c0001\",\n          \"page\": 1,\n          \"quote\": \"해당 계정은 퇴직일 당일 즉시 비활성화한 후 관리자 승인을 거쳐 삭제하였다\"\n        }\n      ]\n    }\n  ]\n}",
+      "llm_response": "{\n  \"match_status\": \"MATCHED\",\n  \"candidate_decisions\": [\n    {\n      \"control_id\": \"2.5.1\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.92,\n      \"reason\": \"계정 삭제 요청과 승인, 처리 기록이 문서의 전체 내용이다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0101_v1_c0001\",\n          \"page\": 1,\n          \"quote\": \"해당 계정은 퇴직일 당일 즉시 비활성화한 후 관리자 승인을 거쳐 삭제하였다\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.5.6\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.5.2\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.2.5\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"퇴직일 당일 계정 비활성화와 권한 회수 절차가 기록되어 있다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0101_v1_c0001\",\n          \"page\": 1,\n          \"quote\": \"해당 계정은 퇴직일 당일 즉시 비활성화한 후 관리자 승인을 거쳐 삭제하였다\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.5.5\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    }\n  ],\n  \"mapped_controls\": [\n    {\n      \"control_id\": \"2.5.1\",\n      \"control_name\": \"사용자 계정 관리\",\n      \"relation\": \"PRIMARY\",\n      \"llm_confidence\": 0.92,\n      \"reason\": \"계정 삭제 요청과 승인, 처리 기록이 문서의 전체 내용이다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0101_v1_c0001\",\n          \"page\": 1,\n          \"quote\": \"해당 계정은 퇴직일 당일 즉시 비활성화한 후 관리자 승인을 거쳐 삭제하였다\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.2.5\",\n      \"control_name\": \"퇴직 및 직무변경 관리\",\n      \"relation\": \"RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"퇴직일 당일 계정 비활성화와 권한 회수 절차가 기록되어 있다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0101_v1_c0001\",\n          \"page\": 1,\n          \"quote\": \"해당 계정은 퇴직일 당일 즉시 비활성화한 후 관리자 승인을 거쳐 삭제하였다\"\n        }\n      ]\n    }\n  ]\n}",
       "gold": {
         "match_status": "MATCHED",
         "controls": [
@@ -2488,37 +2488,37 @@
         "candidate_controls": [
           {
             "rank": 1,
-            "control_id": "2.4.1",
-            "control_name": "보호구역 지정",
+            "control_id": "2.4.2",
+            "control_name": "출입통제",
             "similarity_score": 0.5744
           },
           {
             "rank": 2,
+            "control_id": "2.4.1",
+            "control_name": "보호구역 지정",
+            "similarity_score": 0.5501
+          },
+          {
+            "rank": 3,
             "control_id": "2.4.7",
             "control_name": "업무환경 보안",
             "similarity_score": 0.5233
           },
           {
-            "rank": 3,
+            "rank": 4,
             "control_id": "2.6.2",
             "control_name": "정보시스템 접근",
             "similarity_score": 0.5011
           },
           {
-            "rank": 4,
+            "rank": 5,
             "control_id": "2.5.1",
             "control_name": "사용자 계정 관리",
             "similarity_score": 0.4922
-          },
-          {
-            "rank": 5,
-            "control_id": "2.4.2",
-            "control_name": "출입통제",
-            "similarity_score": 0.4833
           }
         ]
       },
-      "llm_response": "{\n  \"match_status\": \"MATCHED\",\n  \"candidate_decisions\": [\n    {\n      \"control_id\": \"2.4.2\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.87,\n      \"reason\": \"보호구역 출입통제 절차와 출입대장 기록이 명시되어 있다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0181_v1_c0000\",\n          \"page\": 1,\n          \"quote\": \"전산실 출입은 사전 승인된 인원에 한하며\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.4.7\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.6.2\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.5.1\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.4.1\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    }\n  ],\n  \"mapped_controls\": [\n    {\n      \"control_id\": \"2.4.2\",\n      \"control_name\": \"출입통제\",\n      \"relation\": \"PRIMARY\",\n      \"llm_confidence\": 0.87,\n      \"reason\": \"보호구역 출입 통제 절차를 기록한 문서다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0181_v1_c0000\",\n          \"page\": 1,\n          \"quote\": \"전산실 출입은 사전 승인된 인원에 한하며\"\n        }\n      ]\n    }\n  ]\n}",
+      "llm_response": "{\n  \"match_status\": \"MATCHED\",\n  \"candidate_decisions\": [\n    {\n      \"control_id\": \"2.4.2\",\n      \"decision\": \"RELATED\",\n      \"llm_confidence\": 0.87,\n      \"reason\": \"보호구역 출입통제 절차와 출입대장 기록이 명시되어 있다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0181_v1_c0000\",\n          \"page\": 1,\n          \"quote\": \"전산실 출입은 사전 승인된 인원에 한하며\"\n        }\n      ]\n    },\n    {\n      \"control_id\": \"2.4.1\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.4.7\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.6.2\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    },\n    {\n      \"control_id\": \"2.5.1\",\n      \"decision\": \"NOT_RELATED\",\n      \"llm_confidence\": 0.85,\n      \"reason\": \"증적 본문에 해당 통제항목의 대상 활동이 나타나지 않는다.\",\n      \"citations\": []\n    }\n  ],\n  \"mapped_controls\": [\n    {\n      \"control_id\": \"2.4.2\",\n      \"control_name\": \"출입통제\",\n      \"relation\": \"PRIMARY\",\n      \"llm_confidence\": 0.87,\n      \"reason\": \"보호구역 출입통제 절차와 출입대장 기록이 명시되어 있다.\",\n      \"citations\": [\n        {\n          \"chunk_id\": \"E0181_v1_c0000\",\n          \"page\": 1,\n          \"quote\": \"전산실 출입은 사전 승인된 인원에 한하며\"\n        }\n      ]\n    }\n  ]\n}",
       "gold": {
         "match_status": "MATCHED",
         "controls": [
