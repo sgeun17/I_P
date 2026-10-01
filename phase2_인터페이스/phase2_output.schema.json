@@ -1,0 +1,323 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase2_output.schema.json",
+  "title": "Phase2JudgmentOutput",
+  "description": "Phase 2 판정 결과. 증적 하나 × 통제항목 하나에 대한 문항별 판정과 그 항목의 종합 결론. 상태: DRAFT, 미승인.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "version",
+    "control_id",
+    "items",
+    "overall_result",
+    "rule_version",
+    "critical_policy"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "phase2-output-0.2"
+    },
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{0,6}\\d{4,8}$",
+      "description": "입력의 값 그대로."
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "control_id": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "이 결과가 판정한 통제항목. 입력 targets 중 judge=true 인 것 하나."
+    },
+    "control_name": {
+      "type": "string"
+    },
+    "checklist_version": {
+      "type": "string",
+      "description": "어느 질문지 판으로 판정했는지.",
+      "examples": [
+        "phase2-checklist-chapter2-full-draft-2026-10-01"
+      ]
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "description": "문항별 판정. 질문지의 문항 수와 같아야 한다.",
+      "items": {
+        "$ref": "#/$defs/ItemResult"
+      }
+    },
+    "overall_result": {
+      "enum": [
+        "충족",
+        "충족(보완 권고)",
+        "확인 필요",
+        "미충족",
+        "증적 없음"
+      ],
+      "description": "이 통제항목의 결론. items 와 critical 규칙으로 계산한다 (rule_version 참조).\n  미충족         : critical 문항 중 NOT_MET 이 있음\n  확인 필요       : critical 문항 중 UNKNOWN 이 있음 (NOT_MET 은 없음)\n  충족(보완 권고) : critical 은 전부 MET, 비critical 에 NOT_MET·UNKNOWN 이 있음\n  충족           : 전부 MET\n  증적 없음       : 이 항목에 판정할 증적이 없음 (items 가 비어 Phase 2 가 돌지 않은 경우. 이 스키마로는 내지 않고 2단계에서 낸다)"
+    },
+    "overall_reason": {
+      "type": "string",
+      "description": "종합 결론을 한 줄로. 예: 'critical 문항 2.5.1-Q03 이 NOT_MET'."
+    },
+    "decisive_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "종합 결론을 결정한 문항 ID. 화면에서 '왜 미충족인지'를 바로 보여주기 위한 것."
+    },
+    "counts": {
+      "type": "object",
+      "description": "집계. 화면과 ③ 우선순위 산정에 쓴다.",
+      "additionalProperties": false,
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "MET": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "NOT_MET": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "UNKNOWN": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "critical_total": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "rule_version": {
+      "type": "string",
+      "description": "어떤 종합 판정 규칙으로 계산했는지. critical 정책이 바뀌면 이 값을 올린다. 값이 다르면 결과를 섞어서 집계하지 않는다. 현재 overall-v0.1-checkkind.",
+      "examples": [
+        "overall-v0.1-checkkind"
+      ]
+    },
+    "critical_policy": {
+      "type": "object",
+      "description": "이 결과가 어떤 critical 기준으로 나왔는지. **필수다.** 기준이 바뀌어도 옛 결과와 섞이지 않게 하려는 것이다. 체크리스트의 critical 이 700문항 전부 UNDECIDED 라, 당분간 check_kind 로 대신한다.",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "check_kind",
+            "explicit",
+            "all"
+          ],
+          "description": "check_kind : 아래 critical_kinds 에 든 종류를 critical 로 본다 (현재 이 값을 쓴다)\nexplicit  : 체크리스트의 item.critical 값을 쓴다 (기준팀이 700문항을 채운 뒤 이걸로 바꾼다)\nall       : 모든 문항을 critical 로 본다"
+        },
+        "critical_kinds": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "procedure",
+              "record",
+              "implementation"
+            ]
+          },
+          "description": "mode=check_kind 일 때 critical 로 볼 종류. 현재 [\"procedure\", \"implementation\"] — 절차가 없거나 실제 이행이 안 된 것은 결함, 기록 미비는 보완 권고로 본다. 체크리스트의 critical 700문항이 전부 UNDECIDED 라 종류로 대신하는 것이다."
+        }
+      }
+    },
+    "human_review": {
+      "type": "object",
+      "description": "사람 검토 필요 여부. Phase 1 과 같은 모양으로 맞춘다.",
+      "required": [
+        "required"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "P2R101",
+              "P2R102",
+              "P2R103",
+              "P2R104",
+              "P2R105",
+              "P2R106",
+              "P2R107",
+              "P2R108",
+              "P2R109",
+              "P2R110",
+              "P2R201",
+              "P2R202",
+              "P2R203",
+              "P2R204"
+            ]
+          },
+          "description": "Phase 2 검토 사유 코드 (입력 파트 확정, 판단팀 확인 대기). Phase 1 의 R1xx·R2xx 와 겹치지 않게 P2R 접두사.\nP2R1xx 는 무조건 검토, P2R2xx 는 조건부(임계값).\n  P2R101  JSON_PARSE_FAILED — 재시도까지 했는데 JSON 이 안 나왔다\n  P2R102  SCHEMA_INVALID — 출력이 규격에 안 맞는다\n  P2R103  ITEM_ID_INVALID — 질문지에 없는 문항이거나 문항 수가 다르다\n  P2R104  CITATION_INVALID — 인용이 청크 원문과 다르다\n  P2R105  CITATION_MISSING — MET·NOT_MET 인데 근거가 없다\n  P2R106  LLM_CALL_FAILED — LLM 을 끝내 못 불렀다\n  P2R107  ITEM_NOT_JUDGEABLE — 청크나 질문지가 없어 판정을 시도하지 못했다\n  P2R108  PROMPT_INJECTION_SUSPECTED — 증적 본문에 지시문처럼 보이는 내용이 있다\n  P2R109  OVERALL_RULE_CONFLICT — 종합 판정이 규칙과 어긋난다\n  P2R110  PHASE1_RESULT_STALE — Phase 1 결과가 가리키는 청크가 지금 증적에 없다. 증적 version 이 올라간 것\n  P2R201  CRITICAL_NOT_MET — critical 문항이 미충족이다. 결함 판정이라 사람이 한 번 본다\n  P2R202  MANY_UNKNOWN — UNKNOWN 비율이 임계 이상이다. 증적이 부족하거나 질문지가 안 맞는 것\n  P2R203  OCR_SOURCE — OCR 청크를 인용했다. 전처리팀이 품질 점수를 주지 않는다. Phase 1 R207 과 같은 이유\n  P2R204  ALL_UNKNOWN — 문항이 전부 UNKNOWN 이다. 사실상 판정이 안 됐다"
+        },
+        "error_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "처리 중 생긴 오류 코드. Phase 1 ErrorCode(E1xx·E2xx·E4xx)를 그대로 쓰고, Phase 2 전용은 P2E 접두사. 검토로 보내지 않고 기록만 하는 코드도 여기 남긴다."
+        }
+      }
+    },
+    "trace_id": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "processing_time_ms": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "$defs": {
+    "ItemResult": {
+      "type": "object",
+      "description": "문항 하나의 판정.",
+      "required": [
+        "item_id",
+        "result",
+        "reason",
+        "citations"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "enum": [
+                  "MET",
+                  "NOT_MET"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "citations": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "description": "질문지의 문항 ID.",
+          "examples": [
+            "2.5.1-Q01"
+          ]
+        },
+        "result": {
+          "enum": [
+            "MET",
+            "NOT_MET",
+            "UNKNOWN"
+          ],
+          "description": "기준팀 proposed_result_values 와 같다.\n  MET     : 요건을 충족하는 근거가 있음\n  NOT_MET : 충족하지 않음을 확인한 근거가 있음\n  UNKNOWN : 근거가 없거나 범위·시점이 불명확함 — NOT_MET 과 다르다"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "description": "왜 그렇게 판정했는지 한두 문장."
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^P2_(NM|U)_[A-Z_]+$"
+          },
+          "uniqueItems": true,
+          "description": "기준팀 사유 코드 13종. result=NOT_MET 이면 P2_NM_*, UNKNOWN 이면 P2_U_* 를 붙인다. MET 이면 비운다."
+        },
+        "citations": {
+          "type": "array",
+          "description": "이 판정의 근거 문장. 기준팀 질문지의 citation_required_for 가 700문항 전부 [\"MET\", \"NOT_MET\"] 이므로, result=MET 또는 NOT_MET 이면 1개 이상 필수다. UNKNOWN 만 비울 수 있다 (근거가 없어서 그 판정이므로). 이 조건은 아래 allOf 로 강제한다.",
+          "items": {
+            "$ref": "#/$defs/Citation"
+          }
+        },
+        "critical": {
+          "type": "boolean",
+          "description": "이 문항이 critical 인지. critical_policy 로 계산한 값을 그대로 적어, 나중에 정책이 바뀌어도 당시 판정 근거를 알 수 있게 한다."
+        },
+        "check_kind": {
+          "enum": [
+            "procedure",
+            "record",
+            "implementation"
+          ],
+          "description": "질문지의 값 그대로."
+        }
+      }
+    },
+    "Citation": {
+      "type": "object",
+      "required": [
+        "chunk_id",
+        "page",
+        "quote"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "type": "string"
+        },
+        "page": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1,
+          "description": "원문 그대로. 요약·의역 금지. 입력 청크 text 에 포함되는지 대조한다."
+        }
+      }
+    }
+  },
+  "x-status": "DRAFT (팀 승인 전). 입력 파트가 정할 것은 전부 정해졌다. 필드와 값 목록이 더 바뀌지 않는다. 이 규격으로 개발해도 된다. 판단팀이 P2R 코드를 더하면 그때만 다시 배포한다.",
+  "x-agreement": {
+    "state": "IN_PROGRESS",
+    "as_of": "2026-10-02",
+    "owner": "입력 파트",
+    "note": "이 규격에서 입력 파트가 정할 것은 전부 정해졌다. 필드·값 목록이 더 바뀌지 않는다. P2R 코드만 판단팀 확인 뒤 추가될 수 있고, 추가는 기존 값을 건드리지 않는다. schema_version 은 올리지 않았다 — 필드가 바뀌지 않았기 때문이다.",
+    "settled": [
+      "result 는 MET·NOT_MET·UNKNOWN 세 값. 기준팀 proposed_result_values 그대로.",
+      "citations 는 문항마다 단다. MET·NOT_MET 은 1개 이상 필수, UNKNOWN 만 비울 수 있다 (기준팀 citation_required_for).",
+      "citations[].quote 는 입력 청크 text 에 그대로 있어야 한다. 요약·의역 금지.",
+      "reason_codes 는 기준팀 13종. NOT_MET 이면 P2_NM_*, UNKNOWN 이면 P2_U_*.",
+      "check_kind 는 질문지의 값(procedure·record·implementation)을 그대로 적는다.",
+      "critical 은 check_kind 로 정한다. procedure·implementation = critical, record = 비critical. 체크리스트의 critical 700문항이 전부 UNDECIDED 라 쓸 값이 없어서다. 기준팀이 채우면 critical_policy.mode 를 explicit 으로 바꾼다. (입력 파트 결정 2026-10-02, 기준팀 확인 요청)",
+      "overall_result 는 다섯 값으로 둔다 — 충족 / 충족(보완 권고) / 확인 필요 / 미충족 / 증적 없음. (입력 파트 결정 2026-10-02)",
+      "critical_policy 를 필수 필드로 둔다. 모든 결과가 어떤 기준으로 나왔는지 달고 다닌다.",
+      "Phase 2 검토 사유 코드 P2R 14개 확정 — P2R101~P2R110 무조건, P2R201~P2R204 조건부. Phase 1 의 R1xx·R2xx 와 번호가 겹치지 않는 것을 확인했다. 목록은 human_review.reasons 의 enum 과 phase2_errors.md 2절에 있다. (입력 파트 결정 2026-10-02, 판단팀 확인 요청)",
+      "P2R203 (OCR 청크 인용) 은 켜 둔다. OCR 증적은 전부 사람이 확인한다. 전처리팀이 OCR 품질 점수를 주지 않아 글자가 맞는지 알 방법이 없고, 실측에서 항목 매핑은 맞았으나 날짜 5개 중 3개를 틀렸다 (2026 → 2926). Phase 2 는 시기를 묻는 문항이 많아 날짜 오독이 판정을 뒤집는다. (회의 결정)"
+    ],
+    "open": [],
+    "unstable_fields": [],
+    "on_change": "합의가 끝나면 schema_version 을 올리고(phase2-output-0.1 → 0.2), 종합 판정 규칙이 바뀌면 rule_version 을 올린다. rule_version 이 다른 결과는 섞어서 집계하지 않는다."
+  }
+}

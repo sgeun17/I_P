@@ -1,0 +1,102 @@
+{
+  "schema_version": "phase2-input-0.2",
+  "evidence_id": "E0007",
+  "version": 1,
+  "judge_policy": "primary_only",
+  "checklist_version": "phase2-checklist-draft-2026-09-28",
+  "trace_id": "A20261001-0007",
+  "targets": [
+    {
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "relation": "PRIMARY",
+      "judge": true,
+      "checklist_in_scope": true,
+      "llm_confidence": 0.82,
+      "similarity_score": 0.741,
+      "mapping_citations": [
+        {
+          "chunk_id": "E0007_v1_c0003",
+          "page": null,
+          "quote": "사용자 계정의 발급은 소속 팀장의 승인을 받은 후 정보보호팀이 처리한다"
+        }
+      ]
+    },
+    {
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토",
+      "relation": "RELATED",
+      "judge": false,
+      "checklist_in_scope": true,
+      "llm_confidence": 0.54,
+      "similarity_score": 0.612,
+      "mapping_citations": [
+        {
+          "chunk_id": "E0007_v1_c0005",
+          "page": null,
+          "quote": "접근권한은 반기 1회 검토한다"
+        }
+      ]
+    },
+    {
+      "control_id": "2.2.5",
+      "control_name": "퇴직 및 직무변경 관리",
+      "relation": "RELATED",
+      "judge": false,
+      "checklist_in_scope": false,
+      "llm_confidence": 0.49,
+      "similarity_score": 0.588,
+      "mapping_citations": [
+        {
+          "chunk_id": "E0007_v1_c0008",
+          "page": null,
+          "quote": "퇴직자의 계정은 퇴직일 당일 비활성화한다"
+        }
+      ]
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "E0007_v1_c0003",
+      "chunk_index": 3,
+      "chunk_type": "text",
+      "file_type": "docx",
+      "source_file": "인사규정.docx",
+      "page_start": null,
+      "page_end": null,
+      "heading": "제3장 계정 관리",
+      "text": "제12조(계정 발급) 사용자 계정의 발급은 소속 팀장의 승인을 받은 후 정보보호팀이 처리한다. 발급 내역은 계정관리대장에 기록한다.",
+      "source": "parser"
+    },
+    {
+      "chunk_id": "E0007_v1_c0005",
+      "chunk_index": 5,
+      "chunk_type": "text",
+      "file_type": "docx",
+      "source_file": "인사규정.docx",
+      "page_start": null,
+      "page_end": null,
+      "heading": "제3장 계정 관리",
+      "text": "제14조(권한 검토) 접근권한은 반기 1회 검토한다. 검토 결과는 정보보호위원회에 보고한다.",
+      "source": "parser"
+    },
+    {
+      "chunk_id": "E0007_v1_c0008",
+      "chunk_index": 8,
+      "chunk_type": "text",
+      "file_type": "docx",
+      "source_file": "인사규정.docx",
+      "page_start": null,
+      "page_end": null,
+      "heading": "제4장 퇴직 처리",
+      "text": "제21조(퇴직 처리) 퇴직자의 계정은 퇴직일 당일 비활성화한다. 비활성화 후 30일이 지나면 삭제한다.",
+      "source": "parser"
+    }
+  ],
+  "source_versions": {
+    "kb_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "model_id": "BAAI/bge-m3",
+    "llm_model": "qwen3:4b",
+    "prompt_version": "v0.5"
+  }
+}

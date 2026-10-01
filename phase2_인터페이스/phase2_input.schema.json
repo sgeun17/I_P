@@ -1,0 +1,283 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase2_input.schema.json",
+  "title": "Phase2JudgmentInput",
+  "description": "Phase 2 판정 모듈의 입력. 증적 하나 × 통제항목 단위의 판정(1단계)용이다. 여러 증적의 결과를 합쳐 통제항목 하나의 최종 결론(overall_result)을 내는 2단계는 별도 규격으로 만든다. 새로 만드는 값은 없고 전부 Phase 1 최종 결과(Phase1MappingResult)와 입력팀 chunk 표에서 옮긴다. 상태: DRAFT, 미승인.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "version",
+    "judge_policy",
+    "targets",
+    "chunks",
+    "source_versions"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "phase2-input-0.2",
+      "description": "이 규격의 판. 바뀌면 올린다."
+    },
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{0,6}\\d{4,8}$",
+      "description": "증적 번호. Phase 1 값 그대로 (예: E0001). 입력팀 config.py 의 ID_PREFIX·ID_DIGITS 를 따른다.",
+      "examples": [
+        "E0001"
+      ]
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "증적 버전. Phase 1 값 그대로. 같은 증적이라도 버전이 다르면 다른 입력이다."
+    },
+    "judge_policy": {
+      "enum": [
+        "primary_only",
+        "all_mapped"
+      ],
+      "description": "★ 미합의. targets[].judge 를 무엇으로 채웠는지 기록한다. 나중에 정책이 바뀌었을 때 어떤 판정이 어떤 정책으로 나온 것인지 구분하기 위해 값으로 남긴다. 현재 임시 기본값은 primary_only.\n  primary_only : relation=PRIMARY 만 judge=true. RELATED 는 참고 증적으로 연결만 한다.\n  all_mapped   : 매핑된 항목 전부 judge=true.",
+      "default": "primary_only"
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 0,
+      "description": "이 증적에 매핑된 통제항목 전부. Phase1MappingResult.mapped_controls 를 그대로 옮긴다. RELATED 도 빼지 않고 담되, 실제 판정 여부는 judge 로 구분한다. match_status 가 NO_MATCH 면 빈 배열이고 Phase 2 는 돌지 않는다.",
+      "items": {
+        "$ref": "#/$defs/Target"
+      }
+    },
+    "chunks": {
+      "type": "array",
+      "minItems": 1,
+      "description": "이 증적의 청크 전부. 본문(text)을 그대로 담는다. chunk_id 만 넘기고 Phase 2 가 DB 를 조회하는 방식은 쓰지 않는다 — 입력이 자기완결적이어야 재현·시험이 가능하고, Phase 1 MappingInput 도 같은 방식이다. (확정)",
+      "items": {
+        "$ref": "#/$defs/Chunk"
+      }
+    },
+    "source_versions": {
+      "type": "object",
+      "description": "재현용. Phase1MappingResult.versions 를 그대로 옮긴다. 어떤 KB·모델·프롬프트로 나온 매핑인지 추적한다.",
+      "required": [
+        "kb_sha256"
+      ],
+      "properties": {
+        "kb_sha256": {
+          "type": "string",
+          "description": "검색 KB 해시. 체크리스트의 source 해시와 일치해야 한다."
+        }
+      },
+      "additionalProperties": true
+    },
+    "checklist_version": {
+      "type": "string",
+      "description": "쓸 체크리스트 판. 기준팀 checklist_store 의 version. 생략하면 최신 판을 쓴다.",
+      "examples": [
+        "phase2-checklist-draft-2026-09-28"
+      ]
+    },
+    "trace_id": {
+      "type": "string",
+      "description": "처리 추적용. Phase 1 값이 있으면 그대로 잇는다."
+    }
+  },
+  "$defs": {
+    "Target": {
+      "type": "object",
+      "description": "이 증적에 매핑된 통제항목 하나. Phase1 의 MappedControl 을 옮기되, 판정에 안 쓰는 칸(reason 등)은 뺀다.",
+      "required": [
+        "control_id",
+        "control_name",
+        "relation",
+        "judge"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "control_id": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "ISMS-P 통제항목 번호. 검색팀 controls.json 의 101개 중 하나.",
+          "examples": [
+            "2.5.1"
+          ]
+        },
+        "control_name": {
+          "type": "string",
+          "description": "통제항목 명칭. Phase 1 값과 체크리스트 값이 같아야 한다 (기준팀 어댑터가 CONTROL_NAME_MISMATCH 로 검사)."
+        },
+        "relation": {
+          "enum": [
+            "PRIMARY",
+            "RELATED"
+          ],
+          "description": "Phase 1 매핑 관계. PRIMARY 는 정확히 1개."
+        },
+        "judge": {
+          "type": "boolean",
+          "description": "★ 미합의 (임시 규칙). 이 항목의 질문지를 실제로 돌릴지.\n  현재 임시: relation=PRIMARY 면 true, RELATED 면 false.\n  judge=false 인 항목은 판정하지 않고 '참고 증적'으로만 연결한다. 그 항목에 PRIMARY 증적이 따로 생기면, 그때 이 증적의 청크도 같이 근거로 쓴다.\n  어떤 통제항목에 PRIMARY 증적이 끝까지 하나도 없으면 2단계에서 '증적 없음'으로 낸다 — '판단 불가'와 구분한다.\n  근거: 판단팀 실제 LLM 기록 20건 중 16건이 체크리스트 범위 밖 항목을 포함해 전체 보류됐고, 그중 3건은 범위 안 항목이 있어 판정 가능했다."
+        },
+        "checklist_in_scope": {
+          "type": "boolean",
+          "description": "이 항목의 질문지가 현재 체크리스트 판에 있는지. 없으면 judge 와 무관하게 판정할 수 없고, '질문지 없음'으로 표시한다. 한 항목이 없다고 나머지 항목까지 보류하지 않는다."
+        },
+        "llm_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Phase 1 LLM 이 이 매핑을 얼마나 확신했는지. 정확도가 아니다. 화면에 '정확도'로 표기하지 않는다."
+        },
+        "similarity_score": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "검색 유사도. llm_confidence 와 다른 값이다. 섞지 않는다."
+        },
+        "mapping_citations": {
+          "type": "array",
+          "description": "Phase 1 이 이 항목으로 매핑한 근거. 문항별 판정 근거와는 별개다.",
+          "items": {
+            "$ref": "#/$defs/Citation"
+          }
+        }
+      }
+    },
+    "Chunk": {
+      "type": "object",
+      "description": "청크 하나. 입력팀 chunk 표에서 가져온다.",
+      "required": [
+        "chunk_id",
+        "chunk_type",
+        "text",
+        "source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z]{0,6}\\d{4,8}_v\\d+_c\\d{4}$",
+          "description": "청크 번호. {evidence_id}_v{version}_c{index:04d}",
+          "examples": [
+            "E0001_v1_c0000"
+          ]
+        },
+        "chunk_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "문서 안에서의 순서. 0부터."
+        },
+        "chunk_type": {
+          "enum": [
+            "text",
+            "table"
+          ],
+          "description": "글 청크인지 표 청크인지."
+        },
+        "file_type": {
+          "enum": [
+            "pdf",
+            "docx",
+            "xlsx",
+            "pptx",
+            "txt",
+            "csv",
+            "png",
+            "jpg"
+          ],
+          "description": "원본 형식."
+        },
+        "source_file": {
+          "type": "string",
+          "description": "원래 파일 이름. 저장명(E0001_v1.pdf)이 아니다."
+        },
+        "page_start": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "PDF=페이지, XLSX=시트, PPTX=슬라이드. DOCX·TXT·CSV·PNG·JPG 는 null. 화면에 '쪽'으로 고정 표기하지 않는다."
+        },
+        "page_end": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "heading": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "청크 바로 위의 가장 최근 제목."
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "청크 본문. 판정 LLM 에 넘기는 글자는 이 값과 반드시 정확히 같아야 한다. 요약·가공 금지. 인용 대조의 기준이 된다."
+        },
+        "source": {
+          "enum": [
+            "parser",
+            "ocr"
+          ],
+          "description": "parser 는 파서가 읽은 글자, ocr 은 이미지에서 읽은 글자. ocr 이면 글자가 틀릴 수 있어 사람 검토 대상(R207)이 된다."
+        }
+      }
+    },
+    "Citation": {
+      "type": "object",
+      "required": [
+        "chunk_id",
+        "page",
+        "quote"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "type": "string",
+          "description": "chunks 안에 실제로 있어야 한다."
+        },
+        "page": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "quote": {
+          "type": "string",
+          "description": "원문 그대로. 요약·의역 금지. 정규화 후 청크 text 에 포함되는지 검사한다."
+        }
+      }
+    }
+  },
+  "x-status": "DRAFT (팀 승인 전). 입력 파트가 정할 것은 judge_policy 하나만 남았고, 그것도 enum 에 두 값이 다 있어 필드는 바뀌지 않는다. 이 규격으로 개발해도 된다.",
+  "x-agreement": {
+    "state": "IN_PROGRESS",
+    "as_of": "2026-10-02",
+    "owner": "입력 파트",
+    "note": "남은 것은 judge_policy 하나뿐이다. 그것도 enum 에 두 값이 다 있어서 어느 쪽으로 정해도 필드가 바뀌지 않는다 (default 만 달라진다). unstable_fields 가 비어 있으므로 값 목록은 더 바뀌지 않는다.",
+    "settled": [
+      "chunks 는 본문(text)을 그대로 담는다. chunk_id 만 넘기고 DB 조회하는 방식은 쓰지 않는다.",
+      "chunks[].text 는 판정 LLM 에 넘기는 글자와 정확히 같아야 한다. 인용 대조의 기준이다.",
+      "evidence_id·version·control_id 는 Phase 1 결과의 값을 그대로 쓴다. 새로 만들지 않는다.",
+      "판정 단위는 증적1 × 통제항목1 (1층). 여러 증적을 한 항목으로 묶는 2층은 이 스키마를 그대로 쓰고 감싸는 스키마를 따로 둔다. (입력 파트 결정 2026-10-02)"
+    ],
+    "open": [
+      {
+        "id": "A1",
+        "field": "judge_policy, targets[].judge",
+        "question": "판정을 relation=PRIMARY 인 항목만 할지, 매핑된 항목 전부에 할지.",
+        "temporary": "primary_only — PRIMARY 만 판정하고 RELATED 는 참고 증적으로 연결만 한다.",
+        "with": [
+          "판단팀"
+        ],
+        "impact": "필드 모양은 바뀌지 않는다. judge=true 인 항목 개수만 달라진다.",
+        "measured": "primary_only 44개 대상 / 647문항 / 약 367분,  all_mapped 70개 / 992문항 / 약 562분 (1.5배)"
+      }
+    ],
+    "unstable_fields": [],
+    "on_change": "합의가 끝나면 schema_version 을 올린다 (phase2-input-0.1 → 0.2). judge_policy 값을 결과에 남기므로, 정책이 바뀌어도 어느 정책으로 나온 입력인지 구분된다."
+  }
+}

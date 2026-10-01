@@ -1,0 +1,74 @@
+{
+  "schema_version": "phase2-input-0.2",
+  "evidence_id": "E0012",
+  "version": 1,
+  "judge_policy": "primary_only",
+  "checklist_version": "phase2-checklist-draft-2026-09-28",
+  "trace_id": "A20261001-0012",
+  "targets": [
+    {
+      "control_id": "2.2.1",
+      "control_name": "주요 직무자 지정 및 관리",
+      "relation": "PRIMARY",
+      "judge": true,
+      "checklist_in_scope": false,
+      "llm_confidence": 0.77,
+      "similarity_score": 0.698,
+      "mapping_citations": [
+        {
+          "chunk_id": "E0012_v1_c0001",
+          "page": null,
+          "quote": "주요 직무자는 매년 지정하고 목록을 관리한다"
+        }
+      ]
+    },
+    {
+      "control_id": "2.5.6",
+      "control_name": "접근권한 검토",
+      "relation": "RELATED",
+      "judge": false,
+      "checklist_in_scope": true,
+      "llm_confidence": 0.51,
+      "similarity_score": 0.604,
+      "mapping_citations": [
+        {
+          "chunk_id": "E0012_v1_c0002",
+          "page": null,
+          "quote": "지정된 직무자의 권한은 별도 검토 대상으로 둔다"
+        }
+      ]
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "E0012_v1_c0001",
+      "chunk_index": 1,
+      "chunk_type": "text",
+      "file_type": "docx",
+      "source_file": "주요직무자_지정안.docx",
+      "page_start": null,
+      "page_end": null,
+      "heading": "1. 지정 기준",
+      "text": "주요 직무자는 매년 지정하고 목록을 관리한다. 지정 사유와 승인자를 함께 기록한다.",
+      "source": "parser"
+    },
+    {
+      "chunk_id": "E0012_v1_c0002",
+      "chunk_index": 2,
+      "chunk_type": "text",
+      "file_type": "docx",
+      "source_file": "주요직무자_지정안.docx",
+      "page_start": null,
+      "page_end": null,
+      "heading": "2. 권한 관리",
+      "text": "지정된 직무자의 권한은 별도 검토 대상으로 둔다. 검토 주기는 접근권한 검토 절차를 따른다.",
+      "source": "parser"
+    }
+  ],
+  "source_versions": {
+    "kb_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "model_id": "BAAI/bge-m3",
+    "llm_model": "qwen3:4b",
+    "prompt_version": "v0.5"
+  }
+}
