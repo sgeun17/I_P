@@ -1,0 +1,420 @@
+{
+  "status": "PASS",
+  "review_only": true,
+  "approved": false,
+  "human_approved": false,
+  "llm_executed": false,
+  "actual_evidence_used": false,
+  "semantic_judgment_checked": false,
+  "phase1_mapping_origin": "SYNTHETIC_FIXTURE_NOT_OPERATIONAL_APPROVAL",
+  "response_origin": "FIXED_EXPECTED_LABELS_NOT_MODEL_OUTPUT",
+  "checklist_version": "phase2-checklist-chapter2-full-draft-2026-10-01-r2",
+  "catalog_version": "phase2-reason-codes-chapter2-full-draft-2026-10-01-r2",
+  "source_sha256": {
+    "chapter2_full_checklist_draft.json": "e0f380506affacba74415c0594220a4dcfae4f8aa9c744526ad96f7370614f31",
+    "chapter2_reason_codes_draft.json": "40cb925082d26e4c1fececbe24ff1a7540180491bb8994e973cd935b14c1a2b9",
+    "checklist_draft.json": "89f9b5b682580a25fd9ecf9b3b304e3a7cc84e1eee0ed3d1fcad48c4528e590a",
+    "reason_codes_draft.json": "8db7384ce67e496aeaa00441d69eaf032abd1a9ad6caaed8e03044a87da45ae4",
+    "review_examples.json": "21e827229e19dbb6b67f161eee210e4331af36a54b76b765bf5c05c6d9c67f32",
+    "reason_code_examples.json": "d9b826ce41db2fb4e247df5de0d66cc8983ccb868482a7452258c52f5f4f84ea",
+    "chapter2_review_cases.json": "9a77861427575588562380300c896d3ba72b58af6660e7416236f4592a0cdfb9",
+    "verify_chapter2_review_flow.py": "8d25be858ddeabb247003f33292bf2c1e3f88d914423f6beb517e6e6a401e4f2"
+  },
+  "sources_unchanged": true,
+  "temporary_database_only": true,
+  "control_count": 64,
+  "item_count": 700,
+  "representative_case_count": 9,
+  "controls": [
+    {
+      "control_id": "2.1.1",
+      "item_count": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.1.2",
+      "item_count": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.1.3",
+      "item_count": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.1",
+      "item_count": 8,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.2",
+      "item_count": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.3",
+      "item_count": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.4",
+      "item_count": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.5",
+      "item_count": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.6",
+      "item_count": 3,
+      "passed": true
+    },
+    {
+      "control_id": "2.3.1",
+      "item_count": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.3.2",
+      "item_count": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.3.3",
+      "item_count": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.3.4",
+      "item_count": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.1",
+      "item_count": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.2",
+      "item_count": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.3",
+      "item_count": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.4",
+      "item_count": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.5",
+      "item_count": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.6",
+      "item_count": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.7",
+      "item_count": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.1",
+      "item_count": 20,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.2",
+      "item_count": 10,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.3",
+      "item_count": 14,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.4",
+      "item_count": 22,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.5",
+      "item_count": 19,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.6",
+      "item_count": 14,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.1",
+      "item_count": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.2",
+      "item_count": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.3",
+      "item_count": 13,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.4",
+      "item_count": 10,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.5",
+      "item_count": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.6",
+      "item_count": 19,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.7",
+      "item_count": 14,
+      "passed": true
+    },
+    {
+      "control_id": "2.7.1",
+      "item_count": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.7.2",
+      "item_count": 16,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.1",
+      "item_count": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.2",
+      "item_count": 18,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.3",
+      "item_count": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.4",
+      "item_count": 8,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.5",
+      "item_count": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.6",
+      "item_count": 8,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.1",
+      "item_count": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.2",
+      "item_count": 25,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.3",
+      "item_count": 20,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.4",
+      "item_count": 19,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.5",
+      "item_count": 14,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.6",
+      "item_count": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.7",
+      "item_count": 16,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.1",
+      "item_count": 18,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.2",
+      "item_count": 13,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.3",
+      "item_count": 13,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.4",
+      "item_count": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.5",
+      "item_count": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.6",
+      "item_count": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.7",
+      "item_count": 10,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.8",
+      "item_count": 15,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.9",
+      "item_count": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.1",
+      "item_count": 8,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.2",
+      "item_count": 15,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.3",
+      "item_count": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.4",
+      "item_count": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.5",
+      "item_count": 15,
+      "passed": true
+    },
+    {
+      "control_id": "2.12.1",
+      "item_count": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.12.2",
+      "item_count": 6,
+      "passed": true
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "2.1.1-MET",
+      "item_id": "2.1.1-Q01",
+      "fixed_result": "MET",
+      "passed": true,
+      "fabricated_quote_rejected": true
+    },
+    {
+      "case_id": "2.1.1-NOT_MET",
+      "item_id": "2.1.1-Q01",
+      "fixed_result": "NOT_MET",
+      "passed": true,
+      "fabricated_quote_rejected": true
+    },
+    {
+      "case_id": "2.1.1-UNKNOWN",
+      "item_id": "2.1.1-Q01",
+      "fixed_result": "UNKNOWN",
+      "passed": true,
+      "fabricated_quote_rejected": null
+    },
+    {
+      "case_id": "2.4.1-MET",
+      "item_id": "2.4.1-Q02",
+      "fixed_result": "MET",
+      "passed": true,
+      "fabricated_quote_rejected": true
+    },
+    {
+      "case_id": "2.4.1-NOT_MET",
+      "item_id": "2.4.1-Q02",
+      "fixed_result": "NOT_MET",
+      "passed": true,
+      "fabricated_quote_rejected": true
+    },
+    {
+      "case_id": "2.4.1-UNKNOWN",
+      "item_id": "2.4.1-Q02",
+      "fixed_result": "UNKNOWN",
+      "passed": true,
+      "fabricated_quote_rejected": null
+    },
+    {
+      "case_id": "2.10.1-MET",
+      "item_id": "2.10.1-Q03",
+      "fixed_result": "MET",
+      "passed": true,
+      "fabricated_quote_rejected": true
+    },
+    {
+      "case_id": "2.10.1-NOT_MET",
+      "item_id": "2.10.1-Q03",
+      "fixed_result": "NOT_MET",
+      "passed": true,
+      "fabricated_quote_rejected": true
+    },
+    {
+      "case_id": "2.10.1-UNKNOWN",
+      "item_id": "2.10.1-Q03",
+      "fixed_result": "UNKNOWN",
+      "passed": true,
+      "fabricated_quote_rejected": null
+    }
+  ],
+  "limits": [
+    "700문항은 자료 부족 UNKNOWN 고정 응답의 구조 연결만 검사했다.",
+    "대표 사례의 정답은 팀 미승인 초안이다. 문항 전체의 의미 정확도나 모델 성능을 검증하지 않았다.",
+    "critical·종합 등급·운영 승인·Phase2 LLM 호출은 포함하지 않는다."
+  ]
+}

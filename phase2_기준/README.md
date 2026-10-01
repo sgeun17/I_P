@@ -2,6 +2,18 @@
 
 WBS의 Phase2 기준 작업은 이 디렉토리에서 관리한다. 기본 연결 버전은 `phase2-checklist-draft-2026-09-28`이며, **통제항목 3개·활성 질문 54개·퇴역 질문 3개**를 담은 팀 검수용 초안이다. 별도의 2장 전체 초안은 **64개 항목·700문항**으로 확장했다. 이전 첫 묶음 13개·210문항도 보존했다. 모두 `approved=false`, `critical=null`을 유지한다.
 
+## 10/1 기존 적용 조건 검토 (r3)
+
+[기존 조건 440문항 검토](reports/existing_applicability_review_2026-10-01.md): 40문항의 조건을 보완하고 397문항을 유지했으며 3문항의 범위 해석 확인사항을 남겼다. 전체 700문항 중 조건 명시 480문항은 유지된다. 절차·통제가 이미 준비돼 있어야 검사한다는 전제를 보완하고 절차 준비와 실제 사건 검사의 범위를 구분했다. `met`·`not_met`·`unknown` 내용 검토는 보류했으며 질문·ID·판정 기준은 유지했다. 현재 전체 체크리스트·전용 카탈로그는 `-r3`다. 이전 보고서는 해당 버전 당시 기록이다.
+
+[현재 연결 검사](reports/chapter2_review_flow_2026-10-01-r3.json)를 참조한다.
+
+## 10/1 적용 조건 보완 (r2)
+
+적용 조건이 없던 260문항을 검토하여 40문항에 기존 `applicability_condition`을 채웠다. 현재 조건 명시 480문항, 미명시 220문항이다. 질문·ID·충족/미충족/판단불가 기준과 critical은 그대로 유지했다. 수행 의무가 도래했지만 미수행한 회차도 검사 대상에 포함하며, 사건 미발생·기한 미도래를 자동 충족 처리하지 않는다. 전체 체크리스트와 전용 카탈로그는 `-r2` 버전으로 연결한다. 이전 검증 보고서는 당시 버전의 기록이다.
+
+[반영 및 연결 검증](reports/applicability_condition_applied_2026-10-01.json) · [r2 전체 연결 검사](reports/chapter2_review_flow_2026-10-01-r2.json)
+
 ## 10/1 전체 700문항 검수 입력·사유 코드 연결
 
 전체 버전을 명시적으로 선택하면 **64개 항목·700문항**을 Phase1 확정 결과의 ID와 연결해 검수 입력을 만들고 제공된 응답을 검사할 수 있다. 기본 카탈로그와 기존 54문항 연결은 유지한다. 아래 이전 작업 기록의 “새 버전 사유 코드·판단 입력 연결 미완료”는 이번에 검수 경로에 한해 보완했다. 실제 Phase2 LLM 호출·운영 승인·전체 문항 정답 검수는 남아 있다.
@@ -20,7 +32,7 @@ store = ChecklistStore(Path("data/chapter2_review.sqlite3"))
 store.import_draft(Path("chapter2_full_checklist_draft.json"))
 catalog = ReasonCatalog(Path("chapter2_reason_codes_draft.json"))
 request = prepare_judgment_review(
-    phase1_result, store, "phase2-checklist-chapter2-full-draft-2026-10-01",
+    phase1_result, store, "phase2-checklist-chapter2-full-draft-2026-10-01-r3",
     chunks, catalog=catalog, allow_draft=True,
 )
 checked = check_review_output(
