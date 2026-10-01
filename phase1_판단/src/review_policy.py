@@ -51,16 +51,26 @@ PRIMARY_COUNT_WHEN_MATCHED = 1   # MATCHED면 PRIMARY는 정확히 1개
 
 @dataclass(frozen=True)
 class Thresholds:
-    profile_name: str = "thresholds_v0.4"
+    profile_name: str = "thresholds_v0.5"
 
     # `llm_confidence`의 뜻을 규칙으로 정의했기 때문에 이 값에 근거가 생겼다
-    # (mapping_rules 2.2). 0.70은 구간 경계다.
+    # (mapping_rules 2.2). 구간 경계다.
     #
-    #   0.70 이상  관련이 분명하다
-    #   0.70 미만  다른 통제항목으로도 읽힌다  ← 여기부터 사람이 본다
+    # qwen3:4b / phase1_mapping_v0.5 실측 (골든셋 26건, 2026-10-01):
+    #   0.70 → 한 건도 발동하지 않는다. 4b가 0.70 미만을 거의 쓰지 않는다.
+    #   0.85 →  1건
+    #   0.90 → 12건 (오답 5건 포함)
+    #   0.93 → 23건 (오답 6건). 1건 더 잡으려고 헛걸음이 10건 는다.
     #
-    # 정의가 프롬프트에 들어간 뒤 실제 분포를 보고 다시 조정한다.
-    low_confidence: float = 0.70
+    # **4b는 틀릴 때 0.85를 쓴다. 오답 5건 전부에 0.85가 들어 있다.**
+    # 그래서 0.90으로 올린다.
+    #
+    # 지금은 E505(적정성 판정 검출)가 같은 사례를 먼저 잡고 있어 중복이다.
+    # 다만 E505는 프롬프트 수정으로 사라질 예정이고, 그때 이 값이 유일한
+    # 방어선이 된다. 사라진 뒤 G-SINGLE-01이 유출되는 것을 막는다.
+    #
+    # 다시 볼 때: 프롬프트 버전이 바뀌거나 모델이 바뀌면 분포가 달라진다.
+    low_confidence: float = 0.90
 
     # BGE-M3 실측: 관련 있어도 0.5~0.6에 몰리고, 무관한 항목도 0.49가 나온다.
     #
@@ -76,8 +86,16 @@ class Thresholds:
 
     min_chunk_length: int = 30         # 청크가 이보다 짧으면 판단 근거가 부족하다고 본다
 
-    # 결과 유형 자체를 검토로 보낼지 (초기에는 켜두고, 검토량을 보고 끈다)
-    review_on_no_match: bool = True
+    # 결과 유형 자체를 검토로 보낼지.
+    #
+    # R204(NO_MATCH)는 끈다. human_review_policy 2장에 "정확도가 안정되면
+    # R204부터 끄고 그다음 R205를 본다"고 적어뒀고, 조건이 충족됐다.
+    #   qwen3:4b 실측 미탐률 0.0% — 모델이 NO_MATCH라고 한 건 전부 맞았다.
+    #   끄면 검토율 77% -> 58%, 유출은 0 그대로다.
+    #
+    # R205(1:N)는 유지한다. multi_mapping 6건 중 EM 67%로 아직 틀리고,
+    # 오답 5건 중 3건에서 R205가 유일한 백업이다.
+    review_on_no_match: bool = False
     review_on_multi_mapping: bool = True
 
 

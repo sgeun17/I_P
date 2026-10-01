@@ -502,8 +502,8 @@ add(
     expected={
         "match_status": "NO_MATCH",
         "controls": [],
-        "review_required": True,
-        "review_reasons": ["R204"],
+        "review_required": False,
+        "review_reasons": [],
     },
     note="후보 5개가 그대로 나오지만 전부 무관하다. Retriever는 '없다'고 말하지 못한다.",
 )
@@ -520,8 +520,8 @@ add(
     expected={
         "match_status": "NO_MATCH",
         "controls": [],
-        "review_required": True,
-        "review_reasons": ["R204"],
+        "review_required": False,
+        "review_reasons": [],
     },
 )
 
@@ -538,7 +538,7 @@ add(
         "match_status": "NO_MATCH",
         "controls": [],
         "review_required": True,
-        "review_reasons": ["R204"],
+        "review_reasons": ["R202"],
     },
 )
 
@@ -560,10 +560,11 @@ add(
     expected={
         "match_status": "NO_MATCH",
         "controls": [],
-        "review_required": True,
-        "review_reasons": ["R204"],
+        "review_required": False,
+        "review_reasons": [],
     },
-    note="'계정'이 겹쳐 2.5.1이 1위로 올라오지만 정보시스템 계정이 아니다. 점수만 보면 구분할 수 없다.",
+    note="'계정'이 겹쳐 2.5.1이 1위로 올라오지만 정보시스템 계정이 아니다. 점수만 보면 구분할 수 없다."
+         "R204를 끈 뒤로는 자동확정된다. 1위 점수가 high_similarity(0.55)를 간신히 밑돌아 R206도 안 잡는다. 검색팀이 실제 점수를 주면 0.55를 다시 본다.",
 )
 
 e = ev(132, "당직_백업근무자_지정표.xlsx")
@@ -580,10 +581,11 @@ add(
     expected={
         "match_status": "NO_MATCH",
         "controls": [],
-        "review_required": True,
-        "review_reasons": ["R204"],
+        "review_required": False,
+        "review_reasons": [],
     },
-    note="'백업'이 데이터 백업이 아니라 대체 근무자를 뜻한다.",
+    note="'백업'이 데이터 백업이 아니라 대체 근무자를 뜻한다."
+         "R204를 끈 뒤로는 자동확정된다. 1위 점수가 high_similarity(0.55)를 간신히 밑돌아 R206도 안 잡는다. 검색팀이 실제 점수를 주면 0.55를 다시 본다.",
 )
 
 e = ev(133, "신입사원_네트워크_교육안내.pptx")
@@ -598,8 +600,8 @@ add(
     expected={
         "match_status": "NO_MATCH",
         "controls": [],
-        "review_required": True,
-        "review_reasons": ["R204"],
+        "review_required": False,
+        "review_reasons": [],
     },
 )
 
@@ -620,7 +622,7 @@ add(
         "controls": [],
         "uncertain_ids": ["2.6.2", "2.5.1"],
         "review_required": True,
-        "review_reasons": ["R107", "R204", "R208"],
+        "review_reasons": ["R107", "R206", "R208"],
     },
     note="제목은 접근통제지만 본문이 없어 무엇을 하는지 알 수 없다. 청크가 짧아 R208도 걸린다.",
 )
@@ -639,7 +641,7 @@ add(
         "controls": [],
         "uncertain_ids": ["2.11.2"],
         "review_required": True,
-        "review_reasons": ["R107", "R204"],
+        "review_reasons": ["R107"],
     },
     note="무엇을 어떻게 처리했는지가 없다. 근거로 인용할 문장이 없으므로 RELATED로 판단하면 안 된다.",
 )
@@ -658,7 +660,7 @@ add(
         "controls": [],
         "uncertain_ids": ["2.6.1", "2.9.1"],
         "review_required": True,
-        "review_reasons": ["R107", "R204"],
+        "review_reasons": ["R107"],
     },
     note="ACL 수정이 네트워크 접근 통제일 수도 변경관리일 수도 있다. 이 문서만으로는 못 정한다.",
 )

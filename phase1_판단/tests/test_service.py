@@ -1,8 +1,10 @@
 """파싱 → 검증 → 검토 전환 → 최종 결과 조립."""
 
 import json
+from dataclasses import replace
 
 from enums import ErrorCode, MatchStatus, ProcessingStatus, ReviewStatus
+from review_policy import DEFAULT_THRESHOLDS
 from service import build_result, detect_injection
 
 from conftest import GOOD_RESPONSE, make_chunk
@@ -86,7 +88,14 @@ def test_no_match_결과(mapping_input, versions):
     assert result.processing_status == ProcessingStatus.COMPLETED
     assert result.match_status == MatchStatus.NO_MATCH
     assert result.validation.passed
-    assert "R204" in reasons(result), "초기에는 NO_MATCH도 검토로 보낸다"
+    assert "R204" not in reasons(result), \
+        "thresholds_v0.5부터 NO_MATCH라는 사실만으로는 검토로 보내지 않는다"
+
+    # 스위치가 살아 있는지 같이 본다. 정확도가 흔들리면 다시 켜야 하기 때문이다.
+    back_on = replace(DEFAULT_THRESHOLDS, review_on_no_match=True)
+    result_on = build_result(json.dumps(data, ensure_ascii=False), mapping_input,
+                             versions, thresholds=back_on)
+    assert "R204" in reasons(result_on), "스위치를 다시 켜면 R204가 돌아온다"
 
 
 def test_uncertain은_무조건_검토(mapping_input, versions):
