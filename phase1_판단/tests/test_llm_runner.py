@@ -48,7 +48,8 @@ def test_runner_retries_call_error_with_retry_prompt(mapping_input, good_respons
     finally:
         client.close()
 
-    assert result.raw_response == good_response
+    assert json.loads(result.raw_response) == json.loads(good_response)
+    assert result.provider_raw_response == good_response
     assert result.call_error is None
     assert result.attempts == 2
     assert result.retry_count == 1
@@ -80,7 +81,8 @@ def test_runner_retries_json_parse_error_with_retry_prompt(mapping_input, good_r
     finally:
         client.close()
 
-    assert result.raw_response == good_response
+    assert json.loads(result.raw_response) == json.loads(good_response)
+    assert result.provider_raw_response == good_response
     assert result.attempts == 2
     assert result.retry_count == 1
     assert "E201" in calls[1]["messages"][1]["content"]
@@ -133,6 +135,85 @@ def test_runner_does_not_retry_http_4xx_without_common_error_code(mapping_input)
     assert result.call_error is None
     assert result.has_unmapped_request_error is True
     assert result.request_error_status == 404
+
+
+
+def test_runner_derives_no_match_when_all_candidates_are_not_related(mapping_input):
+    content = json.dumps(
+        {
+            "candidate_decisions": [
+                {
+                    "control_id": c.control_id,
+                    "decision": "NOT_RELATED",
+                    "llm_confidence": 0.95,
+                    "reason": "증적에 이 후보의 고유 활동이 나타나지 않는다.",
+                    "citations": [],
+                }
+                for c in mapping_input.candidate_controls
+            ],
+            "mapped_controls": [],
+        },
+        ensure_ascii=False,
+    )
+
+    seen_schema = {}
+
+    def handler(request: httpx.Request):
+        body = json.loads(request.content)
+        seen_schema.update(body["response_format"]["json_schema"]["schema"])
+        return httpx.Response(200, json=_completion(content))
+
+    client = _client(handler)
+    try:
+        result = run_mapping_llm(
+            mapping_input,
+            model="qwen3:8b",
+            http_client=client,
+            sleeper=lambda _: None,
+        )
+    finally:
+        client.close()
+
+    parsed = json.loads(result.raw_response)
+    assert parsed["match_status"] == "NO_MATCH"
+    assert "match_status" not in json.loads(result.provider_raw_response)
+    assert "match_status" not in seen_schema["properties"]
+    assert "match_status" not in seen_schema["required"]
+
+
+def test_runner_overwrites_model_match_status_with_candidate_decisions(mapping_input):
+    # 혹시 모델이 Schema 밖 필드인 match_status를 임의로 출력해도 파생값이 우선한다.
+    content = json.dumps(
+        {
+            "match_status": "MATCHED",
+            "candidate_decisions": [
+                {
+                    "control_id": c.control_id,
+                    "decision": "NOT_RELATED",
+                    "llm_confidence": 0.95,
+                    "reason": "증적에 이 후보의 고유 활동이 나타나지 않는다.",
+                    "citations": [],
+                }
+                for c in mapping_input.candidate_controls
+            ],
+            "mapped_controls": [],
+        },
+        ensure_ascii=False,
+    )
+
+    client = _client(lambda request: httpx.Response(200, json=_completion(content)))
+    try:
+        result = run_mapping_llm(
+            mapping_input,
+            model="qwen3:8b",
+            http_client=client,
+            sleeper=lambda _: None,
+        )
+    finally:
+        client.close()
+
+    assert json.loads(result.raw_response)["match_status"] == "NO_MATCH"
+    assert result.last_issue_codes == ()
 
 
 def test_runner_does_not_retry_non_policy_schema_detail_error(mapping_input):

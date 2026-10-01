@@ -6,7 +6,13 @@ import pytest
 
 from enums import ErrorCode
 from models import LLMMappingOutput, SCHEMA_VERSION
-from prompts import PROMPT_VERSION, RULESET_VERSION, build_prompt_package, get_output_schema
+from prompts import (
+    PROMPT_VERSION,
+    RULESET_VERSION,
+    build_prompt_package,
+    get_generation_schema,
+    get_output_schema,
+)
 from retrieval_adapter import RetrievalAdapterError, mapping_input_from_retriever
 from retry_prompt import RetryPromptError, build_retry_package
 from versions import build_version_info
@@ -91,26 +97,44 @@ def test_prompt_uses_actual_chunks_requirements_but_hides_retrieval_scores():
     assert "<candidates>" in package.user
 
 
-def test_schema_is_generated_from_same_pydantic_model_as_validator():
+def test_final_schema_still_comes_from_same_pydantic_model_as_validator():
     generated = get_output_schema()
     checked_in = json.loads(SCHEMA_FILE.read_text(encoding="utf-8"))
 
     assert generated == checked_in
     assert generated["title"] == "LLMMappingOutput"
-    # Check the actual runtime source of truth, not a hand-maintained duplicate.
+    # 최종 저장/Validator 계약의 Source of Truth는 계속 Pydantic이다.
     assert LLMMappingOutput.model_json_schema()["title"] == "LLMMappingOutput"
 
 
-def test_prompt_contains_current_v07_rules_v05_citation_guidance_and_confidence_definition():
+def test_generation_schema_omits_only_derived_match_status():
+    final_schema = get_output_schema()
+    generation_schema = get_generation_schema()
+
+    assert "match_status" in final_schema["properties"]
+    assert "match_status" in final_schema["required"]
+
+    assert "match_status" not in generation_schema["properties"]
+    assert "match_status" not in generation_schema["required"]
+    assert generation_schema["title"] == "LLMMappingGenerationOutput"
+
+    # 나머지 핵심 출력 구조는 최종 Pydantic 계약과 동일하다.
+    assert generation_schema["properties"]["candidate_decisions"] == final_schema["properties"]["candidate_decisions"]
+    assert generation_schema["properties"]["mapped_controls"] == final_schema["properties"]["mapped_controls"]
+
+
+def test_prompt_contains_current_v07_rules_v06_boundary_adequacy_and_confidence_guidance():
     mapping = mapping_input_from_retriever(_retriever_payload())
     package = build_prompt_package(mapping)
 
     system = package.system
-    assert package.prompt_version == "phase1_mapping_v0.5"
+    assert package.prompt_version == "phase1_mapping_v0.6"
     assert package.ruleset_version == "mapping_rules_v0.7"
-    assert PROMPT_VERSION == "phase1_mapping_v0.5"
+    assert PROMPT_VERSION == "phase1_mapping_v0.6"
     assert RULESET_VERSION == "mapping_rules_v0.7"
     assert "UNCERTAIN" in system
+    assert "match_status는 출력하지 않는다" in system
+    assert "시스템이 candidate_decisions를 보고 결정한다" in system
     assert "10자 이상" in system
     assert "적정/미흡" in system
     assert "정확도, 정답 확률" in system
@@ -120,13 +144,26 @@ def test_prompt_contains_current_v07_rules_v05_citation_guidance_and_confidence_
     # v0.7: PRIMARY 선택이 애매해도 이미 확인된 RELATED를 지우지 않는다.
     assert "RELATED 판단은 그대로 둔다" in system
     assert "UNCERTAIN으로 되돌리지 않는다" in system
-    # v0.5: Citation 필드를 항상 출력하고 페이지형/비페이지형 규칙을 명확히 한다.
+    # v0.5에서 들어간 Citation 규칙은 v0.6에서도 유지한다.
     assert "모든 citation 객체는 chunk_id, page, quote 세 필드를 항상 출력" in system
     assert "page_start <= page <= page_end를 만족하는 정수 page를 반드시 출력" in system
     assert "page_start/page_end가 null인 청크만 page=null" in system
     assert "원문을 따옴표로 다시 인용하지 않는다" in system
+    # v0.6: 키워드 함정/후보 경계, Phase 2 적정성 표현, confidence 상승을 함께 방어한다.
+    assert "공통 키워드를 제거해도 이 후보의 고유한 대상 활동" in system
+    assert "다른 후보가 더 눈에 띈다는 이유만으로" in system
+    assert "요구사항을 충족한다/충족시킨다/만족한다" in system
+    assert "요구사항을 충족한다'라고 쓰지 않는다" in system
+    assert "문장을 reason에 복사한 뒤 한 줄 설명만 덧붙이는 방식도 금지" in system
+    assert "RELATED인데 유효한 원문 citation을 하나도 제시할 수 없다면 RELATED로 출력하지 않는다" in system
+    assert "먼저 UNCERTAIN이 더 맞는지 검토" in system
+    assert "PRIMARY만 애매한 것은 UNCERTAIN 사유가 아니다" in system
+    assert "0.90 이상을 사용하지 않는다" in system
+    assert "Prompt 문구가 더 명확해졌다는 사실 자체는 confidence를 올릴 근거가 아니다" in system
 
     schema = package.output_schema
+    assert "match_status" not in schema["properties"]
+    assert "match_status" not in schema["required"]
     citation_schema = schema["$defs"]["Citation"]
     assert "page" in citation_schema["required"]
     assert set(citation_schema["required"]) == {"chunk_id", "page", "quote"}

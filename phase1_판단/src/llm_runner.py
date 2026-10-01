@@ -10,6 +10,7 @@ Validator/Human Review 로직 자체는 수정하지 않는다.
 """
 from __future__ import annotations
 
+import json
 import time
 from dataclasses import dataclass
 from typing import Callable
@@ -20,7 +21,7 @@ from enums import ErrorCode
 from llm_client import LLMCallError, LLMRequestRejectedError, call_llm
 from llm_config import ContextBudgetConfig, GenerationConfig, LLMClientConfig, TokenCounter
 from models import MappingInput, ValidationIssue
-from output_parser import parse_llm_output
+from output_parser import extract_json_text, parse_llm_output
 from prompts import PromptPackage, build_prompt_package
 from retry_prompt import RetryPromptError, build_retry_package
 from review_policy import DEFAULT_RETRY_POLICY, RetryPolicy
@@ -32,6 +33,8 @@ class LLMRunResult:
     call_error: ErrorCode | None
     attempts: int
     retry_count: int
+    # match_status 파생 전, provider가 실제로 반환한 content. 실험/감사용.
+    provider_raw_response: str | None = None
     last_issue_codes: tuple[ErrorCode, ...] = ()
     request_error_status: int | None = None
     request_error_message: str | None = None
@@ -52,6 +55,40 @@ def _retryable_issues(
     retry_number: int,
 ) -> bool:
     return bool(issues) and all(policy.should_retry(i.code, retry_number) for i in issues)
+
+
+def _inject_derived_match_status(raw: str) -> str:
+    """candidate_decisions에서 match_status를 결정해 최종 계약에 채운다.
+
+    match_status는 모델 판단값이 아니라 파생값이다.
+      - RELATED가 하나라도 있으면 MATCHED
+      - RELATED가 하나도 없으면 NO_MATCH
+
+    JSON 자체가 깨졌거나 candidate_decisions가 배열이 아니면 손대지 않고
+    기존 Parser가 정상적으로 오류를 보고하게 한다.
+    """
+    json_text = extract_json_text(raw)
+    if json_text is None:
+        return raw
+
+    try:
+        data = json.loads(json_text)
+    except json.JSONDecodeError:
+        return raw
+
+    if not isinstance(data, dict):
+        return raw
+
+    decisions = data.get("candidate_decisions")
+    if not isinstance(decisions, list):
+        return raw
+
+    has_related = any(
+        isinstance(item, dict) and item.get("decision") == "RELATED"
+        for item in decisions
+    )
+    data["match_status"] = "MATCHED" if has_related else "NO_MATCH"
+    return json.dumps(data, ensure_ascii=False, separators=(",", ":"))
 
 
 def run_mapping_llm(
@@ -140,13 +177,17 @@ def run_mapping_llm(
                 last_issue_codes=last_codes,
             )
 
-        output, parse_issues = parse_llm_output(raw)
+        # match_status는 모델에게 생성시키지 않는다. candidate_decisions를 기준으로
+        # 런타임에서 결정한 뒤 기존 Parser/Validator 계약에 맞춘다.
+        normalized_raw = _inject_derived_match_status(raw)
+        output, parse_issues = parse_llm_output(normalized_raw)
         if output is not None:
             return LLMRunResult(
-                raw_response=raw,
+                raw_response=normalized_raw,
                 call_error=None,
                 attempts=attempts,
                 retry_count=retry_count,
+                provider_raw_response=raw,
                 last_issue_codes=(),
             )
 
@@ -172,11 +213,12 @@ def run_mapping_llm(
                     sleeper(retry_policy.backoff_seconds)
                 continue
 
-        # E203~E205 등 정책상 재시도하지 않는 출력 오류는 raw를 그대로 Service/Validator로 넘긴다.
+        # E203~E205 등 정책상 재시도하지 않는 출력 오류는 match_status 파생만 적용한 응답을 넘긴다.
         return LLMRunResult(
-            raw_response=raw,
+            raw_response=normalized_raw,
             call_error=None,
             attempts=attempts,
             retry_count=retry_count,
+            provider_raw_response=raw,
             last_issue_codes=last_codes,
         )
