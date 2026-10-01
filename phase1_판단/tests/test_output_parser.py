@@ -99,6 +99,24 @@ def test_본문_속_중괄호가_파싱을_깨지_않는다():
     assert not issues and output is not None
 
 
+def test_citations_생략은_허용한다():
+    """프롬프트는 `citations: []`를 요구하지만 생략해도 받아준다.
+
+    모델이 인용 없는 후보에서 필드를 자주 빼먹는다. "인용이 없다"와
+    "필드를 안 썼다"를 구분해서 얻을 것이 없어 빈 배열로 받기로 했다.
+    (검색팀 2026-10-01 전달 J-LLM-05 — 판단팀 결정)
+
+    형식 단계의 허용일 뿐이다. 매핑해놓고 인용이 없으면 Validator가 E401로 잡는다.
+    """
+    data = json.loads(GOOD_RESPONSE)
+    for decision in data["candidate_decisions"]:
+        decision.pop("citations", None)
+
+    output, issues = parse_llm_output(json.dumps(data, ensure_ascii=False))
+    assert not issues and output is not None
+    assert all(d.citations == [] for d in output.candidate_decisions)
+
+
 def test_extract_json_text는_객체만_잘라낸다():
     assert extract_json_text('앞 {"a": 1} 뒤') == '{"a": 1}'
     assert extract_json_text("괄호 없음") is None

@@ -229,6 +229,12 @@ class CandidateDecision(Base):
     decision: Decision
     llm_confidence: float = Field(ge=0.0, le=1.0)
     reason: str = Field(min_length=1)
+
+    # 프롬프트는 인용이 없어도 `citations: []`를 쓰라고 요구한다. 그런데 모델이
+    # 필드를 통째로 빼는 일이 잦다(qwen3:4b 측정에서 후보 8개). 기본값으로 받는다.
+    # "인용이 없다"와 "필드를 안 썼다"를 구분해서 얻을 것이 없고, 여기서 막으면
+    # 판단 품질과 무관한 재시도만 늘어난다.
+    # (검색팀 2026-10-01 전달 J-LLM-05 — 판단팀 결정: 생략 허용)
     citations: list[Citation] = Field(default_factory=list)
 
 
@@ -240,6 +246,9 @@ class LLMMappedControl(Base):
     relation: Relation
     llm_confidence: float = Field(ge=0.0, le=1.0)
     reason: str = Field(min_length=1)
+
+    # 생략은 **형식 단계에서만** 허용한다(위 주석). 매핑을 해놓고 인용이 없으면
+    # Validator가 E401로 잡는다. 형식 검사와 내용 검사는 다른 단계다.
     citations: list[Citation] = Field(default_factory=list)
 
 

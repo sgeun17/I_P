@@ -29,6 +29,8 @@
     "citation_valid_rate": 0.9259259259259259,
     "invalid_output_rate": 0.038461538461538464,
     "review_required_rate": 0.6153846153846154,
+    "reason_warning_rate": 0.6923076923076923,
+    "reason_warning_total": 44,
     "avg_processing_time_ms": 49529.96153846154,
     "by_category": {
       "false_citation": {

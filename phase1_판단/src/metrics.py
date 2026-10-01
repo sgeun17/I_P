@@ -23,7 +23,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Iterable, Optional
 
-from enums import Decision, MatchStatus, ProcessingStatus, Relation
+from enums import Decision, ErrorCode, MatchStatus, ProcessingStatus, Relation
 from models import Phase1MappingResult
 
 
@@ -69,6 +69,7 @@ class CaseOutcome:
     citation_valid: int
     review_required: bool
     has_uncertain: bool = False
+    reason_warnings: int = 0          # E506·E507. 검증 실패가 아니라 경고다
     processing_time_ms: Optional[int] = None
 
     @property
@@ -117,6 +118,15 @@ def make_outcome(case: dict, result: Phase1MappingResult) -> CaseOutcome:
         has_uncertain=any(
             d.decision == Decision.UNCERTAIN for d in result.candidate_decisions
         ),
+        # E506·E507은 issues가 아니라 **warnings**에 담긴다.
+        # ValidationResult가 둘을 나눠 두었다 — issues는 "결과가 틀렸다",
+        # warnings는 "결과는 유효하지만 근거 품질에 개선점이 있다".
+        # issues에서 세면 항상 0이 나온다.
+        reason_warnings=sum(
+            1
+            for w in result.validation.warnings
+            if w.code in (ErrorCode.REASON_TOO_SHORT, ErrorCode.REASON_NOT_SPECIFIC)
+        ),
         processing_time_ms=result.processing_time_ms,
     )
 
@@ -150,6 +160,12 @@ class Metrics:
     citation_valid_rate: float = 0.0
     invalid_output_rate: float = 0.0
     review_required_rate: float = 0.0
+
+    # reason 작성 품질 경고(E506·E507). **검증 실패가 아니다.**
+    # 판정이 틀린 것이 아니라 근거가 읽기 나쁜 것이라 검토로 보내지 않는다.
+    # 프롬프트를 고치면 줄어야 하는 값이므로 따로 센다.
+    reason_warning_rate: float = 0.0    # 경고가 하나라도 있는 사례의 비율
+    reason_warning_total: int = 0       # 경고 총 건수
     avg_processing_time_ms: Optional[float] = None
 
     by_category: dict[str, dict[str, Optional[float]]] = field(default_factory=dict)
@@ -256,6 +272,8 @@ def compute(
     m.citation_valid_rate = _safe(sum(o.citation_valid for o in rows), cit_total)
     m.invalid_output_rate = _safe(sum(1 for o in rows if not o.parsed), len(rows))
     m.review_required_rate = _safe(sum(1 for o in rows if o.review_required), len(rows))
+    m.reason_warning_total = sum(o.reason_warnings for o in rows)
+    m.reason_warning_rate = _safe(sum(1 for o in rows if o.reason_warnings), len(rows))
 
     times = [o.processing_time_ms for o in rows if o.processing_time_ms is not None]
     m.avg_processing_time_ms = _safe(sum(times), len(times)) if times else None
@@ -307,6 +325,8 @@ def format_report(m: Metrics, title: str = "Phase 1 판단 평가") -> str:
         f"  Citation 유효율       {m.citation_valid_rate:6.1%}",
         f"  출력 실패율           {m.invalid_output_rate:6.1%}   (파싱·스키마 실패)",
         f"  검토 전환율           {m.review_required_rate:6.1%}",
+        f"  reason 경고율         {m.reason_warning_rate:6.1%}   "
+        f"(E506·E507 {m.reason_warning_total}건 — 검증 실패 아님)",
     ]
     if m.avg_processing_time_ms is not None:
         lines.append(f"  평균 처리시간         {m.avg_processing_time_ms:6.0f} ms")
