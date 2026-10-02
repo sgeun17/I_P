@@ -9,6 +9,10 @@ parser_dispatcher.py : 파일 형식을 보고 알맞은 파서를 골라 실행
 
 돌려주는 값은 형식과 상관없이 항상 같은 모양이에요.
     {"source_file": ..., "file_type": ..., "page_count": ..., "blocks": [...], "errors": [...]}
+
+[수정 2026-10-02]
+  - png·jpg 를 ocr_parser 로 연결 (GitHub 최신본과 동일. 이 PC 는 easyocr_test 로 돼 있었음)
+  - 글자가 하나도 안 나온 PDF(스캔본)는 페이지를 이미지로 바꿔 OCR 합니다. (1회차 시험 2건 실패 원인)
 """
 
 import importlib
@@ -26,9 +30,12 @@ PARSERS = {
     "pptx": ("pptx_test",     "pptx_parser",  ["parse_pptx"]),
     "txt":  ("txt_csv_test",  "text_parser",  ["parse_text"]),
     "csv":  ("txt_csv_test",  "text_parser",  ["parse_text"]),
-    "png":  ("",              "ocr_parser",   ["parse_image"]),
-    "jpg":  ("",              "ocr_parser",   ["parse_image"]),
+    "png":  ("",              "ocr_parser",   ["parse_image"]),   # [수정] easyocr_test → ocr_parser
+    "jpg":  ("",              "ocr_parser",   ["parse_image"]),   # [수정] easyocr_test → ocr_parser
 }
+
+OCR_PDF_DPI = 300        # [추가] 스캔 PDF 를 이미지로 바꿀 해상도 (A4 가로 약 2480px)
+OCR_PDF_MAX_PAGES = 30   # [추가] 페이지당 10~30초라 상한을 둠
 
 
 class UnsupportedFileType(Exception):
@@ -84,7 +91,36 @@ def parse_file(file_path, file_type=None):
     path = Path(file_path)
     if file_type is None:
         file_type = path.suffix.lower().lstrip(".")
-    return get_parser(file_type)(str(path))
+    result = get_parser(file_type)(str(path))                               # [수정] 바로 return 하지 않음
+    if file_type == "pdf" and result.get("errors") == ["empty_document"]:   # [추가] 글자 0개인 PDF만
+        result = _ocr_scanned_pdf(path, result)                             # [추가] OCR 로 다시 시도
+    return result
+
+
+def _ocr_scanned_pdf(path, result):
+    """
+    [추가] 스캔 PDF → 페이지를 이미지로 바꿔 OCR.
+    pdfplumber 에 들어 있는 렌더러를 쓰므로 새로 설치할 것은 없습니다.
+    OCR 블록에는 source="ocr" 이 붙습니다 (판단팀 R207 대상).
+    실패하면 원래 결과(empty_document)를 그대로 돌려줍니다.
+    """
+    import pdfplumber
+    if str(HERE) not in sys.path:
+        sys.path.insert(0, str(HERE))
+    from ocr_parser import ocr_pil
+    blocks = []
+    try:
+        with pdfplumber.open(str(path)) as pdf:
+            for page_no, page in enumerate(pdf.pages[:OCR_PDF_MAX_PAGES], start=1):
+                img = page.to_image(resolution=OCR_PDF_DPI).original
+                blocks += ocr_pil(img, page=page_no)
+    except Exception:
+        return result
+    for order, b in enumerate(blocks, 1):      # 페이지를 이어 붙였으니 순서를 다시 매김
+        b["order"] = order
+    if blocks:
+        result = {**result, "blocks": blocks, "errors": []}
+    return result
 
 
 if __name__ == "__main__":
