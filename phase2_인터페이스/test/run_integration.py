@@ -26,6 +26,7 @@ except ImportError:
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent))   # build_phase2_input.py 는 폴더 위(제품 코드)에 있다
 from build_phase2_input import build, judge_targets, load_checklist_scope  # noqa: E402
 
 
