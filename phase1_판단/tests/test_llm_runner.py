@@ -275,7 +275,11 @@ def test_runner_retries_missing_mapped_controls_then_accepts_repair(mapping_inpu
     retry_prompt = calls[1]["messages"][1]["content"]
     assert "E501" in retry_prompt
     assert "E504" in retry_prompt
-    assert "PRIMARY로" in retry_prompt
+    assert "PRIMARY" in retry_prompt
+    assert "mapping_consistency" in retry_prompt
+    assert "related_control_ids" in retry_prompt
+    assert mapping_input.candidate_controls[0].control_id in retry_prompt
+    assert "mapped_control_ids" in retry_prompt
     assert json.loads(result.provider_raw_response) == json.loads(responses[1])
     assert json.loads(result.raw_response)["match_status"] == "MATCHED"
 
@@ -306,8 +310,14 @@ def test_runner_retries_bad_quote_and_page_then_accepts_repair(mapping_input, go
     retry_prompt = calls[1]["messages"][1]["content"]
     assert "E403" in retry_prompt
     assert "E404" in retry_prompt
-    assert "연속된 문자열" in retry_prompt
+    assert "연속해서 존재하는 문자열" in retry_prompt
     assert "page_start~page_end" in retry_prompt
+    assert "citation_failures" in retry_prompt
+    assert "failed_quote" in retry_prompt
+    assert "원문에 존재하지 않는 변형 인용문" in retry_prompt
+    assert "failed_page" in retry_prompt
+    assert "999" in retry_prompt
+    assert mapping_input.chunks[0].chunk_id in retry_prompt
 
 
 def test_runner_retries_repairable_issue_even_when_e505_is_also_present(mapping_input, good_response):

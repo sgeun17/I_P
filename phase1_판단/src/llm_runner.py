@@ -201,6 +201,7 @@ def run_mapping_llm(
                         repairable,
                         attempt=next_retry_number,
                         policy=retry_policy,
+                        failed_output=output,
                     )
                 except RetryPromptError:
                     pass
