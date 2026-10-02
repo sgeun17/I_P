@@ -1,7 +1,8 @@
 """Validator/호출 오류 후 1회 재출력용 Prompt Builder.
 
 정책 원본은 review_policy.DEFAULT_RETRY_POLICY와 docs/error_codes_v0.1.md다.
-재시도 대상이 아닌 E3xx/E4xx/E5xx를 이 모듈로 억지로 고치지 않는다. 그런 오류는 Human Review로 간다.
+실제 실행에서 확인한 구조(E501/E504)·인용(E403/E404) 생성 오류는 한 번만
+새로 생성하게 하고, E505 같은 판단 경계 문제는 기존대로 Human Review로 보낸다.
 """
 from __future__ import annotations
 
@@ -77,6 +78,24 @@ def build_retry_package(
         indent=2,
     )
 
+    repair_rules = []
+    code_set = set(codes)
+    if code_set & {ErrorCode.PRIMARY_COUNT_INVALID, ErrorCode.MATCHED_WITHOUT_CONTROLS}:
+        repair_rules.append(
+            "- candidate_decisions의 RELATED를 다시 센다. 0개면 mapped_controls=[], "
+            "1개면 그 항목을 PRIMARY로, 2개 이상이면 모두 넣고 PRIMARY를 정확히 1개 지정한다."
+        )
+    if ErrorCode.CITATION_QUOTE_NOT_IN_SOURCE in code_set:
+        repair_rules.append(
+            "- quote를 요약하거나 띄어쓰기를 고치지 말고, 지정한 chunk.text에서 연속된 문자열을 그대로 복사한다."
+        )
+    if ErrorCode.CITATION_PAGE_MISMATCH in code_set:
+        repair_rules.append(
+            "- citation.page는 그 citation.chunk_id의 page_start~page_end 범위 안에서만 고른다. "
+            "페이지가 null인 청크에는 null을 쓴다."
+        )
+    repair_text = "\n".join(repair_rules)
+
     user = base.user + f"""
 
 <retry_context>
@@ -89,6 +108,7 @@ def build_retry_package(
 - output_schema와 enum을 다시 확인한다.
 - 필수 판단 절차를 생략하지 않는다.
 - JSON 외의 설명/코드블록을 출력하지 않는다.
+{repair_text}
 """
 
     return PromptPackage(

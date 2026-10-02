@@ -107,7 +107,10 @@ def test_saved_search_result_reaches_real_judgment_service(
     assert result.versions.prompt_version == PROMPT_VERSION
     assert result.versions.kb_sha256 == search_result["index"]["kb_sha256"]
     assert result.versions.embedding_model_revision is None
-    assert outcome.llm_run.raw_response == raw
+    # raw_response는 시스템이 파생한 match_status가 포함된 정규화 JSON이고,
+    # provider_raw_response가 모델이 실제로 보낸 원문이다.
+    assert json.loads(outcome.llm_run.raw_response) == json.loads(raw)
+    assert outcome.llm_run.provider_raw_response == raw
     assert outcome.llm_run.attempts == 1 and outcome.llm_run.retry_count == 0
     assert outcome.elapsed_ms >= 0 and result.processing_time_ms == outcome.elapsed_ms
     assert outcome.evidence_status == EvidenceStatus.REVIEW_REQUIRED

@@ -6,16 +6,16 @@
     python tools/run_ollama_goldenset.py --smoke
 
 전체:
-    python tools/run_ollama_goldenset.py --out runs/qwen3-8b-v06.jsonl
+    python tools/run_ollama_goldenset.py --out runs/qwen3-8b-v07.jsonl
 
 중단 후 이어서:
-    python tools/run_ollama_goldenset.py --out runs/qwen3-8b-v06.jsonl --resume
+    python tools/run_ollama_goldenset.py --out runs/qwen3-8b-v07.jsonl --resume
 
 평가:
     python tools/eval_goldenset.py \
-        --responses runs/qwen3-8b-v06.jsonl \
+        --responses runs/qwen3-8b-v07.jsonl \
         --model qwen3:8b \
-        --prompt phase1_mapping_v0.6
+        --prompt phase1_mapping_v0.7
 
 이 스크립트는 실제 기업 증적이 아닌 저장소의 합성 골든셋만 사용한다.
 """
