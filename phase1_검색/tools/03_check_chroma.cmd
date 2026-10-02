@@ -8,7 +8,7 @@ if not exist ".venv\Scripts\python.exe" (
 )
 ".venv\Scripts\python.exe" -c "import chromadb; from importlib.metadata import version; raise SystemExit(0 if version('chromadb') == '1.5.9' else 1)" >nul 2>&1
 if errorlevel 1 (
-  ".venv\Scripts\python.exe" -m pip install -r requirements-chroma.txt --cache-dir .cache/pip --disable-pip-version-check
+  ".venv\Scripts\python.exe" -m pip install -r requirements.txt --cache-dir .cache/pip --disable-pip-version-check
   if errorlevel 1 (
     echo Installation failed. Check internet access and retry.
     pause

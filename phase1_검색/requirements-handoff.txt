@@ -1,2 +1,2 @@
--r requirements-chroma.txt
-jsonschema==4.26.0
+# Compatibility entry point. Install requirements.txt for normal use.
+-r requirements.txt

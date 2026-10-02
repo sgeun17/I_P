@@ -31,7 +31,7 @@ Chroma의 기본 임베딩 기능은 끄고 직접 만든 BGE-M3 벡터를 전�
 최초 설치:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-chroma.txt --cache-dir .cache/pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt --cache-dir .cache/pip
 ```
 
 샘플 생성·저장·첫 검색:

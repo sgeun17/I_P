@@ -4,6 +4,18 @@
 
 공유 `kb_sha256`은 [kb_identity.py](kb_identity.py)의 `sha256-crlf-v1` 규칙으로 계산한다. LF/CRLF 개행만 CRLF로 통일한 뒤 SHA-256을 계산하며 기존 식별자 `6421a840…803be`를 유지한다. 저장·checkout은 `.gitattributes`로 LF를 사용한다. 따라서 파일 원본 바이트의 해시와 공유 KB 식별자가 다를 수 있다. 다른 내용·서식 변경과 오래된 인덱스는 계속 거부한다. [수정 및 판단팀 동기화 안내](handoff/10월2일_KB해시_줄바꿈불일치_확인.md)를 참고한다.
 
+## 설치
+
+`phase1_검색` 폴더에서 아래 명령으로 설치한다. `requirements.txt`에 모델·검색 패키지, ChromaDB, 검색→판단 입력 검증용 jsonschema가 모두 포함되어 있다.
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+가상환경이 없으면 Windows에서 `01_setup.cmd`를 먼저 실행한다. 가상환경 생성·패키지 설치·모델 다운로드를 진행한다. Chroma 색인은 별도로 `04_index_chroma.cmd`로 준비한다.
+
+기존 `requirements-chroma.txt`, `requirements-handoff.txt`도 같은 기본 설치 목록을 읽으므로 이전 설치 명령을 계속 사용할 수 있다. 테스트를 실행할 때만 `requirements-dev.txt`를 설치한다. 판단팀 모듈 자체의 설치·LLM 접속 설정은 판단팀 안내를 함께 따른다.
+
 ## 먼저 사용할 파일
 
 | 파일 | 용도 |

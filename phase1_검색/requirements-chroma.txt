@@ -1,2 +1,2 @@
+# Compatibility entry point. Install requirements.txt for normal use.
 -r requirements.txt
-chromadb==1.5.9
