@@ -23,6 +23,7 @@
 | [chunk_retriever.py](chunk_retriever.py) | 청크 입력 → 통제항목 후보 검색. 반복 요청에는 `LocalDocumentRetriever`로 모델 재사용 |
 | [judgment_pipeline.py](judgment_pipeline.py) | 검색 결과를 판단팀 호출·응답 검증으로 연결 |
 | [judgment_adapter.py](judgment_adapter.py) | 검색 결과를 판단팀 입력 형식으로 변환 |
+| [tools/rerun_saved_judgments.py](tools/rerun_saved_judgments.py) | 저장된 검색 결과로 판단 단계만 재실행 |
 | [controls.json](controls.json) | 검색 대상 통제항목 101개의 KB |
 | [01_setup.cmd](01_setup.cmd) | 검색 실행 환경 준비 |
 | [04_index_chroma.cmd](04_index_chroma.cmd) | 전체 KB 색인 |
@@ -45,3 +46,20 @@
 Chroma 샘플 점검은 [tools/03_check_chroma.cmd](tools/03_check_chroma.cmd)에서 실행한다. 상세 사용법은 [전체 색인 안내](docs/ChromaDB_전체색인_안내.md), [샘플 실행 안내](docs/ChromaDB_실행안내.md), [기존 작업 이력](docs/작업이력.md)을 참고한다.
 
 이번 폴더 정리에서는 검색 로직·KB·모델을 변경하지 않았다. 테스트 도구나 설치 설정도 실제로 사용하므로 파일명이 오래됐다는 이유로 보관 폴더로 옮기지 않는다.
+
+## 저장된 검색 결과로 판단만 재실행
+
+전체 실행 결과 아래에 `E0001/search.json` 형식의 파일이 있으면 OCR·파싱·BGE-M3를
+다시 수행하지 않고 판단 변경만 비교할 수 있다. 출력 경로는 기존에 없는 새 경로여야 한다.
+
+```bash
+cd ~/I_P/phase1_검색
+../phase1_입력/.venv/bin/python tools/rerun_saved_judgments.py \
+  --source-dir ~/phase1-results/full-20261003 \
+  --out-dir ~/phase1-results/judgment-fix-20261003 \
+  --model qwen3:14b
+```
+
+각 증적 폴더에는 실제 모델 원문 `provider_raw_response.txt`, 런타임이 파생 필드를
+추가한 `normalized_response.json`, 최종 `judgment.json`, 호출·재시도 정보
+`llm_meta.json`이 따로 저장된다. 집계는 `summary.json`, `rows.json`, `summary.csv`로 남는다.

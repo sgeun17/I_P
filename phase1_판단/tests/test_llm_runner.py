@@ -242,3 +242,142 @@ def test_runner_does_not_retry_non_policy_schema_detail_error(mapping_input):
     assert calls == 1
     assert result.raw_response == bad
     assert ErrorCode.REQUIRED_FIELD_MISSING in result.last_issue_codes
+
+
+def _without_derived_match_status(payload: dict) -> str:
+    data = json.loads(json.dumps(payload, ensure_ascii=False))
+    data.pop("match_status", None)
+    return json.dumps(data, ensure_ascii=False)
+
+
+def test_runner_retries_missing_mapped_controls_then_accepts_repair(mapping_input, good_response):
+    good = json.loads(good_response)
+    bad = json.loads(good_response)
+    bad.pop("match_status", None)
+    bad.pop("mapped_controls", None)
+    responses = [json.dumps(bad, ensure_ascii=False), _without_derived_match_status(good)]
+    calls = []
+
+    def handler(request: httpx.Request):
+        calls.append(json.loads(request.content))
+        return httpx.Response(200, json=_completion(responses[len(calls) - 1]))
+
+    client = _client(handler)
+    try:
+        result = run_mapping_llm(mapping_input, model="qwen3:14b", http_client=client, sleeper=lambda _: None)
+    finally:
+        client.close()
+
+    assert result.attempts == 2
+    assert result.retry_count == 1
+    assert result.call_error is None
+    assert result.last_issue_codes == ()
+    retry_prompt = calls[1]["messages"][1]["content"]
+    assert "E501" in retry_prompt
+    assert "E504" in retry_prompt
+    assert "PRIMARY로" in retry_prompt
+    assert json.loads(result.provider_raw_response) == json.loads(responses[1])
+    assert json.loads(result.raw_response)["match_status"] == "MATCHED"
+
+
+def test_runner_retries_bad_quote_and_page_then_accepts_repair(mapping_input, good_response):
+    good = json.loads(good_response)
+    bad = json.loads(good_response)
+    bad.pop("match_status", None)
+    for section in ("candidate_decisions", "mapped_controls"):
+        citation = bad[section][0]["citations"][0]
+        citation["quote"] = "원문에 존재하지 않는 변형 인용문"
+        citation["page"] = 999
+    responses = [json.dumps(bad, ensure_ascii=False), _without_derived_match_status(good)]
+    calls = []
+
+    def handler(request: httpx.Request):
+        calls.append(json.loads(request.content))
+        return httpx.Response(200, json=_completion(responses[len(calls) - 1]))
+
+    client = _client(handler)
+    try:
+        result = run_mapping_llm(mapping_input, model="qwen3:14b", http_client=client, sleeper=lambda _: None)
+    finally:
+        client.close()
+
+    assert result.attempts == 2
+    assert result.last_issue_codes == ()
+    retry_prompt = calls[1]["messages"][1]["content"]
+    assert "E403" in retry_prompt
+    assert "E404" in retry_prompt
+    assert "연속된 문자열" in retry_prompt
+    assert "page_start~page_end" in retry_prompt
+
+
+def test_runner_retries_repairable_issue_even_when_e505_is_also_present(mapping_input, good_response):
+    bad = json.loads(good_response)
+    bad.pop("match_status", None)
+    bad["mapped_controls"] = []
+    bad["candidate_decisions"][0]["reason"] = "요구사항을 충족하는 것으로 판단된다."
+    responses = [json.dumps(bad, ensure_ascii=False), _without_derived_match_status(json.loads(good_response))]
+    calls = 0
+
+    def handler(request: httpx.Request):
+        nonlocal calls
+        response = responses[calls]
+        calls += 1
+        return httpx.Response(200, json=_completion(response))
+
+    client = _client(handler)
+    try:
+        result = run_mapping_llm(mapping_input, model="qwen3:14b", http_client=client, sleeper=lambda _: None)
+    finally:
+        client.close()
+
+    assert calls == 2
+    assert result.last_issue_codes == ()
+
+
+def test_runner_does_not_retry_e505_only(mapping_input, good_response):
+    bad = json.loads(good_response)
+    bad.pop("match_status", None)
+    bad["candidate_decisions"][0]["reason"] = "요구사항을 충족하는 것으로 판단된다."
+    calls = 0
+
+    def handler(request: httpx.Request):
+        nonlocal calls
+        calls += 1
+        return httpx.Response(200, json=_completion(json.dumps(bad, ensure_ascii=False)))
+
+    client = _client(handler)
+    try:
+        result = run_mapping_llm(mapping_input, model="qwen3:14b", http_client=client, sleeper=lambda _: None)
+    finally:
+        client.close()
+
+    assert calls == 1
+    assert result.retry_count == 0
+    assert ErrorCode.ADEQUACY_JUDGMENT_DETECTED in result.last_issue_codes
+
+
+def test_runner_returns_final_semantic_failure_after_single_retry(mapping_input, good_response):
+    bad = json.loads(good_response)
+    bad.pop("match_status", None)
+    bad["mapped_controls"] = []
+    raw = json.dumps(bad, ensure_ascii=False)
+    calls = 0
+
+    def handler(request: httpx.Request):
+        nonlocal calls
+        calls += 1
+        return httpx.Response(200, json=_completion(raw))
+
+    client = _client(handler)
+    try:
+        result = run_mapping_llm(mapping_input, model="qwen3:14b", http_client=client, sleeper=lambda _: None)
+    finally:
+        client.close()
+
+    assert calls == 2
+    assert result.attempts == 2
+    assert result.retry_count == 1
+    assert result.call_error is None
+    assert ErrorCode.PRIMARY_COUNT_INVALID in result.last_issue_codes
+    assert ErrorCode.MATCHED_WITHOUT_CONTROLS in result.last_issue_codes
+    assert result.provider_raw_response == raw

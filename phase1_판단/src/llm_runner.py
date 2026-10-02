@@ -4,7 +4,7 @@
 - 최초 호출 1회
 - E101~E105 또는 E201/E202 중 정책이 허용하는 오류만 재출력 Prompt로 1회 재시도
 - 재시도 후 호출 계층이 다시 실패하면 E106
-- E3xx/E4xx/E5xx는 이 모듈에서 재시도하지 않는다
+- 형식 파싱 뒤 발견되는 E403/E404/E501/E504도 정책에 따라 한 번 교정 재시도한다
 
 Validator/Human Review 로직 자체는 수정하지 않는다.
 """
@@ -25,6 +25,7 @@ from output_parser import extract_json_text, parse_llm_output
 from prompts import PromptPackage, build_prompt_package
 from retry_prompt import RetryPromptError, build_retry_package
 from review_policy import DEFAULT_RETRY_POLICY, RetryPolicy
+from validators import validate
 
 
 @dataclass(frozen=True)
@@ -182,13 +183,39 @@ def run_mapping_llm(
         normalized_raw = _inject_derived_match_status(raw)
         output, parse_issues = parse_llm_output(normalized_raw)
         if output is not None:
+            # Pydantic 형식만 맞는다고 성공으로 끝내면 MATCHED+빈 매핑,
+            # PRIMARY 누락, 변형 인용처럼 실제 결과로 조립할 수 없는 응답은
+            # 재시도 기회를 잃는다. 전체 Validator를 여기서도 실행하되,
+            # 정책이 허용한 교정 가능 오류만 골라 한 번 다시 생성한다.
+            validation = validate(output, mapping_input)
+            last_codes = tuple(issue.code for issue in validation.issues)
+            next_retry_number = retry_count + 1
+            repairable = [
+                issue for issue in validation.issues
+                if retry_policy.should_retry(issue.code, next_retry_number)
+            ]
+            if repairable:
+                try:
+                    package = build_retry_package(
+                        mapping_input,
+                        repairable,
+                        attempt=next_retry_number,
+                        policy=retry_policy,
+                    )
+                except RetryPromptError:
+                    pass
+                else:
+                    retry_count += 1
+                    if retry_policy.backoff_seconds > 0:
+                        sleeper(retry_policy.backoff_seconds)
+                    continue
             return LLMRunResult(
                 raw_response=normalized_raw,
                 call_error=None,
                 attempts=attempts,
                 retry_count=retry_count,
                 provider_raw_response=raw,
-                last_issue_codes=(),
+                last_issue_codes=last_codes,
             )
 
         last_codes = tuple(issue.code for issue in parse_issues)

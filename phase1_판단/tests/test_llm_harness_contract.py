@@ -116,6 +116,7 @@ def test_generation_schema_omits_only_derived_match_status():
 
     assert "match_status" not in generation_schema["properties"]
     assert "match_status" not in generation_schema["required"]
+    assert "mapped_controls" in generation_schema["required"]
     assert generation_schema["title"] == "LLMMappingGenerationOutput"
 
     # 나머지 핵심 출력 구조는 최종 Pydantic 계약과 동일하다.
@@ -123,14 +124,14 @@ def test_generation_schema_omits_only_derived_match_status():
     assert generation_schema["properties"]["mapped_controls"] == final_schema["properties"]["mapped_controls"]
 
 
-def test_prompt_contains_current_v07_rules_v06_boundary_adequacy_and_confidence_guidance():
+def test_prompt_contains_current_v07_rules_and_generation_guardrails():
     mapping = mapping_input_from_retriever(_retriever_payload())
     package = build_prompt_package(mapping)
 
     system = package.system
-    assert package.prompt_version == "phase1_mapping_v0.6"
+    assert package.prompt_version == "phase1_mapping_v0.7"
     assert package.ruleset_version == "mapping_rules_v0.7"
-    assert PROMPT_VERSION == "phase1_mapping_v0.6"
+    assert PROMPT_VERSION == "phase1_mapping_v0.7"
     assert RULESET_VERSION == "mapping_rules_v0.7"
     assert "UNCERTAIN" in system
     assert "match_status는 출력하지 않는다" in system
@@ -143,6 +144,10 @@ def test_prompt_contains_current_v07_rules_v06_boundary_adequacy_and_confidence_
     assert "mapping_type" in system
     # v0.7: PRIMARY 선택이 애매해도 이미 확인된 RELATED를 지우지 않는다.
     assert "RELATED 판단은 그대로 둔다" in system
+    assert "mapped_controls 필드는 항상 출력" in system
+    assert "PRIMARY가 정확히 1개" in system
+    assert "연속 부분 문자열" in system
+    assert "page_start~page_end" in system
     assert "UNCERTAIN으로 되돌리지 않는다" in system
     # v0.5에서 들어간 Citation 규칙은 v0.6에서도 유지한다.
     assert "모든 citation 객체는 chunk_id, page, quote 세 필드를 항상 출력" in system

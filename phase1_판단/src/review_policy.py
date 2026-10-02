@@ -371,6 +371,13 @@ class RetryPolicy:
             ErrorCode.LLM_TRUNCATED_RESPONSE,
             ErrorCode.JSON_PARSE_FAILED,
             ErrorCode.SCHEMA_INVALID,
+            # 실제 33건 재실행에서 형식 파싱은 통과했지만 아래 오류가 22건의
+            # 최종 실패를 만들었다. 원문/후보를 다시 읽어 한 번 고칠 수 있는
+            # 생성 오류만 재시도한다. E505는 사람 검토 신호이므로 제외한다.
+            ErrorCode.PRIMARY_COUNT_INVALID,
+            ErrorCode.MATCHED_WITHOUT_CONTROLS,
+            ErrorCode.CITATION_QUOTE_NOT_IN_SOURCE,
+            ErrorCode.CITATION_PAGE_MISMATCH,
         }
     )
 

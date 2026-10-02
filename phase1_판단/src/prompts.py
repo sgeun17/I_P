@@ -20,7 +20,7 @@ from typing import Any
 
 from models import LLMMappingOutput, MappingInput
 
-PROMPT_VERSION = "phase1_mapping_v0.6"
+PROMPT_VERSION = "phase1_mapping_v0.7"
 RULESET_VERSION = "mapping_rules_v0.7"
 
 
@@ -64,6 +64,11 @@ def get_generation_schema() -> dict[str, Any]:
     schema["properties"].pop("match_status", None)
     required = schema.get("required", [])
     schema["required"] = [name for name in required if name != "match_status"]
+    # 최종 저장 모델은 과거 응답 호환을 위해 누락을 []로 읽지만, 모델 생성 계약에서는
+    # 반드시 출력하게 한다. 생략을 허용하면 RELATED가 있어 런타임이 MATCHED를
+    # 파생했는데 mapped_controls=[]로 보완되는 E504/E501 모순이 생긴다.
+    if "mapped_controls" not in schema["required"]:
+        schema["required"].append("mapped_controls")
     schema["title"] = "LLMMappingGenerationOutput"
     return schema
 
@@ -196,6 +201,12 @@ _BASE_SYSTEM = r"""
 - candidate_decisions와 mapped_controls의 citations도 항상 배열로 출력한다. 없으면 []를 쓴다.
 - JSON 앞뒤에 설명, Markdown 코드블록, 머리말/꼬리말을 붙이지 않는다.
 - 최종 응답은 JSON 객체 하나뿐이다.
+- 제출 직전 반드시 다음을 자체 점검한다.
+  1. mapped_controls 필드는 항상 출력했는가(없으면 []인가)?
+  2. RELATED가 0개면 mapped_controls가 [], 1개면 그 항목이 PRIMARY인가?
+  3. RELATED가 2개 이상이면 mapped_controls에 모두 포함했고 PRIMARY가 정확히 1개인가?
+  4. quote는 chunk.text의 연속 부분 문자열을 띄어쓰기·문장부호까지 그대로 복사했는가?
+  5. page는 해당 chunk의 page_start~page_end 안의 값인가?
 
 <output_schema>
 {OUTPUT_SCHEMA}
