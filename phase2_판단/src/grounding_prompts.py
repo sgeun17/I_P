@@ -13,10 +13,10 @@ from dataclasses import dataclass
 import json
 from typing import Any, Mapping, Sequence
 
-from draft_contract import get_development_output_schema
+from structured_output_adapter import item_json_schema
 
 
-PROMPT_VERSION = "phase2_grounding_v0.2-dev"
+PROMPT_VERSION = "phase2_grounding_v0.3-ollama-qwen3"
 GLOBAL_RULESET_VERSION = "phase2_rules_v0.1"
 
 
@@ -95,7 +95,7 @@ def build_system_prompt(output_schema: dict[str, Any]) -> str:
 - MET용 사유 코드가 제공되지 않은 경우 MET에서 reason_codes=[]를 허용한다.
 
 [출력]
-- output_schema의 필드와 enum만 사용한다.
+- output_schema는 찬우 담당에서 제공한 Pydantic JSON Schema 산출물을 그대로 읽은 문항별 Structured Output 계약이다. 필드와 enum만 사용한다.
 - JSON 객체 하나만 출력한다. 설명, Markdown 코드블록, 머리말/꼬리말을 붙이지 않는다.
 
 <output_schema>
@@ -153,7 +153,7 @@ def build_prompt_package(
     output_schema: dict[str, Any] | None = None,
     ruleset_version: str = GLOBAL_RULESET_VERSION,
 ) -> PromptPackage:
-    schema = deepcopy(output_schema) if output_schema is not None else get_development_output_schema()
+    schema = deepcopy(output_schema) if output_schema is not None else item_json_schema()
     return PromptPackage(
         prompt_version=PROMPT_VERSION,
         ruleset_version=ruleset_version,

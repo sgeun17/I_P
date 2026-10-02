@@ -13,8 +13,8 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 PROJECT_ROOT = HERE.parents[1]
-DEFAULT_CHECKLIST = PROJECT_ROOT / "phase2_기준" / "checklist_draft.json"
-DEFAULT_REASON_CODES = PROJECT_ROOT / "phase2_기준" / "reason_codes_draft.json"
+DEFAULT_CHECKLIST = PROJECT_ROOT / "phase2_기준" / "chapter2_full_checklist_draft.json"
+DEFAULT_REASON_CODES = PROJECT_ROOT / "phase2_기준" / "chapter2_reason_codes_draft.json"
 
 
 class DraftDataError(ValueError):

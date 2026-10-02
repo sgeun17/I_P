@@ -12,12 +12,12 @@ import json
 
 from checklist_adapter import DEFAULT_CHECKLIST, DEFAULT_REASON_CODES
 from context_builder import CONTEXT_BUILDER_VERSION
-from draft_contract import DEVELOPMENT_SCHEMA_VERSION
+from structured_output_adapter import output_schema_sha256, output_schema_version as output_schema_version_from_contract
 from grounding_prompts import GLOBAL_RULESET_VERSION, PROMPT_VERSION
 from phase1_runtime import DEFAULT_RETRY_POLICY, retry_policy_snapshot
 
 
-VERSION_RECORD_VERSION = "phase2_versions_v0.1"
+VERSION_RECORD_VERSION = "phase2_versions_v0.2"
 
 
 def sha256_file(path: Path) -> str:
@@ -41,7 +41,7 @@ def build_version_info(
     checklist_path: Path = DEFAULT_CHECKLIST,
     reason_codes_path: Path = DEFAULT_REASON_CODES,
     ruleset_version: str = GLOBAL_RULESET_VERSION,
-    output_schema_version: str = DEVELOPMENT_SCHEMA_VERSION,
+    output_schema_version: str | None = None,
 ) -> dict[str, Any]:
     if not isinstance(model_name, str) or not model_name.strip():
         raise ValueError("model_name은 비어 있지 않은 문자열이어야 합니다.")
@@ -52,7 +52,8 @@ def build_version_info(
         "prompt_version": PROMPT_VERSION,
         "ruleset_version": ruleset_version,
         "context_builder_version": CONTEXT_BUILDER_VERSION,
-        "output_schema_version": output_schema_version,
+        "output_schema_version": output_schema_version or output_schema_version_from_contract(),
+        "output_schema_sha256": output_schema_sha256(),
         "model_name": model_name.strip(),
         "checklist_version": checklist.get("draft_version") or checklist.get("version"),
         "checklist_approved": checklist.get("approved"),

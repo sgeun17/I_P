@@ -1,8 +1,8 @@
 """Phase 2 항목별 판단 개발 하네스.
 
-운영 Input/Output Schema 확정 전에도 Context -> Grounding Prompt -> Structured JSON 호출을
-시험할 수 있게 한다. 기본 출력 계약은 draft_contract의 DEV ONLY schema다.
-최종 Schema가 오면 output_schema/output_validator를 주입해 교체한다.
+Context -> Grounding Prompt -> 팀 제공 Structured Output Schema 호출을 수행한다.
+기본 문항 출력 계약은 phase2_인터페이스/phase2_output.schema.json의 ItemResult이며,
+최종 JSON/ENUM/ID/Citation 검증은 찬우 Validator가 수행한다.
 
 Citation 원문 일치/page 일치와 Human Review 전환은 찬우 Validator 영역이므로 이 하네스가
 대체하지 않는다. 여기서는 JSON 파싱과 개발용 최소 구조만 확인한다.
@@ -16,7 +16,7 @@ from typing import Any, Callable, Mapping, Sequence
 
 import httpx
 
-from draft_contract import validate_development_output
+from structured_output_adapter import validate_model_generated_item
 from grounding_prompts import PromptPackage, build_prompt_package, build_retry_user_prompt
 from phase1_runtime import (
     DEFAULT_RETRY_POLICY,
@@ -104,10 +104,8 @@ def run_item_judgment(
     }
 
     if output_validator is None:
-        output_validator = lambda payload: validate_development_output(
-            payload,
-            expected_item_id=item_id,
-            allowed_reason_codes=allowed_reason_codes,
+        output_validator = lambda payload: validate_model_generated_item(
+            payload, expected_item_id=item_id, allowed_reason_codes=allowed_reason_codes
         )
 
     config = _client_config_using_policy(client_config, retry_policy)
