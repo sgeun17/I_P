@@ -27,7 +27,9 @@ except ImportError:
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-import overall_result as orule  # noqa: E402
+sys.path.insert(0, str(HERE.parent))
+import overall_result as orule   # noqa: E402
+import phase2_errors as perr     # noqa: E402
 
 
 def find_repo(start):
@@ -105,13 +107,15 @@ def main():
     for (cid, cname), items in sorted(by_control.items()):
         computed = orule.compute(items, policy)
         out = {
-            "schema_version": "phase2-output-0.2",
+            "schema_version": "phase2-output-0.3",
             "evidence_id": "E9999", "version": 1,
             "control_id": cid, "control_name": cname,
             "checklist_version": checklist.get("draft_version"),
             "items": [{**i, "critical": orule.is_critical(i, policy)} for i in items],
             **computed,
         }
+        # human_review 는 출력 스키마 required 다. 파이프라인이 항상 채우므로 여기서도 채운다.
+        out["human_review"] = perr.decide_review(out["items"])
         try:
             jsonschema.validate(out, schema)
             ok += 1
