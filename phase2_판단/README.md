@@ -1,4 +1,31 @@
-# Phase 2 판단 — 자운 담당 구현
+# Phase 2 판단 — 자운·찬우 구현
+
+2026-10-02 추가: 공식 phase2-input-0.2 / phase2-output-0.2 기반 검증 실행기를 구현했다.
+현재 진입점은 `src/validated_pipeline.py`의 `run_control_judgment()`와 `tools/run_validated_phase2.py`다.
+기존 하네스를 내부 호출하고 JSON·ID·인용 검증, Self-check, 날짜 추출, Human Review를 연결한다.
+
+```powershell
+python -m pip install -r requirements.txt
+python -m pytest -q
+python tools/run_validated_phase2.py --help
+```
+
+최신 문서는 다음과 같다.
+
+- `docs/RUN_VALIDATED_PHASE2.md`: 실행과 결과 파일
+- `docs/phase2_rules_v0.1.md`: 판정 규칙
+- `docs/validator_phase_design.md`: E505/P2E505 분리와 연결
+- `docs/citation_normalization_v0.1.md`: 인용 허용 경계
+- `docs/test_scenarios_v0.1.md`: 시험 범위
+- `docs/DELIVERY_REVIEW.md`: 납품 범위와 검증 결과
+
+최신성 개월 수·인정 형식은 수신한 항목별 정책을 주입한다. 기본 업무 기준은 만들지 않는다.
+Self-check 테스트의 고정 응답 통과가 실제 모델 정확도를 의미하지 않는다.
+DB/HTTP 오케스트레이터 연결, 기준팀 승인, 최종 critical, 검토자 결정 기록은 별도 통합·합의 사항이다.
+
+---
+
+아래는 2026-10-01의 기존 개발 기록이며 현재 실행 안내는 위 문서를 따른다.
 
 2026-10-01 기준, **다른 팀의 최종 운영 Schema/규칙이 없어도 독립적으로 구현 가능한 부분**을 모아 둔 디렉터리다.
 

@@ -2,12 +2,13 @@
 
 Phase 1의 System/User 분리와 Prompt Injection 방어 원칙을 재사용하되,
 Phase 2에서는 통제항목 "관련성"이 아니라 체크리스트 item 하나의 적정성만 판단한다.
-최종 phase2_rules_v0.1.md가 아직 없으므로 전역 판정 규칙을 이 파일에 새로 만들지 않는다.
-판정 경계는 입력된 checklist_item.evidence_rule과 별도 global_rules 문자열만 사용한다.
+판정 경계는 checklist_item.evidence_rule과 phase2_rules_v0.1.md 구현 초안을 사용한다.
+팀 승인 여부와 항목별 미확정 정책은 해당 규칙 문서에 명시한다.
 """
 from __future__ import annotations
 
 from copy import deepcopy
+from pathlib import Path
 from dataclasses import dataclass
 import json
 from typing import Any, Mapping, Sequence
@@ -15,8 +16,8 @@ from typing import Any, Mapping, Sequence
 from draft_contract import get_development_output_schema
 
 
-PROMPT_VERSION = "phase2_grounding_v0.1-dev"
-GLOBAL_RULESET_VERSION = "PENDING_phase2_rules_v0.1"
+PROMPT_VERSION = "phase2_grounding_v0.2-dev"
+GLOBAL_RULESET_VERSION = "phase2_rules_v0.1"
 
 
 @dataclass(frozen=True)
@@ -111,8 +112,7 @@ def build_user_prompt(
     global_rules: str | None = None,
 ) -> str:
     rules = global_rules.strip() if isinstance(global_rules, str) and global_rules.strip() else (
-        "팀 확정 phase2_rules_v0.1은 아직 주입되지 않았다. "
-        "checklist_item.evidence_rule 밖의 판정 정책을 새로 만들지 않는다."
+        (Path(__file__).resolve().parents[1] / "docs" / "phase2_rules_v0.1.md").read_text(encoding="utf-8")
     )
     return f"""
 아래 체크리스트 항목 하나를 현재 제공된 증적 원문만으로 판단하라.
