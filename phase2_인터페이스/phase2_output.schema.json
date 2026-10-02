@@ -269,6 +269,10 @@
             "implementation"
           ],
           "description": "질문지의 값 그대로."
+        },
+        "error_code": {
+          "type": "string",
+          "description": "이 문항을 판정하지 못했을 때의 오류 코드 (선택 필드). Phase 1 ErrorCode(E1xx·E2xx) 또는 Phase 2 전용(P2E...). result 가 UNKNOWN 일 때만 붙는다.\nphase2_errors.failed_item() 이 이 값을 내므로 스키마가 받아줘야 한다. (없으면 LLM 타임아웃 같은 실패 결과가 규격 위반이 된다.)\nUNKNOWN 이 두 가지 뜻이라 구분이 필요하다 — '근거 부족'(다른 자료로 확인될 수 있음)과 '기술 실패'(판정을 아예 못 함). 없으면 근거 부족으로 본다. result enum 은 늘리지 않는다."
         }
       }
     },
@@ -301,9 +305,9 @@
   "x-status": "DRAFT (팀 승인 전). 입력 파트가 정할 것은 전부 정해졌다. 필드와 값 목록이 더 바뀌지 않는다. 이 규격으로 개발해도 된다. 판단팀이 P2R 코드를 더하면 그때만 다시 배포한다.",
   "x-agreement": {
     "state": "IN_PROGRESS",
-    "as_of": "2026-10-02",
+    "as_of": "2026-10-03",
     "owner": "입력 파트",
-    "note": "이 규격에서 입력 파트가 정할 것은 전부 정해졌다. 필드·값 목록이 더 바뀌지 않는다. P2R 코드만 판단팀 확인 뒤 추가될 수 있고, 추가는 기존 값을 건드리지 않는다. schema_version 은 올리지 않았다 — 필드가 바뀌지 않았기 때문이다.",
+    "note": "입력 파트가 정할 것은 전부 정해졌다. 필드와 값 목록이 더 바뀌지 않는다. 앞으로 생길 수 있는 변경은 possible_changes 에 적은 FC-OUT-1(P2R205 추가) 하나뿐이고, 추가라서 이 규격으로 지금 개발해도 된다.",
     "settled": [
       "result 는 MET·NOT_MET·UNKNOWN 세 값. 기준팀 proposed_result_values 그대로.",
       "citations 는 문항마다 단다. MET·NOT_MET 은 1개 이상 필수, UNKNOWN 만 비울 수 있다 (기준팀 citation_required_for).",
@@ -314,10 +318,21 @@
       "overall_result 는 다섯 값으로 둔다 — 충족 / 충족(보완 권고) / 확인 필요 / 미충족 / 증적 없음. (입력 파트 결정 2026-10-02)",
       "critical_policy 를 필수 필드로 둔다. 모든 결과가 어떤 기준으로 나왔는지 달고 다닌다.",
       "Phase 2 검토 사유 코드 P2R 14개 확정 — P2R101~P2R110 무조건, P2R201~P2R204 조건부. Phase 1 의 R1xx·R2xx 와 번호가 겹치지 않는 것을 확인했다. 목록은 human_review.reasons 의 enum 과 phase2_errors.md 2절에 있다. (입력 파트 결정 2026-10-02, 판단팀 확인 요청)",
-      "P2R203 (OCR 청크 인용) 은 켜 둔다. OCR 증적은 전부 사람이 확인한다. 전처리팀이 OCR 품질 점수를 주지 않아 글자가 맞는지 알 방법이 없고, 실측에서 항목 매핑은 맞았으나 날짜 5개 중 3개를 틀렸다 (2026 → 2926). Phase 2 는 시기를 묻는 문항이 많아 날짜 오독이 판정을 뒤집는다. (회의 결정)"
+      "P2R203 (OCR 청크 인용) 은 켜 둔다. OCR 증적은 전부 사람이 확인한다. 전처리팀이 OCR 품질 점수를 주지 않아 글자가 맞는지 알 방법이 없고, 실측에서 항목 매핑은 맞았으나 날짜 5개 중 3개를 틀렸다 (2026 → 2926). Phase 2 는 시기를 묻는 문항이 많아 날짜 오독이 판정을 뒤집는다. (회의 결정)",
+      "items[].error_code 를 선택 필드로 둔다. LLM 타임아웃·JSON 깨짐처럼 판정을 아예 못 한 문항은 result=UNKNOWN 에 error_code 를 붙여 '근거 부족'과 구분한다. result enum 은 늘리지 않는다. (입력 파트 결정 2026-10-03)"
     ],
     "open": [],
     "unstable_fields": [],
-    "on_change": "합의가 끝나면 schema_version 을 올리고(phase2-output-0.1 → 0.2), 종합 판정 규칙이 바뀌면 rule_version 을 올린다. rule_version 이 다른 결과는 섞어서 집계하지 않는다."
+    "on_change": "합의가 끝나면 schema_version 을 올리고(phase2-output-0.1 → 0.2), 종합 판정 규칙이 바뀌면 rule_version 을 올린다. rule_version 이 다른 결과는 섞어서 집계하지 않는다.",
+    "possible_changes": [
+      {
+        "id": "FC-OUT-1",
+        "field": "human_review.reasons.items.enum",
+        "change": "P2R111 (EVIDENCE_CONFLICT — 같은 문항에 증적끼리 엇갈림) 추가. 14개 → 15개",
+        "when": "한 통제항목에 PRIMARY 증적이 둘 이상 붙어 2층(여러 증적을 항목 하나로 합치기)이 실제로 돌기 시작할 때. 충돌은 증적이 하나일 때는 생기지 않아 지금 enum 에 없다. judge_policy 는 primary_only 로 확정됐지만, 한 항목에 PRIMARY 증적이 여럿 붙는 경우는 그와 무관하게 생긴다.",
+        "impact": "추가뿐이다. 기존 14개가 그대로 남고 이미 나온 결과도 유효하다. 번호는 1xx 를 쓴다 — 충돌은 자동으로 못 정해 무조건 검토이기 때문이다. schema_version 은 올리지 않는다.",
+        "safe_to_build_now": true
+      }
+    ]
   }
 }
