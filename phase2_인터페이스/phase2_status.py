@@ -146,7 +146,13 @@ def approve_review(phase: str, modified: bool) -> str:
     사람이 검토를 끝냈을 때 갈 상태.
         고친 게 있다 → 그 단계부터 다시 돌린다
         그대로 승인   → Phase 1 검토였으면 판정으로, Phase 2 검토였으면 끝
+
+    ★ phase 를 먼저 검사한다. 모르는 값이 들어오면 조용히 COMPLETED 를 내지 않고
+      ValueError 를 낸다. 오타 하나로 검토 중인 증적이 '완료' 로 넘어가 버리면
+      사람이 올린 검토 결과가 사라진다.
     """
+    if phase not in RESUME_FROM:
+        raise ValueError(f"모르는 단계: {phase} (허용: {sorted(RESUME_FROM)})")
     if modified:
         return resume_from(phase)
     return "VALIDATING" if phase == "phase1" else "COMPLETED"
