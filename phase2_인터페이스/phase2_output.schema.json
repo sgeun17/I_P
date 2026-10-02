@@ -12,7 +12,8 @@
     "items",
     "overall_result",
     "rule_version",
-    "critical_policy"
+    "critical_policy",
+    "human_review"
   ],
   "additionalProperties": false,
   "properties": {
@@ -46,8 +47,8 @@
     },
     "items": {
       "type": "array",
-      "minItems": 1,
-      "description": "문항별 판정. 질문지의 문항 수와 같아야 한다.",
+      "minItems": 0,
+      "description": "문항별 판정. 질문지의 문항 수와 같아야 한다.\n  ★ 비울 수 있는 경우가 하나 있다 — 판정할 증적이 아예 없을 때(overall_result='증적 없음').\n    overall_result.compute([]) 가 그 값을 내므로 빈 배열을 받아줘야 한다.\n    그 외에는 1개 이상이다. 아래 allOf 로 양방향을 강제한다.",
       "items": {
         "$ref": "#/$defs/ItemResult"
       }
@@ -175,7 +176,52 @@
           },
           "description": "처리 중 생긴 오류 코드. Phase 1 ErrorCode(E1xx·E2xx·E4xx)를 그대로 쓰고, Phase 2 전용은 P2E 접두사. 검토로 보내지 않고 기록만 하는 코드도 여기 남긴다."
         }
-      }
+      },
+      "allOf": [
+        {
+          "$comment": "검토가 필요하면 사유가 1개 이상 있어야 한다. phase2_errors._build() 가 required=bool(reasons) 로 낸다.",
+          "if": {
+            "properties": {
+              "required": {
+                "const": true
+              }
+            },
+            "required": [
+              "required"
+            ]
+          },
+          "then": {
+            "required": [
+              "reasons"
+            ],
+            "properties": {
+              "reasons": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "$comment": "검토가 필요 없으면 사유가 없어야 한다.",
+          "if": {
+            "properties": {
+              "required": {
+                "const": false
+              }
+            },
+            "required": [
+              "required"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reasons": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
     },
     "trace_id": {
       "type": "string"
@@ -213,9 +259,66 @@
             }
           },
           "then": {
+            "required": [
+              "citations"
+            ],
             "properties": {
               "citations": {
                 "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "enum": [
+                  "NOT_MET",
+                  "UNKNOWN"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "reason_codes"
+            ],
+            "properties": {
+              "reason_codes": {
+                "minItems": 1
+              }
+            }
+          },
+          "$comment": "required 가 없으면 reason_codes 키를 지운 입력이 그냥 통과한다 (properties 는 키가 있을 때만 검사한다)."
+        },
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "const": "MET"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason_codes": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "$comment": "error_code 는 판정을 못 한 문항에만 붙는다. MET·NOT_MET 에 붙으면 모순이다.",
+          "if": {
+            "required": [
+              "error_code"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "const": "UNKNOWN"
               }
             }
           }
@@ -245,11 +348,24 @@
         "reason_codes": {
           "type": "array",
           "items": {
-            "type": "string",
-            "pattern": "^P2_(NM|U)_[A-Z_]+$"
+            "enum": [
+              "P2_NM_RULE_NOT_DEFINED",
+              "P2_NM_REQUIRED_ACTION_NOT_DONE",
+              "P2_NM_RULE_VIOLATED",
+              "P2_U_EVIDENCE_INSUFFICIENT",
+              "P2_U_SCOPE_OR_RULE_UNCLEAR",
+              "P2_U_SUBJECT_OR_EVENT_UNLINKED",
+              "P2_U_TIME_OR_VERSION_UNCLEAR",
+              "P2_U_EVIDENCE_UNREADABLE",
+              "P2_U_EVIDENCE_CONFLICT",
+              "P2_U_NO_TRIGGER_EVENT",
+              "P2_U_EXCEPTION_UNRESOLVED",
+              "P2_U_NOT_YET_DUE",
+              "P2_U_OBSERVATION_INCOMPLETE"
+            ]
           },
           "uniqueItems": true,
-          "description": "기준팀 사유 코드 13종. result=NOT_MET 이면 P2_NM_*, UNKNOWN 이면 P2_U_* 를 붙인다. MET 이면 비운다."
+          "description": "기준팀 사유 코드 13종 (chapter2_reason_codes_draft.json 그대로). result=NOT_MET 이면 P2_NM_*, UNKNOWN 이면 P2_U_*. MET 이면 비운다.\n  ★ MET 이 아니면 키가 있어야 하고 1개 이상이어야 한다. 기준팀 reason_codes.py _assignment() 이 빈 배열을 INVALID_ASSIGNMENT 로 거부한다. 아래 allOf 로 강제한다.\n  ★ 오타를 막기 위해 pattern 이 아니라 enum 으로 둔다. 기준팀이 코드를 추가하면 이 목록과 schema_version 을 같이 올린다.\n  기술 실패 문항은 phase2_errors.TECH_REASON_CODE (P2_U_EVIDENCE_UNREADABLE) 를 붙인다."
         },
         "citations": {
           "type": "array",
@@ -302,12 +418,12 @@
       }
     }
   },
-  "x-status": "DRAFT (팀 승인 전). 입력 파트가 정할 것은 전부 정해졌다. 필드와 값 목록이 더 바뀌지 않는다. 이 규격으로 개발해도 된다. 판단팀이 P2R 코드를 더하면 그때만 다시 배포한다.",
+  "x-status": "DRAFT (팀 승인 전). 입력 파트가 정할 것은 전부 정해졌다. 이 규격으로 개발해도 된다.",
   "x-agreement": {
     "state": "IN_PROGRESS",
     "as_of": "2026-10-03",
     "owner": "입력 파트",
-    "note": "입력 파트가 정할 것은 전부 정해졌다. 필드와 값 목록이 더 바뀌지 않는다. 앞으로 생길 수 있는 변경은 possible_changes 에 적은 FC-OUT-1(P2R205 추가) 하나뿐이고, 추가라서 이 규격으로 지금 개발해도 된다.",
+    "note": "입력 파트가 정할 것은 전부 정해졌다. 필드와 값 목록이 더 바뀌지 않는다. 이 규격으로 개발하면 된다.",
     "settled": [
       "result 는 MET·NOT_MET·UNKNOWN 세 값. 기준팀 proposed_result_values 그대로.",
       "citations 는 문항마다 단다. MET·NOT_MET 은 1개 이상 필수, UNKNOWN 만 비울 수 있다 (기준팀 citation_required_for).",
@@ -319,20 +435,49 @@
       "critical_policy 를 필수 필드로 둔다. 모든 결과가 어떤 기준으로 나왔는지 달고 다닌다.",
       "Phase 2 검토 사유 코드 P2R 14개 확정 — P2R101~P2R110 무조건, P2R201~P2R204 조건부. Phase 1 의 R1xx·R2xx 와 번호가 겹치지 않는 것을 확인했다. 목록은 human_review.reasons 의 enum 과 phase2_errors.md 2절에 있다. (입력 파트 결정 2026-10-02, 판단팀 확인 요청)",
       "P2R203 (OCR 청크 인용) 은 켜 둔다. OCR 증적은 전부 사람이 확인한다. 전처리팀이 OCR 품질 점수를 주지 않아 글자가 맞는지 알 방법이 없고, 실측에서 항목 매핑은 맞았으나 날짜 5개 중 3개를 틀렸다 (2026 → 2926). Phase 2 는 시기를 묻는 문항이 많아 날짜 오독이 판정을 뒤집는다. (회의 결정)",
-      "items[].error_code 를 선택 필드로 둔다. LLM 타임아웃·JSON 깨짐처럼 판정을 아예 못 한 문항은 result=UNKNOWN 에 error_code 를 붙여 '근거 부족'과 구분한다. result enum 은 늘리지 않는다. (입력 파트 결정 2026-10-03)"
+      "items[].error_code 를 선택 필드로 둔다. LLM 타임아웃·JSON 깨짐처럼 판정을 아예 못 한 문항은 result=UNKNOWN 에 error_code 를 붙여 '근거 부족'과 구분한다. result enum 은 늘리지 않는다. (입력 파트 결정 2026-10-03)",
+      "reason_codes 는 result 가 MET 이 아니면 1개 이상 필수, MET 이면 0개다. 기준팀 reason_codes.py _assignment() 이 NOT_MET·UNKNOWN 의 빈 배열을 INVALID_ASSIGNMENT 로 거부한다. 기술 실패 문항은 phase2_errors.TECH_REASON_CODE (P2_U_EVIDENCE_UNREADABLE) 를 붙인다 — 기준팀에 전용 코드 신설 여부를 묻는 중이다 (ISSUES #9). (입력 파트 결정 2026-10-03)",
+      "items 는 비울 수 있다. 판정할 증적이 아예 없을 때(overall_result='증적 없음') 뿐이고, 그 역도 성립한다 — items 가 비면 overall_result 는 반드시 '증적 없음' 이다. 양방향을 allOf 로 강제한다. 전에는 items 최소 1개여서 overall_result.compute([]) 의 결과를 내보낼 수 없었다. (입력 파트 결정 2026-10-03)",
+      "human_review 를 필수 필드로 둔다. 파이프라인이 항상 채우는 값이다. (입력 파트 결정 2026-10-03)",
+      "check_kind 를 모르는 문항은 키 자체를 뺀다. null 을 넣으면 enum 위반으로 그 문항이 규격을 벗어난다. (입력 파트 결정 2026-10-03)"
     ],
     "open": [],
     "unstable_fields": [],
-    "on_change": "합의가 끝나면 schema_version 을 올리고(phase2-output-0.1 → 0.2), 종합 판정 규칙이 바뀌면 rule_version 을 올린다. rule_version 이 다른 결과는 섞어서 집계하지 않는다.",
-    "possible_changes": [
-      {
-        "id": "FC-OUT-1",
-        "field": "human_review.reasons.items.enum",
-        "change": "P2R111 (EVIDENCE_CONFLICT — 같은 문항에 증적끼리 엇갈림) 추가. 14개 → 15개",
-        "when": "한 통제항목에 PRIMARY 증적이 둘 이상 붙어 2층(여러 증적을 항목 하나로 합치기)이 실제로 돌기 시작할 때. 충돌은 증적이 하나일 때는 생기지 않아 지금 enum 에 없다. judge_policy 는 primary_only 로 확정됐지만, 한 항목에 PRIMARY 증적이 여럿 붙는 경우는 그와 무관하게 생긴다.",
-        "impact": "추가뿐이다. 기존 14개가 그대로 남고 이미 나온 결과도 유효하다. 번호는 1xx 를 쓴다 — 충돌은 자동으로 못 정해 무조건 검토이기 때문이다. schema_version 은 올리지 않는다.",
-        "safe_to_build_now": true
+    "on_change": "필드나 값 목록이 바뀌면 schema_version 을 올린다. 지금 판은 phase2-output-0.2.\n  ★ 2026-10-03 에 required 가 늘었지만 번호는 올리지 않았다 (다른 팀 코드 변경 최소화). 10/2 에 배포한 같은 번호 파일은 폐기하고 이 파일로 교체해야 한다. 자세한 근거는 ISSUES.md '판 번호' 절.",
+    "possible_changes": []
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "items": {
+            "maxItems": 0
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "overall_result": {
+            "const": "증적 없음"
+          }
+        }
       }
-    ]
-  }
+    },
+    {
+      "if": {
+        "properties": {
+          "overall_result": {
+            "const": "증적 없음"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "items": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
 }
