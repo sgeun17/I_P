@@ -165,7 +165,13 @@ def main():
                                   "quote": "x"}])], [], True, ["P2R203"]),
         # 근거가 짧은 것은 검토로 보내지 않는다 (판단팀 E506 과 같은 취급). 기록만 한다.
         ("근거가 너무 짧음 (검토 아님)", [it("Q1", "MET", reason="맞음")], [], False, []),
-        ("질문지가 없어 판정 안 함 (검토 아님)", [], ["P2E002"], True, ["P2R107"]),
+        # 질문지·판정대상이 없는 것은 정상 결과 '증적 없음' 이다.
+        # evidence_outcome() 이 review_required=False 를 내므로 여기도 False 여야 한다.
+        # (전에는 True/P2R107 을 기대하게 돼 있어서 두 함수가 서로 다른 말을 했다.)
+        ("질문지가 없어 판정 안 함 (검토 아님)", [], ["P2E002"], False, []),
+        ("판정 대상이 없음 (검토 아님)", [], ["P2E001"], False, []),
+        # 다른 이유로 문항이 비었으면 판정을 시도했다 못한 것이므로 검토다.
+        ("청크가 없어 판정 못 함 (검토)", [], ["P2E003"], True, ["P2R107"]),
     ]
     for label, items, errors, want_req, want_codes in cases:
         r = pe.decide_review(items, errors)
