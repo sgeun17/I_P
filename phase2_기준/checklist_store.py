@@ -13,8 +13,11 @@ import json
 from pathlib import Path
 import re
 import sqlite3
+import sys
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent / 'phase1_검색'))
+from kb_identity import kb_sha256
 DEFAULT_DATABASE = HERE / 'data/checklists.sqlite3'
 
 
@@ -173,7 +176,7 @@ class ChecklistStore:
                 and nonempty(document['source'].get('path')), 'source.path가 필요합니다.')
         kb_path = (path.parent / document['source']['path']).resolve()
         kb_bytes = read_bytes(kb_path, 'SOURCE_FILE_ERROR')
-        counts = validate_document(document, decode_document(kb_bytes), digest_bytes(kb_bytes))
+        counts = validate_document(document, decode_document(kb_bytes), kb_sha256(kb_bytes))
         source_files = {kb_path: kb_bytes, path: source_bytes}
         for source in document['source_documents']:
             source_path = (path.parent / source['path']).resolve()

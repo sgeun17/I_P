@@ -10,7 +10,7 @@ import atexit
 from contextlib import redirect_stdout
 from copy import deepcopy
 from datetime import datetime
-import hashlib
+from kb_identity import kb_sha256
 import json
 import math
 import os
@@ -186,7 +186,7 @@ class LocalDocumentRetriever:
         import chromadb
         from chromadb.config import Settings
         self.controls = load_controls(ROOT / "controls.json")
-        self.kb_sha = hashlib.sha256((ROOT / "controls.json").read_bytes()).hexdigest()
+        self.kb_sha = kb_sha256((ROOT / "controls.json").read_bytes())
         self.model = load_model(MODEL_DIR, "cpu")
         self.cache_key = embedding_cache_key([control_text(c) for c in self.controls], MODEL_DIR, self.model)
         self.db = chromadb.PersistentClient(path="data/chroma_kb", settings=Settings(anonymized_telemetry=False))
@@ -196,7 +196,7 @@ class LocalDocumentRetriever:
     def search(self, payload, top_k=5, compatibility=False):
         check(type(top_k) is int and 1 <= top_k <= 101, "top_k는 1~101의 정수여야 합니다.")
         document, warnings = prepare_input(payload, compatibility)
-        check(hashlib.sha256((ROOT / "controls.json").read_bytes()).hexdigest() == self.kb_sha,
+        check(kb_sha256((ROOT / "controls.json").read_bytes()) == self.kb_sha,
               "실행 중 KB가 변경됐습니다. 재색인 후 다시 실행하세요.", "INDEX_MISMATCH")
         try:
             vectors = encode_texts(self.model, [c["text"] for c in document["chunks"]])

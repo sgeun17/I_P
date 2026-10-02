@@ -1,0 +1,2 @@
+# KB 저장/checkout은 LF. 공유 kb_sha256은 kb_identity.py 규칙으로 계산한다.
+controls.json text eol=lf

@@ -11,6 +11,8 @@ from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from kb_identity import kb_sha256
 sys.path.insert(0, str(ROOT / 'tests'))
 from review_kb_sources import normalized, read_guide, SOURCES
 
@@ -161,7 +163,7 @@ def main():
     counts = dict(Counter(r['semantic_classification'] for r in expansions))
     result = {'checked_at': datetime.now().astimezone().isoformat(),
               'status': 'AI_MEANING_REVIEWED_HUMAN_APPROVAL_PENDING',
-              'kb_sha256': before, 'source_comparison_sha256': sha(comparison_path),
+              'kb_sha256': kb_sha256(kb_path.read_bytes()), 'source_comparison_sha256': sha(comparison_path),
               'source_pdf_sha256': sha(source_path), 'control_count': 101,
               'total_keyword_count': len(rows), 'reviewed_expansion_count': len(expansions),
               'expansion_classifications': counts, 'kb_changed': False, 'human_approved': False,
@@ -183,7 +185,7 @@ def main():
     lines += ['', *[f'- {limit}' for limit in result['limits']]]
     (out / 'review.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')
     attention = [r for r in expansions if r['semantic_classification'] != 'MEANING_ALIGNED']
-    (out / 'attention_items.json').write_text(json.dumps({'kb_sha256': before, 'count': len(attention), 'keywords': attention}, ensure_ascii=False, indent=2), encoding='utf-8')
+    (out / 'attention_items.json').write_text(json.dumps({'kb_sha256': kb_sha256(kb_path.read_bytes()), 'count': len(attention), 'keywords': attention}, ensure_ascii=False, indent=2), encoding='utf-8')
     print(json.dumps({'status': result['status'], 'counts': counts, 'attention_count': len(attention)}, ensure_ascii=False))
 
 

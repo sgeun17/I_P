@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime
 import hashlib
+from kb_identity import kb_sha256
 from importlib.metadata import version
 import json
 import os
@@ -28,7 +29,7 @@ QUERIES = [
 
 
 def kb_hash():
-    return hashlib.sha256((ROOT / "controls.json").read_bytes()).hexdigest()
+    return kb_sha256((ROOT / "controls.json").read_bytes())
 
 
 def client():

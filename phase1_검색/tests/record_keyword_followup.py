@@ -11,6 +11,8 @@ import sys
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from kb_identity import kb_sha256
 
 
 def read(path):
@@ -51,7 +53,7 @@ def main():
         docs['input_judgment_source_count'] = len(external)
         docs['report_corrections'] = ['Windows 경로 구분자를 정규화해 입력·판단 소스 개수 집계를 0→43으로 수정. 실행 검사 결과에는 영향 없음.']
         save(docs_dir / 'summary.json', docs)
-    kb_hash = sha(ROOT / 'controls.json')
+    kb_hash = kb_sha256((ROOT / 'controls.json').read_bytes())
     assert kb_hash == meaning['kb_sha256'] == quality['kb_sha256'] == docs['kb_sha256']
     assert quality['labels_sha256'] == sha(labels_path)
     assert labels['cases'][:30] == base_labels['cases'] and len(labels['cases']) == 54

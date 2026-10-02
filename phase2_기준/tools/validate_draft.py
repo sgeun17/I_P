@@ -15,6 +15,8 @@ import sys
 HERE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(HERE))
 SEARCH = HERE.parent / 'phase1_검색'
+sys.path.insert(0, str(SEARCH))
+from kb_identity import kb_sha256
 # 9/26의 EX-01~09 객체를 정렬 키 JSON으로 직렬화한 SHA-256. 확장해도 원형을 보존한다.
 ORIGINAL_EXAMPLES_SHA256 = '479f5281b872879904b85d651da10d6ca06e4754b7c055adc8c6b9bdbb678c45'
 
@@ -52,7 +54,7 @@ def main():
     def check(name, passed):
         checks.append({'check': name, 'passed': bool(passed)})
 
-    check('원본 KB 해시 일치', digest(kb_path) == d['source']['sha256'])
+    check('공유 KB 식별 해시 일치', kb_sha256(kb_path.read_bytes()) == d['source']['sha256'])
     check('팀 미승인 초안', d['approved'] is False and d['status'] == 'DRAFT_FOR_TEAM_REVIEW')
     check('활성 ID 중복 없음', len(ids) == len(set(ids)))
     check('질문 문장 완전 중복 없음', len({i['question'] for i in items}) == len(items))
@@ -143,7 +145,7 @@ def main():
         'status': 'PASS' if all(c['passed'] for c in checks) else 'FAIL',
         'checked_at': datetime.now().astimezone().isoformat(),
         'draft_version': d['draft_version'], 'draft_sha256': digest(draft_path),
-        'kb_sha256': digest(kb_path), 'candidate_count': len(d['priority_candidates']),
+        'kb_sha256': kb_sha256(kb_path.read_bytes()), 'candidate_count': len(d['priority_candidates']),
         'sample_control_count': len(d['controls']), 'original_question_count': len(old),
         'active_question_count': len(items), 'retired_question_count': len(retired),
         'new_question_count': len(set(active)-set(old)),

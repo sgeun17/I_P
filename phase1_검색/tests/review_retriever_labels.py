@@ -3,7 +3,11 @@ import hashlib
 import json
 from pathlib import Path
 
+import sys
+
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from kb_identity import kb_sha256
 NOTES = {
     'S01': '승인 후 계정 발급, 인사이동 시 권한 변경, 퇴사 계정 삭제가 핵심이다. 절차 이행과 관련성을 확인하며 조직 전체의 충족 판정은 하지 않는다.',
     'S02': 'root·Administrator의 최소 발급, 사용자 제한과 별도 사용 승인으로 특수 계정 통제를 설명한다.',
@@ -73,7 +77,7 @@ def main():
     assert {c['id'] for c in cases} == set(NOTES) and len(cases) == 30
     output = {'version': 'source-label-review-2026-09-27',
               'status': 'AI_SOURCE_REVIEWED_HUMAN_APPROVAL_PENDING', 'human_approved': False,
-              'predictions_used_for_label_changes': False, 'kb_sha256': sha(kb_path),
+              'predictions_used_for_label_changes': False, 'kb_sha256': kb_sha256(kb_path.read_bytes()),
               'source_dataset_sha256': sources, 'source_comparison_sha256': sha(comparison),
               'label_changes': [], 'cases': cases,
               'limits': ['합성 개발 사례 30개. 실제 운영 증적 또는 사람의 독립 정답 세트가 아님.',

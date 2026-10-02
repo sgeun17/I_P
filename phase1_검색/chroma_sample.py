@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime
-import hashlib
+from kb_identity import kb_sha256
 from importlib.metadata import version
 import json
 from pathlib import Path
@@ -57,7 +57,7 @@ def build():
     vectors = normalized_vectors(model.encode(inputs, batch_size=4,
         normalize_embeddings=True, convert_to_numpy=True, show_progress_bar=False))
     kb_vectors, query_vector = vectors[:-1], vectors[-1].tolist()
-    kb_hash = hashlib.sha256((ROOT / "controls.json").read_bytes()).hexdigest()
+    kb_hash = kb_sha256((ROOT / "controls.json").read_bytes())
     metadatas = [{"control_id": c["control_id"], "control_name": c["control_name"],
                   "model_id": MODEL_ID, "model_revision": MODEL_REVISION,
                   "kb_sha256": kb_hash} for c in sample]

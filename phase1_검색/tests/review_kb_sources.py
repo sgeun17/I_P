@@ -13,7 +13,11 @@ from pathlib import Path
 import re
 import unicodedata
 
+import sys
+
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from kb_identity import kb_sha256
 SOURCES = ROOT.parent.parent / 'ISMP-P 인증기준·제도'
 HEADER = re.compile(r'항\s*목\s*(\d\.\d+\.\d+)')
 
@@ -130,7 +134,7 @@ def main():
     counts = Counter(k['classification'] for k in keywords)
     report = {'status': 'PASS' if not differences else 'REVIEW_NEEDED',
         'review_type': 'AUTOMATED_LOCAL_SOURCE_COMPARISON',
-        'checked_at': datetime.now().astimezone().isoformat(), 'kb_sha256': before,
+        'checked_at': datetime.now().astimezone().isoformat(), 'kb_sha256': kb_sha256(kb_path.read_bytes()),
         'control_count': len(rows), 'evidence_example_count': sum(len(r['evidence_examples']) for r in rows),
         'keyword_count': len(keywords), 'keyword_classifications': dict(counts),
         'sources': {sid: {k: v for k, v in guide.items() if k != 'sections'} for sid, guide in guides.items()},
@@ -142,7 +146,7 @@ def main():
                    '금융권 추가 점검사항 전체를 KB에 구현했다는 뜻이 아님.']}
     out.mkdir(parents=True)
     (out / 'comparison.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
-    (out / 'keyword_review.json').write_text(json.dumps({'kb_sha256': before, 'keywords': keywords}, ensure_ascii=False, indent=2), encoding='utf-8')
+    (out / 'keyword_review.json').write_text(json.dumps({'kb_sha256': kb_sha256(kb_path.read_bytes()), 'keywords': keywords}, ensure_ascii=False, indent=2), encoding='utf-8')
     lines = ['# Phase1 검색 KB 전체 원문 대조', '',
              f"- 결과: {report['status']}. 통제항목 {len(rows)}개, 증거자료 예시 {report['evidence_example_count']}개.",
              '- 일반·금융 안내서의 같은 ID 절에서 명칭과 인증기준을 대조하고, 일반 점검항목 XLSX도 교차 확인했다.',

@@ -8,6 +8,8 @@ from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from kb_identity import kb_sha256
 sys.path[:0] = [str(ROOT), str(ROOT / 'tests')]
 from chunk_retriever import LocalDocumentRetriever
 from evaluate_review_cases import payload
@@ -65,7 +67,7 @@ def main():
                  'self_rank': ids.index(c['control_id']) + 1 if c['control_id'] in ids else None}
                 for c, ids in zip(engine.controls, probe['ids'])]
     assert sha(labels_path) == label_hash
-    assert sha(ROOT / 'controls.json') == engine.kb_sha
+    assert kb_sha256((ROOT / 'controls.json').read_bytes()) == engine.kb_sha
     related = [r for r in rows if r['required']]
     metrics = {'categories': dict(Counter(r['category'] for r in rows)), 'related_documents': len(related),
                'all_required_in_top5': sum(not r['missing_required'] for r in related),

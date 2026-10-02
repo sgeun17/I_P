@@ -1,12 +1,12 @@
 """Retriever 0.2 출력 → 판단팀 MappingInput 변환. 판단·LLM 호출은 수행하지 않습니다."""
 from copy import deepcopy
 import argparse
-import hashlib
 import json
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 from chunk_retriever import ROOT, prepare_input, RetrievalError, write_result
+from kb_identity import kb_sha256
 
 JUDGMENT = ROOT.parent / "phase1_판단"
 
@@ -43,7 +43,7 @@ def to_mapping_input(search_result, judgment_dir=JUDGMENT):
         expected = f"{envelope['evidence_id']}_v{envelope['version']}_c{c['chunk_index']:04d}"
         require(c["chunk_id"] == expected, f"판단팀 청크 ID 규칙 불일치: {c['chunk_id']} (기대 {expected})")
     kb_raw = (ROOT / "controls.json").read_bytes()
-    kb_sha = hashlib.sha256(kb_raw).hexdigest()
+    kb_sha = kb_sha256(kb_raw)
     index = read(judgment_dir / "data/control_index.json")
     controls = {c["control_id"]: c for c in json.loads(kb_raw)}
     require(result["index"]["kb_sha256"] == kb_sha == index["kb_sha256"], "검색 결과·현재 KB·판단팀 KB 해시가 다릅니다.")

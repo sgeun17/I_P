@@ -3,14 +3,17 @@ from datetime import datetime
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from kb_identity import kb_sha256
 DEST = ROOT / "releases/phase1-review-2026-09-25"
 
 
 def main():
     raw = (ROOT / "controls.json").read_bytes()
-    digest = hashlib.sha256(raw).hexdigest()
+    digest = kb_sha256(raw)
     kb_report = json.loads((ROOT / "reports/kb_validation_result.json").read_text(encoding="utf-8"))
     index_report = json.loads((ROOT / "reports/chroma_index_result.json").read_text(encoding="utf-8"))
     assert kb_report["status"] == index_report["status"] == "PASS"
@@ -18,9 +21,11 @@ def main():
     assert index_report["count"] == len(json.loads(raw)) == 101
     DEST.mkdir(parents=True, exist_ok=True)
     target = DEST / "controls.json"
-    if target.exists() and target.read_bytes() != raw:
-        raise ValueError("기존 스냅샷과 KB가 다릅니다. 새 검수 버전 이름을 사용하세요.")
-    target.write_bytes(raw)
+    if target.exists():
+        if kb_sha256(target.read_bytes()) != digest:
+            raise ValueError("기존 스냅샷과 KB가 다릅니다. 새 검수 버전 이름을 사용하세요.")
+    else:
+        target.write_bytes(raw)
     snapshots = {}
     for name in ("kb_validation_result.json", "chroma_index_result.json"):
         content = (ROOT / "reports" / name).read_bytes()
@@ -45,7 +50,7 @@ def main():
         "재색인·재시작 검증의 PASS와 생성 보고서의 해시를 확인하세요. KB가 달라지면 별도 버전과 정답 회귀 검증이 필요합니다.\n\n"
         "남은 승인: KB 내용 최종 검수, 독립 정답 검수, 실제 LLM 및 전체 통합 검증. 운영 관련성 임계값은 미설정입니다.\n",
         encoding="utf-8")
-    assert hashlib.sha256(target.read_bytes()).hexdigest() == digest
+    assert kb_sha256(target.read_bytes()) == digest
     print(f"PASS: 검수용 스냅샷 {DEST}")
 
 

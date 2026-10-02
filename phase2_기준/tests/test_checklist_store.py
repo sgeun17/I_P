@@ -41,6 +41,20 @@ class ChecklistStoreTests(unittest.TestCase):
         path.write_text(json.dumps(document, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         return path
 
+    def test_kb_line_endings_preserve_identity_but_content_changes_fail(self):
+        original = Path(self.document['source']['path']).read_bytes().replace(b'\r\n', b'\n')
+        kb_path = self.directory / 'controls.json'
+        candidate = deepcopy(self.document)
+        candidate['source']['path'] = str(kb_path)
+        path = self.write_document(candidate, 'line-endings.json')
+        line_store = ChecklistStore(self.directory / 'line-endings.sqlite3')
+        for newline in (b'\n', b'\r\n'):
+            kb_path.write_bytes(original.replace(b'\n', newline))
+            result = line_store.import_draft(path)
+            self.assertEqual(result['active_question_count'], 54)
+        kb_path.write_bytes(original.replace(b'"control_id"', b'"control_id" ', 1))
+        self.assert_code('SOURCE_MISMATCH', lambda: line_store.import_draft(path))
+
     def next_document(self):
         document = deepcopy(self.document)
         document['draft_version'] = self.version + '-test-next'

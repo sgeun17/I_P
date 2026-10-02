@@ -8,6 +8,8 @@ from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from kb_identity import kb_sha256
 sys.path.insert(0, str(ROOT / 'tests'))
 from review_kb_sources import normalized
 
@@ -28,7 +30,7 @@ def main():
     kb_path = ROOT / 'controls.json'
     kb = {c['control_id']: c for c in load(kb_path)}
     rows = {c['control_id']: c for c in comparison['controls']}
-    assert comparison['kb_sha256'] == evaluation['kb_sha256'] == sha(kb_path)
+    assert comparison['kb_sha256'] == evaluation['kb_sha256'] == kb_sha256(kb_path.read_bytes())
     assert all(c['source_comparisons']['KISA-2023']['name_match']
                and c['source_comparisons']['KISA-2023']['requirement_match']
                and all(e['matched_in_general_section'] for e in c['evidence_examples'])
@@ -60,7 +62,7 @@ def main():
                          'decision': 'KEEP_GENERAL_GUIDE_MATCHING_KB', 'reason': reason,
                          'scope_approval': 'PENDING'})
     (source_dir / 'source_differences_review.json').write_text(json.dumps({
-        'kb_sha256': sha(kb_path), 'primary_source': 'KISA-2023', 'primary_source_exact_matches': 101,
+        'kb_sha256': kb_sha256(kb_path.read_bytes()), 'primary_source': 'KISA-2023', 'primary_source_exact_matches': 101,
         'general_evidence_examples_exact_matches': 399,
         'differences_by_source': dict(Counter(d['source_id'] for d in reviewed)),
         'kb_modified': False, 'reviews': reviewed}, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -94,7 +96,7 @@ def main():
     manifest = {
         'snapshot_id': release.name, 'status': 'REVIEW_SNAPSHOT_NOT_FINAL_RELEASE',
         'created_at': datetime.now().astimezone().isoformat(),
-        'kb_sha256': sha(kb_path), 'control_count': 101, 'labels_sha256': sha(labels),
+        'kb_sha256': kb_sha256(kb_path.read_bytes()), 'control_count': 101, 'labels_sha256': sha(labels),
         'model': old_index['model'], 'embedding_cache_key': evaluation['embedding_cache_key'],
         'index_count_verified': evaluation['index_count'],
         'index_manifest_sha256': sha(ROOT / 'data/chroma_kb_manifest.json'),

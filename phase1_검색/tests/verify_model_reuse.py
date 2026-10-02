@@ -13,6 +13,8 @@ import time
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from kb_identity import kb_sha256
 sys.path[:0] = [str(ROOT), str(ROOT.parent / 'phase1_판단/src')]
 
 import chunk_retriever
@@ -44,7 +46,7 @@ def main():
     external = {k: sha(ROOT.parent / k) for k in baseline
                 if k.replace('\\', '/').startswith(('phase1_입력/', 'phase1_판단/'))}
     assert len(external) == 43 and all(v == baseline[k] for k, v in external.items())
-    kb_hash = sha(ROOT / 'controls.json')
+    kb_hash = kb_sha256((ROOT / 'controls.json').read_bytes())
     validator = Draft202012Validator(read(ROOT / 'schemas/chunk_output.schema.json'))
     canonical = read(ROOT / 'examples/docx_input.json')
     legacy = read(ROOT / 'examples/docx_input_legacy.json')
@@ -136,7 +138,7 @@ def main():
     finally:
         close_retriever()
         (out / 'worker_stderr.log').write_text(logs.getvalue(), encoding='utf-8')
-    assert kb_hash == sha(ROOT / 'controls.json')
+    assert kb_hash == kb_sha256((ROOT / 'controls.json').read_bytes())
     assert all(sha(ROOT.parent / k) == v for k, v in external.items())
     report = {'status': 'PASS', 'checked_at': datetime.now().astimezone().isoformat(),
               'scope': '실제 BGE-M3 공개 Python 호출의 모델 수명·요청 격리·결과 호환 검사. LLM 호출 없음.',

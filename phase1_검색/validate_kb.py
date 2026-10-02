@@ -1,7 +1,7 @@
 """원문 대조 기록에서 별도로 추출한 기준 목록과 현재 KB를 비교합니다."""
 from collections import Counter
 from datetime import datetime
-import hashlib
+from kb_identity import kb_sha256
 import json
 from pathlib import Path
 
@@ -37,7 +37,7 @@ def main():
     counts = {f: sum(len(c.get(f, [])) for c in controls) for f in ("keyword", "evidence_examples")}
     warnings.append(f"원문 대조 기록 작성 시 키워드 781개, 현재 {counts['keyword']}개. ID·명칭 대조에만 기록의 기준 목록을 사용했으며 최신 키워드의 의미 검수는 별도입니다.")
     report = {"status": "PASS" if not errors else "FAIL", "checked_at": datetime.now().astimezone().isoformat(),
-              "kb_sha256": hashlib.sha256(kb_bytes).hexdigest(), "count": len(controls),
+              "kb_sha256": kb_sha256(kb_bytes), "count": len(controls),
               "domains": dict(Counter(str(cid).split('.')[0] for cid in ids)),
               "duplicate_ids": duplicates, "missing_ids": missing, "extra_ids": extra,
               "field_counts": counts, "reference": baseline["reference"], "errors": errors, "warnings": warnings,
