@@ -240,6 +240,12 @@ RETRY_NOTE = (
 # ──────────────────────────────────────────────────────────────────────────
 # 7. 문항 하나가 실패했을 때
 # ──────────────────────────────────────────────────────────────────────────
+# 기술 실패 문항에 붙일 기준팀 사유 코드 (임시).
+#   13종 중 기술 실패에 가장 가까운 값. '근거를 읽어 판정하지 못했다' 는 뜻으로 쓴다.
+#   기준팀이 전용 코드를 새로 만들어 주면 이 한 줄만 바꾸면 된다.
+TECH_REASON_CODE = "P2_U_EVIDENCE_UNREADABLE"
+
+
 def failed_item(item_id, error_code, message, check_kind=None):
     """
     문항 하나가 끝내 실패했을 때 만들 결과.
@@ -247,19 +253,32 @@ def failed_item(item_id, error_code, message, check_kind=None):
     ★ 통제항목 전체를 실패시키지 않는다. 그 문항만 UNKNOWN 으로 둔다.
       - NOT_MET 이 아니다. 요건을 안 지켰다고 확인한 게 아니라 확인을 못 한 것이다.
       - citations 는 비운다. UNKNOWN 은 비워도 되는 유일한 값이다.
+
+    ★ reason_codes 는 비우지 않는다.
+      기준팀 reason_codes.py _assignment() 이
+      "NOT_MET·UNKNOWN 에는 사유 코드가 필요합니다" 로 빈 배열을 거부한다.
+      기술 실패에 딱 맞는 코드가 13종 안에 없어서 TECH_REASON_CODE 로 임시 매핑한다.
+      ─ 기준팀에 '기술 실패용 사유 코드' 신설 여부를 물어야 한다 (ISSUES).
+      정확한 원인은 error_code 가 들고 있으므로 정보가 사라지지는 않는다.
+
+    ★ check_kind 는 모를 때 키 자체를 뺀다.
+      출력 스키마가 enum(procedure·record·implementation) 이라
+      null 을 넣으면 그 문항이 규격 위반이 된다.
     """
     name = (ERRORS.get(error_code, (None,))[0]
             or REUSED_FROM_PHASE1.get(error_code)
             or error_code)
-    return {
+    item = {
         "item_id": item_id,
         "result": "UNKNOWN",
         "reason": f"판정하지 못했습니다 ({name}): {message}"[:300],
-        "reason_codes": [],
+        "reason_codes": [TECH_REASON_CODE],
         "citations": [],
-        "check_kind": check_kind,
-        "error_code": error_code,       # 화면·로그용. 출력 스키마에는 넣지 않는다
+        "error_code": error_code,
     }
+    if check_kind is not None:
+        item["check_kind"] = check_kind
+    return item
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -291,7 +310,13 @@ def decide_review(items, errors=(), thresholds=None, injection_suspected=False):
         add("P2R108")
 
     if not items:
-        add("P2R107")
+        # ★ 문항이 없는 두 경우를 가른다. evidence_outcome() 과 같은 기준을 쓴다.
+        #   P2E001 (judge=true 가 없다) · P2E002 (질문지가 없다) 만 있으면
+        #   정상 결과 '증적 없음' 이다 — 사람이 볼 게 없으므로 검토로 올리지 않는다.
+        #   그 밖의 이유로 문항이 비었으면 판정을 시도했다가 못 한 것이므로 검토다.
+        soft_only = bool(errors) and all(c in ("P2E001", "P2E002") for c in errors)
+        if not soft_only:
+            add("P2R107")
         return _build(reasons)
 
     total = len(items)
