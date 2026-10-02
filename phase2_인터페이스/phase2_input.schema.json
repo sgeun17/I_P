@@ -38,13 +38,13 @@
         "primary_only",
         "all_mapped"
       ],
-      "description": "targets[].judge 를 무엇으로 채웠는지 기록한다. 정책이 바뀌었을 때 어떤 판정이 어떤 정책으로 나온 것인지 값으로 구분하기 위해 남긴다. **현재 primary_only 로 확정.**\n  primary_only : relation=PRIMARY 만 judge=true. RELATED 는 참고 증적으로 연결만 한다.\n  all_mapped   : 매핑된 항목 전부 judge=true.",
+      "description": "판정 대상을 무엇으로 골랐는지 기록한다. **primary_only 로 확정.**\n  primary_only : relation=PRIMARY 인 항목만 judge=true. RELATED 는 판정하지 않고 참고 증적으로 연결만 한다.\n  all_mapped   : 지금 쓰지 않는 값. 자리만 비워 둔다.\n  결과에 어느 정책으로 나왔는지 값으로 남겨, 정책이 바뀌어도 옛 결과와 섞이지 않게 한다.",
       "default": "primary_only"
     },
     "targets": {
       "type": "array",
       "minItems": 0,
-      "description": "이 증적에 매핑된 통제항목 전부. Phase1MappingResult.mapped_controls 를 그대로 옮긴다. RELATED 도 빼지 않고 담되, 실제 판정 여부는 judge 로 구분한다. match_status 가 NO_MATCH 면 빈 배열이고 Phase 2 는 돌지 않는다.",
+      "description": "이 증적에 매핑된 통제항목 전부. Phase1MappingResult.mapped_controls 를 그대로 옮긴다. RELATED 도 빼지 않고 담되, 실제 판정 여부는 judge 로 구분한다. match_status 가 NO_MATCH 면 빈 배열이고 Phase 2 는 돌지 않는다.\n  ★ judge_policy = primary_only 일 때의 모양을 최상위 allOf 로 강제한다.\n    PRIMARY → judge=true,  RELATED → judge=false,  PRIMARY 는 최대 1개.\n    '최대'다 — 0개(매핑이 RELATED 뿐)는 정상이고 '증적 없음'으로 낸다.\n    판단팀 validators.py 도 MATCHED 면 PRIMARY 를 정확히 1개로 막는다 (PRIMARY_COUNT_INVALID).",
       "items": {
         "$ref": "#/$defs/Target"
       }
@@ -52,7 +52,7 @@
     "chunks": {
       "type": "array",
       "minItems": 1,
-      "description": "이 증적의 청크 전부. 본문(text)을 그대로 담는다. chunk_id 만 넘기고 Phase 2 가 DB 를 조회하는 방식은 쓰지 않는다 — 입력이 자기완결적이어야 재현·시험이 가능하고, Phase 1 MappingInput 도 같은 방식이다. (확정)",
+      "description": "이 증적의 청크 전부. 본문(text)을 그대로 담는다. chunk_id 만 넘기고 Phase 2 가 DB 를 조회하는 방식은 쓰지 않는다 — 입력이 자기완결적이어야 재현·시험이 가능하고, Phase 1 MappingInput 도 같은 방식이다. (확정)\n  ★ chunk_index 오름차순으로 정렬해서 넣는다. phase2_판단 context_builder.normalize_chunks() 가 enumerate(chunks) 로 배열 순서를 그대로 문서 순서로 쓰기 때문에, 정렬이 안 되면 앞뒤 문맥 청크가 엉뚱하게 붙는다.",
       "items": {
         "$ref": "#/$defs/Chunk"
       }
@@ -66,7 +66,8 @@
       "properties": {
         "kb_sha256": {
           "type": "string",
-          "description": "검색 KB 해시. 체크리스트의 source 해시와 일치해야 한다."
+          "description": "검색 KB 해시. 체크리스트의 source 해시와 일치해야 한다. 소문자 16진수 64자. 빈 문자열·자리채움값을 막는다.",
+          "pattern": "^[0-9a-f]{64}$"
         }
       },
       "additionalProperties": true
@@ -91,7 +92,8 @@
         "control_id",
         "control_name",
         "relation",
-        "judge"
+        "judge",
+        "checklist_in_scope"
       ],
       "additionalProperties": false,
       "properties": {
@@ -116,7 +118,7 @@
         },
         "judge": {
           "type": "boolean",
-          "description": "이 항목의 질문지를 실제로 돌릴지. **judge_policy = primary_only 로 확정.**\n  규칙: relation=PRIMARY 면 true, RELATED 면 false.\n  judge=false 인 항목은 판정하지 않고 '참고 증적'으로만 연결한다. 그 항목에 PRIMARY 증적이 따로 생기면, 그때 이 증적의 청크도 같이 근거로 쓴다.\n  어떤 통제항목에 PRIMARY 증적이 끝까지 하나도 없으면 2단계에서 '증적 없음'으로 낸다 — '판단 불가'와 구분한다.\n  근거: 판단팀 실제 LLM 기록 20건 중 16건이 체크리스트 범위 밖 항목을 포함해 전체 보류됐고, 그중 3건은 범위 안 항목이 있어 판정 가능했다."
+          "description": "이 항목의 질문지를 실제로 돌릴지. **judge_policy = primary_only 로 확정.**\n  규칙: relation=PRIMARY 면 true, RELATED 면 false.\n  judge=false 인 항목은 판정하지 않고 '참고 증적'으로만 연결한다. 그 항목에 PRIMARY 증적이 따로 생기면, 그때 이 증적의 청크도 같이 근거로 쓴다.\n  어떤 통제항목에 PRIMARY 증적이 끝까지 없으면 '증적 없음'으로 낸다 — '판단 불가'와 구분한다."
         },
         "checklist_in_scope": {
           "type": "boolean",
@@ -149,6 +151,7 @@
       "description": "청크 하나. 입력팀 chunk 표에서 가져온다.",
       "required": [
         "chunk_id",
+        "chunk_index",
         "chunk_type",
         "text",
         "source"
@@ -257,26 +260,95 @@
     "state": "IN_PROGRESS",
     "as_of": "2026-10-03",
     "owner": "입력 파트",
-    "note": "열린 항목이 없다. 앞으로 생길 수 있는 변경은 possible_changes 의 FC-IN-1 (judge_policy 기본값) 하나뿐이고, enum 에 두 값이 다 있어 필드는 바뀌지 않는다.",
+    "note": "열린 항목이 없다. 필드·타입·값 목록이 더 바뀌지 않는다. 이 규격으로 개발하면 된다.",
     "settled": [
       "chunks 는 본문(text)을 그대로 담는다. chunk_id 만 넘기고 DB 조회하는 방식은 쓰지 않는다.",
       "chunks[].text 는 판정 LLM 에 넘기는 글자와 정확히 같아야 한다. 인용 대조의 기준이다.",
       "evidence_id·version·control_id 는 Phase 1 결과의 값을 그대로 쓴다. 새로 만들지 않는다.",
       "판정 단위는 증적1 × 통제항목1 (1층). 여러 증적을 한 항목으로 묶는 2층은 이 스키마를 그대로 쓰고 감싸는 스키마를 따로 둔다. (입력 파트 결정 2026-10-02)",
-      "judge_policy = primary_only 로 확정. relation=PRIMARY 인 항목만 판정하고, RELATED 는 판정하지 않고 참고 증적으로 연결만 한다. 어떤 통제항목에 PRIMARY 증적이 끝까지 없으면 '증적 없음'으로 낸다 — '판단 불가'와 구분한다. 근거: all_mapped 로 넓히면 판정 대상 46 → 72조합, 약 383분 → 600분이 되고 RELATED 조합은 질문지 대부분이 범위 밖이라 UNKNOWN 이 쏟아져 검토가 불어난다. 넓히는 쪽은 코드로 준비해 두었고 필요하면 그때 켠다. (팀 결정 2026-10-03)"
+      "judge_policy = primary_only 로 확정. relation=PRIMARY 인 항목만 판정하고, RELATED 는 판정하지 않고 참고 증적으로 연결만 한다. 어떤 통제항목에 PRIMARY 증적이 끝까지 없으면 '증적 없음'으로 낸다 — '판단 불가'와 구분한다. (팀 결정 2026-10-03)",
+      "chunks 는 chunk_index 오름차순으로 정렬해 넣는다. chunk_index 는 필수다. phase2_판단 context_builder.normalize_chunks() 가 enumerate(chunks) 로 배열 순서를 그대로 문서 순서로 쓰기 때문에, 정렬하지 않으면 앞뒤 문맥 청크가 엉뚱하게 붙는다. (입력 파트 결정 2026-10-03)",
+      "targets[].checklist_in_scope 는 필수다. 선택 필드로 두면 키가 빠진 대상이 조용히 '질문지 없음'으로 걸러져 판정에서 사라진다. (입력 파트 결정 2026-10-03)"
     ],
     "open": [],
     "unstable_fields": [],
-    "on_change": "합의가 끝나면 schema_version 을 올린다 (phase2-input-0.1 → 0.2). judge_policy 값을 결과에 남기므로, 정책이 바뀌어도 어느 정책으로 나온 입력인지 구분된다.",
-    "possible_changes": [
-      {
-        "id": "FC-IN-1",
-        "field": "judge_policy.default",
-        "change": "\"primary_only\" → \"all_mapped\"",
-        "when": "나중에 all_mapped 로 넓히기로 하면. 지금은 primary_only 로 확정됐다. 넓히려면 한 통제항목에 증적이 여러 개 붙는 2층 집계와 화면이 같이 필요하다.",
-        "impact": "이 한 줄뿐이다. enum 에 두 값이 다 있으므로 필드·타입·값 목록이 바뀌지 않는다. 받는 쪽은 데이터의 실제 judge 값을 읽으므로 코드가 깨지지 않는다. 결과에 judge_policy 가 값으로 남아 어느 정책으로 나온 입력인지 구분된다.",
-        "safe_to_build_now": true
+    "on_change": "필드나 값 목록이 바뀌면 schema_version 을 올린다. 지금 판은 phase2-input-0.2.\n  ★ 2026-10-03 에 required 가 늘었지만 번호는 올리지 않았다 (다른 팀 코드 변경 최소화). 10/2 에 배포한 같은 번호 파일은 폐기하고 이 파일로 교체해야 한다. 자세한 근거는 ISSUES.md '판 번호' 절.",
+    "possible_changes": []
+  },
+  "allOf": [
+    {
+      "$comment": "judge_policy = primary_only 일 때의 모양. PRIMARY↔judge 가 어긋난 입력을 거른다.",
+      "if": {
+        "properties": {
+          "judge_policy": {
+            "const": "primary_only"
+          }
+        },
+        "required": [
+          "judge_policy"
+        ]
+      },
+      "then": {
+        "properties": {
+          "targets": {
+            "items": {
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "relation": {
+                        "const": "PRIMARY"
+                      }
+                    },
+                    "required": [
+                      "relation"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "judge": {
+                        "const": true
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "relation": {
+                        "const": "RELATED"
+                      }
+                    },
+                    "required": [
+                      "relation"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "judge": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "contains": {
+              "type": "object",
+              "properties": {
+                "relation": {
+                  "const": "PRIMARY"
+                }
+              },
+              "required": [
+                "relation"
+              ]
+            },
+            "minContains": 0,
+            "maxContains": 1
+          }
+        }
       }
-    ]
-  }
+    }
+  ]
 }
