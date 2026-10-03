@@ -1,0 +1,3 @@
+# These two files are linked by a raw file hash. Preserve their bytes on checkout.
+full_checklist_draft.json text eol=lf
+full_reason_codes_draft.json text eol=lf

@@ -1,0 +1,983 @@
+[
+  {
+    "control_id": "1.1.1",
+    "major_check": 1,
+    "item_ids": [
+      "1.1.1-Q01",
+      "1.1.1-Q02"
+    ]
+  },
+  {
+    "control_id": "1.1.1",
+    "major_check": 2,
+    "item_ids": [
+      "1.1.1-Q03",
+      "1.1.1-Q04"
+    ]
+  },
+  {
+    "control_id": "1.1.2",
+    "major_check": 1,
+    "item_ids": [
+      "1.1.2-Q01",
+      "1.1.2-Q02"
+    ]
+  },
+  {
+    "control_id": "1.1.2",
+    "major_check": 2,
+    "item_ids": [
+      "1.1.2-Q03",
+      "1.1.2-Q04"
+    ]
+  },
+  {
+    "control_id": "1.1.3",
+    "major_check": 1,
+    "item_ids": [
+      "1.1.3-Q01",
+      "1.1.3-Q02"
+    ]
+  },
+  {
+    "control_id": "1.1.3",
+    "major_check": 2,
+    "item_ids": [
+      "1.1.3-Q03",
+      "1.1.3-Q04"
+    ]
+  },
+  {
+    "control_id": "1.1.3",
+    "major_check": 3,
+    "item_ids": [
+      "1.1.3-Q05",
+      "1.1.3-Q06"
+    ]
+  },
+  {
+    "control_id": "1.1.4",
+    "major_check": 1,
+    "item_ids": [
+      "1.1.4-Q01"
+    ]
+  },
+  {
+    "control_id": "1.1.4",
+    "major_check": 2,
+    "item_ids": [
+      "1.1.4-Q02",
+      "1.1.4-Q03"
+    ]
+  },
+  {
+    "control_id": "1.1.4",
+    "major_check": 3,
+    "item_ids": [
+      "1.1.4-Q04"
+    ]
+  },
+  {
+    "control_id": "1.1.5",
+    "major_check": 1,
+    "item_ids": [
+      "1.1.5-Q01"
+    ]
+  },
+  {
+    "control_id": "1.1.5",
+    "major_check": 2,
+    "item_ids": [
+      "1.1.5-Q02"
+    ]
+  },
+  {
+    "control_id": "1.1.5",
+    "major_check": 3,
+    "item_ids": [
+      "1.1.5-Q03"
+    ]
+  },
+  {
+    "control_id": "1.1.5",
+    "major_check": 4,
+    "item_ids": [
+      "1.1.5-Q04"
+    ]
+  },
+  {
+    "control_id": "1.1.6",
+    "major_check": 1,
+    "item_ids": [
+      "1.1.6-Q01"
+    ]
+  },
+  {
+    "control_id": "1.1.6",
+    "major_check": 2,
+    "item_ids": [
+      "1.1.6-Q02",
+      "1.1.6-Q03"
+    ]
+  },
+  {
+    "control_id": "1.1.6",
+    "major_check": 3,
+    "item_ids": [
+      "1.1.6-Q04",
+      "1.1.6-Q05",
+      "1.1.6-Q06"
+    ]
+  },
+  {
+    "control_id": "1.2.1",
+    "major_check": 1,
+    "item_ids": [
+      "1.2.1-Q01",
+      "1.2.1-Q02"
+    ]
+  },
+  {
+    "control_id": "1.2.1",
+    "major_check": 2,
+    "item_ids": [
+      "1.2.1-Q03"
+    ]
+  },
+  {
+    "control_id": "1.2.1",
+    "major_check": 3,
+    "item_ids": [
+      "1.2.1-Q04"
+    ]
+  },
+  {
+    "control_id": "1.2.2",
+    "major_check": 1,
+    "item_ids": [
+      "1.2.2-Q01"
+    ]
+  },
+  {
+    "control_id": "1.2.2",
+    "major_check": 2,
+    "item_ids": [
+      "1.2.2-Q02"
+    ]
+  },
+  {
+    "control_id": "1.2.2",
+    "major_check": 3,
+    "item_ids": [
+      "1.2.2-Q03"
+    ]
+  },
+  {
+    "control_id": "1.2.3",
+    "major_check": 1,
+    "item_ids": [
+      "1.2.3-Q01"
+    ]
+  },
+  {
+    "control_id": "1.2.3",
+    "major_check": 2,
+    "item_ids": [
+      "1.2.3-Q02"
+    ]
+  },
+  {
+    "control_id": "1.2.3",
+    "major_check": 3,
+    "item_ids": [
+      "1.2.3-Q03",
+      "1.2.3-Q04"
+    ]
+  },
+  {
+    "control_id": "1.2.3",
+    "major_check": 4,
+    "item_ids": [
+      "1.2.3-Q05",
+      "1.2.3-Q06"
+    ]
+  },
+  {
+    "control_id": "1.2.3",
+    "major_check": 5,
+    "item_ids": [
+      "1.2.3-Q07"
+    ]
+  },
+  {
+    "control_id": "1.2.4",
+    "major_check": 1,
+    "item_ids": [
+      "1.2.4-Q01",
+      "1.2.4-Q02"
+    ]
+  },
+  {
+    "control_id": "1.2.4",
+    "major_check": 2,
+    "item_ids": [
+      "1.2.4-Q03",
+      "1.2.4-Q04"
+    ]
+  },
+  {
+    "control_id": "1.3.1",
+    "major_check": 1,
+    "item_ids": [
+      "1.3.1-Q01",
+      "1.3.1-Q02"
+    ]
+  },
+  {
+    "control_id": "1.3.1",
+    "major_check": 2,
+    "item_ids": [
+      "1.3.1-Q03"
+    ]
+  },
+  {
+    "control_id": "1.3.2",
+    "major_check": 1,
+    "item_ids": [
+      "1.3.2-Q01"
+    ]
+  },
+  {
+    "control_id": "1.3.2",
+    "major_check": 2,
+    "item_ids": [
+      "1.3.2-Q02"
+    ]
+  },
+  {
+    "control_id": "1.3.3",
+    "major_check": 1,
+    "item_ids": [
+      "1.3.3-Q01"
+    ]
+  },
+  {
+    "control_id": "1.3.3",
+    "major_check": 2,
+    "item_ids": [
+      "1.3.3-Q02"
+    ]
+  },
+  {
+    "control_id": "1.4.1",
+    "major_check": 1,
+    "item_ids": [
+      "1.4.1-Q01",
+      "1.4.1-Q02"
+    ]
+  },
+  {
+    "control_id": "1.4.1",
+    "major_check": 2,
+    "item_ids": [
+      "1.4.1-Q03"
+    ]
+  },
+  {
+    "control_id": "1.4.2",
+    "major_check": 1,
+    "item_ids": [
+      "1.4.2-Q01"
+    ]
+  },
+  {
+    "control_id": "1.4.2",
+    "major_check": 2,
+    "item_ids": [
+      "1.4.2-Q02",
+      "1.4.2-Q03",
+      "1.4.2-Q04"
+    ]
+  },
+  {
+    "control_id": "1.4.3",
+    "major_check": 1,
+    "item_ids": [
+      "1.4.3-Q01",
+      "1.4.3-Q02",
+      "1.4.3-Q03"
+    ]
+  },
+  {
+    "control_id": "1.4.3",
+    "major_check": 2,
+    "item_ids": [
+      "1.4.3-Q04"
+    ]
+  },
+  {
+    "control_id": "3.1.1",
+    "major_check": 1,
+    "item_ids": [
+      "3.1.1-Q01"
+    ]
+  },
+  {
+    "control_id": "3.1.1",
+    "major_check": 2,
+    "item_ids": [
+      "3.1.1-Q02",
+      "3.1.1-Q03"
+    ]
+  },
+  {
+    "control_id": "3.1.1",
+    "major_check": 3,
+    "item_ids": [
+      "3.1.1-Q04",
+      "3.1.1-Q05"
+    ]
+  },
+  {
+    "control_id": "3.1.1",
+    "major_check": 4,
+    "item_ids": [
+      "3.1.1-Q06",
+      "3.1.1-Q07"
+    ]
+  },
+  {
+    "control_id": "3.1.1",
+    "major_check": 5,
+    "item_ids": [
+      "3.1.1-Q08",
+      "3.1.1-Q09"
+    ]
+  },
+  {
+    "control_id": "3.1.1",
+    "major_check": 6,
+    "item_ids": [
+      "3.1.1-Q10"
+    ]
+  },
+  {
+    "control_id": "3.1.1",
+    "major_check": 7,
+    "item_ids": [
+      "3.1.1-Q11"
+    ]
+  },
+  {
+    "control_id": "3.1.1",
+    "major_check": 8,
+    "item_ids": [
+      "3.1.1-Q12"
+    ]
+  },
+  {
+    "control_id": "3.1.1",
+    "major_check": 9,
+    "item_ids": [
+      "3.1.1-Q13",
+      "3.1.1-Q14",
+      "3.1.1-Q15",
+      "3.1.1-Q16"
+    ]
+  },
+  {
+    "control_id": "3.1.2",
+    "major_check": 1,
+    "item_ids": [
+      "3.1.2-Q01"
+    ]
+  },
+  {
+    "control_id": "3.1.2",
+    "major_check": 2,
+    "item_ids": [
+      "3.1.2-Q02"
+    ]
+  },
+  {
+    "control_id": "3.1.2",
+    "major_check": 3,
+    "item_ids": [
+      "3.1.2-Q03"
+    ]
+  },
+  {
+    "control_id": "3.1.3",
+    "major_check": 1,
+    "item_ids": [
+      "3.1.3-Q01"
+    ]
+  },
+  {
+    "control_id": "3.1.3",
+    "major_check": 2,
+    "item_ids": [
+      "3.1.3-Q02"
+    ]
+  },
+  {
+    "control_id": "3.1.3",
+    "major_check": 3,
+    "item_ids": [
+      "3.1.3-Q03"
+    ]
+  },
+  {
+    "control_id": "3.1.4",
+    "major_check": 1,
+    "item_ids": [
+      "3.1.4-Q01"
+    ]
+  },
+  {
+    "control_id": "3.1.4",
+    "major_check": 2,
+    "item_ids": [
+      "3.1.4-Q02"
+    ]
+  },
+  {
+    "control_id": "3.1.4",
+    "major_check": 3,
+    "item_ids": [
+      "3.1.4-Q03"
+    ]
+  },
+  {
+    "control_id": "3.1.5",
+    "major_check": 1,
+    "item_ids": [
+      "3.1.5-Q01"
+    ]
+  },
+  {
+    "control_id": "3.1.5",
+    "major_check": 2,
+    "item_ids": [
+      "3.1.5-Q02"
+    ]
+  },
+  {
+    "control_id": "3.1.5",
+    "major_check": 3,
+    "item_ids": [
+      "3.1.5-Q03"
+    ]
+  },
+  {
+    "control_id": "3.1.5",
+    "major_check": 4,
+    "item_ids": [
+      "3.1.5-Q04"
+    ]
+  },
+  {
+    "control_id": "3.1.5",
+    "major_check": 5,
+    "item_ids": [
+      "3.1.5-Q05"
+    ]
+  },
+  {
+    "control_id": "3.1.5",
+    "major_check": 6,
+    "item_ids": [
+      "3.1.5-Q06"
+    ]
+  },
+  {
+    "control_id": "3.1.6",
+    "major_check": 1,
+    "item_ids": [
+      "3.1.6-Q01"
+    ]
+  },
+  {
+    "control_id": "3.1.6",
+    "major_check": 2,
+    "item_ids": [
+      "3.1.6-Q02"
+    ]
+  },
+  {
+    "control_id": "3.1.6",
+    "major_check": 3,
+    "item_ids": [
+      "3.1.6-Q03"
+    ]
+  },
+  {
+    "control_id": "3.1.6",
+    "major_check": 4,
+    "item_ids": [
+      "3.1.6-Q04"
+    ]
+  },
+  {
+    "control_id": "3.1.6",
+    "major_check": 5,
+    "item_ids": [
+      "3.1.6-Q05"
+    ]
+  },
+  {
+    "control_id": "3.1.6",
+    "major_check": 6,
+    "item_ids": [
+      "3.1.6-Q06",
+      "3.1.6-Q07"
+    ]
+  },
+  {
+    "control_id": "3.1.6",
+    "major_check": 7,
+    "item_ids": [
+      "3.1.6-Q08",
+      "3.1.6-Q09"
+    ]
+  },
+  {
+    "control_id": "3.1.6",
+    "major_check": 8,
+    "item_ids": [
+      "3.1.6-Q10"
+    ]
+  },
+  {
+    "control_id": "3.1.7",
+    "major_check": 1,
+    "item_ids": [
+      "3.1.7-Q01"
+    ]
+  },
+  {
+    "control_id": "3.1.7",
+    "major_check": 2,
+    "item_ids": [
+      "3.1.7-Q02",
+      "3.1.7-Q03"
+    ]
+  },
+  {
+    "control_id": "3.1.7",
+    "major_check": 3,
+    "item_ids": [
+      "3.1.7-Q04"
+    ]
+  },
+  {
+    "control_id": "3.1.7",
+    "major_check": 4,
+    "item_ids": [
+      "3.1.7-Q05",
+      "3.1.7-Q06"
+    ]
+  },
+  {
+    "control_id": "3.2.1",
+    "major_check": 1,
+    "item_ids": [
+      "3.2.1-Q01"
+    ]
+  },
+  {
+    "control_id": "3.2.1",
+    "major_check": 2,
+    "item_ids": [
+      "3.2.1-Q02"
+    ]
+  },
+  {
+    "control_id": "3.2.1",
+    "major_check": 3,
+    "item_ids": [
+      "3.2.1-Q03"
+    ]
+  },
+  {
+    "control_id": "3.2.2",
+    "major_check": 1,
+    "item_ids": [
+      "3.2.2-Q01",
+      "3.2.2-Q02"
+    ]
+  },
+  {
+    "control_id": "3.2.2",
+    "major_check": 2,
+    "item_ids": [
+      "3.2.2-Q03"
+    ]
+  },
+  {
+    "control_id": "3.2.3",
+    "major_check": 1,
+    "item_ids": [
+      "3.2.3-Q01",
+      "3.2.3-Q02"
+    ]
+  },
+  {
+    "control_id": "3.2.3",
+    "major_check": 2,
+    "item_ids": [
+      "3.2.3-Q03"
+    ]
+  },
+  {
+    "control_id": "3.2.3",
+    "major_check": 3,
+    "item_ids": [
+      "3.2.3-Q04"
+    ]
+  },
+  {
+    "control_id": "3.2.4",
+    "major_check": 1,
+    "item_ids": [
+      "3.2.4-Q01"
+    ]
+  },
+  {
+    "control_id": "3.2.4",
+    "major_check": 2,
+    "item_ids": [
+      "3.2.4-Q02"
+    ]
+  },
+  {
+    "control_id": "3.2.4",
+    "major_check": 3,
+    "item_ids": [
+      "3.2.4-Q03"
+    ]
+  },
+  {
+    "control_id": "3.2.4",
+    "major_check": 4,
+    "item_ids": [
+      "3.2.4-Q04"
+    ]
+  },
+  {
+    "control_id": "3.2.4",
+    "major_check": 5,
+    "item_ids": [
+      "3.2.4-Q05"
+    ]
+  },
+  {
+    "control_id": "3.2.4",
+    "major_check": 6,
+    "item_ids": [
+      "3.2.4-Q06"
+    ]
+  },
+  {
+    "control_id": "3.2.5",
+    "major_check": 1,
+    "item_ids": [
+      "3.2.5-Q01"
+    ]
+  },
+  {
+    "control_id": "3.2.5",
+    "major_check": 2,
+    "item_ids": [
+      "3.2.5-Q02"
+    ]
+  },
+  {
+    "control_id": "3.2.5",
+    "major_check": 3,
+    "item_ids": [
+      "3.2.5-Q03"
+    ]
+  },
+  {
+    "control_id": "3.2.5",
+    "major_check": 4,
+    "item_ids": [
+      "3.2.5-Q04",
+      "3.2.5-Q05",
+      "3.2.5-Q06"
+    ]
+  },
+  {
+    "control_id": "3.2.5",
+    "major_check": 5,
+    "item_ids": [
+      "3.2.5-Q07",
+      "3.2.5-Q08"
+    ]
+  },
+  {
+    "control_id": "3.2.5",
+    "major_check": 6,
+    "item_ids": [
+      "3.2.5-Q09"
+    ]
+  },
+  {
+    "control_id": "3.3.1",
+    "major_check": 1,
+    "item_ids": [
+      "3.3.1-Q01"
+    ]
+  },
+  {
+    "control_id": "3.3.1",
+    "major_check": 2,
+    "item_ids": [
+      "3.3.1-Q02"
+    ]
+  },
+  {
+    "control_id": "3.3.1",
+    "major_check": 3,
+    "item_ids": [
+      "3.3.1-Q03",
+      "3.3.1-Q04"
+    ]
+  },
+  {
+    "control_id": "3.3.1",
+    "major_check": 4,
+    "item_ids": [
+      "3.3.1-Q05"
+    ]
+  },
+  {
+    "control_id": "3.3.1",
+    "major_check": 5,
+    "item_ids": [
+      "3.3.1-Q06",
+      "3.3.1-Q07"
+    ]
+  },
+  {
+    "control_id": "3.3.1",
+    "major_check": 6,
+    "item_ids": [
+      "3.3.1-Q08"
+    ]
+  },
+  {
+    "control_id": "3.3.1",
+    "major_check": 7,
+    "item_ids": [
+      "3.3.1-Q09",
+      "3.3.1-Q10",
+      "3.3.1-Q11",
+      "3.3.1-Q12"
+    ]
+  },
+  {
+    "control_id": "3.3.2",
+    "major_check": 1,
+    "item_ids": [
+      "3.3.2-Q01"
+    ]
+  },
+  {
+    "control_id": "3.3.2",
+    "major_check": 2,
+    "item_ids": [
+      "3.3.2-Q02"
+    ]
+  },
+  {
+    "control_id": "3.3.3",
+    "major_check": 1,
+    "item_ids": [
+      "3.3.3-Q01"
+    ]
+  },
+  {
+    "control_id": "3.3.3",
+    "major_check": 2,
+    "item_ids": [
+      "3.3.3-Q02"
+    ]
+  },
+  {
+    "control_id": "3.3.3",
+    "major_check": 3,
+    "item_ids": [
+      "3.3.3-Q03"
+    ]
+  },
+  {
+    "control_id": "3.3.4",
+    "major_check": 1,
+    "item_ids": [
+      "3.3.4-Q01",
+      "3.3.4-Q02"
+    ]
+  },
+  {
+    "control_id": "3.3.4",
+    "major_check": 2,
+    "item_ids": [
+      "3.3.4-Q03"
+    ]
+  },
+  {
+    "control_id": "3.3.4",
+    "major_check": 3,
+    "item_ids": [
+      "3.3.4-Q04"
+    ]
+  },
+  {
+    "control_id": "3.3.4",
+    "major_check": 4,
+    "item_ids": [
+      "3.3.4-Q05"
+    ]
+  },
+  {
+    "control_id": "3.4.1",
+    "major_check": 1,
+    "item_ids": [
+      "3.4.1-Q01"
+    ]
+  },
+  {
+    "control_id": "3.4.1",
+    "major_check": 2,
+    "item_ids": [
+      "3.4.1-Q02"
+    ]
+  },
+  {
+    "control_id": "3.4.1",
+    "major_check": 3,
+    "item_ids": [
+      "3.4.1-Q03"
+    ]
+  },
+  {
+    "control_id": "3.4.1",
+    "major_check": 4,
+    "item_ids": [
+      "3.4.1-Q04"
+    ]
+  },
+  {
+    "control_id": "3.4.2",
+    "major_check": 1,
+    "item_ids": [
+      "3.4.2-Q01",
+      "3.4.2-Q02",
+      "3.4.2-Q03"
+    ]
+  },
+  {
+    "control_id": "3.4.2",
+    "major_check": 2,
+    "item_ids": [
+      "3.4.2-Q04"
+    ]
+  },
+  {
+    "control_id": "3.4.2",
+    "major_check": 3,
+    "item_ids": [
+      "3.4.2-Q05"
+    ]
+  },
+  {
+    "control_id": "3.4.2",
+    "major_check": 4,
+    "item_ids": [
+      "3.4.2-Q06"
+    ]
+  },
+  {
+    "control_id": "3.5.1",
+    "major_check": 1,
+    "item_ids": [
+      "3.5.1-Q01",
+      "3.5.1-Q02"
+    ]
+  },
+  {
+    "control_id": "3.5.1",
+    "major_check": 2,
+    "item_ids": [
+      "3.5.1-Q03"
+    ]
+  },
+  {
+    "control_id": "3.5.1",
+    "major_check": 3,
+    "item_ids": [
+      "3.5.1-Q04"
+    ]
+  },
+  {
+    "control_id": "3.5.2",
+    "major_check": 1,
+    "item_ids": [
+      "3.5.2-Q01",
+      "3.5.2-Q02"
+    ]
+  },
+  {
+    "control_id": "3.5.2",
+    "major_check": 2,
+    "item_ids": [
+      "3.5.2-Q03"
+    ]
+  },
+  {
+    "control_id": "3.5.2",
+    "major_check": 3,
+    "item_ids": [
+      "3.5.2-Q04"
+    ]
+  },
+  {
+    "control_id": "3.5.2",
+    "major_check": 4,
+    "item_ids": [
+      "3.5.2-Q05",
+      "3.5.2-Q06"
+    ]
+  },
+  {
+    "control_id": "3.5.2",
+    "major_check": 5,
+    "item_ids": [
+      "3.5.2-Q07"
+    ]
+  },
+  {
+    "control_id": "3.5.2",
+    "major_check": 6,
+    "item_ids": [
+      "3.5.2-Q08",
+      "3.5.2-Q09"
+    ]
+  },
+  {
+    "control_id": "3.5.3",
+    "major_check": 1,
+    "item_ids": [
+      "3.5.3-Q01"
+    ]
+  },
+  {
+    "control_id": "3.5.3",
+    "major_check": 2,
+    "item_ids": [
+      "3.5.3-Q02"
+    ]
+  }
+]

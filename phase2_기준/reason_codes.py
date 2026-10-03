@@ -20,7 +20,7 @@ DEFAULT_CATALOG = HERE / "reason_codes_draft.json"
 DEFAULT_EXAMPLES = HERE / "reason_code_examples.json"
 RESULTS = {"MET", "NOT_MET", "UNKNOWN"}
 SOURCE_NAMES = {"checklist_draft.json", "review_examples.json"}
-CHECKLIST_SOURCES = {"checklist_draft.json", "chapter2_full_checklist_draft.json"}
+CHECKLIST_SOURCES = {"checklist_draft.json", "chapter2_full_checklist_draft.json", "full_checklist_draft.json"}
 
 
 class ReasonCodeError(ValueError):

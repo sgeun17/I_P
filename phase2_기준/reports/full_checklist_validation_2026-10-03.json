@@ -1,0 +1,534 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-03",
+  "approved": false,
+  "checklist_version": "phase2-checklist-full-draft-2026-10-03-r1",
+  "checklist_sha256": "c265cfb94f512829e6ae0a83ed09267010c3d137ee3cf02d484f23468ce17a11",
+  "catalog_sha256": "5e4790f86b0714bab02985a58bd30765a3b2bd58eb0b506738dd322b25b470d0",
+  "control_count": 101,
+  "question_count": 883,
+  "new_question_count": 183,
+  "new_major_check_count": 133,
+  "questions_per_chapter": {
+    "1": 64,
+    "2": 700,
+    "3": 119
+  },
+  "chapter2_content_preserved": true,
+  "source_pdf_verified": true,
+  "llm_executed": false,
+  "actual_evidence_used": false,
+  "semantic_judgment_checked": false,
+  "controls": [
+    {
+      "control_id": "1.1.1",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "1.1.2",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "1.1.3",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "1.1.4",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "1.1.5",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "1.1.6",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "1.2.1",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "1.2.2",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "1.2.3",
+      "questions": 7,
+      "passed": true
+    },
+    {
+      "control_id": "1.2.4",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "1.3.1",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "1.3.2",
+      "questions": 2,
+      "passed": true
+    },
+    {
+      "control_id": "1.3.3",
+      "questions": 2,
+      "passed": true
+    },
+    {
+      "control_id": "1.4.1",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "1.4.2",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "1.4.3",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "2.1.1",
+      "questions": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.1.2",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.1.3",
+      "questions": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.1",
+      "questions": 8,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.2",
+      "questions": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.3",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.4",
+      "questions": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.5",
+      "questions": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.2.6",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "2.3.1",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.3.2",
+      "questions": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.3.3",
+      "questions": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.3.4",
+      "questions": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.1",
+      "questions": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.2",
+      "questions": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.3",
+      "questions": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.4",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.5",
+      "questions": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.6",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.4.7",
+      "questions": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.1",
+      "questions": 20,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.2",
+      "questions": 10,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.3",
+      "questions": 14,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.4",
+      "questions": 22,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.5",
+      "questions": 19,
+      "passed": true
+    },
+    {
+      "control_id": "2.5.6",
+      "questions": 14,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.1",
+      "questions": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.2",
+      "questions": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.3",
+      "questions": 13,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.4",
+      "questions": 10,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.5",
+      "questions": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.6",
+      "questions": 19,
+      "passed": true
+    },
+    {
+      "control_id": "2.6.7",
+      "questions": 14,
+      "passed": true
+    },
+    {
+      "control_id": "2.7.1",
+      "questions": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.7.2",
+      "questions": 16,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.1",
+      "questions": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.2",
+      "questions": 18,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.3",
+      "questions": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.4",
+      "questions": 8,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.5",
+      "questions": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.8.6",
+      "questions": 8,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.1",
+      "questions": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.2",
+      "questions": 25,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.3",
+      "questions": 20,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.4",
+      "questions": 19,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.5",
+      "questions": 14,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.6",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "2.9.7",
+      "questions": 16,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.1",
+      "questions": 18,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.2",
+      "questions": 13,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.3",
+      "questions": 13,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.4",
+      "questions": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.5",
+      "questions": 5,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.6",
+      "questions": 9,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.7",
+      "questions": 10,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.8",
+      "questions": 15,
+      "passed": true
+    },
+    {
+      "control_id": "2.10.9",
+      "questions": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.1",
+      "questions": 8,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.2",
+      "questions": 15,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.3",
+      "questions": 11,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.4",
+      "questions": 7,
+      "passed": true
+    },
+    {
+      "control_id": "2.11.5",
+      "questions": 15,
+      "passed": true
+    },
+    {
+      "control_id": "2.12.1",
+      "questions": 12,
+      "passed": true
+    },
+    {
+      "control_id": "2.12.2",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "3.1.1",
+      "questions": 16,
+      "passed": true
+    },
+    {
+      "control_id": "3.1.2",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "3.1.3",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "3.1.4",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "3.1.5",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "3.1.6",
+      "questions": 10,
+      "passed": true
+    },
+    {
+      "control_id": "3.1.7",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "3.2.1",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "3.2.2",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "3.2.3",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "3.2.4",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "3.2.5",
+      "questions": 9,
+      "passed": true
+    },
+    {
+      "control_id": "3.3.1",
+      "questions": 12,
+      "passed": true
+    },
+    {
+      "control_id": "3.3.2",
+      "questions": 2,
+      "passed": true
+    },
+    {
+      "control_id": "3.3.3",
+      "questions": 3,
+      "passed": true
+    },
+    {
+      "control_id": "3.3.4",
+      "questions": 5,
+      "passed": true
+    },
+    {
+      "control_id": "3.4.1",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "3.4.2",
+      "questions": 6,
+      "passed": true
+    },
+    {
+      "control_id": "3.5.1",
+      "questions": 4,
+      "passed": true
+    },
+    {
+      "control_id": "3.5.2",
+      "questions": 9,
+      "passed": true
+    },
+    {
+      "control_id": "3.5.3",
+      "questions": 2,
+      "passed": true
+    }
+  ],
+  "limits": [
+    "원문과의 연결·구조 검사이며 현행 법령 검증이나 팀 승인이 아니다.",
+    "자료 부족 UNKNOWN 고정 응답으로 전체 연결을 확인했다. 모델 정확도 검증이 아니다.",
+    "1·3장 주요 확인사항의 1차 분해. 세부 설명 전체 및 복수 요건의 추가 원자화 검토가 남아 있다."
+  ]
+}

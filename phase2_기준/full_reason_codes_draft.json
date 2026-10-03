@@ -1,0 +1,240 @@
+{
+  "catalog_version": "phase2-reason-codes-full-draft-2026-10-03-r1",
+  "status": "DRAFT_FOR_TEAM_REVIEW",
+  "approved": false,
+  "metadata": {
+    "created_at": "2026-10-03",
+    "review_only": true,
+    "human_approved": false,
+    "llm_executed": false,
+    "actual_evidence_used": false,
+    "wbs_item": "사용자 요청에 따른 1·2·3장 범위 확장",
+    "coverage": "101개 통제항목·883문항의 구조 연결용 공통 사유 13종. 신규 문항의 의미별 코드 충분성은 팀 검수 전.",
+    "parent_catalog_version": "phase2-reason-codes-chapter2-full-draft-2026-10-01-r3",
+    "parent_catalog_sha256": "799d37627b9db7b4df672be03d3da05bb4c81cfc05f144020c101d48427c4336",
+    "example_coverage": "대표 사례만 별도 검증. 전체 문항의 MET/NOT_MET/UNKNOWN 정답셋은 미작성."
+  },
+  "checklist_version": "phase2-checklist-full-draft-2026-10-03-r1",
+  "source_files": [
+    {
+      "path": "full_checklist_draft.json",
+      "sha256": "c265cfb94f512829e6ae0a83ed09267010c3d137ee3cf02d484f23468ce17a11"
+    }
+  ],
+  "result_values": [
+    "MET",
+    "NOT_MET",
+    "UNKNOWN"
+  ],
+  "assignment_rules": {
+    "met_reason_codes": [],
+    "not_met_requires_direct_confirmation": true,
+    "evidence_missing_is_not_failure": true,
+    "multiple_codes_allowed": true,
+    "code_order_is_priority": false,
+    "classification_automated": false,
+    "notes": [
+      "이 목록은 문항의 자연어 기준을 대체하지 않는다. 코드만으로 증적을 판정하지 않는다.",
+      "MET·NOT_MET에 필요한 실제 증적 인용은 판단·인터페이스팀 계약에서 확정한다. 합성 사례의 evidence_excerpt는 검토 연결이며 운영 citations 객체가 아니다.",
+      "복수 사유의 대표값과 출력 필드, UNKNOWN 집계·N/A·critical 처리는 팀 합의 전이다."
+    ]
+  },
+  "pending_decisions": [
+    {
+      "decision_id": "PD_NO_EVENT_POLICY",
+      "question": "조건부 사건이 없는 경우 적용 제외 상태와 종합 결과 반영을 어떻게 정할 것인가?"
+    },
+    {
+      "decision_id": "PD_EXCEPTION_POLICY",
+      "question": "공유계정 등 예외의 적용 기준·승인·책임추적성 확인 및 연결 문항을 어떻게 정할 것인가?"
+    },
+    {
+      "decision_id": "PD_NOT_YET_DUE_POLICY",
+      "question": "기한 이전의 진행 중 상태를 어떤 결과·사유·집계로 표현할 것인가?"
+    },
+    {
+      "decision_id": "PD_CONFLICT_RESOLUTION",
+      "question": "동일 범위 상충 자료의 유효성·추가 확인·우선권을 어떻게 정할 것인가?"
+    },
+    {
+      "decision_id": "PD_MULTI_REASON_SELECTION",
+      "question": "복수 사유의 대표 코드가 필요한가? 필요하다면 선택 기준은 무엇인가?"
+    },
+    {
+      "decision_id": "PD_OUTPUT_CONTRACT",
+      "question": "출력 JSON의 reason·사유 코드 필드와 운영 citations 규격을 어떻게 연결할 것인가?"
+    },
+    {
+      "decision_id": "PD_AGGREGATION_POLICY",
+      "question": "UNKNOWN·적용 제외·critical을 종합 결과에 어떻게 반영할 것인가?"
+    }
+  ],
+  "codes": [
+    {
+      "code": "P2_NM_RULE_NOT_DEFINED",
+      "result": "NOT_MET",
+      "label": "절차·기준 미수립 확인",
+      "use_when": "적용 대상의 필수 절차·규정·분류·기준·주기 등이 미수립 상태라는 직접 확인이 있다.",
+      "do_not_use_when": "절차서가 첨부되지 않았다는 사실만으로 사용하지 않는다.",
+      "required_context": [
+        "검토 대상·시점",
+        "해당 문항에서 요구하는 절차·기준",
+        "미수립을 직접 확인한 문구·위치"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_NM_REQUIRED_ACTION_NOT_DONE",
+      "result": "NOT_MET",
+      "label": "필수 행동 미수행 확인",
+      "use_when": "당시 해당 대상·사건에 필요한 실행·기록·검토·개선 행동을 하지 않았다는 직접 확인이 있다.",
+      "do_not_use_when": "실행 기록을 제출하지 않았거나 사건·의무가 아직 발생하지 않은 경우에 사용하지 않는다.",
+      "required_context": [
+        "적용 사건·기간",
+        "당시 이행 의무와 기한이 있는 경우 그 기한",
+        "미수행을 직접 확인한 문구·위치"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_NM_RULE_VIOLATED",
+      "result": "NOT_MET",
+      "label": "적용 기준과 불일치 확인",
+      "use_when": "해당 대상·사건의 실제 상태 또는 처리 방법이 당시 적용되는 문항 기준과 다르다는 직접 확인이 있다.",
+      "do_not_use_when": "적용 기준·실제 상태·사건 연결 중 하나라도 확인되지 않으면 사용하지 않는다. 내부 기준만으로 원문 요구를 대체하지 않는다.",
+      "required_context": [
+        "당시 적용 기준·효력",
+        "같은 대상·사건의 실제 상태·처리",
+        "불일치를 직접 확인한 문구·위치"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_EVIDENCE_INSUFFICIENT",
+      "result": "UNKNOWN",
+      "label": "근거 자료·내용 부족",
+      "use_when": "필요한 자료가 없거나 일부만 제공되어 문항을 확인할 정보가 부족하다.",
+      "do_not_use_when": "자료 미첨부를 실제 미수행 또는 미수립으로 바꾸지 않는다.",
+      "required_context": [
+        "필요한 정보",
+        "제공된 정보와 확인되지 않은 정보"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_SCOPE_OR_RULE_UNCLEAR",
+      "result": "UNKNOWN",
+      "label": "적용 범위·기준 불명",
+      "use_when": "제공된 자료의 적용 대상·범위 또는 문항에 적용할 기준을 확정할 수 없다.",
+      "do_not_use_when": "기준이 존재하지 않는다는 직접 확인과 구분한다. 금융권 추가요건 등을 임의로 적용하지 않는다.",
+      "required_context": [
+        "검토 대상·범위",
+        "확인되지 않은 적용 관계·기준"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_SUBJECT_OR_EVENT_UNLINKED",
+      "result": "UNKNOWN",
+      "label": "대상·사건 자료 연결 불명",
+      "use_when": "계정·매체·백업본·처리 사건 등과 제공 자료가 같은 대상을 설명하는지 연결되지 않는다.",
+      "do_not_use_when": "확인된 개별 사건을 조직 전체로 확대하지 않는다.",
+      "required_context": [
+        "검토 대상·사건 식별자",
+        "자료에 식별된 대상·사건",
+        "확인되지 않은 대응 관계"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_TIME_OR_VERSION_UNCLEAR",
+      "result": "UNKNOWN",
+      "label": "시점·기간·효력 불명",
+      "use_when": "수행일·검토기간·효력일·당시 적용 버전을 확인하지 못해 해당 시점의 이행을 대조할 수 없다.",
+      "do_not_use_when": "문서가 오래됐다는 이유만으로 사용하지 않는다. 임의의 최신성 일수 또는 최신 작성일 우선 규칙을 만들지 않는다.",
+      "required_context": [
+        "검토 기준일·대상 기간",
+        "자료의 작성·수행·효력 시점 또는 버전",
+        "확인되지 않은 시간 관계"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_EVIDENCE_UNREADABLE",
+      "result": "UNKNOWN",
+      "label": "근거 판독 불가",
+      "use_when": "필요한 근거 내용이 흐림·손상·가림 등의 이유로 읽히지 않는다.",
+      "do_not_use_when": "제목·파일명·다른 읽히는 부분만으로 필요한 본문 내용을 추측하지 않는다.",
+      "required_context": [
+        "판독이 필요한 부분",
+        "판독 불가한 위치·내용"
+      ],
+      "pending_decision_id": null
+    },
+    {
+      "code": "P2_U_EVIDENCE_CONFLICT",
+      "result": "UNKNOWN",
+      "label": "동일 범위 근거 상충",
+      "use_when": "동일 대상·사건·적용 시점의 근거가 서로 상충하고 유효 근거를 정할 정보가 없다.",
+      "do_not_use_when": "대상·시점이 다른 자료를 곧바로 상충으로 취급하지 않는다. 작성일이 최신이라는 이유만으로 우선하지 않는다.",
+      "required_context": [
+        "동일 대상·사건·시점 연결",
+        "서로 상충하는 근거",
+        "해소되지 않은 유효성·우선권"
+      ],
+      "pending_decision_id": "PD_CONFLICT_RESOLUTION"
+    },
+    {
+      "code": "P2_U_NO_TRIGGER_EVENT",
+      "result": "UNKNOWN",
+      "label": "검토 대상 사건 없음",
+      "use_when": "해당 기간에 조건부 이행을 검토할 인사 사건·발견 문제 등이 없다고 확인되었고 적용 제외 처리가 미합의다.",
+      "do_not_use_when": "사건 없음과 사건 자료 미제공을 혼동하지 않는다. 자동 MET·NOT_MET·N/A를 부여하지 않는다.",
+      "required_context": [
+        "해당 문항의 이행 발생 조건",
+        "검토 기간",
+        "사건이 없다는 직접 확인"
+      ],
+      "pending_decision_id": "PD_NO_EVENT_POLICY"
+    },
+    {
+      "code": "P2_U_EXCEPTION_UNRESOLVED",
+      "result": "UNKNOWN",
+      "label": "예외 적용 검토 미완료",
+      "use_when": "공유계정 등 예외의 적용 가능성·승인·책임추적성을 확인하지 못해 일반 기준만으로 결론을 내릴 수 없다.",
+      "do_not_use_when": "공유계정 존재만으로 자동 NOT_MET이나 예외 승인을 부여하지 않는다.",
+      "required_context": [
+        "예외 관련 문항·범위",
+        "업무상 사유·승인·책임추적성 중 확인되지 않은 정보"
+      ],
+      "pending_decision_id": "PD_EXCEPTION_POLICY"
+    },
+    {
+      "code": "P2_U_NOT_YET_DUE",
+      "result": "UNKNOWN",
+      "label": "이행 기한 미도래",
+      "use_when": "확인된 적용 기한이 검토 기준일 이후이고 아직 이행 완료를 확인하지 못했으며 중간 상태 처리가 미합의다.",
+      "do_not_use_when": "기한 이전의 미완료를 기한 위반으로 보지 않는다. 기한이 남았다는 이유만으로 MET을 부여하지 않는다.",
+      "required_context": [
+        "검토 기준일",
+        "해당 사건의 적용 기한",
+        "현재 진행·완료 상태"
+      ],
+      "pending_decision_id": "PD_NOT_YET_DUE_POLICY"
+    },
+    {
+      "code": "P2_U_OBSERVATION_INCOMPLETE",
+      "result": "UNKNOWN",
+      "label": "필요 관찰기간 미확인",
+      "use_when": "적용 의무·대상 기간은 확인되었지만 일부 시점·일부 백업본 자료만 있어 검토 대상 전체의 기간 이행을 확인할 수 없다.",
+      "do_not_use_when": "최근 백업 한 건 또는 한 시점의 존재를 전체 보관기간 이행으로 확대하지 않는다. 문서 나이만으로 사용하지 않는다.",
+      "required_context": [
+        "검토 대상·적용 의무 기간",
+        "실제 확인 가능한 관찰 구간",
+        "확인되지 않은 구간·대상"
+      ],
+      "pending_decision_id": null
+    }
+  ],
+  "checklist_source": "full_checklist_draft.json"
+}
