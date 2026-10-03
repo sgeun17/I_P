@@ -15,12 +15,14 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from typing import Any
 
 from models import LLMMappingOutput, MappingInput
 
-PROMPT_VERSION = "phase1_mapping_v0.7"
+SPAN_REPAIR = os.environ.get('PHASE1_SPAN_REPAIR') == '1'
+PROMPT_VERSION = 'phase1_mapping_v0.12-spans' if SPAN_REPAIR else 'phase1_mapping_v0.7'
 RULESET_VERSION = "mapping_rules_v0.7"
 
 

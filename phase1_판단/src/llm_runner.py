@@ -26,6 +26,7 @@ from prompts import PromptPackage, build_prompt_package
 from retry_prompt import RetryPromptError, build_retry_package
 from review_policy import DEFAULT_RETRY_POLICY, RetryPolicy
 from validators import validate
+from prompts import SPAN_REPAIR
 
 
 @dataclass(frozen=True)
@@ -39,6 +40,8 @@ class LLMRunResult:
     last_issue_codes: tuple[ErrorCode, ...] = ()
     request_error_status: int | None = None
     request_error_message: str | None = None
+    # Internal audit only; no change to the public Phase1MappingResult schema.
+    attempt_records: tuple[dict, ...] = ()
 
     @property
     def transport_succeeded(self) -> bool:
@@ -188,6 +191,43 @@ def run_mapping_llm(
             # 재시도 기회를 잃는다. 전체 Validator를 여기서도 실행하되,
             # 정책이 허용한 교정 가능 오류만 골라 한 번 다시 생성한다.
             validation = validate(output, mapping_input)
+            # Opt-in citation-only repair. Preserve the latest team's general retry path below.
+            if SPAN_REPAIR and retry_count == 0 and any(
+                i.code.value in {'E401', 'E403', 'E404'} for i in validation.issues
+            ) and retry_policy.max_retries >= 1:
+                from span_repair import prepare, apply_patch_response
+                audit = [{'attempt': attempts, 'provider_raw_response': raw,
+                          'issues': [i.model_dump(mode='json') for i in validation.issues]}]
+                repair = prepare(output, mapping_input, validation.issues)
+                if repair is None:
+                    audit[0].update(patch_applied=False, repair_error='No unambiguous source spans')
+                else:
+                    targets, correction = repair
+                    audit[0]['selection_plan'] = targets
+                    attempts += 1
+                    retry_count += 1
+                    patch_raw = None
+                    try:
+                        patch_raw = call_llm(correction.system, correction.user, model, correction.output_schema,
+                                            client_config=client_config, generation=generation,
+                                            http_client=http_client, context_budget=context_budget,
+                                            token_counter=token_counter)
+                        patched = apply_patch_response(output, mapping_input, targets, patch_raw)
+                        repaired_output, _ = parse_llm_output(patched)
+                        if repaired_output is None:
+                            raise ValueError('Repaired output failed public schema')
+                        validation = validate(repaired_output, mapping_input)
+                        normalized_raw = patched
+                        audit.append({'attempt': attempts, 'provider_raw_response': patch_raw,
+                                      'patch_applied': True,
+                                      'issues': [i.model_dump(mode='json') for i in validation.issues]})
+                    except (ValueError, TypeError, KeyError, LLMCallError, LLMRequestRejectedError) as exc:
+                        audit.append({'attempt': attempts, 'provider_raw_response': patch_raw,
+                                      'patch_applied': False, 'repair_error': str(exc)})
+                return LLMRunResult(raw_response=normalized_raw, call_error=None,
+                                    attempts=attempts, retry_count=retry_count, provider_raw_response=raw,
+                                    last_issue_codes=tuple(i.code for i in validation.issues),
+                                    attempt_records=tuple(audit))
             last_codes = tuple(issue.code for issue in validation.issues)
             next_retry_number = retry_count + 1
             repairable = [
