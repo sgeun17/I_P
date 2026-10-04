@@ -1,5 +1,5 @@
 """
-phase2_errors.py : Phase 2 오류·재시도·검토 전환   (WBS 3-B)
+phase2_errors.py : Phase 2 오류·재시도·검토 전환
 
 큰 원칙 두 개
     1. Phase 1 것을 최대한 그대로 쓴다.
@@ -14,9 +14,10 @@ phase2_errors.py : Phase 2 오류·재시도·검토 전환   (WBS 3-B)
        통제항목은 나머지 문항으로 계속 간다.
        한 질문지가 647문항인데 한 문항 때문에 전부 날리면 다시 돌리는 비용이 너무 크다.
 
-★ 미합의 — 코드 값과 임계값은 전부 초안이다. 판단팀과 맞춰야 한다.
 """
 from __future__ import annotations
+
+import warnings
 
 SPEC_VERSION = "phase2-errors-0.1"
 
@@ -136,6 +137,11 @@ REVIEW_REASONS = {
     "P2R109": ("OVERALL_RULE_CONFLICT", "종합 판정이 규칙과 어긋난다"),
     "P2R110": ("PHASE1_RESULT_STALE",
                "Phase 1 결과가 가리키는 청크가 지금 증적에 없다. 증적 version 이 올라간 것"),
+    "P2R111": ("SELF_CHECK_UNSUPPORTED",
+               "Self-check 가 그 판정을 뒷받침하지 못한다. 인용문은 원문에 있지만 "
+               "그것만으로는 판정이 성립하지 않거나, 체크리스트에 없는 조건을 지어냈다"),
+    "P2R112": ("SELF_CHECK_CONFLICT",
+               "Self-check 가 같은 범위의 근거끼리 어긋난다고 봤다"),
 
     # ── 조건부 ────────────────────────────────────────────────────────
     "P2R201": ("CRITICAL_NOT_MET",
@@ -145,11 +151,64 @@ REVIEW_REASONS = {
     "P2R203": ("OCR_SOURCE",
                "OCR 청크를 인용했다. 전처리팀이 품질 점수를 주지 않는다. Phase 1 R207 과 같은 이유"),
     "P2R204": ("ALL_UNKNOWN", "문항이 전부 UNKNOWN 이다. 사실상 판정이 안 됐다"),
+    "P2R205": ("SELF_CHECK_UNCERTAIN",
+               "Self-check 가 확신하지 못했거나 확신도가 임계 미만이다. "
+               "'틀렸다'가 아니라 '모르겠다'라서 임계값과 같이 본다"),
     # 근거가 짧은 것(P2E506)은 여기 넣지 않는다. 판단팀이 E506 을 검토로 안 보내는 것과 맞춘다.
 }
 
 # 무조건 검토인 것
 UNCONDITIONAL = tuple(k for k in REVIEW_REASONS if k.startswith("P2R1"))
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# 3-2. Self-check 신호 → 검토 사유
+#
+# 판단팀 validated_pipeline.py 는 MET·NOT_MET 이 나오면 Self-check 로 한 번 더
+# 되묻고, 그 결과를 "SELF_CHECK_" + verdict 모양의 신호로 audit.review_signals
+# 에 남긴다. 그 신호를 공식 P2R 코드로 번역하는 표다.
+#
+# ★ 이 표가 없어서 2026-10-03 전체 시험에서 4개 증적(E0002·E0010·E0021·E0025)
+#   60문항의 최종 출력이 보류됐다 (audit.review_contract_pending = true).
+#   판단팀은 이미 신호를 내고 있었고, 받을 코드가 없었던 것이다.
+#
+# verdict 는 self_check.py 의 enum 4개다 — SUPPORTED / UNSUPPORTED /
+# CONFLICT / UNCERTAIN. SUPPORTED 는 검토가 아니므로 표에 없다.
+SELF_CHECK_SIGNALS = {
+    "SELF_CHECK_UNSUPPORTED": "P2R111",
+    "SELF_CHECK_CONFLICT": "P2R112",
+    "SELF_CHECK_UNCERTAIN": "P2R205",
+    "SELF_CHECK_LOW_CONFIDENCE": "P2R205",   # 확신도가 임계 미만. UNCERTAIN 과 같이 본다
+    "SELF_CHECK_NOT_RUN": "P2R106",          # Self-check 를 아예 못 돌렸다 = LLM 호출 실패
+}
+
+
+def review_reason_for_signal(signal):
+    """
+    Self-check 신호 하나를 공식 검토 사유 코드로 바꾼다.
+    모르는 신호면 None 을 돌려준다 — 조용히 삼키지 않고 호출한 쪽이 알게 한다.
+    """
+    return SELF_CHECK_SIGNALS.get(signal)
+
+
+def review_reasons_for_signals(signals):
+    """
+    audit.review_signals 목록을 받아 (사유 코드들, 번역 못 한 신호들) 로 나눈다.
+
+        codes, unknown = review_reasons_for_signals(audit["review_signals"])
+
+    unknown 이 비어 있지 않으면 이 표에 값을 더해야 한다는 뜻이다.
+    그대로 두면 또 출력 보류가 난다.
+    """
+    codes, unknown = [], []
+    for s in signals or []:
+        hit = SELF_CHECK_SIGNALS.get(s)
+        if hit is None:
+            if s not in unknown:
+                unknown.append(s)
+        elif hit not in codes:
+            codes.append(hit)
+    return codes, unknown
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -284,13 +343,16 @@ def failed_item(item_id, error_code, message, check_kind=None):
 # ──────────────────────────────────────────────────────────────────────────
 # 8. 검토 필요 여부 판정
 # ──────────────────────────────────────────────────────────────────────────
-def decide_review(items, errors=(), thresholds=None, injection_suspected=False):
+def decide_review(items, errors=(), thresholds=None, injection_suspected=False,
+                  review_signals=None):
     """
     통제항목 하나의 결과를 보고 사람 검토가 필요한지 정한다.
     판단팀 review_policy.decide() 와 같은 모양으로 맞춘다.
 
-    items  : 문항별 판정 결과
-    errors : 처리 중 생긴 오류 코드 목록
+    items          : 문항별 판정 결과
+    errors         : 처리 중 생긴 오류 코드 목록
+    review_signals : 판단팀 audit["review_signals"] 목록 (선택).
+                     Self-check 신호를 공식 사유 코드로 바꿔 함께 담는다.
     돌려주는 값 : {"required": bool, "reasons": [코드...]}
     """
     th = {**THRESHOLDS, **(thresholds or {})}
@@ -305,6 +367,18 @@ def decide_review(items, errors=(), thresholds=None, injection_suspected=False):
         hit = BLOCKING.get(code)
         if hit:
             add(hit)
+
+    # 1-2. 무조건 — Self-check 신호에서 온 것
+    #   번역 못 한 신호가 있으면 조용히 넘기지 않는다. 그대로 두면 받는 쪽이
+    #   "공식 코드가 없다"며 최종 출력을 보류한다 (2026-10-03 60문항).
+    sc_codes, sc_unknown = review_reasons_for_signals(review_signals)
+    for code in sc_codes:
+        add(code)
+    if sc_unknown:
+        warnings.warn(
+            "모르는 Self-check 신호가 있습니다: " + ", ".join(sc_unknown) +
+            " — phase2_errors.SELF_CHECK_SIGNALS 에 추가해야 합니다.",
+            stacklevel=2)
 
     if injection_suspected:
         add("P2R108")
