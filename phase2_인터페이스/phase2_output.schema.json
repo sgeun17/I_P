@@ -19,7 +19,7 @@
   "properties": {
     "schema_version": {
       "type": "string",
-      "const": "phase2-output-0.2"
+      "const": "phase2-output-0.3"
     },
     "evidence_id": {
       "type": "string",
@@ -163,6 +163,7 @@
               "P2R110",
               "P2R111",
               "P2R112",
+              "P2R113",
               "P2R201",
               "P2R202",
               "P2R203",
@@ -170,7 +171,7 @@
               "P2R205"
             ]
           },
-          "description": "Phase 2 검토 사유 코드 (입력 파트 확정). Phase 1 의 R1xx·R2xx 와 겹치지 않게 P2R 접두사.\nP2R1xx 는 무조건 검토, P2R2xx 는 조건부(임계값).\n  P2R101  JSON_PARSE_FAILED — 재시도까지 했는데 JSON 이 안 나왔다\n  P2R102  SCHEMA_INVALID — 출력이 규격에 안 맞는다\n  P2R103  ITEM_ID_INVALID — 질문지에 없는 문항이거나 문항 수가 다르다\n  P2R104  CITATION_INVALID — 인용이 청크 원문과 다르다\n  P2R105  CITATION_MISSING — MET·NOT_MET 인데 근거가 없다\n  P2R106  LLM_CALL_FAILED — LLM 을 끝내 못 불렀다\n  P2R107  ITEM_NOT_JUDGEABLE — 청크나 질문지가 없어 판정을 시도하지 못했다\n  P2R108  PROMPT_INJECTION_SUSPECTED — 증적 본문에 지시문처럼 보이는 내용이 있다\n  P2R109  OVERALL_RULE_CONFLICT — 종합 판정이 규칙과 어긋난다\n  P2R110  PHASE1_RESULT_STALE — Phase 1 결과가 가리키는 청크가 지금 증적에 없다. 증적 version 이 올라간 것\n  P2R201  CRITICAL_NOT_MET — critical 문항이 미충족이다. 결함 판정이라 사람이 한 번 본다\n  P2R202  MANY_UNKNOWN — UNKNOWN 비율이 임계 이상이다. 증적이 부족하거나 질문지가 안 맞는 것\n  P2R203  OCR_SOURCE — OCR 청크를 인용했다. 전처리팀이 품질 점수를 주지 않는다. Phase 1 R207 과 같은 이유\n  P2R204  ALL_UNKNOWN — 문항이 전부 UNKNOWN 이다. 사실상 판정이 안 됐다\n  P2R111·P2R112·P2R205 는 판단팀 Self-check 신호를 받는다 (2026-10-04 추가). 이 셋이 없어서 10/03 전체 시험에서 4개 증적 60문항의 최종 출력이 보류됐다. 신호 → 코드 번역표는 phase2_errors.SELF_CHECK_SIGNALS 에 있다."
+          "description": "Phase 2 검토 사유 코드 (입력 파트 확정). Phase 1 의 R1xx·R2xx 와 겹치지 않게 P2R 접두사.\nP2R1xx 는 무조건 검토, P2R2xx 는 조건부(임계값).\n  P2R101  JSON_PARSE_FAILED — 재시도까지 했는데 JSON 이 안 나왔다\n  P2R102  SCHEMA_INVALID — 출력이 규격에 안 맞는다\n  P2R103  ITEM_ID_INVALID — 질문지에 없는 문항이거나 문항 수가 다르다\n  P2R104  CITATION_INVALID — 인용이 청크 원문과 다르다\n  P2R105  CITATION_MISSING — MET·NOT_MET 인데 근거가 없다\n  P2R106  LLM_CALL_FAILED — LLM 을 끝내 못 불렀다\n  P2R107  ITEM_NOT_JUDGEABLE — 청크나 질문지가 없어 판정을 시도하지 못했다\n  P2R108  PROMPT_INJECTION_SUSPECTED — 증적 본문에 지시문처럼 보이는 내용이 있다\n  P2R109  OVERALL_RULE_CONFLICT — 종합 판정이 규칙과 어긋난다\n  P2R110  PHASE1_RESULT_STALE — Phase 1 결과가 가리키는 청크가 지금 증적에 없다. 증적 version 이 올라간 것\n  P2R201  CRITICAL_NOT_MET — critical 문항이 미충족이다. 결함 판정이라 사람이 한 번 본다\n  P2R202  MANY_UNKNOWN — UNKNOWN 비율이 임계 이상이다. 증적이 부족하거나 질문지가 안 맞는 것\n  P2R203  OCR_SOURCE — OCR 청크를 인용했다. 전처리팀이 품질 점수를 주지 않는다. Phase 1 R207 과 같은 이유\n  P2R204  ALL_UNKNOWN — 문항이 전부 UNKNOWN 이다. 사실상 판정이 안 됐다\n  P2R111·P2R112·P2R205 는 판단팀 Self-check 신호를 받는다 (2026-10-04 추가). 이 셋이 없어서 10/03 전체 시험에서 4개 증적 60문항의 최종 출력이 보류됐다. 신호 → 코드 번역표는 phase2_errors.SELF_CHECK_SIGNALS 에 있다.\n  P2R113 은 그 번역표에 없는 신호가 왔을 때다. 이때 결과는 provisional=true 이고 provisional_reason 에 신호 이름이 들어간다. 번역표에 그 신호를 더하면 P2R113 은 사라진다."
         },
         "error_codes": {
           "type": "array",
@@ -178,6 +179,13 @@
             "type": "string"
           },
           "description": "처리 중 생긴 오류 코드. Phase 1 ErrorCode(E1xx·E2xx·E4xx)를 그대로 쓰고, Phase 2 전용은 P2E 접두사. 검토로 보내지 않고 기록만 하는 코드도 여기 남긴다."
+        },
+        "unmapped_signals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "번역표에 없어서 공식 사유 코드로 바꾸지 못한 검토 신호 이름. 선택 필드이며, 비어 있으면 키 자체를 뺀다. 이 키가 있으면 P2R113 과 provisional=true 가 함께 온다."
         }
       },
       "allOf": [
@@ -239,11 +247,11 @@
     },
     "provisional": {
       "type": "boolean",
-      "description": "이 결과가 아직 최종이 아닌가 (선택 필드. 없으면 최종으로 본다).\n  true 면 판정은 나왔지만 전달 계약이 덜 맞아 확정하지 못한 상태다 — 판단팀 audit.review_contract_pending 과 같은 뜻이고, 그때 문항 결과는 audit.provisional_items 에 보존된다.\n  ★ 집계와 화면에서 최종 결과와 반드시 구분한다. 섞어서 세면 '판정 완료 건수'가 실제보다 커진다. (2026-10-03 시험에서 25건 중 4건이 이 상태였다)"
+      "description": "이 결과가 아직 최종이 아닌가 (선택 필드. 없으면 최종으로 본다). true 면 provisional_reason 이 반드시 있어야 하고, false 면 없어야 한다. 집계와 화면에서 최종 결과와 구분한다."
     },
     "provisional_reason": {
       "type": "string",
-      "description": "provisional=true 인 이유를 한 줄로. 예: 'UNMAPPED_REVIEW_SIGNAL: SELF_CHECK_UNSUPPORTED'"
+      "description": "provisional=true 인 이유를 한 줄로. 예: UNMAPPED_REVIEW_SIGNAL: SELF_CHECK_UNSUPPORTED"
     }
   },
   "$defs": {
@@ -425,6 +433,14 @@
           "type": "string",
           "minLength": 1,
           "description": "원문 그대로. 요약·의역 금지. 입력 청크 text 에 포함되는지 대조한다."
+        },
+        "source": {
+          "enum": [
+            "text",
+            "ocr",
+            "table"
+          ],
+          "description": "이 인용이 나온 청크의 추출 경로. 입력 chunks[].source 를 그대로 옮긴다. 선택 필드지만, 없으면 P2R203(OCR 인용 시 사람 검토)이 켜지지 않는다."
         }
       }
     }
@@ -432,7 +448,7 @@
   "x-status": "DRAFT (팀 승인 전). 입력 파트가 정할 것은 전부 정해졌다. 이 규격으로 개발해도 된다.",
   "x-agreement": {
     "state": "IN_PROGRESS",
-    "as_of": "2026-10-04",
+    "as_of": "2026-10-05",
     "owner": "입력 파트",
     "note": "입력 파트가 정할 것은 전부 정해졌다. 필드와 값 목록이 더 바뀌지 않는다. 이 규격으로 개발하면 된다.",
     "settled": [
@@ -453,11 +469,14 @@
       "check_kind 를 모르는 문항은 키 자체를 뺀다. null 을 넣으면 enum 위반으로 그 문항이 규격을 벗어난다. (입력 파트 결정 2026-10-03)",
       "Phase 2 검토 사유 코드 P2R 17개. P2R101~P2R112 무조건, P2R201~P2R205 조건부. P2R111(SELF_CHECK_UNSUPPORTED)·P2R112(SELF_CHECK_CONFLICT)·P2R205(SELF_CHECK_UNCERTAIN) 은 판단팀 validated_pipeline.py 가 내는 Self-check 신호를 받는다. 번역표는 phase2_errors.SELF_CHECK_SIGNALS. 추가뿐이라 기존 14개와 이미 나온 결과는 그대로다. (입력 파트 결정 2026-10-04)",
       "provisional 을 선택 필드로 둔다. 전달 계약이 덜 맞아 확정하지 못한 결과를 최종 결과와 집계·화면에서 구분하기 위해서다. 없으면 최종으로 본다. (입력 파트 결정 2026-10-04)",
-      "Phase 2 가 깨끗하게 끝나도 Phase 1 검토가 안 끝났으면 COMPLETED 로 가지 않는다. phase2_status.from_phase2(..., phase1_review_open=True) 가 REVIEW_REQUIRED 를 낸다. 상태 칸이 하나뿐이라 덮어쓰면 사람이 안 본 Phase 1 검토가 사라진다. 실측: 10/03 시험 COMPLETED 4건이 전부 이 경우였다. (입력 파트 결정 2026-10-04)"
+      "Phase 2 가 깨끗하게 끝나도 Phase 1 검토가 안 끝났으면 COMPLETED 로 가지 않는다. phase2_status.from_phase2(..., phase1_review_open=True) 가 REVIEW_REQUIRED 를 낸다. 상태 칸이 하나뿐이라 덮어쓰면 사람이 안 본 Phase 1 검토가 사라진다. 실측: 10/03 시험 COMPLETED 4건이 전부 이 경우였다. (입력 파트 결정 2026-10-04)",
+      "provisional 과 provisional_reason 은 짝이다. true 면 이유가 반드시 있고, false 면 없어야 한다. 둘 다 생략하면 최종 결과로 본다. (입력 파트 결정 2026-10-05)",
+      "SELF_CHECK_SIGNALS 에 없는 검토 신호는 경고만 내지 않고 결과에 남긴다 — P2R113(REVIEW_SIGNAL_UNMAPPED) 을 붙이고 provisional=true 로 낸다. 코드 추가뿐이라 기존 결과는 그대로다. (입력 파트 결정 2026-10-05)",
+      "citations[].source 를 선택 필드로 둔다. additionalProperties=false 라서 이 필드가 없으면 판단팀이 source 를 실으면 스키마 위반이고, 안 실으면 P2R203 이 영구히 안 켜진다. (입력 파트 결정 2026-10-05)"
     ],
     "open": [],
     "unstable_fields": [],
-    "on_change": "필드나 값 목록이 바뀌면 schema_version 을 올린다. 지금 판은 phase2-output-0.2.\n  ★ 2026-10-03 에 required 가 늘었지만 번호는 올리지 않았다 (다른 팀 코드 변경 최소화). 10/2 에 배포한 같은 번호 파일은 폐기하고 이 파일로 교체해야 한다. 자세한 근거는 ISSUES.md '판 번호' 절.",
+    "on_change": "필드나 값 목록이 바뀌면 schema_version 을 올린다. 지금 판은 phase2-output-0.3.",
     "possible_changes": []
   },
   "allOf": [
@@ -490,6 +509,42 @@
           "items": {
             "maxItems": 0
           }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provisional": {
+            "const": true
+          }
+        },
+        "required": [
+          "provisional"
+        ]
+      },
+      "then": {
+        "required": [
+          "provisional_reason"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provisional": {
+            "const": false
+          }
+        },
+        "required": [
+          "provisional"
+        ]
+      },
+      "then": {
+        "not": {
+          "required": [
+            "provisional_reason"
+          ]
         }
       }
     }
