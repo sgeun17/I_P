@@ -1,5 +1,5 @@
 """
-phase2_status.py : 증적 하나의 상태 전이   (WBS 3-A 상태 정의)
+phase2_status.py : 증적 하나의 상태 전이
 
 새 상태값을 만들지 않는다. 입력팀 config.VALID_STATUSES 의 8개를 그대로 쓴다.
 그중 MAPPING / VALIDATING / COMPLETED 세 개가 정의만 돼 있고 아무도 안 쓰고 있어서,
@@ -9,12 +9,6 @@ Phase 2 가 그 자리에 들어간다.
     입력팀 pipeline.py   UPLOADED → PREPROCESSING → PREPROCESSED / FAILED
     판단팀 service.to_evidence_status()   FAILED / REVIEW_REQUIRED / COMPLETED
     아무도 안 씀          MAPPING, VALIDATING
-
-★ 미합의 — Phase 1 이 끝난 증적의 상태
-    판단팀 to_evidence_status() 는 Phase 1 매핑이 끝나면 COMPLETED 를 돌려준다.
-    Phase 2 가 생긴 뒤에는 그게 "다 끝났다"가 아니라 "판정 대기"다.
-    이 모듈은 VALIDATING 으로 두는 쪽을 기본으로 한다 (from_phase1 참조).
-    판단팀 코드는 고치지 않는다. 그 함수를 호출하는 쪽에서 한 번 갈아끼운다.
 """
 from __future__ import annotations
 
@@ -105,17 +99,33 @@ def from_phase1(processing_status: str, review_required: bool,
     return "VALIDATING" if phase2_enabled else "COMPLETED"
 
 
-def from_phase2(processing_status: str, review_required: bool) -> str:
+def from_phase2(processing_status: str, review_required: bool,
+                phase1_review_open: bool = False) -> str:
     """
     Phase 2 판정 결과 → evidence.status. Phase 1 과 같은 모양으로 맞춘다.
 
         processing_status = FAILED   → FAILED
         review_required             → REVIEW_REQUIRED
+        phase1_review_open          → REVIEW_REQUIRED
         그 외                        → COMPLETED
+
+    ★ phase1_review_open — Phase 1 이 올린 검토가 아직 안 끝났는가.
+      Phase 2 가 깨끗하게 끝났다고 COMPLETED 로 덮으면, 사람이 아직 안 본
+      Phase 1 검토가 조용히 사라진다. 상태 칸이 하나뿐이라 덮어쓰면 끝이다.
+
+      실측 (2026-10-03 전체 시험) — COMPLETED 4건이 전부 이 경우였다.
+        E0008  phase1_review_required=True  R201·R202·R205
+        E0017  phase1_review_required=True  R201·R205
+        E0018  phase1_review_required=True  R201·R205
+        E0026  phase1_review_required=True  R201·R205
+      Phase 2 가 잘 돌았다는 것과 Phase 1 검토가 끝났다는 것은 다른 말이다.
+
+      호출하는 쪽은 Phase 1 결과의 human_review.required 를 그대로 넘기면 된다.
+      사람이 그 검토를 끝냈으면 False 다.
     """
     if processing_status == "FAILED":
         return "FAILED"
-    if review_required:
+    if review_required or phase1_review_open:
         return "REVIEW_REQUIRED"
     return "COMPLETED"
 
