@@ -1,5 +1,5 @@
 """
-run_error_check.py : 오류·재시도·검토 흐름 검사   (WBS 3-B 점검)
+run_error_check.py : 오류·재시도·검토 흐름 검사 
 
 쓰는 법
     python run_error_check.py                  저장소를 알아서 찾음
@@ -196,7 +196,8 @@ def main():
     ]
     for label, items, errors in outcomes:
         o = pe.evidence_outcome(items, errors)
-        status = st.from_phase2(o["processing_status"], o["review_required"])
+        status = st.from_phase2(o["processing_status"], o["review_required"],
+                                phase1_review_open=False)
         print(f"  {label:36} → {status:16} {o['note']}")
         if status not in st.STATUSES:
             fails.append(label)
