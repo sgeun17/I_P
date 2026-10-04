@@ -142,6 +142,9 @@ REVIEW_REASONS = {
                "그것만으로는 판정이 성립하지 않거나, 체크리스트에 없는 조건을 지어냈다"),
     "P2R112": ("SELF_CHECK_CONFLICT",
                "Self-check 가 같은 범위의 근거끼리 어긋난다고 봤다"),
+    "P2R113": ("REVIEW_SIGNAL_UNMAPPED",
+               "SELF_CHECK_SIGNALS 에 없는 검토 신호가 왔다. 번역표에 그 신호를 "
+               "더하기 전까지 이 결과는 provisional 이다"),
 
     # ── 조건부 ────────────────────────────────────────────────────────
     "P2R201": ("CRITICAL_NOT_MET",
@@ -181,6 +184,10 @@ SELF_CHECK_SIGNALS = {
     "SELF_CHECK_LOW_CONFIDENCE": "P2R205",   # 확신도가 임계 미만. UNCERTAIN 과 같이 본다
     "SELF_CHECK_NOT_RUN": "P2R106",          # Self-check 를 아예 못 돌렸다 = LLM 호출 실패
 }
+
+# 표에 없는 신호가 왔을 때 붙이는 코드와, provisional_reason 에 쓰는 머리말.
+UNMAPPED_SIGNAL_REASON = "P2R113"
+UNMAPPED_SIGNAL_PREFIX = "UNMAPPED_REVIEW_SIGNAL"
 
 
 def review_reason_for_signal(signal):
@@ -369,12 +376,12 @@ def decide_review(items, errors=(), thresholds=None, injection_suspected=False,
             add(hit)
 
     # 1-2. 무조건 — Self-check 신호에서 온 것
-    #   번역 못 한 신호가 있으면 조용히 넘기지 않는다. 그대로 두면 받는 쪽이
-    #   "공식 코드가 없다"며 최종 출력을 보류한다 (2026-10-03 60문항).
+    #   번역 못 한 신호는 결과에 남긴다. 경고만 내면 결과 JSON 에 흔적이 없다.
     sc_codes, sc_unknown = review_reasons_for_signals(review_signals)
     for code in sc_codes:
         add(code)
     if sc_unknown:
+        add(UNMAPPED_SIGNAL_REASON)
         warnings.warn(
             "모르는 Self-check 신호가 있습니다: " + ", ".join(sc_unknown) +
             " — phase2_errors.SELF_CHECK_SIGNALS 에 추가해야 합니다.",
@@ -391,7 +398,7 @@ def decide_review(items, errors=(), thresholds=None, injection_suspected=False,
         soft_only = bool(errors) and all(c in ("P2E001", "P2E002") for c in errors)
         if not soft_only:
             add("P2R107")
-        return _build(reasons)
+        return _build(reasons, sc_unknown)
 
     total = len(items)
     unknown = [i for i in items if i.get("result") == "UNKNOWN"]
@@ -412,11 +419,28 @@ def decide_review(items, errors=(), thresholds=None, injection_suspected=False,
             if c.get("source") == "ocr":
                 add("P2R203")
 
-    return _build(reasons)
+    return _build(reasons, sc_unknown)
 
 
-def _build(reasons):
-    return {"required": bool(reasons), "reasons": reasons}
+def _build(reasons, unmapped=()):
+    r = {"required": bool(reasons), "reasons": reasons}
+    if unmapped:
+        r["unmapped_signals"] = list(unmapped)
+    return r
+
+
+def provisional_fields(review):
+    """
+    decide_review() 결과를 받아 출력에 붙일 provisional 두 필드를 돌려준다.
+    번역 못 한 신호가 없으면 빈 dict 이므로 그대로 update() 하면 된다.
+
+        out.update(provisional_fields(review))
+    """
+    unmapped = (review or {}).get("unmapped_signals") or []
+    if not unmapped:
+        return {}
+    return {"provisional": True,
+            "provisional_reason": UNMAPPED_SIGNAL_PREFIX + ": " + ", ".join(unmapped)}
 
 
 def is_unconditional(reason_code):
