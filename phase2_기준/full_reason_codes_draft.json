@@ -1,5 +1,5 @@
 {
-  "catalog_version": "phase2-reason-codes-full-draft-2026-10-05-r4",
+  "catalog_version": "phase2-reason-codes-full-draft-2026-10-05-r5",
   "status": "APPROVED_FOR_USE",
   "approved": true,
   "metadata": {
@@ -14,11 +14,11 @@
     "parent_catalog_sha256": "799d37627b9db7b4df672be03d3da05bb4c81cfc05f144020c101d48427c4336",
     "example_coverage": "대표 사례만 별도 검증. 전체 문항의 MET/NOT_MET/UNKNOWN 정답셋은 미작성."
   },
-  "checklist_version": "phase2-checklist-full-draft-2026-10-05-r4",
+  "checklist_version": "phase2-checklist-full-draft-2026-10-05-r5",
   "source_files": [
     {
       "path": "full_checklist_draft.json",
-      "sha256": "5517a9831b34085011f5a051724417a41ddb14d563634c1f7dc08a6064992066"
+      "sha256": "ddf927e0fc6680c4d9a018d9a8abfcc9eab70978c58a9c68710b32c4db474bfa"
     }
   ],
   "result_values": [

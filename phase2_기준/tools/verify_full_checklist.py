@@ -34,6 +34,10 @@ def verify(verify_pdf=False):
         for i in c['items']:
             i['critical'] = c['control_id'].rsplit('.',1)[0] in data['critical_policy']['critical_control_groups']
             i['critical_status'] = 'CONFIRMED_BY_OWNER'
+            if i['item_id'] == '2.10.8-Q05':
+                current = next(x for c in data['controls'] for x in c['items'] if x['item_id'] == i['item_id'])
+                for key in ('evidence_rule', 'review_note'):
+                    i[key] = current[key]
     assert [c for c in data['controls'] if c['control_id'].startswith('2.')] == old['controls']
     new = [i for c in data['controls'] if not c['control_id'].startswith('2.') for i in c['items']]
     inventory = read(HERE/'drafts/chapters13/source_inventory.json')
@@ -75,7 +79,7 @@ def verify(verify_pdf=False):
         'control_count':len(control_results),'question_count':sum(c['questions'] for c in control_results),
         'new_question_count':len(new),'new_major_check_count':len(coverage),
         'questions_per_chapter':dict(Counter(i['control_id'].split('.')[0] for c in data['controls'] for i in c['items'])),
-        'chapter2_content_preserved_except_critical':True,'source_pdf_verified':verify_pdf,
+        'chapter2_content_preserved_except_critical_and_q05_exception':True,'source_pdf_verified':verify_pdf,
         'llm_executed':False,'actual_evidence_used':False,'semantic_judgment_checked':False,
         'controls':control_results,
         'limits':['원문과의 연결·구조 검사이며 현행 법령 검증이나 팀 승인이 아니다.',

@@ -1,6 +1,6 @@
 {
   "checked_at": "2026-10-05",
-  "checklist_version": "phase2-checklist-full-draft-2026-10-05-r4",
+  "checklist_version": "phase2-checklist-full-draft-2026-10-05-r5",
   "checklist_approved": true,
   "question_count": 883,
   "temporal_wording_question_count": 167,
@@ -14550,7 +14550,8 @@
       ],
       "candidate_evidence": [
         "패치 유예·예외 절차",
-        "위험·보완조치·보고 기준"
+        "위험·보완조치·보고 기준",
+        "미적용 사유·보완대책 작성 및 관리 기준이 확인되는 패치 관리표·작성 지침"
       ],
       "temporal_wording": [
         {
@@ -18704,7 +18705,8 @@
         "개인정보 처리방침(개인정보 처리업무 위탁 관련 공개 내역)",
         "개인정보 수집 양식",
         "개인정보 처리 위탁 계약서",
-        "재화 또는 서비스 홍보·판매 권유 업무 위탁 관련 정보주체 통지 내역"
+        "재화 또는 서비스 홍보·판매 권유 업무 위탁 관련 정보주체 통지 내역",
+        "검토 기간의 홍보·판매 권유 위탁 없음 확인 자료 및 위탁 발생 시 업무 내용·수탁자 통지 방침"
       ],
       "temporal_wording": [],
       "policy_status": "NEEDS_POLICY_DECISION"
@@ -19537,5 +19539,5 @@
       "policy_status": "NEEDS_POLICY_DECISION"
     }
   ],
-  "checklist_sha256": "5517a9831b34085011f5a051724417a41ddb14d563634c1f7dc08a6064992066"
+  "checklist_sha256": "ddf927e0fc6680c4d9a018d9a8abfcc9eab70978c58a9c68710b32c4db474bfa"
 }
