@@ -23,7 +23,7 @@ P2E505는 공식 Phase 2 정의인 ADEQUACY_WITHOUT_EVIDENCE다. 원문에 없�
 
 새 통합 진입점은 src/validated_pipeline.py의 run_control_judgment다. 기존 자운 하네스를 내부에서 호출하므로 전송·retry를 복제하지 않는다.
 tools/run_validated_phase2.py가 실제 CLI 진입점이다. 기존 src/judgment_harness.py 직접 호출은 프롬프트 개발용이며 전체 검증 결과가 아니다.
-반환은 {processing_status, output, audit}. output만 phase2-output-0.2로 전송한다. audit와 status는 별도 저장한다.
+반환은 {processing_status, output, audit}. output만 phase2-output-0.3으로 전송한다. audit와 status는 별도 저장한다.
 원응답이 잘못됐을 때 output에는 UNKNOWN이 들어가지만 audit.run.raw_response와 원래 오류를 보존한다. UNKNOWN을 “검증에 성공한 적정성 판정”으로 통계에 포함하지 않는다.
 
 ## 통합팀 연결 지점

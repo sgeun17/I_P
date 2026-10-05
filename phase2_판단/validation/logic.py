@@ -64,16 +64,22 @@ def validate_item(output, item, context, reason_codes, *, evidence_id=None, vers
         return issues
     if output.get("item_id") != item["item_id"]:
         issues.append(issue("P2E301", "요청 문항과 item_id가 다르다"))
+    result = output.get("result")
+    codes = output.get("reason_codes", [])
+    catalog = {row["code"]: row["result"] for row in reason_codes}
+    # Preserve the Phase 2-specific diagnosis even when JSON Schema catches the
+    # same bad result/reason-code combination first.
+    if isinstance(codes, list) and all(isinstance(code, str) for code in codes):
+        mismatch = (result == "MET" and bool(codes)) or any(
+            code not in catalog or catalog[code] != result for code in codes
+        )
+        if mismatch and not any(row["code"] == "P2E502" for row in issues):
+            issues.append(issue("P2E502", "판정 결과와 사유 코드 카탈로그 불일치"))
     if issues:
         # Also preserve the actionable citation-missing code beside schema errors.
         if output.get("result") in {"MET", "NOT_MET"} and output.get("citations") == []:
             issues.append(issue("P2E501", "MET/NOT_MET 인용 누락"))
         return issues
-    result = output["result"]
-    codes = output.get("reason_codes", [])
-    catalog = {row["code"]: row["result"] for row in reason_codes}
-    if (result == "MET" and codes) or any(c not in catalog or catalog[c] != result for c in codes):
-        issues.append(issue("P2E502", "판정 결과와 사유 코드 카탈로그 불일치"))
     if "check_kind" in output and output["check_kind"] != item.get("check_kind"):
         issues.append(issue("E202", "check_kind는 체크리스트 값이어야 한다"))
     if len(output["reason"].strip()) < interface_module("errors").THRESHOLDS["min_reason_length"]:

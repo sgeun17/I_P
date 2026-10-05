@@ -1,9 +1,9 @@
 {
   "version": "phase2_goldenset_v0.2",
   "created_at": "2026-10-02",
-  "contract_version": "phase2-output-0.2",
+  "contract_version": "phase2-output-0.3",
   "output_schema_path": "phase2_인터페이스/phase2_output.schema.json",
-  "output_schema_sha256": "ff15939aa8506dc49737c712a918da7ac160465262019f10fae987475b456836",
+  "output_schema_sha256": "fefdc23ae0f233b209b199398b403edc086672f3829e23d54adccf99f060e50b",
   "output_item_schema_ref": "#/$defs/ItemResult",
   "checklist_version": "phase2-checklist-chapter2-full-draft-2026-10-01-r3",
   "checklist_sha256": "6e791ee40cd4920822e9093a9f9e8a3e3d053359cc7a6bafccc6cfd4af7e9765",

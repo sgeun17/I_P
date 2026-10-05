@@ -15,16 +15,20 @@ from judgment_harness import run_item_judgment
 from phase1_runtime import call_llm, DEFAULT_RETRY_POLICY, retry_policy_snapshot
 from self_check import run_self_check, SELF_CHECK_VERSION
 from grounding_prompts import PROMPT_VERSION
-from validation.contracts import ROOT, INTERFACE, interface_module, item_schema, issue, validate_schema
+from validation.contracts import (ROOT, INTERFACE, interface_module, item_schema, issue,
+                                  output_schema_version, validate_schema)
 from validation.logic import validate_input, validate_item, validate_output, rule_version
 from validation.review import decide_review, injection_suspected, REVIEW_PROFILE, DEFAULT_CONFIDENCE_THRESHOLD
 
 RULES_PATH = Path(__file__).resolve().parents[1] / "docs" / "phase2_rules_v0.1.md"
 
 
-def unknown(item, message, reason_code="P2_U_EVIDENCE_INSUFFICIENT"):
-    return {"item_id": item["item_id"], "result": "UNKNOWN", "reason": message,
-            "reason_codes": [reason_code], "citations": [], "check_kind": item["check_kind"]}
+def unknown(item, message, reason_code="P2_U_EVIDENCE_INSUFFICIENT", *, error_code=None):
+    result = {"item_id": item["item_id"], "result": "UNKNOWN", "reason": message,
+              "reason_codes": [reason_code], "citations": [], "check_kind": item["check_kind"]}
+    if error_code:
+        result["error_code"] = error_code
+    return result
 
 
 def run_validated_item(item, context, *, evidence_id, version, model, reason_codes,
@@ -48,7 +52,8 @@ def run_validated_item(item, context, *, evidence_id, version, model, reason_cod
             issues.append(issue(run.final_error_code, "문항 호출/검증 실패"))
         if run.request_error_status is not None:
             signals.append("LLM_REQUEST_REJECTED")
-        return unknown(item, "문항 호출 또는 검증 실패로 근거를 확정할 수 없습니다."), audit
+        return unknown(item, "문항 호출 또는 검증 실패로 근거를 확정할 수 없습니다.",
+                       error_code=run.final_error_code or "E202"), audit
     output = deepcopy(run.parsed_output)
     output["check_kind"] = item["check_kind"]
     output.pop("critical", None)  # computed from the trusted checklist later
@@ -191,11 +196,12 @@ def run_control_judgment(payload, control_id, *, catalog, reason_catalog, contro
             progress(index, len(checklist_items), item["item_id"], output["result"])
     summary = interface_module("overall").compute(outputs, policy)
     summary["rule_version"] = rule_version(policy)
-    result = {"schema_version": "phase2-output-0.2", "evidence_id": payload["evidence_id"],
+    result = {"schema_version": output_schema_version(), "evidence_id": payload["evidence_id"],
               "version": payload["version"], "control_id": control_id, "control_name": control["control_name"],
               "checklist_version": catalog.get("draft_version") or catalog.get("version"),
               "items": outputs, **summary}
     result["human_review"] = decide_review(outputs, context, issues, signals=audit["review_signals"], injection=injected)
+    result.update(interface_module("errors").provisional_fields(result["human_review"]))
     assembly_errors = validate_output(result, payload, checklist_items, policy)
     if assembly_errors:
         issues.extend(assembly_errors)

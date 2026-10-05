@@ -1,6 +1,6 @@
 # Phase 2 판단 — 자운·찬우 구현
 
-2026-10-02 추가: 공식 phase2-input-0.2 / phase2-output-0.2 기반 검증 실행기를 구현했다.
+2026-10-05 갱신: 공식 phase2-input-0.2 / phase2-output-0.3 기반 검증 실행기를 구현했다.
 현재 진입점은 `src/validated_pipeline.py`의 `run_control_judgment()`와 `tools/run_validated_phase2.py`다.
 기존 하네스를 내부 호출하고 JSON·ID·인용 검증, Self-check, 날짜 추출, Human Review를 연결한다.
 
@@ -18,6 +18,7 @@ python tools/run_validated_phase2.py --help
 - `docs/citation_normalization_v0.1.md`: 인용 허용 경계
 - `docs/test_scenarios_v0.1.md`: 시험 범위
 - `docs/DELIVERY_REVIEW.md`: 납품 범위와 검증 결과
+- `docs/INTERFACE_V03_AND_TECHNICAL_FIX_2026-10-05.md`: 인터페이스 0.3 연결과 기술 오류 8문항 보완
 
 최신성 개월 수·인정 형식은 수신한 항목별 정책을 주입한다. 기본 업무 기준은 만들지 않는다.
 Self-check 테스트의 고정 응답 통과가 실제 모델 정확도를 의미하지 않는다.
@@ -81,14 +82,14 @@ python tools/inspect_phase2_ready.py
 
 실제 LLM 호출은 `src/judgment_harness.py`의 `run_item_judgment()`를 사용한다. 기본값은 Phase 1과 같은 Ollama OpenAI-compatible 전송부를 재사용한다.
 
-## 아직 확정 구현하지 않은 것
+## 현재 남은 승인·통합 사항
 
-다음은 다른 팀 계약이 와야 운영 코드로 고정할 수 있다.
+Input 0.2 / Output 0.3, 오류·검토 코드, Self-check 신호와 provisional 전달은 연결했다.
+아래 항목은 코드가 임의로 정하지 않고 담당 팀의 확정값을 기다린다.
 
-- 혜진·세윤: Phase 2 Input JSON Schema / Output JSON Schema / 상태값 / 오류 코드
-- 판정 규칙 문서: 최종 `phase2_rules_v0.1.md`, 특히 상충 근거 처리
-- 채은·유빈: checklist/reason code 최종 승인본, 최신성 기준, critical 확정
-- 찬우: Citation Validator / JSON·ENUM·ID Validator / Self-check / Human Review 전환 계약
-- 승은: 종합 등급 전달 형식과 critical 사용 방식
+- 기준팀: 체크리스트·사유 코드 최종 승인, 항목별 최신성·인정 형식, 최종 critical 값
+- 통합팀: Phase 1 완료 후 DB 상태를 `from_phase1()`로 VALIDATING에 연결
+- 운영: 검토자 결정 저장과 서버/API 연결
+- 품질: 실제 정답 근거가 확정된 문항으로 의미 정확도 측정
 
 자세한 구현 범위와 교체 지점은 `IMPLEMENTATION_2026-10-01.md`를 본다.

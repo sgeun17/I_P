@@ -13,15 +13,15 @@ def injection_suspected(context):
 
 
 def decide_review(items, context, issues=(), *, signals=(), injection=False):
-    # Citation.source is forbidden by the wire schema. Enrich a COPY solely for the helper.
+    # Keep the model-generated wire item untouched. Enrich a copy solely for OCR review routing.
     sources = {c["chunk_id"]: c.get("source") for c in context["chunks"]}
     enriched = deepcopy(items)
     for item in enriched:
         for citation in item.get("citations", []):
             citation["source"] = sources.get(citation["chunk_id"])
     codes = list(dict.fromkeys(i["code"] for i in issues))
-    result = interface_module("errors").decide_review(enriched, codes, injection_suspected=injection)
+    result = interface_module("errors").decide_review(
+        enriched, codes, injection_suspected=injection, review_signals=signals
+    )
     result["error_codes"] = codes
-    if signals:
-        result["required"] = True
     return result

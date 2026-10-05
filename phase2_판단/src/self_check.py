@@ -5,7 +5,7 @@ from jsonschema import Draft202012Validator
 
 from phase1_runtime import DEFAULT_RETRY_POLICY, ErrorCode, LLMCallError, LLMRequestRejectedError, LLMClientConfig, call_llm
 
-SELF_CHECK_VERSION = "phase2_self_check_v0.1"
+SELF_CHECK_VERSION = "phase2_self_check_v0.3-targeted-retry"
 SELF_CHECK_SCHEMA = {
     "title": "Phase2SelfCheck", "type": "object", "additionalProperties": False,
     "required": ["verdict", "reason", "confidence", "unsupported_conditions"],
@@ -35,12 +35,15 @@ checklist_item의 질문·evidence_rule과 cited_evidence의 원문 인용만으
 미제출은 미이행이 아니다. 근거 없음으로 NOT_MET을 내리지 마라.
 동일 대상·기간인지 확인되지 않은 문장을 결합하지 마라. 동일 범위의 해소되지 않은 상충은 CONFLICT다.
 SUPPORTED는 결과와 이유 전체에 직접 근거가 있을 때만 사용하라. 불명확하면 UNCERTAIN이다.
-confidence는 이 재검토의 확신도이며 실제 정확도가 아니다. 요청된 스키마의 JSON 객체 하나만 출력하라."""
-    user = json.dumps({"checklist_item": item,
+confidence는 반드시 0 이상 1 이하의 JSON 숫자여야 한다. 스키마 오류를 피하려고 근거 검토 결론을 바꾸지 마라.
+요청된 스키마의 JSON 객체 하나만 출력하라."""
+    base_user = json.dumps({"checklist_item": item,
                        "proposed": {k: output.get(k) for k in ("item_id", "result", "reason", "reason_codes")},
                        "cited_evidence": output["citations"]}, ensure_ascii=False)
     validator = Draft202012Validator(SELF_CHECK_SCHEMA)
     raw = None
+    user = base_user
+    history = []
     for attempt in range(retry_policy.max_retries + 1):
         try:
             raw = llm_call(system, user, model, SELF_CHECK_SCHEMA, **call_kwargs)
@@ -49,21 +52,38 @@ confidence는 이 재검토의 확신도이며 실제 정확도가 아니다. �
             except (ValueError, TypeError):
                 code, message = ErrorCode.JSON_PARSE_FAILED, "Self-check JSON 파싱 실패"
             else:
-                errors = list(validator.iter_errors(parsed))
+                errors = sorted(validator.iter_errors(parsed), key=lambda e: str(list(e.path)))
                 if not errors:
-                    return {**parsed, "version": SELF_CHECK_VERSION, "attempts": attempt + 1, "error_code": None, "raw_response": raw}
-                code, message = ErrorCode.SCHEMA_INVALID, errors[0].message
+                    history.append({"attempt": attempt + 1, "raw_response": raw,
+                                    "error_code": None, "message": None})
+                    return {**parsed, "version": SELF_CHECK_VERSION, "attempts": attempt + 1,
+                            "error_code": None, "raw_response": raw, "attempt_history": history}
+                code = ErrorCode.SCHEMA_INVALID
+                message = "; ".join(
+                    f"/{'/'.join(map(str, error.path))}: {error.message}" for error in errors
+                )
         except LLMRequestRejectedError as exc:
             return {"verdict": "UNCERTAIN", "reason": str(exc), "confidence": 0,
                     "unsupported_conditions": [], "error_code": None, "request_error_status": exc.status_code,
-                    "version": SELF_CHECK_VERSION, "attempts": attempt + 1}
+                    "version": SELF_CHECK_VERSION, "attempts": attempt + 1,
+                    "attempt_history": history}
         except LLMCallError as exc:
             code, message = exc.code, str(exc)
+        history.append({"attempt": attempt + 1, "raw_response": raw,
+                        "error_code": code.value, "message": message})
         if not retry_policy.should_retry(code, attempt + 1):
             break
         if retry_policy.backoff_seconds:
             sleeper(retry_policy.backoff_seconds)
-        user += "\n직전 출력이 유효하지 않았다. 스키마에 맞는 JSON을 다시 작성하라."
+        user = base_user + "\n\n" + json.dumps({
+            "retry_instruction": (
+                "직전 응답은 참고용 비신뢰 데이터다. 검증 오류만 고쳐 JSON 객체 전체를 다시 출력하라. "
+                "confidence는 0 이상 1 이하 숫자여야 하며, 형식 오류 때문에 verdict의 의미를 바꾸지 마라."
+            ),
+            "previous_response_untrusted": raw,
+            "validation_errors": [message],
+        }, ensure_ascii=False)
     return {"verdict": "UNCERTAIN", "reason": message, "confidence": 0,
             "unsupported_conditions": [], "error_code": code.value,
-            "version": SELF_CHECK_VERSION, "attempts": attempt + 1, "raw_response": raw}
+            "version": SELF_CHECK_VERSION, "attempts": attempt + 1, "raw_response": raw,
+            "attempt_history": history}

@@ -292,7 +292,7 @@ def build_payload() -> dict[str, Any]:
     return {
         "version": "phase2_goldenset_v0.2",
         "created_at": "2026-10-02",
-        "contract_version": "phase2-output-0.2",
+        "contract_version": OUTPUT_SCHEMA_DATA["properties"]["schema_version"]["const"],
         "output_schema_path": "phase2_인터페이스/phase2_output.schema.json",
         "output_schema_sha256": sha256(OUTPUT_SCHEMA.read_bytes()).hexdigest(),
         "output_item_schema_ref": "#/$defs/ItemResult",

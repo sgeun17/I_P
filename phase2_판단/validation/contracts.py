@@ -28,6 +28,11 @@ def item_schema():
     return deepcopy(schema("item"))
 
 
+def output_schema_version():
+    """Return the authoritative wire version instead of duplicating it."""
+    return schema("output")["properties"]["schema_version"]["const"]
+
+
 def validate_schema(payload, kind):
     issues = []
     def finite_numbers(value, path=""):
@@ -54,7 +59,7 @@ def validate_schema(payload, kind):
 @lru_cache(maxsize=None)
 def interface_module(name):
     paths = {"errors": INTERFACE / "phase2_errors.py",
-             "overall": INTERFACE / "test" / "overall_result.py",
+             "overall": INTERFACE / "overall_result.py",
              "kb_identity": ROOT / "phase1_검색" / "kb_identity.py"}
     path = paths[name]
     spec = importlib.util.spec_from_file_location(f"phase2_contract_{name}", path)

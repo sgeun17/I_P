@@ -1,7 +1,7 @@
 # phase2_rules_v0.1
 
 작성: 2026-10-02. 상태: 판단팀 구현 초안, 팀 승인 전.
-적용 계약: phase2-input-0.2 / phase2-output-0.2 / phase2-errors-0.1.
+적용 계약: phase2-input-0.2 / phase2-output-0.3 / phase2-errors-0.1.
 이 문서는 구현 가능한 공통 경계를 고정한다. 기준팀의 문항별 evidence_rule과 합의된 조직 기준을 대체하지 않는다.
 
 ## 판정 대상과 결과
@@ -47,7 +47,7 @@
 - critical NOT_MET → 미충족; 그 외 critical UNKNOWN → 확인 필요; 비critical NOT_MET/UNKNOWN → 충족(보완 권고); 모두 MET → 충족.
 - 실행 실패 문항만 UNKNOWN으로 바꾸며 나머지 문항을 계속 처리한다. 오류 원문과 재시도 기록은 audit에 보존한다.
 - 오류→검토 코드는 공식 phase2_errors.py를 사용한다. OCR 인용은 원본 청크 source로 찾아 P2R203을 부여한다.
-- 새 검토 신호(Self-check 확신도, 날짜 등)는 공식 P2R enum에 임의로 추가하지 않는다. human_review.required=true와 audit.review_signals를 함께 전달한다. UI에 상세 사유를 노출할 공식 코드 확장은 인터페이스팀 합의가 필요하다.
+- Self-check 신호는 공식 인터페이스 번역표로 P2R111/P2R112/P2R205에 연결한다. 번역표에 없는 신호는 P2R113과 provisional=true로 남겨 누락하지 않는다.
 - 판정 대상/질문지 없음은 output=null, 처리 상태와 P2E001/P2E002를 audit에 남긴다. items=[]인 공식 출력은 생성하지 않는다.
 - 상태는 기존 계약의 VALIDATING → COMPLETED/REVIEW_REQUIRED/FAILED를 따른다. ANALYZING을 추가하지 않는다.
 

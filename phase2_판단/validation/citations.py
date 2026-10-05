@@ -1,6 +1,6 @@
 """Phase 2 판단 결과의 citation을 원문 컨텍스트와 대조한다.
 
-공식 phase2-output-0.2의 문항 결과와 실제로 LLM에 제공한 컨텍스트를 받는다.
+공식 phase2-output-0.3의 문항 결과와 실제로 LLM에 제공한 컨텍스트를 받는다.
 원문/페이지 오류는 Phase 1 E4xx, Phase 2 판정 규칙은 P2Exxx로 반환한다.
 """
 from __future__ import annotations
