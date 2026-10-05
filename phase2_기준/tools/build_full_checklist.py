@@ -1,6 +1,6 @@
 """Build the 1/2/3 chapter draft from reviewed questions; preserve chapter 2 exactly.
 
-No model calls, approval, database writes or changes to other teams.
+Reproduce the owner-approved criteria snapshot; no model calls or database writes.
 """
 from copy import deepcopy
 import hashlib
@@ -9,7 +9,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parents[1]
 WORK = HERE / 'drafts/chapters13'
-VERSION = 'phase2-checklist-full-draft-2026-10-03-r1'
+VERSION = 'phase2-checklist-full-draft-2026-10-05-r4'
 
 
 def read(path):
@@ -21,7 +21,7 @@ def sha(path):
 
 
 def write(path, data):
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
 
 
 def build():
@@ -98,11 +98,24 @@ def build():
     assert set(additions) == {cid for cid in master if not cid.startswith('2.')}
     full = deepcopy(old)
     full['draft_version'] = VERSION
+    full.update(approved=True, status='APPROVED_FOR_USE')
+    full['approval'] = {
+        'date': '2026-10-05', 'source': '담당 사용자 대화 지시',
+        'scope': '현재 101개 통제항목·883문항 및 공통 사유 코드 13종을 사용하도록 승인',
+        'exclusions': ['개별 LLM 판정 결과 승인', '최신성·파일 형식 정책 확정', '현행 법령 검증'],
+    }
     full['controls'] = sorted([*additions.values(), *deepcopy(old['controls'])],
                               key=lambda c: tuple(map(int,c['control_id'].split('.'))))
     total = sum(len(c['items']) for c in full['controls'])
+    policy = read(HERE/'critical_policy.json')
+    for control in full['controls']:
+        group = control['control_id'].rsplit('.', 1)[0]
+        for item in control['items']:
+            item['critical'] = group in policy['critical_control_groups']
+            item['critical_status'] = 'CONFIRMED_BY_OWNER'
+    full['critical_policy'] = deepcopy(policy)
     added = total - 700
-    full['source']['basis'] = '보유 2023년 KISA 안내서 기반 1·2·3장 전체 초안. 2장 r3의 700문항을 보존하고 1·3장 주요 확인사항 133개를 분해했다. 최신 법규 확인·팀 승인 결과가 아니다.'
+    full['source']['basis'] = '보유 2023년 KISA 안내서 기반 1·2·3장 전체 초안. 2장 r3의 700문항을 보존하고 1·3장 주요 확인사항 133개를 분해했다. 원문 작성 이력은 보존하며 현재 기준 사용 승인은 최상위 approval에 별도로 기록한다. 최신 법규 검증 결과는 아니다.'
     full['scope'] = {
         'wbs_date': '2026-10-03', 'candidate_count': 101, 'sample_control_count': 101,
         'draft_control_ids': [c['control_id'] for c in full['controls']],
@@ -112,36 +125,37 @@ def build():
     }
     full['parent_draft'] = {'path': parent.name, 'version': old['draft_version'], 'sha256': sha(parent)}
     full['review_summary'] = {
-        'reviewed_at': '2026-10-03', 'reviewer_type': 'AI_ASSISTED_SOURCE_REVIEW',
+        'reviewed_at': '2026-10-05', 'reviewer_type': 'AI_ASSISTED_SOURCE_REVIEW',
         'control_count': 101, 'active_question_count': total,
         'new_control_count': 37, 'new_question_count': added,
         'preserved_control_count': 64, 'preserved_question_count': 700,
         'retired_question_count': len(old['retired_items']),
-        'new_major_check_count': 133, 'team_approved': False,
+        'new_major_check_count': 133, 'team_approved': True,
         'source_pdf_pages_reviewed': sorted({s['pdf_page'] for s in inventory.values()}),
         'report': 'docs/full_checklist_review.md',
     }
     full['integration_state'] = {
-        'review_only': True, 'human_approved': False, 'llm_executed': False,
+        'review_only': False, 'human_approved': True, 'llm_executed': False,
         'actual_evidence_used': False, 'default_checklist_replaced': False,
         'next_steps': ['신규 문항 의미·적용 조건 검수',
                        '판단팀 실행 시 전체 체크리스트·사유 코드 쌍 명시',
-                       'critical·법적 적용 기준·예외 처리 및 팀 승인'],
+                       '법적 적용 기준·예외 처리 및 최신성·형식 정책 연결'],
     }
     # Drop historical metadata tied exclusively to chapter 2, if present.
     for key in list(full):
         if key not in {'draft_version','status','approved','source','scope','proposed_result_values',
-                       'source_documents','parent_draft','review_summary','integration_state','controls','retired_items'}:
+                       'source_documents','parent_draft','review_summary','integration_state','controls','retired_items','critical_policy','approval'}:
             del full[key]
     target = HERE / 'full_checklist_draft.json'
     write(target, full)
     catalog = read(HERE / 'chapter2_reason_codes_draft.json')
-    catalog['catalog_version'] = 'phase2-reason-codes-full-draft-2026-10-03-r1'
+    catalog['catalog_version'] = 'phase2-reason-codes-full-draft-2026-10-05-r4'
+    catalog.update(approved=True, status='APPROVED_FOR_USE', approval=deepcopy(full['approval']))
     catalog['checklist_version'] = VERSION
     catalog['checklist_source'] = target.name
     catalog['source_files'] = [{'path': target.name, 'sha256': sha(target)}]
-    catalog['metadata'].update(created_at='2026-10-03',
-        coverage=f'101개 통제항목·{total}문항의 구조 연결용 공통 사유 13종. 신규 문항의 의미별 코드 충분성은 팀 검수 전.',
+    catalog['metadata'].update(created_at='2026-10-05', review_only=False, human_approved=True,
+        coverage=f'101개 통제항목·{total}문항의 공통 사유 13종. 2026-10-05 담당 사용자 요청으로 현 버전 사용 승인.',
         wbs_item='사용자 요청에 따른 1·2·3장 범위 확장',
         parent_catalog_version=read(HERE/'chapter2_reason_codes_draft.json')['catalog_version'],
         parent_catalog_sha256=sha(HERE/'chapter2_reason_codes_draft.json'))
@@ -150,14 +164,14 @@ def build():
                                for (cid,i),ids in coverage.items()])
     doc = ['# 1·2·3장 전체 체크리스트 검수본', '',
            f'101개 통제항목·{total}문항. 기존 2장 700문항 보존, 1·3장 {added}문항 추가.',
-           '팀 미승인 초안. critical 미정. 보유 2023년 안내서 기준이며 현행 법령·실제 증적 판정의 정확성을 보증하지 않는다.', '',
+           '2026-10-05 담당 사용자 요청으로 현재 기준 사용 승인. critical은 2.5·2.6·2.10·2.11 모든 문항 true, 나머지 false. 최신성·파일 형식 정책과 개별 판정 결과 승인은 별도다.', '',
            '1·3장 주요 확인사항 133개를 모두 연결했다. 복수 요소를 포함하는 절차·고지 요건 등은 추가 원자화 검토가 필요하다.',
            '미발생·기한 미도래·적용 불명은 UNKNOWN 보류. 자료 미제출은 NOT_MET 근거가 아니다.', '']
     for c in full['controls']:
         doc += [f'## {c["control_id"]} {c["control_name"]}', '',
-                '| ID | 질문 | 검사 유형 | 적용 조건 |', '|---|---|---|---|']
+                '| ID | 질문 | 검사 유형 | critical | 적용 조건 |', '|---|---|---|---|---|']
         for i in c['items']:
-            doc.append(f'| {i["item_id"]} | {i["question"]} | {i["check_kind"]} | {i.get("applicability_condition", "별도 사건 조건 없음; 적용 범위 확인 필요")} |')
+            doc.append(f'| {i["item_id"]} | {i["question"]} | {i["check_kind"]} | {str(i["critical"]).lower()} | {i.get("applicability_condition", "별도 사건 조건 없음; 적용 범위 확인 필요")} |')
         doc += ['']
     (HERE/'docs/full_checklist_review.md').write_text('\n'.join(doc)+'\n',encoding='utf-8')
     print(json.dumps({'controls':101,'questions':total,'added':added},ensure_ascii=False))

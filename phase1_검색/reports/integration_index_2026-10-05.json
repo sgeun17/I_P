@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-10-05",
+  "status": "PASS",
+  "scope": "통합 코드의 retrieve 호출 경로 정적 확인 + 동일 검색 API/로컬 Chroma 색인의 샘플 실행",
+  "full_pipeline_executed": false,
+  "llm_executed": false,
+  "integration_source_sha256": "a951913c4ab384ba8bd01046e9a079c86969a07bc6786f760e6738c616862f73",
+  "input_sha256": "facc306c686a85fbb92b7103a191afe0dad52857e3e7da30c32b7dda394ca28d",
+  "index": {
+    "collection": "isms_p_controls",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+  },
+  "candidate_ids": [
+    "2.9.4",
+    "2.5.1",
+    "2.5.6",
+    "3.4.2",
+    "2.9.5"
+  ],
+  "remaining": "입력 DB부터 LLM·결과 저장까지 팀 통합 환경 실행은 별도 확인"
+}

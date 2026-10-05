@@ -1,12 +1,12 @@
 # 1·2·3장 전체 체크리스트 연결 안내
 
-2026-10-03 작성. 팀 검수용 초안이며 운영 승인본이 아니다.
+2026-10-05 갱신. 담당 사용자 요청으로 현재 체크리스트·사유 코드 사용 승인을 반영했다. 최신성·파일 형식 정책과 개별 LLM 결과 승인은 별도다.
 
 ## 바뀐 범위
 
-- 2장 기존 64개 통제항목·700문항과 퇴역 3개는 내용·ID 그대로 보존한다.
+- 기존 883문항의 질문·근거·조건·ID와 퇴역 3개는 보존하고 활성 문항의 critical·critical_status와 최상위 승인 메타데이터를 반영한다. 기존 2장 전용 호환본은 변경하지 않는다.
 - 1장 16개, 3장 21개 통제항목을 추가한다. 두 장의 주요 확인사항 133개를 183문항으로 정리했다.
-- 전체 101개 통제항목·883문항. 신규 문항의 critical은 모두 null/UNDECIDED이다.
+- 전체 101개 통제항목·883문항. 2.5·2.6·2.10·2.11의 모든 문항은 critical=true(341개), 나머지는 false(542개), 상태는 CONFIRMED_BY_OWNER이다. record 문항도 포함한다.
 - 질문·검사 유형·근거·조건·출처는 기존 필드를 사용한다. 문항 필드를 추가하지 않았다.
 - 공통 사유 코드 13종의 의미를 변경하지 않고 새 체크리스트 버전·해시에 연결한 카탈로그를 추가했다.
 
@@ -16,16 +16,18 @@
 
 | 구분 | 경로 | 버전 |
 |---|---|---|
-| 체크리스트 | `full_checklist_draft.json` | `phase2-checklist-full-draft-2026-10-03-r1` |
-| 사유 코드 | `full_reason_codes_draft.json` | `phase2-reason-codes-full-draft-2026-10-03-r1` |
+| 체크리스트 | `full_checklist_draft.json` | `phase2-checklist-full-draft-2026-10-05-r4` |
+| 사유 코드 | `full_reason_codes_draft.json` | `phase2-reason-codes-full-draft-2026-10-05-r4` |
 
-판단팀 `tools/run_validated_phase2.py`의 기존 선택 옵션을 사용한다. `phase2_판단` 디렉토리에서:
+판단팀 `tools/run_validated_phase2.py`에는 현재 critical 정책 선택 옵션이 없다. 아래 명령은 파일 선택 방법만 보여주며 **그대로 실행하면 기존 check_kind 정책으로 계산하므로 이번 critical 결정 적용 명령이 아니다.** 판단팀에서 CLI 옵션을 추가하거나, 아래 API 인자를 명시해야 한다.
 
 ```powershell
-python tools/run_validated_phase2.py --input <실제_Phase2_입력_JSON> --control-id 1.1.1 --model qwen3:14b --allow-draft --checklist ../phase2_기준/full_checklist_draft.json --reason-codes ../phase2_기준/full_reason_codes_draft.json --out-dir <새_결과_폴더>
+python tools/run_validated_phase2.py --input <실제_Phase2_입력_JSON> --control-id 1.1.1 --model qwen3:14b --checklist ../phase2_기준/full_checklist_draft.json --reason-codes ../phase2_기준/full_reason_codes_draft.json --out-dir <새_결과_폴더>
 ```
 
 위 명령은 실행 예시이며 이번 작업에서 LLM을 호출하지 않았다. 입력 JSON의 대상 통제항목과 checklist_version도 새 전체 버전에 맞게 생성해야 한다. 버전 문자열만 덮어쓰지 말고 동일 Phase1 결과·원문 청크에서 다시 조립한다.
+
+판단팀 Python 호출은 기존 `run_control_judgment(..., critical_policy={"mode": "explicit"})`를 사용한다. 기본 check_kind 정책은 이번 담당자 결정과 다르다. record 80문항이 새로 중요 문항에 포함되는 등 종합 결과가 달라질 수 있으므로 r1 결과와 구분하여 재생성한다. 다른 팀 코드는 수정하지 않았다.
 
 인터페이스팀 `build_phase2_input.load_checklist_scope()`에 전체 JSON 경로를 넘겨 scope와 version을 얻고 `build()`에 함께 전달하면 된다. 기존 primary_only 선택 정책은 별도 합의 사항이며 이번 작업에서 변경하지 않았다.
 
@@ -39,6 +41,8 @@ python tools/run_validated_phase2.py --input <실제_Phase2_입력_JSON> --contr
 - 사건 없음·기한 미도래·적용 불명은 기존 정책처럼 UNKNOWN 보류한다. N/A나 자동 MET을 새로 도입하지 않았다.
 - 안내서의 법조문·고지사항·수치·기한을 현행법으로 자동 고정하지 않는다. 검토 시점에 적용되는 법령·예외를 확인하지 못하면 UNKNOWN이다. 특히 야간 광고 전송은 일률적 금지가 아닌 해당 법적 허용 요건 확인 질문으로 작성했다.
 - 출처 문자열과 PDF 쪽수, 전체 ID/명칭, 2장 보존, 임시 DB 저장·조회 및 고정 응답 계약을 검증한다. 이것은 LLM 의미 정확도 또는 실증적 검증 결과가 아니다.
-- critical, 최신성·인정 증적 형식, 예외 처리, 사유 코드 충분성 및 문항 의미에 대한 최종 승인은 별도 협의 사항이다.
+- critical 지정은 확정했다. 최신성·인정 증적 파일 형식 및 예외 처리는 별도 협의 사항이다. 현재 문항과 사유 코드는 사용 승인했다.
 
 질문 작성 원본은 `drafts/chapters13/questions.txt`, 주요 확인사항 연결표는 `drafts/chapters13/coverage.json`이다. `tools/build_full_checklist.py`로 전체 JSON·카탈로그·검수 문서를 함께 생성한다. 배포 후 내용을 변경할 때는 기존 버전을 덮어쓰지 않고 버전을 올린다.
+
+승인 범위: 전체 r4 체크리스트·사유 코드의 사용 승인이다. 과거 54/700문항 호환본과 과거 결과는 미승인 상태를 그대로 보존한다. 내부 review API의 `allow_draft=True`와 결과 `approved=false`는 검수 실행/응답에 대한 표시이며 기준 파일 승인과 구분한다. 최신성·파일 형식 정책이 없으면 `POLICY_MISSING`은 계속 발생할 수 있다.

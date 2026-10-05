@@ -61,13 +61,19 @@ class ReviewQuestion(ReviewBase):
     source_clause: Text
     question: Text
     check_kind: Literal["procedure", "implementation", "record"]
-    critical: None
-    critical_status: Literal["UNDECIDED"]
+    critical: bool | None
+    critical_status: Literal["UNDECIDED", "CONFIRMED_BY_OWNER"]
     evidence_rule: EvidenceRule
     review_status: Literal["SOURCE_REVIEWED_DRAFT"]
     source_refs: list[SourceReference]
     review_note: Text
     applicability_condition: Text | None = None
+
+    @model_validator(mode="after")
+    def _critical_decision(self):
+        if (self.critical is None) != (self.critical_status == "UNDECIDED"):
+            raise ValueError("critical 값과 확정 상태가 일치하지 않습니다.")
+        return self
 
 
 class JudgmentReviewInput(ReviewBase):

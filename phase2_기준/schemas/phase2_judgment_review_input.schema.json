@@ -307,11 +307,21 @@
           "type": "string"
         },
         "critical": {
-          "title": "Critical",
-          "type": "null"
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Critical"
         },
         "critical_status": {
-          "const": "UNDECIDED",
+          "enum": [
+            "UNDECIDED",
+            "CONFIRMED_BY_OWNER"
+          ],
           "title": "Critical Status",
           "type": "string"
         },

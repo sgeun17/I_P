@@ -30,6 +30,10 @@ def verify(verify_pdf=False):
     data = read(full)
     catalog = ReasonCatalog(catalog_path)
     old = read(HERE/'chapter2_full_checklist_draft.json')
+    for c in old['controls']:
+        for i in c['items']:
+            i['critical'] = c['control_id'].rsplit('.',1)[0] in data['critical_policy']['critical_control_groups']
+            i['critical_status'] = 'CONFIRMED_BY_OWNER'
     assert [c for c in data['controls'] if c['control_id'].startswith('2.')] == old['controls']
     new = [i for c in data['controls'] if not c['control_id'].startswith('2.') for i in c['items']]
     inventory = read(HERE/'drafts/chapters13/source_inventory.json')
@@ -63,14 +67,15 @@ def verify(verify_pdf=False):
             assert checked['validation']['passed'], c['control_id']
             control_results.append({'control_id':c['control_id'],'questions':len(req.questions),'passed':True})
     return {
-        'status':'PASS','checked_at':'2026-10-03','approved':False,
+        'status':'PASS','checked_at':'2026-10-05','approved':False,
+        'checklist_approved':data['approved'],
         'checklist_version':data['draft_version'],
         'checklist_sha256':hashlib.sha256(full.read_bytes()).hexdigest(),
         'catalog_sha256':hashlib.sha256(catalog_path.read_bytes()).hexdigest(),
         'control_count':len(control_results),'question_count':sum(c['questions'] for c in control_results),
         'new_question_count':len(new),'new_major_check_count':len(coverage),
         'questions_per_chapter':dict(Counter(i['control_id'].split('.')[0] for c in data['controls'] for i in c['items'])),
-        'chapter2_content_preserved':True,'source_pdf_verified':verify_pdf,
+        'chapter2_content_preserved_except_critical':True,'source_pdf_verified':verify_pdf,
         'llm_executed':False,'actual_evidence_used':False,'semantic_judgment_checked':False,
         'controls':control_results,
         'limits':['원문과의 연결·구조 검사이며 현행 법령 검증이나 팀 승인이 아니다.',

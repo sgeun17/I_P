@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checked_at": "2026-09-25T23:34:52.795227+09:00",
+  "checked_at": "2026-10-05T16:39:35.425378+09:00",
   "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
   "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54",
   "model": {
@@ -8,7 +8,7 @@
     "revision": "5617a9f61b028005a4858fdac845db406aefb181"
   },
   "chromadb_version": "1.5.9",
-  "db_path": "C:\\Users\\USER\\Desktop\\ISMS-P 인증 증적 사전점검 도구 개발\\개발\\I_P\\Search\\data\\chroma_kb",
+  "db_path": "C:\\Users\\USER\\Desktop\\ISMS-P 인증 증적 사전점검 도구 개발\\개발\\I_P\\phase1_검색\\data\\chroma_kb",
   "collection": "isms_p_controls",
   "count": 101,
   "dimension": 1024,

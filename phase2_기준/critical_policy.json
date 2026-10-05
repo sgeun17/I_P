@@ -1,0 +1,23 @@
+{
+  "policy_version": "critical-control-groups-2026-10-05-v2",
+  "status": "CONFIRMED_BY_OWNER",
+  "decision_date": "2026-10-05",
+  "decision_source": "사용자가 기존 결정에서 2.7·2.8·2.9를 제외. 2.5·2.6·2.10·2.11 모든 문항 true, 나머지 false로 확정",
+  "critical_control_groups": [
+    "2.5",
+    "2.6",
+    "2.10",
+    "2.11"
+  ],
+  "other_items_critical": false,
+  "included_check_kinds": [
+    "procedure",
+    "implementation",
+    "record"
+  ],
+  "runtime_policy": {
+    "mode": "explicit"
+  },
+  "checklist_content_approved": true,
+  "note": "문항 중요도는 v2 결정을 유지한다. 2026-10-05 현재 체크리스트 사용 승인도 받았다. 최신성·파일 형식·예외 정책과 개별 판정 결과 승인은 별도다."
+}

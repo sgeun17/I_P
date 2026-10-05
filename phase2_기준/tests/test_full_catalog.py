@@ -38,6 +38,10 @@ class FullCatalogTests(unittest.TestCase):
         kb = read(HERE.parent / 'phase1_검색/controls.json')
         self.assertEqual([c['control_id'] for c in self.data['controls']], [c['control_id'] for c in kb])
         old = read(HERE/'chapter2_full_checklist_draft.json')
+        for c in old['controls']:
+            for i in c['items']:
+                i['critical'] = c['control_id'].rsplit('.',1)[0] in {'2.5','2.6','2.10','2.11'}
+                i['critical_status'] = 'CONFIRMED_BY_OWNER'
         self.assertEqual([c for c in self.data['controls'] if c['control_id'].startswith('2.')], old['controls'])
         self.assertEqual(self.data['retired_items'], old['retired_items'])
         self.assertEqual(sum(len(c['items']) for c in self.data['controls']), 883)
@@ -55,7 +59,7 @@ class FullCatalogTests(unittest.TestCase):
         for iid in linked:
             with self.subTest(item=iid):
                 i = items[iid]
-                self.assertIsNone(i['critical'])
+                self.assertIs(i['critical'], False)
                 if iid.startswith('3.'):
                     self.assertTrue(i['applicability_condition'])
                     self.assertIn('법령', i['evidence_rule']['unknown'])
@@ -69,6 +73,7 @@ class FullCatalogTests(unittest.TestCase):
                 checked = check_review_output(req, fixed_response(req), self.store,
                                               catalog=self.catalog, allow_draft=True)
                 self.assertTrue(checked['validation']['passed'], checked)
+                self.assertFalse(checked['approved'])
                 self.assertFalse(checked['validation']['semantic_judgment_checked'])
 
     def test_new_chapters_reject_bad_quote_wrong_version_and_missing_item(self):
@@ -86,9 +91,8 @@ class FullCatalogTests(unittest.TestCase):
                     self.assertFalse(check_review_output(req,bad,self.store,catalog=self.catalog,allow_draft=True)['validation']['passed'])
 
     def test_approval_and_catalog_mixing_guards(self):
-        with self.assertRaises(ChecklistError) as caught:
-            self.store.get_control(self.data['draft_version'],'1.1.1')
-        self.assertEqual(caught.exception.code,'DRAFT_NOT_APPROVED')
+        self.assertTrue(self.store.get_control(self.data['draft_version'],'1.1.1')['approved'])
+        self.assertTrue(self.catalog.list_codes()['approved'])
         c = self.data['controls'][0]
         req = make_request(c,self.data,self.store,self.catalog,'자료 없음')
         with self.assertRaises(JudgmentReviewError) as caught:

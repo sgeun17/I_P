@@ -1,7 +1,7 @@
 """검수용 Phase2 체크리스트의 버전 저장·통제항목/문항 조회. 판정을 수행하지 않는다.
 
 표준 라이브러리 SQLite를 사용한다. 동일 버전의 다른 내용은 거부하고,
-조회 시 초안 상태와 미정 critical을 그대로 반환한다. 운영 승인 기능은 없다.
+조회 시 초안 상태와 critical 결정 상태를 그대로 반환한다. 운영 승인 기능은 없다.
 """
 from __future__ import annotations
 
@@ -18,6 +18,7 @@ import sys
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'phase1_검색'))
 from kb_identity import kb_sha256
+from criteria_state import valid_state
 DEFAULT_DATABASE = HERE / 'data/checklists.sqlite3'
 
 
@@ -58,8 +59,7 @@ def validate_document(document, kb, kb_sha):
     """적재 전에 원본 KB 연결·활성/퇴역 ID·근거·초안 상태를 확인한다."""
     require(isinstance(document, dict), '체크리스트는 객체여야 합니다.')
     require(nonempty(document.get('draft_version')), 'draft_version이 필요합니다.')
-    require(document.get('approved') is False and document.get('status') == 'DRAFT_FOR_TEAM_REVIEW',
-            '검수용 초안만 적재합니다. 이 모듈로 운영 승인을 부여할 수 없습니다.')
+    require(valid_state(document), '체크리스트 승인 값과 상태가 일치해야 합니다.')
     require(isinstance(document.get('source'), dict), 'source가 필요합니다.')
     require(document['source'].get('sha256') == kb_sha, 'Phase1 KB 해시가 다릅니다.', 'SOURCE_MISMATCH')
     require(document.get('proposed_result_values') == ['MET', 'NOT_MET', 'UNKNOWN'], '판정값 제안이 다릅니다.')
@@ -93,8 +93,11 @@ def validate_document(document, kb, kb_sha):
                     and item.get('control_id') == cid and iid not in active, f'문항 ID·소속·중복 오류: {iid}')
             require(nonempty(item.get('question')) and nonempty(item.get('source_clause')), f'{iid}: 질문·원문이 필요합니다.')
             require(item.get('check_kind') in ('procedure', 'implementation', 'record'), f'{iid}: check_kind 오류')
-            require(item.get('critical') is None and item.get('critical_status') == 'UNDECIDED',
-                    f'{iid}: 미합의 critical 값을 이 적재 과정에서 확정하지 않습니다.')
+            critical = item.get('critical')
+            critical_status = item.get('critical_status')
+            require((critical is None and critical_status == 'UNDECIDED') or
+                    (type(critical) is bool and critical_status == 'CONFIRMED_BY_OWNER'),
+                    f'{iid}: critical 값과 확정 상태가 일치해야 합니다.')
             require(item.get('review_status') == 'SOURCE_REVIEWED_DRAFT', f'{iid}: 검수 초안 상태가 필요합니다.')
             rule = item.get('evidence_rule')
             require(isinstance(rule, dict), f'{iid}: evidence_rule이 필요합니다.')
@@ -223,7 +226,7 @@ class ChecklistStore:
                 inserted = True
             require(all(read_bytes(p, 'SOURCE_MISMATCH') == raw for p, raw in source_files.items()),
                     '적재 중 원본 파일이 바뀌었습니다.', 'SOURCE_MISMATCH')
-        return {'version': version, 'source_sha256': content_sha, 'approved': False,
+        return {'version': version, 'source_sha256': content_sha, 'approved': document['approved'],
                 'status': document['status'], 'inserted': inserted, **counts}
 
     def _document(self, db, version):
@@ -233,14 +236,15 @@ class ChecklistStore:
         return json.loads(row[0]), row[1]
 
     @staticmethod
-    def _review_allowed(allow_draft):
-        require(allow_draft is True, '팀 미승인 검수용 KB입니다. 검토 호출에 allow_draft=True를 명시하세요.', 'DRAFT_NOT_APPROVED')
+    def _review_allowed(allow_draft, document):
+        require(valid_state(document), '체크리스트 승인 값과 상태가 일치해야 합니다.')
+        require(document['approved'] is True or allow_draft is True, '팀 미승인 검수용 KB입니다. 검토 호출에 allow_draft=True를 명시하세요.', 'DRAFT_NOT_APPROVED')
 
     def get_control(self, version, control_id, *, allow_draft=False):
         require(nonempty(control_id), '통제항목 ID는 비어 있지 않은 문자열이어야 합니다.')
         with closing(self._connect()) as db:
             document, content_sha = self._document(db, version)
-            self._review_allowed(allow_draft)
+            self._review_allowed(allow_draft, document)
             row = db.execute('SELECT control_json FROM controls WHERE version=? AND control_id=?', (version, control_id)).fetchone()
             require(row is not None, f'초안 범위에 없는 통제항목입니다: {control_id}', 'CONTROL_NOT_FOUND')
             control = json.loads(row[0])
@@ -253,7 +257,7 @@ class ChecklistStore:
         require(nonempty(item_id), '문항 ID는 비어 있지 않은 문자열이어야 합니다.')
         with closing(self._connect()) as db:
             document, content_sha = self._document(db, version)
-            self._review_allowed(allow_draft)
+            self._review_allowed(allow_draft, document)
             retired = db.execute('SELECT item_json FROM retired_items WHERE version=? AND item_id=?', (version, item_id)).fetchone()
             if retired:
                 replacements = json.loads(retired[0])['replaced_by']

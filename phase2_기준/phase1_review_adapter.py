@@ -1,7 +1,7 @@
 """확정된 Phase1 결과를 기존 체크리스트의 내부 검수 계획에 연결한다.
 
-문항 판정이나 운영 Phase2 API 규격을 생성하지 않는다. 현재 체크리스트는
-미승인 초안이므로 ``allow_draft=True``를 명시한 호출만 허용한다.
+문항 판정이나 운영 Phase2 API 규격을 생성하지 않는다. 기준 사용 승인 여부와
+별개로 내부 검수 계획 생성에는 ``allow_draft=True``를 명시한다.
 Phase1 판단팀의 Pydantic 모델과 사람 검토 게이트를 그대로 재사용한다.
 사람이 승인·수정한 결과는 기존 검증 오류가 남아 있어도 기존 검토 정책에 따라
 문항 조회를 허용한다. 저장된 검증 결과를 보존하며 수정 인용을 새로 검증하지 않는다.
@@ -29,6 +29,7 @@ from models import Phase1MappingResult
 from review import is_confirmed_for_phase2
 
 from checklist_store import ChecklistError, ChecklistStore
+from criteria_state import valid_state
 
 
 class ReviewPlanError(ValueError):
@@ -86,7 +87,7 @@ def prepare_review_plan(result, store: ChecklistStore, checklist_version: str,
     수정 매핑·인용의 최신 검증이라고 간주하지 않으며 범위를 메타데이터에 남긴다.
     """
     _require(allow_draft is True, "DRAFT_NOT_APPROVED",
-             "팀 미승인 초안입니다. 검수 호출에 allow_draft=True를 명시하세요.")
+             "내부 검수 계획 생성에는 allow_draft=True를 명시하세요. 기준 사용 승인과 별개입니다.")
     _require(isinstance(checklist_version, str) and bool(checklist_version.strip()),
              "CHECKLIST_VERSION_REQUIRED", "체크리스트 버전을 지정해야 합니다.")
     phase1 = _validated_result(result)
@@ -118,9 +119,8 @@ def prepare_review_plan(result, store: ChecklistStore, checklist_version: str,
     selected = next((item for item in versions if item["version"] == checklist_version), None)
     _require(selected is not None, "VERSION_NOT_FOUND", "체크리스트 버전이 없습니다.",
              checklist_version=checklist_version)
-    _require(selected.get("status") == "DRAFT_FOR_TEAM_REVIEW"
-             and selected.get("approved") is False, "CHECKLIST_STATE_UNSUPPORTED",
-             "이 연결은 미승인 검수용 초안에만 사용할 수 있습니다.")
+    _require(valid_state(selected), "CHECKLIST_STATE_UNSUPPORTED",
+             "체크리스트 승인 값과 상태가 일치해야 합니다.")
     _require(selected.get("kb_sha256") == kb_sha, "KB_SOURCE_MISMATCH",
              "Phase1 검색 KB와 선택한 체크리스트의 원본 KB가 다릅니다.",
              phase1_kb_sha256=kb_sha, checklist_kb_sha256=selected.get("kb_sha256"))
@@ -140,7 +140,7 @@ def prepare_review_plan(result, store: ChecklistStore, checklist_version: str,
                  and response.get("source_sha256") == selected["source_sha256"]
                  and response.get("source", {}).get("sha256") == kb_sha
                  and response.get("status") == selected["status"]
-                 and response.get("approved") is False,
+                 and response.get("approved") is selected['approved'],
                  "CHECKLIST_CHANGED_DURING_READ", "체크리스트 조회 결과의 버전·출처가 다릅니다.",
                  control_id=mapping.control_id)
         checklist = response["control"]

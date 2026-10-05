@@ -1,24 +1,24 @@
 {
-  "catalog_version": "phase2-reason-codes-full-draft-2026-10-03-r1",
-  "status": "DRAFT_FOR_TEAM_REVIEW",
-  "approved": false,
+  "catalog_version": "phase2-reason-codes-full-draft-2026-10-05-r4",
+  "status": "APPROVED_FOR_USE",
+  "approved": true,
   "metadata": {
-    "created_at": "2026-10-03",
-    "review_only": true,
-    "human_approved": false,
+    "created_at": "2026-10-05",
+    "review_only": false,
+    "human_approved": true,
     "llm_executed": false,
     "actual_evidence_used": false,
     "wbs_item": "사용자 요청에 따른 1·2·3장 범위 확장",
-    "coverage": "101개 통제항목·883문항의 구조 연결용 공통 사유 13종. 신규 문항의 의미별 코드 충분성은 팀 검수 전.",
+    "coverage": "101개 통제항목·883문항의 공통 사유 13종. 2026-10-05 담당 사용자 요청으로 현 버전 사용 승인.",
     "parent_catalog_version": "phase2-reason-codes-chapter2-full-draft-2026-10-01-r3",
     "parent_catalog_sha256": "799d37627b9db7b4df672be03d3da05bb4c81cfc05f144020c101d48427c4336",
     "example_coverage": "대표 사례만 별도 검증. 전체 문항의 MET/NOT_MET/UNKNOWN 정답셋은 미작성."
   },
-  "checklist_version": "phase2-checklist-full-draft-2026-10-03-r1",
+  "checklist_version": "phase2-checklist-full-draft-2026-10-05-r4",
   "source_files": [
     {
       "path": "full_checklist_draft.json",
-      "sha256": "c265cfb94f512829e6ae0a83ed09267010c3d137ee3cf02d484f23468ce17a11"
+      "sha256": "5517a9831b34085011f5a051724417a41ddb14d563634c1f7dc08a6064992066"
     }
   ],
   "result_values": [
@@ -236,5 +236,15 @@
       "pending_decision_id": null
     }
   ],
-  "checklist_source": "full_checklist_draft.json"
+  "checklist_source": "full_checklist_draft.json",
+  "approval": {
+    "date": "2026-10-05",
+    "source": "담당 사용자 대화 지시",
+    "scope": "현재 101개 통제항목·883문항 및 공통 사유 코드 13종을 사용하도록 승인",
+    "exclusions": [
+      "개별 LLM 판정 결과 승인",
+      "최신성·파일 형식 정책 확정",
+      "현행 법령 검증"
+    ]
+  }
 }

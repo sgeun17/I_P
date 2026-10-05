@@ -1,7 +1,7 @@
 """Review-only reason code lookup and validation; never judges evidence.
 
-The catalog and examples are unapproved proposals. Explicit ``allow_draft``
-is required. Phase1, team API contracts and operational judgments are untouched.
+Approved catalogs can be queried directly; legacy drafts require ``allow_draft``.
+Catalog approval never approves an assigned evidence judgment or example.
 """
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+from criteria_state import valid_state
 
 
 HERE = Path(__file__).resolve().parent
@@ -75,14 +76,14 @@ class ReasonCatalog:
             self._source_hashes[source["path"]] = actual_hash
         checklist = self._sources[self.checklist_source]
         _require(checklist.get("draft_version") == self._data["checklist_version"], "SOURCE_CHANGED", "체크리스트 버전이 다릅니다.")
-        _require(checklist.get("approved") is False and checklist.get("status") == "DRAFT_FOR_TEAM_REVIEW", "INVALID_SOURCE", "체크리스트는 미승인 검수용 초안이어야 합니다.")
+        _require(valid_state(checklist) and checklist['approved'] is self._data['approved'], "INVALID_SOURCE", "체크리스트와 사유 코드 승인 상태가 일치해야 합니다.")
 
     def _validate_catalog(self):
         data = self._data
         _require(_text(data.get("catalog_version")) and _text(data.get("checklist_version")), "INVALID_CATALOG", "카탈로그·체크리스트 버전이 필요합니다.")
-        _require(data.get("approved") is False and data.get("status") == "DRAFT_FOR_TEAM_REVIEW", "INVALID_CATALOG", "이 모듈은 팀 미승인 검수용 초안만 처리합니다.")
+        _require(valid_state(data), "INVALID_CATALOG", "사유 코드 승인 값과 상태가 일치해야 합니다.")
         metadata = _object(data.get("metadata"), "INVALID_CATALOG")
-        _require(metadata.get("review_only") is True and metadata.get("human_approved") is False and metadata.get("llm_executed") is False and metadata.get("actual_evidence_used") is False, "INVALID_CATALOG", "검수용·미승인·미실행 상태를 유지해야 합니다.")
+        _require(metadata.get("review_only") is (not data['approved']) and metadata.get("human_approved") is data['approved'] and metadata.get("llm_executed") is False and metadata.get("actual_evidence_used") is False, "INVALID_CATALOG", "승인 메타데이터와 기준 파일 생성 범위가 일치해야 합니다.")
         values = _array(data.get("result_values"), "INVALID_CATALOG")
         _require(len(values) == 3 and all(isinstance(x, str) for x in values) and set(values) == RESULTS, "INVALID_CATALOG", "제안 결과 값은 MET·NOT_MET·UNKNOWN입니다.")
         rules = _object(data.get("assignment_rules"), "INVALID_CATALOG")
@@ -122,7 +123,7 @@ class ReasonCatalog:
             self._codes[code] = entry
 
     def _allow(self, allow_draft):
-        _require(allow_draft is True, "DRAFT_NOT_APPROVED", "팀 미승인 초안입니다. 검수 목적으로 allow_draft=True를 명시하세요.")
+        _require(self._data['approved'] is True or allow_draft is True, "DRAFT_NOT_APPROVED", "팀 미승인 초안입니다. 검수 목적으로 allow_draft=True를 명시하세요.")
 
     def _check_sources_unchanged(self):
         _, current_catalog_hash = _read(self.path)
@@ -137,7 +138,7 @@ class ReasonCatalog:
         self._check_sources_unchanged()
         return deepcopy({
             "catalog_version": self._data["catalog_version"],
-            "status": self._data["status"], "approved": False,
+            "status": self._data["status"], "approved": self._data['approved'],
             "codes": [x for x in self._data["codes"] if result is None or x["result"] == result],
             "pending_decisions": self._data["pending_decisions"],
         })
