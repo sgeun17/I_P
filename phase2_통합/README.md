@@ -4,12 +4,9 @@ WBS 38행 `Phase 2 통합 / 결과 화면·수정 이력` 의 **데이터·상�
 화면은 B 파트가 만든다. 이 폴더는 그 화면에 넘길 값을 저장하고 꺼내준다.
 
 ```
-phase2_schema.sql              표 3개 (CREATE TABLE IF NOT EXISTS — 데이터 보존)
-phase2_schema_reset.sql        개발용 초기화 (데이터 삭제)
-phase2_migration_v1_to_v2.sql  전에 만든 표가 있으면 한 번 돌린다
+phase2_schema.sql          표 3개 (CREATE TABLE IF NOT EXISTS — 데이터 보존)
 phase2_result_store.py     판정 결과 저장·조회·종합·UI 응답 조립
 phase2_review_store.py     승인·수정·반려와 이력
-API_response_spec.md       화면 쪽에 넘기는 응답 규격
 ```
 
 ## 설치
