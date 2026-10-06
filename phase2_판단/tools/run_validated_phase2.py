@@ -21,9 +21,13 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--allow-draft", action="store_true")
-    parser.add_argument("--checklist", default=str(HERE.parent / "phase2_기준/chapter2_full_checklist_draft.json"))
-    parser.add_argument("--reason-codes", default=str(HERE.parent / "phase2_기준/chapter2_reason_codes_draft.json"))
+    parser.add_argument("--checklist", default=str(HERE.parent / "phase2_기준/full_checklist_draft.json"))
+    parser.add_argument("--reason-codes", default=str(HERE.parent / "phase2_기준/full_reason_codes_draft.json"))
     parser.add_argument("--policies", help="Optional per-item policy JSON; no built-in freshness age")
+    parser.add_argument(
+        "--organization-profile",
+        help="Optional organization applicability/risk context JSON passed to the item Grounding prompt",
+    )
     parser.add_argument("--as-of", help="Explicit YYYY-MM-DD reference date")
     args = parser.parse_args()
     out = Path(args.out_dir)
@@ -36,6 +40,7 @@ def main():
         catalog=read(args.checklist), reason_catalog=read(args.reason_codes), controls=controls,
         model=args.model, allow_draft=args.allow_draft,
         item_policies=read(args.policies) if args.policies else None, as_of=args.as_of,
+        organization_context=read(args.organization_profile) if args.organization_profile else None,
         controls_sha256=interface_module("kb_identity").kb_sha256((HERE.parent / "phase1_검색/controls.json").read_bytes()),
         progress=lambda n, total, item_id, status: print(f"[{n}/{total}] {item_id}: {status}", flush=True))
     for name, data in (("audit.json", result["audit"]), ("output.json", result["output"]),

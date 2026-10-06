@@ -88,3 +88,42 @@ def test_dev_harness_retries_invalid_json_using_phase1_retry_policy():
     assert result.attempts == 2
     assert result.retry_count == 1
     assert "E201" in calls[1]
+
+
+def test_dev_harness_forwards_company_profile_and_records_only_profile_fingerprint():
+    item = get_checklist_item("3.1.1-Q07")
+    codes = compact_reason_codes(load_reason_code_catalog())
+    profile = {
+        "profile_version": "test-org-profile-v1",
+        "applicability_facts": [{
+            "fact_id": "AGE-001",
+            "statement": "만 14세 미만 회원가입을 허용하지 않는다.",
+        }],
+    }
+    response = json.dumps({
+        "item_id": "3.1.1-Q07",
+        "result": "UNKNOWN",
+        "reason": "적용 조건 미발생 여부가 확인되어 법정대리인 동의 기록 부재만으로 결함을 확정하지 않는다.",
+        "reason_codes": ["P2_U_NO_TRIGGER_EVENT"],
+        "citations": [],
+    }, ensure_ascii=False)
+
+    calls = []
+    def fake_call(system, user, model, schema, **kwargs):
+        calls.append(user)
+        return response
+
+    result = run_item_judgment(
+        item,
+        _context(),
+        model="qwen3:test",
+        reason_codes=codes,
+        organization_context=profile,
+        llm_call=fake_call,
+    )
+
+    assert result.succeeded is True
+    assert result.parsed_output["reason_codes"] == ["P2_U_NO_TRIGGER_EVENT"]
+    assert '"profile_version": "test-org-profile-v1"' in calls[0]
+    assert result.organization_profile_version == "test-org-profile-v1"
+    assert result.organization_context_sha256

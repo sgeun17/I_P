@@ -1,0 +1,20 @@
+{
+  "profile_version": "phase2-org-profile-example-v0.1",
+  "organization_scope": {
+    "service": "example-membership-service",
+    "notes": "예시 값이다. 실제 조직 설정으로 교체한다."
+  },
+  "applicability_facts": [
+    {
+      "fact_id": "AGE-SCOPE-001",
+      "statement": "만 14세 미만 이용자의 회원가입을 허용하지 않는다.",
+      "status": "ORGANIZATION_DECLARED",
+      "scope": "회원가입",
+      "evidence_expectation": "실제 가입 단계에서 연령 제한이 동작함을 evidence_context 원문으로 별도 확인한다."
+    }
+  ],
+  "risk_acceptance": {
+    "level": "LOW",
+    "notes": "보완 우선순위 참고용이다. 법적 의무나 ISMS-P 판정을 면제하지 않는다."
+  }
+}

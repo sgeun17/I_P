@@ -27,6 +27,10 @@ def main() -> int:
     parser.add_argument("--context", required=True, help="context_builder 결과 JSON")
     parser.add_argument("--model", help="Qwen3 Ollama tag. 생략하면 LLM_MODEL")
     parser.add_argument("--allow-draft", action="store_true")
+    parser.add_argument(
+        "--organization-profile",
+        help="선택: 조직별 적용범위·운영정책·위험수용 보조 컨텍스트 JSON",
+    )
     args = parser.parse_args()
 
     runtime = runtime_profile_from_env(model_override=args.model)
@@ -37,6 +41,7 @@ def main() -> int:
         _read(args.context),
         model=runtime.model,
         reason_codes=reasons,
+        organization_context=_read(args.organization_profile) if args.organization_profile else None,
     )
     print(json.dumps({
         "runtime": runtime.audit_dict(),
@@ -45,6 +50,8 @@ def main() -> int:
         "retry_count": result.retry_count,
         "final_error_code": result.final_error_code,
         "validation_messages": list(result.validation_messages),
+        "organization_profile_version": result.organization_profile_version,
+        "organization_context_sha256": result.organization_context_sha256,
         "output": result.parsed_output,
     }, ensure_ascii=False, indent=2))
     return 0 if result.succeeded else 1

@@ -1,7 +1,7 @@
 """Phase 2 판단 결과 재현을 위한 버전 메타데이터.
 
-최종 Output Schema가 오기 전에도 Prompt/Context/Checklist/Reason code/Retry 설정의 조합을
-기록할 수 있게 한다. 파일 버전 문자열과 SHA-256을 함께 보존해 같은 이름의 draft가 바뀌는 것도 잡는다.
+Prompt/Context/Checklist/Reason code/Retry 설정의 조합을 기록한다.
+파일 버전 문자열과 SHA-256을 함께 보존해 같은 이름의 기준 파일이 바뀌는 것도 잡는다.
 """
 from __future__ import annotations
 

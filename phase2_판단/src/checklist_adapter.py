@@ -1,7 +1,8 @@
-"""현재 Phase 2 기준팀 draft를 판단 하네스가 읽기 위한 얇은 adapter.
+"""Phase 2 기준팀 카탈로그를 판단 하네스가 읽기 위한 얇은 adapter.
 
-운영 저장소/API를 대신하지 않는다. 체크리스트와 reason code가 아직 팀 미승인 상태이므로
-모든 조회는 allow_draft=True를 명시해야 한다.
+기본값은 현재 승인된 1·2·3장 전체 카탈로그를 사용한다.
+미승인 과거 draft를 직접 지정해 개발 검수할 때만 allow_draft=True를 사용한다.
+운영 저장소/API를 대신하지 않는다.
 """
 from __future__ import annotations
 
@@ -13,8 +14,8 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 PROJECT_ROOT = HERE.parents[1]
-DEFAULT_CHECKLIST = PROJECT_ROOT / "phase2_기준" / "chapter2_full_checklist_draft.json"
-DEFAULT_REASON_CODES = PROJECT_ROOT / "phase2_기준" / "chapter2_reason_codes_draft.json"
+DEFAULT_CHECKLIST = PROJECT_ROOT / "phase2_기준" / "full_checklist_draft.json"
+DEFAULT_REASON_CODES = PROJECT_ROOT / "phase2_기준" / "full_reason_codes_draft.json"
 
 
 class DraftDataError(ValueError):

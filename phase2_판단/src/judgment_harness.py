@@ -10,6 +10,7 @@ Citation 원문 일치/page 일치와 Human Review 전환은 찬우 Validator �
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+from hashlib import sha256
 import json
 import time
 from typing import Any, Callable, Mapping, Sequence
@@ -48,6 +49,8 @@ class JudgmentRunResult:
     attempt_history: tuple[dict[str, Any], ...] = ()
     citation_generation_mode: str = "verbatim"
     source_spans: dict[str, Any] | None = None
+    organization_context_sha256: str | None = None
+    organization_profile_version: str | None = None
 
     @property
     def succeeded(self) -> bool:
@@ -81,6 +84,7 @@ def run_item_judgment(
     model: str,
     reason_codes: Sequence[Mapping[str, Any]] | None = None,
     global_rules: str | None = None,
+    organization_context: Mapping[str, Any] | None = None,
     output_schema: dict[str, Any] | None = None,
     output_validator: OutputValidator | None = None,
     retry_policy: RetryPolicy = DEFAULT_RETRY_POLICY,
@@ -102,15 +106,28 @@ def run_item_judgment(
         prompt_context, span_map, output_schema = prepare_spans(
             evidence_context, str(checklist_item.get("item_id") or ""), reason_codes
         )
+    organization_payload = dict(organization_context or {})
+    organization_context_sha256 = (
+        sha256(json.dumps(
+            organization_payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+        ).encode("utf-8")).hexdigest()
+        if organization_payload else None
+    )
     run_metadata = {
         "citation_generation_mode": SPAN_VERSION if citation_span_selection else "verbatim",
         "source_spans": span_map,
+        "organization_context_sha256": organization_context_sha256,
+        "organization_profile_version": (
+            str(organization_payload.get("profile_version"))
+            if organization_payload.get("profile_version") is not None else None
+        ),
     }
     package: PromptPackage = build_prompt_package(
         checklist_item,
         prompt_context,
         reason_codes=reason_codes,
         global_rules=global_rules,
+        organization_context=organization_payload,
         output_schema=output_schema,
     )
     if citation_span_selection:

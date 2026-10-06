@@ -60,3 +60,48 @@ def test_prompt_accepts_future_rules_and_schema_without_code_rewrite():
     assert package.output_schema == schema
     assert package.ruleset_version == "phase2_rules_v0.1"
     assert "TEST_RULE" in package.user
+
+
+def test_prompt_checks_applicability_before_downstream_evidence_and_accepts_org_context():
+    item = get_checklist_item("3.1.1-Q07")
+    codes = compact_reason_codes(load_reason_code_catalog())
+    organization = {
+        "profile_version": "test-org-profile-v1",
+        "applicability_facts": [{
+            "fact_id": "AGE-001",
+            "statement": "만 14세 미만 회원가입을 허용하지 않는다.",
+            "status": "ORGANIZATION_DECLARED",
+        }],
+        "risk_acceptance": {"level": "LOW"},
+    }
+    context = _context()
+    context["chunks"][0]["text"] = "회원가입 단계에서 만 14세 미만 사용자는 가입할 수 없도록 차단한다."
+
+    package = build_prompt_package(
+        item,
+        context,
+        reason_codes=codes,
+        organization_context=organization,
+    )
+
+    assert "적용 조건 우선 판정" in package.system
+    assert "P2_U_NO_TRIGGER_EVENT" in package.system
+    assert "법정대리인 동의 기록이 없다" in package.system
+    assert "위험수용 수준" in package.system
+    assert "만 14세 미만 회원가입을 허용하지 않는다." in package.user
+    assert '"profile_version": "test-org-profile-v1"' in package.user
+    assert "applicability_condition" in package.user
+
+
+def test_risk_acceptance_is_not_an_override_for_compliance_result():
+    item = get_checklist_item("3.1.1-Q07")
+    package = build_prompt_package(
+        item,
+        _context(),
+        organization_context={
+            "profile_version": "test-org-profile-v1",
+            "risk_acceptance": {"level": "HIGH", "notes": "내부적으로 위험을 수용함"},
+        },
+    )
+    assert "법적 의무" in package.system
+    assert "면제 사유가 아니다" in package.system
