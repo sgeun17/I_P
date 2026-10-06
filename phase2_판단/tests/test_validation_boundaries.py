@@ -125,6 +125,38 @@ def test_confidence_exact_threshold_is_accepted(setup_case):
     assert checked["result"] == "MET"
 
 
+def test_entailment_consistency_guard_is_not_rejected_by_original_low_confidence(setup_case):
+    payload, _, item, context, output = setup_case
+    item = deepcopy(item)
+    item["question"] = "법정대리인의 동의를 받았는가?"
+    quote = "담당자는 법정대리인의 동의를 받지 않고 수집을 진행하였다."
+    citation = output["citations"][0]
+    for chunk in context["chunks"]:
+        if chunk["chunk_id"] == citation["chunk_id"]:
+            chunk["text"] = quote
+            break
+    citation["quote"] = quote
+    output.update(
+        result="NOT_MET",
+        reason="법정대리인의 동의를 받지 않고 수집을 진행하였다.",
+        reason_codes=["P2_NM_REQUIRED_ACTION_NOT_DONE"],
+    )
+    contradictory = response({
+        "verdict": "UNSUPPORTED",
+        "reason": "동의를 받지 않고 진행한 사실은 확인되었으나 NOT_MET 근거가 부족하다.",
+        "confidence": .6,
+        "unsupported_conditions": ["NOT_MET 판정의 직접 근거 부족"],
+    })
+    checked, audit = run_validated_item(
+        item, context, evidence_id=payload["evidence_id"], version=1,
+        model="fake", reason_codes=REASONS["codes"], llm_call=response(output),
+        self_check_call=contradictory,
+    )
+    assert checked["result"] == "NOT_MET"
+    assert audit["self_check"]["confidence"] == .6
+    assert audit["semantic_guards"][-1]["decision"] == "RETAIN_PROPOSED_NOT_MET"
+
+
 def test_draft_denied_without_explicit_opt_in(setup_case):
     payload, catalog, *_ = setup_case
     run = run_control_judgment(payload, "2.5.1", catalog=catalog, reason_catalog=REASONS, controls=CONTROLS, model="fake")

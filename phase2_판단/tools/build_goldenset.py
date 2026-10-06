@@ -25,6 +25,12 @@ def _read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _portable_text_sha256(path: Path) -> str:
+    """Return a content hash that is stable across LF and CRLF checkouts."""
+    text = path.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\r", "\n")
+    return sha256(text.encode("utf-8")).hexdigest()
+
+
 CHECKLIST_DATA = _read_json(CHECKLIST)
 REASON_DATA = _read_json(REASON_CODES)
 OUTPUT_SCHEMA_DATA = _read_json(OUTPUT_SCHEMA)
@@ -294,10 +300,10 @@ def build_payload() -> dict[str, Any]:
         "created_at": "2026-10-02",
         "contract_version": OUTPUT_SCHEMA_DATA["properties"]["schema_version"]["const"],
         "output_schema_path": "phase2_인터페이스/phase2_output.schema.json",
-        "output_schema_sha256": sha256(OUTPUT_SCHEMA.read_bytes()).hexdigest(),
+        "output_schema_sha256": _portable_text_sha256(OUTPUT_SCHEMA),
         "output_item_schema_ref": "#/$defs/ItemResult",
         "checklist_version": CHECKLIST_DATA["draft_version"],
-        "checklist_sha256": sha256(CHECKLIST.read_bytes()).hexdigest(),
+        "checklist_sha256": _portable_text_sha256(CHECKLIST),
         "reason_codes_version": REASON_DATA["catalog_version"],
         "synthetic": True,
         "note": "증적 본문은 전부 합성이다. ideal은 사람이 정한 정답이며 LLM 정확도 측정값이 아니다.",

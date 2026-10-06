@@ -1,5 +1,6 @@
 """Regression coverage for the interface team's phase2-output-0.3 contract."""
 from copy import deepcopy
+from pathlib import Path
 
 from test_validated_pipeline import execute, setup_case
 from validation.contracts import interface_module, output_schema_version, validate_schema
@@ -42,4 +43,9 @@ def test_schema_error_and_semantic_reason_mismatch_are_both_recorded(setup_case)
 
 
 def test_overall_helper_is_loaded_from_interface_root():
-    assert interface_module("overall").__file__.endswith("phase2_인터페이스\\overall_result.py")
+    expected = (
+        Path(__file__).resolve().parents[2]
+        / "phase2_인터페이스"
+        / "overall_result.py"
+    ).resolve()
+    assert Path(interface_module("overall").__file__).resolve() == expected

@@ -1,8 +1,7 @@
-"""Phase 2 기준팀 카탈로그를 판단 하네스가 읽기 위한 얇은 adapter.
+"""현재 Phase 2 기준팀 카탈로그를 판단 하네스가 읽기 위한 얇은 adapter.
 
-기본값은 현재 승인된 1·2·3장 전체 카탈로그를 사용한다.
-미승인 과거 draft를 직접 지정해 개발 검수할 때만 allow_draft=True를 사용한다.
-운영 저장소/API를 대신하지 않는다.
+운영 저장소/API를 대신하지 않는다. 기본값은 1·2·3장 r5 승인본이며, 별도 미승인
+파일을 읽을 때만 ``allow_draft=True``가 필요하다.
 """
 from __future__ import annotations
 

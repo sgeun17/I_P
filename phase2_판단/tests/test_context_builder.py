@@ -1,5 +1,6 @@
 from context_builder import (
     ContextBuildError,
+    build_control_evidence_context,
     build_context_from_phase1,
     build_evidence_context,
     extract_phase1_citation_anchors,
@@ -88,3 +89,39 @@ def test_budget_requires_real_counter_callback():
         assert exc.code == "TOKEN_COUNTER_REQUIRED"
     else:
         raise AssertionError("TOKEN_COUNTER_REQUIRED가 발생해야 합니다.")
+
+
+def test_small_document_delivers_all_chunks_and_audits_reasons():
+    context = build_control_evidence_context(
+        _chunks(),
+        ["e0001_v1_c0001"],
+        [{"question": "계정 접근권한 검토 기록을 확인하는가", "evidence_rule": {}}],
+        max_chunks=12,
+        max_context_tokens=10000,
+        token_counter=len,
+    )
+    assert [row["chunk_id"] for row in context["chunks"]] == [
+        f"e0001_v1_c{i:04d}" for i in range(1, 6)
+    ]
+    assert context["selection_audit"]["mode"] == "full_document"
+    assert not context["selection_audit"]["excluded"]
+    anchor = context["selection_audit"]["included"][0]
+    assert "phase1_mapping_anchor" in anchor["reasons"]
+
+
+def test_large_document_keeps_anchor_and_relevant_execution_chunk():
+    chunks = _chunks() + [
+        {**_chunks()[0], "chunk_id": "e0001_v1_c0006", "text": "실제 계정 삭제 처리자와 처리일 기록"},
+        {**_chunks()[0], "chunk_id": "e0001_v1_c0007", "text": "무관한 식단 기록"},
+    ]
+    context = build_control_evidence_context(
+        chunks,
+        ["e0001_v1_c0001"],
+        [{"question": "계정 삭제 처리자와 처리일을 확인하는가", "evidence_rule": {}}],
+        max_chunks=3,
+    )
+    ids = {row["chunk_id"] for row in context["chunks"]}
+    assert "e0001_v1_c0001" in ids
+    assert "e0001_v1_c0006" in ids
+    assert context["selection_audit"]["mode"] == "relevance_budget"
+    assert context["selection_audit"]["excluded"]

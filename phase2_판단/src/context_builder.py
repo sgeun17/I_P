@@ -19,10 +19,11 @@ from copy import deepcopy
 from dataclasses import dataclass, replace
 from hashlib import sha256
 import json
+import re
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
 
-CONTEXT_BUILDER_VERSION = "phase2_context_v0.1"
+CONTEXT_BUILDER_VERSION = "phase2_context_v0.2-audited-selection"
 TokenCounter = Callable[[str], int]
 
 
@@ -418,6 +419,117 @@ def build_evidence_context(
         "omitted_chunk_ids": omitted,
         "token_usage": token_usage,
     }
+
+
+_TERM_RE = re.compile(r"[0-9A-Za-z가-힣_]+")
+_STOP_TERMS = {
+    "그리고", "그러나", "대한", "대하여", "위한", "있는", "없는", "한다", "여부",
+    "확인", "증적", "기록", "문서", "항목", "관련", "필요", "경우", "통제", "해당",
+}
+
+
+def _selection_terms(items: Sequence[Mapping[str, Any]]) -> set[str]:
+    """체크리스트 문구에서 청크 선택에 쓸 일반 용어를 추출한다.
+
+    E번호나 정답표를 사용하지 않고 질문·근거 규칙만 사용한다.
+    """
+    text = json.dumps(list(items), ensure_ascii=False)
+    return {
+        token.lower()
+        for token in _TERM_RE.findall(text)
+        if len(token) >= 2 and token.lower() not in _STOP_TERMS
+    }
+
+
+def build_control_evidence_context(
+    chunks: Sequence[Any],
+    evidence_chunk_ids: Sequence[str],
+    checklist_items: Sequence[Mapping[str, Any]],
+    *,
+    anchor_quotes: Mapping[str, Sequence[str]] | None = None,
+    max_chunks: int = 12,
+    max_context_tokens: int | None = None,
+    token_counter: TokenCounter | None = None,
+) -> dict[str, Any]:
+    """통제항목 전체 문항에 공통으로 쓸 감사 가능한 context를 고른다.
+
+    작은 문서는 전체 청크를 전달한다. 큰 문서는 Phase 1 anchor, anchor 인접 청크,
+    체크리스트 질문·근거 규칙과 어휘가 겹치는 청크 순으로 선택한다. 선택 및 제외
+    사유를 ``selection_audit``에 남긴다. 토큰 제한을 사용할 때는 기존의 실제
+    tokenizer callback 계약을 그대로 따른다.
+    """
+    normalized = normalize_chunks(chunks)
+    if max_chunks < len(set(evidence_chunk_ids)):
+        raise ContextBuildError(
+            "MAX_CHUNKS_TOO_SMALL",
+            "max_chunks는 최소한 핵심 evidence chunk 수 이상이어야 합니다.",
+        )
+    if max_chunks < 1:
+        raise ContextBuildError("INVALID_MAX_CHUNKS", "max_chunks는 1 이상이어야 합니다.")
+
+    # anchor 존재 여부를 먼저 검증하고 원문 위치를 얻는다.
+    anchors = _selected_with_neighbors(normalized, evidence_chunk_ids, 0)
+    anchor_positions = {row.source_position for row in anchors}
+    terms = _selection_terms(checklist_items)
+    reasons: dict[str, list[str]] = {}
+    scored: list[tuple[int, int, ContextChunk]] = []
+    for row in normalized:
+        row_reasons: list[str] = []
+        if row.source_position in anchor_positions:
+            row_reasons.append("phase1_mapping_anchor")
+        distance = min(abs(row.source_position - pos) for pos in anchor_positions)
+        if distance == 1:
+            row_reasons.append("adjacent_to_anchor")
+        haystack = f"{row.heading or ''} {row.text}".lower()
+        matches = sum(1 for term in terms if term in haystack)
+        if matches:
+            row_reasons.append("checklist_term_match")
+        reasons[row.chunk_id] = row_reasons
+        # anchor > 인접 > 문항 어휘 일치 > 원문 순서. 점수 동률은 앞 청크 우선.
+        score = (100000 if row.source_position in anchor_positions else 0)
+        score += (10000 if distance == 1 else 0)
+        score += min(matches, 100) * 100
+        scored.append((score, -row.source_position, row))
+
+    if len(normalized) <= max_chunks:
+        selected_ids = {row.chunk_id for row in normalized}
+        for row in normalized:
+            reasons[row.chunk_id].append("full_document_within_chunk_budget")
+        mode = "full_document"
+    else:
+        ranked = sorted(scored, key=lambda entry: (entry[0], entry[1]), reverse=True)
+        selected_ids = {entry[2].chunk_id for entry in ranked[:max_chunks]}
+        mode = "relevance_budget"
+
+    selected_raw = [chunks[row.source_position] for row in normalized if row.chunk_id in selected_ids]
+    context = build_evidence_context(
+        selected_raw,
+        evidence_chunk_ids,
+        anchor_quotes=anchor_quotes,
+        neighbor_count=max(0, len(selected_raw)),
+        max_context_tokens=max_context_tokens,
+        token_counter=token_counter,
+    )
+    delivered_ids = {row["chunk_id"] for row in context["chunks"]}
+    token_omitted = set(context.get("omitted_chunk_ids", []))
+    included = []
+    excluded = []
+    for row in normalized:
+        if row.chunk_id in delivered_ids:
+            included.append({"chunk_id": row.chunk_id, "reasons": reasons[row.chunk_id] or ["document_fallback"]})
+        else:
+            why = "token_budget" if row.chunk_id in token_omitted else "lower_relevance_chunk_budget"
+            excluded.append({"chunk_id": row.chunk_id, "reason": why})
+    context["selection_audit"] = {
+        "mode": mode,
+        "input_chunk_count": len(normalized),
+        "delivered_chunk_count": len(delivered_ids),
+        "max_chunks": max_chunks,
+        "max_context_tokens": max_context_tokens,
+        "included": included,
+        "excluded": excluded,
+    }
+    return context
 
 
 def build_context_from_phase1(
