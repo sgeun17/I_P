@@ -42,10 +42,10 @@ class FullCatalogTests(unittest.TestCase):
             for i in c['items']:
                 i['critical'] = c['control_id'].rsplit('.',1)[0] in {'2.5','2.6','2.10','2.11'}
                 i['critical_status'] = 'CONFIRMED_BY_OWNER'
-                if i['item_id'] == '2.10.8-Q05':
+                if i['item_id'] in {'2.10.8-Q05','2.2.5-Q07','2.9.3-Q14','2.5.1-Q17','2.2.3-Q04'}:
                     current = next(x for c in self.data['controls'] for x in c['items'] if x['item_id'] == i['item_id'])
                     for key in ('evidence_rule', 'review_note'):
-                        i[key] = deepcopy(current[key])  # r5 문항별 예외, 나머지 필드는 보존 검사
+                        i[key] = deepcopy(current[key])  # 문항별 예외·인정 범위 보완, 나머지 필드는 보존 검사
         self.assertEqual([c for c in self.data['controls'] if c['control_id'].startswith('2.')], old['controls'])
         self.assertEqual(self.data['retired_items'], old['retired_items'])
         self.assertEqual(sum(len(c['items']) for c in self.data['controls']), 883)

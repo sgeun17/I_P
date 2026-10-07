@@ -63,3 +63,5 @@ cd ~/I_P/phase1_검색
 각 증적 폴더에는 실제 모델 원문 `provider_raw_response.txt`, 런타임이 파생 필드를
 추가한 `normalized_response.json`, 최종 `judgment.json`, 호출·재시도 정보
 `llm_meta.json`이 따로 저장된다. 집계는 `summary.json`, `rows.json`, `summary.csv`로 남는다.
+
+오프라인 반입·설치와 통합 점검은 [오프라인 실행 절차](handoff/offline_runbook_2026-10-06.md)를 참고한다. 현재 환경 재고 확인 도구는 `tools/check_offline_readiness.py`이며 파일·패키지 존재만 검사한다.

@@ -1,0 +1,66 @@
+{
+  "scope": "FILE_AND_PACKAGE_INVENTORY_ONLY",
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "torch": "2.14.0",
+    "sentence-transformers": "5.7.0",
+    "transformers": "4.57.6",
+    "chromadb": "1.5.9",
+    "jsonschema": "4.26.0",
+    "pydantic": "2.13.5",
+    "httpx": "0.28.1",
+    "PyYAML": "6.0.3",
+    "fastapi": null,
+    "uvicorn": "0.53.0",
+    "python-multipart": null,
+    "pymysql": null,
+    "cryptography": null,
+    "python-dotenv": "1.2.3",
+    "filetype": null,
+    "pdfplumber": null,
+    "openpyxl": null,
+    "python-pptx": null,
+    "python-docx": null,
+    "easyocr": null
+  },
+  "search_files": {
+    "models/bge-m3/config_sentence_transformers.json": true,
+    "models/bge-m3/config.json": true,
+    "models/bge-m3/modules.json": true,
+    "models/bge-m3/sentence_bert_config.json": true,
+    "models/bge-m3/sentencepiece.bpe.model": true,
+    "models/bge-m3/special_tokens_map.json": true,
+    "models/bge-m3/tokenizer_config.json": true,
+    "models/bge-m3/tokenizer.json": true,
+    "models/bge-m3/1_Pooling/config.json": true,
+    "models/bge-m3/pytorch_model.bin": true,
+    "data/chroma_kb/chroma.sqlite3": true
+  },
+  "input_db_env_exists": false,
+  "raw_file_sha256": {
+    "phase1_검색/controls.json": "d69396f252b9990a4ffc7a4773dd852af87a635cdfbb6539d1113dc8b80bd177",
+    "phase2_기준/full_checklist_draft.json": "468eca5d61045362f97b64c7115eb70d2a14ef2212390246ca15c5516d8f2405",
+    "phase2_기준/full_reason_codes_draft.json": "bcf068a646c55f182598aa2f387e69f137969a2d3475cb53e950bc4110522709"
+  },
+  "missing_packages": [
+    "fastapi",
+    "python-multipart",
+    "pymysql",
+    "cryptography",
+    "filetype",
+    "pdfplumber",
+    "openpyxl",
+    "python-pptx",
+    "python-docx",
+    "easyocr"
+  ],
+  "e2e_verified": false,
+  "offline_install_verified": false,
+  "limits": [
+    "Package metadata is not an import or ABI compatibility test.",
+    "File presence is not model/index integrity validation.",
+    "Database, OCR weights, LLM and web services are not contacted.",
+    "Raw file hashes are not the normalized shared KB identity."
+  ]
+}

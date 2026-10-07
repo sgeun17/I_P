@@ -1,0 +1,632 @@
+{
+  "scope": "IN_PROCESS_HTTP_AND_PARSER_SMOKE",
+  "python": "3.12.14",
+  "results": [
+    {
+      "name": "web_health_page_and_readiness",
+      "passed": true,
+      "detail": {
+        "health_status": 200,
+        "page_status": 200,
+        "readiness_ready": false,
+        "not_ready": [
+          "chroma_index",
+          "judgment_model_env",
+          "input_db_env"
+        ]
+      }
+    },
+    {
+      "name": "import_easyocr",
+      "passed": true,
+      "detail": {
+        "module": "easyocr"
+      }
+    },
+    {
+      "name": "import_torchvision",
+      "passed": true,
+      "detail": {
+        "module": "torchvision"
+      }
+    },
+    {
+      "name": "import_pdfplumber",
+      "passed": true,
+      "detail": {
+        "module": "pdfplumber"
+      }
+    },
+    {
+      "name": "import_docx",
+      "passed": true,
+      "detail": {
+        "module": "docx"
+      }
+    },
+    {
+      "name": "import_pptx",
+      "passed": true,
+      "detail": {
+        "module": "pptx"
+      }
+    },
+    {
+      "name": "import_openpyxl",
+      "passed": true,
+      "detail": {
+        "module": "openpyxl"
+      }
+    },
+    {
+      "name": "txt_parse_and_chunk",
+      "passed": true,
+      "detail": {
+        "block_count": 1,
+        "chunk_count": 1
+      }
+    },
+    {
+      "name": "empty_txt",
+      "passed": true,
+      "detail": {
+        "errors": [
+          "empty_document"
+        ]
+      }
+    },
+    {
+      "name": "corrupted_docx",
+      "passed": true,
+      "detail": {
+        "errors": [
+          "corrupted_file"
+        ]
+      }
+    },
+    {
+      "name": "corrupted_pdf",
+      "passed": true,
+      "detail": {
+        "errors": [
+          "corrupted_file"
+        ]
+      }
+    },
+    {
+      "name": "docx_parse_and_chunk",
+      "passed": true,
+      "detail": {
+        "block_count": 2,
+        "chunk_count": 1
+      }
+    }
+  ],
+  "passed": true,
+  "database_tested": false,
+  "llm_tested": false,
+  "ocr_inference_tested": false,
+  "upload_to_report_e2e": false,
+  "packages": [
+    {
+      "name": "aiohappyeyeballs",
+      "version": "2.7.1"
+    },
+    {
+      "name": "aiohttp",
+      "version": "3.14.4"
+    },
+    {
+      "name": "aiosignal",
+      "version": "1.4.0"
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.5"
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0"
+    },
+    {
+      "name": "anyio",
+      "version": "4.15.1"
+    },
+    {
+      "name": "attrs",
+      "version": "26.1.0"
+    },
+    {
+      "name": "bcrypt",
+      "version": "5.0.0"
+    },
+    {
+      "name": "build",
+      "version": "1.6.1"
+    },
+    {
+      "name": "certifi",
+      "version": "2026.7.22"
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1"
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.2"
+    },
+    {
+      "name": "chromadb",
+      "version": "1.5.9"
+    },
+    {
+      "name": "click",
+      "version": "8.5.0"
+    },
+    {
+      "name": "cloudpickle",
+      "version": "3.1.2"
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6"
+    },
+    {
+      "name": "cryptography",
+      "version": "50.0.2"
+    },
+    {
+      "name": "durationpy",
+      "version": "0.11"
+    },
+    {
+      "name": "easyocr",
+      "version": "1.7.2"
+    },
+    {
+      "name": "et_xmlfile",
+      "version": "2.0.0"
+    },
+    {
+      "name": "fastapi",
+      "version": "0.142.2"
+    },
+    {
+      "name": "filelock",
+      "version": "4.0.12"
+    },
+    {
+      "name": "filetype",
+      "version": "1.2.0"
+    },
+    {
+      "name": "flatbuffers",
+      "version": "25.12.19"
+    },
+    {
+      "name": "frozenlist",
+      "version": "1.8.0"
+    },
+    {
+      "name": "fsspec",
+      "version": "2026.9.0"
+    },
+    {
+      "name": "googleapis-common-protos",
+      "version": "1.75.5"
+    },
+    {
+      "name": "grpcio",
+      "version": "1.84.0"
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0"
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9"
+    },
+    {
+      "name": "httptools",
+      "version": "0.8.0"
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1"
+    },
+    {
+      "name": "huggingface_hub",
+      "version": "0.36.2"
+    },
+    {
+      "name": "idna",
+      "version": "3.20"
+    },
+    {
+      "name": "ImageIO",
+      "version": "2.38.0"
+    },
+    {
+      "name": "importlib_resources",
+      "version": "7.1.0"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.0"
+    },
+    {
+      "name": "Jinja2",
+      "version": "3.1.6"
+    },
+    {
+      "name": "joblib",
+      "version": "1.6.0"
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.26.0"
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1"
+    },
+    {
+      "name": "kubernetes",
+      "version": "36.0.3"
+    },
+    {
+      "name": "lazy-loader",
+      "version": "0.6"
+    },
+    {
+      "name": "lxml",
+      "version": "6.1.3"
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.2.0"
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.4"
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2"
+    },
+    {
+      "name": "mmh3",
+      "version": "5.3.1"
+    },
+    {
+      "name": "mpmath",
+      "version": "1.3.0"
+    },
+    {
+      "name": "multidict",
+      "version": "6.9.1"
+    },
+    {
+      "name": "narwhals",
+      "version": "2.26.0"
+    },
+    {
+      "name": "networkx",
+      "version": "3.7"
+    },
+    {
+      "name": "ninja",
+      "version": "1.13.2"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.3"
+    },
+    {
+      "name": "oauthlib",
+      "version": "4.0.0"
+    },
+    {
+      "name": "onnxruntime",
+      "version": "1.30.0"
+    },
+    {
+      "name": "opencv-python-headless",
+      "version": "5.0.0.93"
+    },
+    {
+      "name": "openpyxl",
+      "version": "3.1.5"
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.0"
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-common",
+      "version": "0.66b0"
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-proto-common",
+      "version": "1.45.0"
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-proto-grpc",
+      "version": "1.45.0"
+    },
+    {
+      "name": "opentelemetry-proto",
+      "version": "1.45.0"
+    },
+    {
+      "name": "opentelemetry-sdk",
+      "version": "1.45.0"
+    },
+    {
+      "name": "opentelemetry-semantic-conventions",
+      "version": "0.66b0"
+    },
+    {
+      "name": "orjson",
+      "version": "3.12.0"
+    },
+    {
+      "name": "overrides",
+      "version": "7.7.0"
+    },
+    {
+      "name": "packaging",
+      "version": "26.3"
+    },
+    {
+      "name": "pdfminer.six",
+      "version": "20260107"
+    },
+    {
+      "name": "pdfplumber",
+      "version": "0.11.10"
+    },
+    {
+      "name": "pillow",
+      "version": "12.3.0"
+    },
+    {
+      "name": "pip",
+      "version": "25.0.1"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0"
+    },
+    {
+      "name": "propcache",
+      "version": "0.5.4"
+    },
+    {
+      "name": "protobuf",
+      "version": "7.36.2"
+    },
+    {
+      "name": "pybase64",
+      "version": "1.5.1"
+    },
+    {
+      "name": "pyclipper",
+      "version": "1.4.0"
+    },
+    {
+      "name": "pycparser",
+      "version": "3.0"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.13.5"
+    },
+    {
+      "name": "pydantic-settings",
+      "version": "2.15.0"
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.46.5"
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0"
+    },
+    {
+      "name": "PyMySQL",
+      "version": "1.1.1"
+    },
+    {
+      "name": "pypdfium2",
+      "version": "5.14.0"
+    },
+    {
+      "name": "PyPika",
+      "version": "0.51.1"
+    },
+    {
+      "name": "pyproject_hooks",
+      "version": "1.3.3"
+    },
+    {
+      "name": "pytest",
+      "version": "9.1.1"
+    },
+    {
+      "name": "python-bidi",
+      "version": "0.6.11"
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0"
+    },
+    {
+      "name": "python-docx",
+      "version": "1.2.0"
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.2.4"
+    },
+    {
+      "name": "python-multipart",
+      "version": "0.0.32"
+    },
+    {
+      "name": "python-pptx",
+      "version": "1.0.2"
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.3"
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0"
+    },
+    {
+      "name": "regex",
+      "version": "2026.9.29"
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2"
+    },
+    {
+      "name": "requests-oauthlib",
+      "version": "2.0.0"
+    },
+    {
+      "name": "rich",
+      "version": "15.0.0"
+    },
+    {
+      "name": "rpds-py",
+      "version": "2026.9.1"
+    },
+    {
+      "name": "safetensors",
+      "version": "0.8.0"
+    },
+    {
+      "name": "scikit-image",
+      "version": "0.26.0"
+    },
+    {
+      "name": "scikit-learn",
+      "version": "1.9.1"
+    },
+    {
+      "name": "scipy",
+      "version": "1.18.1"
+    },
+    {
+      "name": "sentence-transformers",
+      "version": "5.7.0"
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0"
+    },
+    {
+      "name": "shapely",
+      "version": "2.1.2"
+    },
+    {
+      "name": "shellingham",
+      "version": "1.5.4"
+    },
+    {
+      "name": "six",
+      "version": "1.17.0"
+    },
+    {
+      "name": "starlette",
+      "version": "1.7.0"
+    },
+    {
+      "name": "sympy",
+      "version": "1.14.0"
+    },
+    {
+      "name": "tenacity",
+      "version": "9.1.4"
+    },
+    {
+      "name": "threadpoolctl",
+      "version": "3.7.0"
+    },
+    {
+      "name": "tifffile",
+      "version": "2026.9.20"
+    },
+    {
+      "name": "tokenizers",
+      "version": "0.22.2"
+    },
+    {
+      "name": "torch",
+      "version": "2.14.1"
+    },
+    {
+      "name": "torchvision",
+      "version": "0.29.1"
+    },
+    {
+      "name": "tqdm",
+      "version": "4.70.1"
+    },
+    {
+      "name": "transformers",
+      "version": "4.57.6"
+    },
+    {
+      "name": "typer",
+      "version": "0.27.2"
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.4"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0"
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0"
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.54.0"
+    },
+    {
+      "name": "watchfiles",
+      "version": "1.3.0"
+    },
+    {
+      "name": "websocket-client",
+      "version": "1.9.2"
+    },
+    {
+      "name": "websockets",
+      "version": "17.2"
+    },
+    {
+      "name": "xlsxwriter",
+      "version": "3.2.9"
+    },
+    {
+      "name": "yarl",
+      "version": "1.25.1"
+    }
+  ],
+  "checked_at": "2026-10-06",
+  "pip_check": "No broken requirements found.",
+  "environment": "workspace tmp/integration-env; separate from search venv",
+  "execution_note": "Restricted execution stalled creating Windows asyncio socketpair; local-socket-enabled execution completed."
+}

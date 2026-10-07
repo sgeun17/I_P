@@ -1,0 +1,285 @@
+{
+  "checked_at": "2026-10-06",
+  "decision": "KEEP_MAX_REJECT_UNCONDITIONAL_AVERAGE_REPLACEMENT",
+  "runtime_changed": false,
+  "human_approved_gold": false,
+  "llm_executed": false,
+  "source_reports": [
+    "aggregation_comparison_2026-10-06.json",
+    "E0004_aggregation_2026-10-06.json",
+    "aggregation_stress_2026-10-06.json"
+  ],
+  "case_count": 39,
+  "labelled_case_count": 34,
+  "limits": [
+    "Stress cases derive from base cases and are not independent samples.",
+    "Expected labels are review proposals, not approved gold.",
+    "Missing labels for additional candidates prevent precision claims."
+  ],
+  "regressions": [
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S01",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.5.1": 23
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S01",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.5.1": 43
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S02",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.5.5": 43
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S02",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.5.5": 84
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S04",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.6.6": 7
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S04",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.6.6": 57
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S05",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.9.3": 20
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S06",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.9.4": 12
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S08",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.2.4": 12
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S08",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.2.4": 48
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S09",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.11.2": 25
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S10",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.12.2": 8
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S10",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.12.2": 39
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S11",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "3.4.1": 9
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S12",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.10.2": 68
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_S12",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.10.2": 83
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_M01",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.5.1": 14,
+        "2.9.4": 2
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_M01",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.5.1": 35,
+        "2.9.4": 9
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_M02",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.9.3": 2,
+        "2.12.2": 15
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_M02",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.9.3": 9,
+        "2.12.2": 44
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_I_M02",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.9.3": 1,
+        "2.12.2": 53
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_I_M02",
+      "method": "mean_top3_chunk_similarity",
+      "expected_ranks": {
+        "2.9.3": 1,
+        "2.12.2": 36
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_I_M02",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.9.3": 1,
+        "2.12.2": 61
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_M03",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.6.6": 14,
+        "2.5.5": 19
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_D_M03",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.6.6": 50,
+        "2.5.5": 68
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_I_M03",
+      "method": "mean_chunk_similarity",
+      "expected_ranks": {
+        "2.6.6": 1,
+        "2.5.5": 7
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_I_M03",
+      "method": "mean_top3_chunk_similarity",
+      "expected_ranks": {
+        "2.6.6": 1,
+        "2.5.5": 6
+      },
+      "all_required_in_top5": false
+    },
+    {
+      "source": "aggregation_stress_2026-10-06.json",
+      "evidence_id": "aggregation_I_M03",
+      "method": "rrf_k60",
+      "expected_ranks": {
+        "2.6.6": 1,
+        "2.5.5": 13
+      },
+      "all_required_in_top5": false
+    }
+  ]
+}

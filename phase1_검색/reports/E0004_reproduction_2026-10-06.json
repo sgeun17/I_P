@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-10-06",
+  "evidence_id": "E0004",
+  "status": "SEARCH_CANDIDATE_OMISSION_REPRODUCED",
+  "historical_candidate_ids": [
+    "1.1.3",
+    "2.1.2",
+    "1.1.2",
+    "2.10.1",
+    "1.3.1"
+  ],
+  "current_candidate_ids": [
+    "1.1.3",
+    "2.1.2",
+    "1.1.2",
+    "2.10.1",
+    "1.3.1"
+  ],
+  "same_candidates_and_order": true,
+  "historical_chunks_equal_copied_source_chunks": true,
+  "historical_index": {
+    "collection": "isms_p_controls",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_cache_key": "2bb7cf10bdaab31c728280aa6943861aaf9e06d5fad5d93cd5ae168cc3d4a021"
+  },
+  "current_index": {
+    "collection": "isms_p_controls",
+    "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+    "embedding_cache_key": "ec54123d57bd81d531b75fafb7ec211508b3e7c8643661bf9f819692af654d54"
+  },
+  "raw_file_hashes": {
+    "2026_정보보호_예산_및_인력운영계획.docx": "63ee322c5768fc315e6b3421b896729483ae0176a380141d68a433aa0bf1a020",
+    "historical_search.json": "0c96e94a58b63958730a99c301d7be7fa2d25ffdc09f6cbe66c367456ffe5805",
+    "search_input.json": "f2b1659d138fc5472e93f68d2a1516833a28d00465743c2acb3adf3d8163b491",
+    "E0004\\phase1_judgment.json": "e60f381f9e0e8a4978af411a71a5bf9b0eefeebf47513a9d6e3bc13044c21c84",
+    "E0004\\row.json": "4471c8d3742913477ba6e2bb00703aa739f6bd2ae4c76ea6a8efbcbef7ea0f0a",
+    "E0004\\source_chunks.json": "59422cb81bb16f349b520fb0a5da3f705f8ad614e46bfd34ac151be9a86c2678"
+  },
+  "raw_files_in_git": false,
+  "llm_rerun": false,
+  "runtime_changed": false,
+  "expected_control_review_status": "REVIEW_PROPOSAL_NOT_APPROVED_GOLD",
+  "limits": [
+    "Embedding cache keys differ; equal candidate order is not byte-identical execution reproduction.",
+    "Original DOCX text was inspected; current parser was not rerun.",
+    "Related control 1.1.6 is a retrieval review proposal, not a MET judgment."
+  ]
+}

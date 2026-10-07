@@ -1,4 +1,4 @@
-"""Build the 1/2/3 chapter draft from reviewed questions; preserve chapter 2 exactly.
+"""Build the 1/2/3 chapter draft from reviewed questions; preserve question IDs and apply documented rule clarifications.
 
 Reproduce the owner-approved criteria snapshot; no model calls or database writes.
 """
@@ -9,7 +9,35 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parents[1]
 WORK = HERE / 'drafts/chapters13'
-VERSION = 'phase2-checklist-full-draft-2026-10-05-r5'
+VERSION = 'phase2-checklist-full-draft-2026-10-06-r6'
+
+
+def clarify_evidence_scope(full):
+    """기존 요구의 활동·사람·범위 연결을 명시한다. 사례별 정답을 주입하지 않는다."""
+    rules = {
+        '2.2.5-Q07': (
+            '동일 인사변경 사건의 대상 공유계정과 비밀번호 변경 시점·결과를 직접 연결한다. 개인 계정 삭제·잠금·권한 회수는 공유계정 비밀번호 변경을 대신하지 않는다.',
+            '계정 삭제·권한 회수 기록만 있고 대상 공유계정의 비밀번호 변경 여부가 확인되지 않으면 UNKNOWN이다. 변경하지 않았다는 직접 확인 없이 NOT_MET으로 단정하지 않는다.'),
+        '1.1.2-Q04': (
+            '지정된 CPO의 신원·역할과 해당 인물의 직위·권한·적용 자격 근거를 연결한다. CISO 등 다른 사람의 경력은 CPO의 자격 근거로 사용하지 않는다. 동일인 겸임은 명시적 연결 자료가 있을 때만 검토한다.',
+            'OCR 표의 행·열 관계가 불명확하거나 경력의 주체가 CPO와 연결되지 않으면 UNKNOWN이다. 다른 사람의 자격 확인 문구나 직함만으로 적용 요건 전체를 충족했다고 추정하지 않는다.'),
+        '2.9.3-Q14': (
+            '소산 기준과 실제 소산 기록의 대상 백업·일자·위치·인계 또는 전송 결과를 대조한다. 복구 테스트 성공은 소산 이행을 대신하지 않는다. 선택한 한 건·기간에서 확인된 이행만 인정하며 일부 주간 기록을 전체 시스템·전체 연도의 준수로 확대하지 않는다.',
+            '복구 테스트만 제공되었거나 소산 기록의 대상·평가 기간·요구 주기 연결이 부족하면 UNKNOWN이다. 기록에 없는 기간의 미이행을 추정하지 않는다.'),
+        '2.5.1-Q17': (
+            '승인 절차의 존재와 실제 수행을 구분한다. 실제 신청 건의 대상 계정·시스템·요청 권한과 승인 주체·시점·결과를 유효한 검토 절차에 연결한다. 절차가 직무·필요성 검토를 승인에 포함하고 해당 건의 이행이 확인되면 별도 제목의 검토서 없이 승인 기록을 인정할 수 있다. 신청일을 승인일로 자동 간주하지 않는다.',
+            '절차 설명만 있거나 승인 기록의 대상·검토 주체·시점·결과 또는 적절성 검토 연결이 확인되지 않으면 UNKNOWN이다. 모델에 전달되지 않은 다른 청크의 실행 기록이 있는지도 확인한다.'),
+        '2.2.3-Q04': (
+            '검토 범위의 보관 매체별 접근 제한을 확인한다. 종이는 잠금 보관 등 물리적 제한, 전자 사본은 열람 권한·접근 제어 등 전자적 제한 근거가 필요하다. 전자 등록 또는 저장 위치 명시는 접근 제한을 대신하지 않는다. 종이·전자본이 모두 범위에 있으면 양쪽 근거를 확인한다.',
+            '종이 잠금 보관만 확인되고 범위 내 전자 사본의 접근 제한이 확인되지 않으면 전체 범위 판정은 UNKNOWN이다. 종이만을 검토하는 명시적 범위는 그 범위로 한정하고 전자본까지 확대하지 않는다.'),
+    }
+    for control in full['controls']:
+        for item in control['items']:
+            if item['item_id'] in rules:
+                met, unknown = rules[item['item_id']]
+                item['evidence_rule']['met'] += ' 인정 범위: ' + met
+                item['evidence_rule']['unknown'] += ' 오판 방지: ' + unknown
+                item['review_note'] += ' 2026-10-06 저장된 개발 시험의 의미 오류 검토에 따라 활동·사람·대상 범위를 명확히 했다. 원본 문서 정확성·실제 기대값 승인은 별도다.'
 
 
 def apply_item_exceptions(full):
@@ -152,6 +180,7 @@ def build():
             item['critical_status'] = 'CONFIRMED_BY_OWNER'
     full['critical_policy'] = deepcopy(policy)
     apply_item_exceptions(full)
+    clarify_evidence_scope(full)
     added = total - 700
     full['source']['basis'] = '보유 2023년 KISA 안내서 기반 1·2·3장 전체 초안. 2장 r3의 700문항 ID·질문을 보존하고 1·3장 주요 확인사항 133개를 분해했다. 원문 작성 이력은 보존하며 현재 기준 사용 승인은 최상위 approval에 별도로 기록한다. 최신 법규 검증 결과는 아니다.'
     full['scope'] = {
@@ -163,11 +192,12 @@ def build():
     }
     full['parent_draft'] = {'path': parent.name, 'version': old['draft_version'], 'sha256': sha(parent)}
     full['review_summary'] = {
-        'reviewed_at': '2026-10-05', 'reviewer_type': 'AI_ASSISTED_SOURCE_REVIEW',
+        'reviewed_at': '2026-10-06', 'reviewer_type': 'AI_ASSISTED_SOURCE_REVIEW',
         'control_count': 101, 'active_question_count': total,
         'new_control_count': 37, 'new_question_count': added,
         'preserved_control_count': 64, 'preserved_question_count': 700,
         'item_exception_ids': ['3.3.2-Q02', '2.10.8-Q05'],
+        'clarified_item_ids': ['2.2.5-Q07', '1.1.2-Q04', '2.9.3-Q14', '2.5.1-Q17', '2.2.3-Q04'],
         'retired_question_count': len(old['retired_items']),
         'new_major_check_count': 133, 'team_approved': True,
         'source_pdf_pages_reviewed': sorted({s['pdf_page'] for s in inventory.values()}),
@@ -188,12 +218,12 @@ def build():
     target = HERE / 'full_checklist_draft.json'
     write(target, full)
     catalog = read(HERE / 'chapter2_reason_codes_draft.json')
-    catalog['catalog_version'] = 'phase2-reason-codes-full-draft-2026-10-05-r5'
+    catalog['catalog_version'] = 'phase2-reason-codes-full-draft-2026-10-06-r6'
     catalog.update(approved=True, status='APPROVED_FOR_USE', approval=deepcopy(full['approval']))
     catalog['checklist_version'] = VERSION
     catalog['checklist_source'] = target.name
     catalog['source_files'] = [{'path': target.name, 'sha256': sha(target)}]
-    catalog['metadata'].update(created_at='2026-10-05', review_only=False, human_approved=True,
+    catalog['metadata'].update(created_at='2026-10-06', review_only=False, human_approved=True,
         coverage=f'101개 통제항목·{total}문항의 공통 사유 13종. 2026-10-05 담당 사용자 요청으로 현 버전 사용 승인.',
         wbs_item='사용자 요청에 따른 1·2·3장 범위 확장',
         parent_catalog_version=read(HERE/'chapter2_reason_codes_draft.json')['catalog_version'],

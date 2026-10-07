@@ -1,6 +1,7 @@
 """Verify all-chapter source coverage and review wiring, without LLM calls."""
 import argparse
 from collections import Counter
+from datetime import date
 import hashlib
 import json
 from pathlib import Path
@@ -34,7 +35,7 @@ def verify(verify_pdf=False):
         for i in c['items']:
             i['critical'] = c['control_id'].rsplit('.',1)[0] in data['critical_policy']['critical_control_groups']
             i['critical_status'] = 'CONFIRMED_BY_OWNER'
-            if i['item_id'] == '2.10.8-Q05':
+            if i['item_id'] in {'2.10.8-Q05','2.2.5-Q07','2.9.3-Q14','2.5.1-Q17','2.2.3-Q04'}:
                 current = next(x for c in data['controls'] for x in c['items'] if x['item_id'] == i['item_id'])
                 for key in ('evidence_rule', 'review_note'):
                     i[key] = current[key]
@@ -71,7 +72,7 @@ def verify(verify_pdf=False):
             assert checked['validation']['passed'], c['control_id']
             control_results.append({'control_id':c['control_id'],'questions':len(req.questions),'passed':True})
     return {
-        'status':'PASS','checked_at':'2026-10-05','approved':False,
+        'status':'PASS','checked_at':date.today().isoformat(),'approved':False,
         'checklist_approved':data['approved'],
         'checklist_version':data['draft_version'],
         'checklist_sha256':hashlib.sha256(full.read_bytes()).hexdigest(),
@@ -79,7 +80,7 @@ def verify(verify_pdf=False):
         'control_count':len(control_results),'question_count':sum(c['questions'] for c in control_results),
         'new_question_count':len(new),'new_major_check_count':len(coverage),
         'questions_per_chapter':dict(Counter(i['control_id'].split('.')[0] for c in data['controls'] for i in c['items'])),
-        'chapter2_content_preserved_except_critical_and_q05_exception':True,'source_pdf_verified':verify_pdf,
+        'chapter2_content_preserved_except_documented_rules_and_critical':True,'source_pdf_verified':verify_pdf,
         'llm_executed':False,'actual_evidence_used':False,'semantic_judgment_checked':False,
         'controls':control_results,
         'limits':['원문과의 연결·구조 검사이며 현행 법령 검증이나 팀 승인이 아니다.',

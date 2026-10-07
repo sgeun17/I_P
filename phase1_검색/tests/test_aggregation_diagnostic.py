@@ -33,3 +33,18 @@ class AggregationDiagnosticTests(unittest.TestCase):
     def test_no_expected_label_means_no_accuracy_claim(self):
         report=compare(fixture())
         self.assertTrue(all(v['required_recall_at_k'] is None for v in report['rankings'].values()))
+
+    def test_averaging_can_drop_a_short_but_relevant_secondary_topic(self):
+        # Six chunks on A and one on B: C is background similarity, not a gold topic.
+        groups = [[('A', .9), ('C', .7), ('B', .1)]] * 6
+        groups += [[('B', .95), ('C', .6), ('A', .1)]]
+        result = {'success': True, 'evidence_id': 'imbalanced', 'index': {}, 'retrieval': {
+            'candidates': [{'control_id': c} for c in ['B', 'A', 'C']],
+            'chunk_results': [{'candidates': [
+                {'control_id': c, 'rank': n + 1, 'similarity_score': score}
+                for n, (c, score) in enumerate(rows)]} for rows in groups]}}
+        rankings = compare(result, ['A', 'B'], top_k=2)['rankings']
+        self.assertEqual(rankings['max_chunk_similarity']['required_recall_at_k'], 1.0)
+        for method in ('mean_chunk_similarity', 'mean_top3_chunk_similarity'):
+            self.assertEqual(rankings[method]['required_recall_at_k'], .5)
+            self.assertNotIn('B', rankings[method]['top_k'])

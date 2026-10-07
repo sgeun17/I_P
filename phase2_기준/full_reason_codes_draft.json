@@ -1,9 +1,9 @@
 {
-  "catalog_version": "phase2-reason-codes-full-draft-2026-10-05-r5",
+  "catalog_version": "phase2-reason-codes-full-draft-2026-10-06-r6",
   "status": "APPROVED_FOR_USE",
   "approved": true,
   "metadata": {
-    "created_at": "2026-10-05",
+    "created_at": "2026-10-06",
     "review_only": false,
     "human_approved": true,
     "llm_executed": false,
@@ -14,11 +14,11 @@
     "parent_catalog_sha256": "799d37627b9db7b4df672be03d3da05bb4c81cfc05f144020c101d48427c4336",
     "example_coverage": "대표 사례만 별도 검증. 전체 문항의 MET/NOT_MET/UNKNOWN 정답셋은 미작성."
   },
-  "checklist_version": "phase2-checklist-full-draft-2026-10-05-r5",
+  "checklist_version": "phase2-checklist-full-draft-2026-10-06-r6",
   "source_files": [
     {
       "path": "full_checklist_draft.json",
-      "sha256": "ddf927e0fc6680c4d9a018d9a8abfcc9eab70978c58a9c68710b32c4db474bfa"
+      "sha256": "468eca5d61045362f97b64c7115eb70d2a14ef2212390246ca15c5516d8f2405"
     }
   ],
   "result_values": [
