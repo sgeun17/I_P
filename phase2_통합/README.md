@@ -1,7 +1,7 @@
 # Phase 2 통합 — 결과 저장 · 검토 이력 · 커버리지
 
-Phase 2 에서 **DB 를 쓰는 쪽**. 화면은 B 파트가 만들고, 이 폴더는 그 화면에 넘길
-값을 저장하고 꺼내준다. DB 를 안 쓰는 순수 함수는 `phase2_인터페이스/` 에 있다.
+Phase 2 에서 **DB 를 쓰는 쪽**. 이 폴더는 화면에 넘길 값을 저장하고 꺼내준다.
+DB 를 안 쓰는 순수 함수는 `phase2_인터페이스/` 에 있다.
 
 ```
 phase2_runner.py           Phase 1 이 끝난 증적을 Phase 2 로 넘긴다
@@ -10,7 +10,6 @@ phase2_review_store.py     승인·수정·반려와 이력
 phase1_mapping_store.py    Phase 1 매핑 결과 저장·조회
 phase2_report.py           항목별 근거 리포트 (HTML·CSV)
 phase2_schema.sql          표 3개      phase1_mapping.sql   매핑 표 2개
-API_response_spec.md       화면 쪽에 넘기는 응답 규격
 test/run_db_check.py       실제 MySQL 점검 28건
 test/run_e2e_demo.py       Phase 1→2 종단 시연
 ```
