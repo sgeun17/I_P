@@ -6,7 +6,6 @@
 --   기존 세 표(evidence, evidence_history, chunk)는 건드리지 않는다.
 --
 -- ⚠ 이 파일은 CREATE TABLE IF NOT EXISTS 다. 여러 번 돌려도 데이터가 안 지워진다.
---   표를 완전히 새로 만들려면 phase2_schema_reset.sql 을 쓴다.
 -- =========================================================
 
 USE evidence_db;
@@ -55,8 +54,14 @@ CREATE TABLE IF NOT EXISTS phase2_result (
 
   -- 같은 증적·항목에서 '현재 유효한 줄' 은 하나뿐이어야 한다.
   -- 생성 컬럼으로 만들어 UNIQUE 를 건다 (NULL 은 UNIQUE 에 안 걸려서 그냥은 못 막는다).
+  --
+  -- ⚠ STORED 가 아니라 VIRTUAL 이어야 한다.
+  --   MySQL 은 STORED 생성 컬럼의 재료가 되는 칸에 ON DELETE CASCADE 를 못 걸게 한다.
+  --   evidence_id 가 여기 재료이고 아래 FK 가 CASCADE 라서, STORED 로 두면
+  --   표를 만들 때 ERROR 1215 (Cannot add foreign key constraint) 가 난다.
+  --   VIRTUAL 이면 그 제약이 없고 UNIQUE 인덱스도 그대로 걸린다.
   current_key VARCHAR(45) GENERATED ALWAYS AS
-    (IF(superseded_at IS NULL, CONCAT(evidence_id, '#', control_id), NULL)) STORED,
+    (IF(superseded_at IS NULL, CONCAT(evidence_id, '#', control_id), NULL)) VIRTUAL,
 
   PRIMARY KEY (result_id),
   UNIQUE KEY uk_current (current_key),
@@ -103,14 +108,16 @@ CREATE TABLE IF NOT EXISTS review_history (
 -- control_id 가 NULL 이면 증적 전체 (NO_MATCH·E502),
 -- 값이 있으면 그 통제항목만 (NO_CHECKLIST).
 CREATE TABLE IF NOT EXISTS phase2_excluded (
-  excluded_id  BIGINT       NOT NULL AUTO_INCREMENT,
-  evidence_id  VARCHAR(20)  NOT NULL,
-  control_id   VARCHAR(20)  NOT NULL DEFAULT '',   -- '' = 증적 전체
-  reason_code  VARCHAR(40)  NOT NULL,
-  reason       VARCHAR(300) NULL,
-  noted_at     DATETIME(3)  NOT NULL,
+  excluded_id      BIGINT       NOT NULL AUTO_INCREMENT,
+  evidence_id      VARCHAR(20)  NOT NULL,
+  -- 어느 버전에서 제외했는지. 없으면 v1 에서 제외한 게 v2 재업로드까지 막는다.
+  evidence_version INT          NOT NULL DEFAULT 1,
+  control_id       VARCHAR(20)  NOT NULL DEFAULT '',   -- '' = 증적 전체
+  reason_code      VARCHAR(40)  NOT NULL,
+  reason           VARCHAR(300) NULL,
+  noted_at         DATETIME(3)  NOT NULL,
   PRIMARY KEY (excluded_id),
-  UNIQUE KEY uk_evidence_control (evidence_id, control_id),
+  UNIQUE KEY uk_evidence_control (evidence_id, evidence_version, control_id),
   KEY idx_reason (reason_code),
   CONSTRAINT fk_p2x_evidence FOREIGN KEY (evidence_id)
     REFERENCES evidence (evidence_id) ON DELETE CASCADE
