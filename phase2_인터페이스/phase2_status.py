@@ -51,10 +51,16 @@ ALLOWED = {
     # 재시도. 처음부터가 아니라 터진 단계부터 다시 한다.
     "FAILED":          {"PREPROCESSING", "MAPPING", "VALIDATING"},
     # 끝. 같은 파일을 다시 올리면 version 이 올라가고 UPLOADED 로 새로 시작한다.
-    "COMPLETED":       set(),
+    # 하나만 예외 — 사람이 끝난 판정을 틀렸다고 보고 다시 열 때. 자동으로는 안 간다.
+    # (phase2_review_store 에서 NOT_REQUIRED 판정을 수정·반려할 때만 생긴다)
+    "COMPLETED":       {"REVIEW_REQUIRED"},
 }
 
-TERMINAL = ("COMPLETED",)
+# 정상 흐름에서 더 갈 데가 없는 상태. ALLOWED 의 COMPLETED 에 REVIEW_REQUIRED 가
+# 하나 열려 있지만, 그건 사람이 끝난 판정을 틀렸다고 보고 직접 다시 열 때만이다.
+# 자동 처리는 여기서 멈춘다.
+FINAL = ("COMPLETED",)
+TERMINAL = FINAL          # 예전 이름. 쓰던 코드가 있으면 그대로 돈다.
 
 
 def can(current: str, nxt: str) -> bool:
