@@ -1,0 +1,412 @@
+{
+  "checklist_version": "phase2-checklist-full-draft-2026-10-06-r6",
+  "synthetic": true,
+  "human_approved_gold": false,
+  "llm_executed": true,
+  "cases": [
+    {
+      "case_id": "2.2.5-Q07-MET",
+      "expected": "MET",
+      "result": "MET",
+      "match": true,
+      "seconds": 10.42,
+      "issues": [],
+      "signals": [],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.2.5-Q07-UNKNOWN",
+      "expected": "UNKNOWN",
+      "result": "UNKNOWN",
+      "match": true,
+      "seconds": 3.69,
+      "issues": [],
+      "signals": [],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.2.5-Q07-NOT_MET",
+      "expected": "NOT_MET",
+      "result": "UNKNOWN",
+      "match": false,
+      "seconds": 6.59,
+      "issues": [],
+      "signals": [
+        "SELF_CHECK_UNSUPPORTED"
+      ],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "1.1.2-Q04-MET",
+      "expected": "MET",
+      "result": "MET",
+      "match": true,
+      "seconds": 9.12,
+      "issues": [],
+      "signals": [],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "1.1.2-Q04-UNKNOWN",
+      "expected": "UNKNOWN",
+      "result": "UNKNOWN",
+      "match": true,
+      "seconds": 3.56,
+      "issues": [],
+      "signals": [],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "1.1.2-Q04-NOT_MET",
+      "expected": "NOT_MET",
+      "result": "UNKNOWN",
+      "match": false,
+      "seconds": 6.77,
+      "issues": [],
+      "signals": [
+        "SELF_CHECK_UNSUPPORTED"
+      ],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.9.3-Q14-MET",
+      "expected": "MET",
+      "result": "MET",
+      "match": true,
+      "seconds": 8.98,
+      "issues": [],
+      "signals": [],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.9.3-Q14-UNKNOWN",
+      "expected": "UNKNOWN",
+      "result": "UNKNOWN",
+      "match": true,
+      "seconds": 3.84,
+      "issues": [],
+      "signals": [],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.9.3-Q14-NOT_MET",
+      "expected": "NOT_MET",
+      "result": "UNKNOWN",
+      "match": false,
+      "seconds": 6.59,
+      "issues": [],
+      "signals": [
+        "SELF_CHECK_UNSUPPORTED"
+      ],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.5.1-Q17-MET",
+      "expected": "MET",
+      "result": "MET",
+      "match": true,
+      "seconds": 10.42,
+      "issues": [],
+      "signals": [],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.5.1-Q17-UNKNOWN",
+      "expected": "UNKNOWN",
+      "result": "UNKNOWN",
+      "match": true,
+      "seconds": 7.97,
+      "issues": [],
+      "signals": [
+        "SELF_CHECK_UNSUPPORTED"
+      ],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.5.1-Q17-NOT_MET",
+      "expected": "NOT_MET",
+      "result": "UNKNOWN",
+      "match": false,
+      "seconds": 7.39,
+      "issues": [],
+      "signals": [
+        "SELF_CHECK_UNSUPPORTED"
+      ],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.2.3-Q04-MET",
+      "expected": "MET",
+      "result": "UNKNOWN",
+      "match": false,
+      "seconds": 6.05,
+      "issues": [],
+      "signals": [],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.2.3-Q04-UNKNOWN",
+      "expected": "UNKNOWN",
+      "result": "UNKNOWN",
+      "match": true,
+      "seconds": 3.69,
+      "issues": [],
+      "signals": [],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "2.2.3-Q04-NOT_MET",
+      "expected": "NOT_MET",
+      "result": "UNKNOWN",
+      "match": false,
+      "seconds": 7.94,
+      "issues": [],
+      "signals": [
+        "SELF_CHECK_UNSUPPORTED"
+      ],
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    }
+  ],
+  "checked_at": "2026-10-07",
+  "model": "qwen3:14b",
+  "model_digest": "bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe88",
+  "temperature": 0,
+  "max_tokens": 4096,
+  "thinking": false,
+  "match_count": 9,
+  "limits": [
+    "Synthetic developer labels, not approved operational gold.",
+    "Single-item harness and self-check executed; no full-control/DB/web run.",
+    "Freshness and format policies absent; no arbitrary policy supplied."
+  ],
+  "mismatches": [
+    {
+      "case_id": "2.2.5-Q07-NOT_MET",
+      "expected": "NOT_MET",
+      "actual": "UNKNOWN",
+      "initial_result": "NOT_MET",
+      "reason": "인용문만으로 판정을 확정할 수 없어 검토가 필요합니다: proposed의 '비밀번호 즉시 변경 의무가 있었으나, 해당 비밀번호를 변경하지 않았다는 사실' 주장은 원문에 명시된 '비밀번호를 즉시 변경해야 했으나 변경하지 않았음을 담당자가 확인했다'라는 표현과 의미상 일치하지만, '비밀번호 즉시 변경 의무가 있었다'는 조건은 원문에 명시되지 않았다. 원문은 '비밀번호를 즉시 변경해야 했으나 변경하지 않았음'이라는 사실을 확인했을 뿐, '의무가 있었다'는 조건은 직접적으로 언급되지 않았다. 따라서 '의무가 있었다'는 조건은 UNSUPPORTED로 판단된다.",
+      "self_check": {
+        "verdict": "UNSUPPORTED",
+        "reason": "proposed의 '비밀번호 즉시 변경 의무가 있었으나, 해당 비밀번호를 변경하지 않았다는 사실' 주장은 원문에 명시된 '비밀번호를 즉시 변경해야 했으나 변경하지 않았음을 담당자가 확인했다'라는 표현과 의미상 일치하지만, '비밀번호 즉시 변경 의무가 있었다'는 조건은 원문에 명시되지 않았다. 원문은 '비밀번호를 즉시 변경해야 했으나 변경하지 않았음'이라는 사실을 확인했을 뿐, '의무가 있었다'는 조건은 직접적으로 언급되지 않았다. 따라서 '의무가 있었다'는 조건은 UNSUPPORTED로 판단된다.",
+        "confidence": 0.6,
+        "unsupported_conditions": [
+          "비밀번호 즉시 변경 의무가 있었다"
+        ]
+      }
+    },
+    {
+      "case_id": "1.1.2-Q04-NOT_MET",
+      "expected": "NOT_MET",
+      "actual": "UNKNOWN",
+      "initial_result": "NOT_MET",
+      "reason": "인용문만으로 판정을 확정할 수 없어 검토가 필요합니다: proposed의 '지정된 개인정보 보호책임자(CPO A)가 해당 조직에 적용되는 자격 요건을 갖추지 못했음을 적용 기준 및 직접 확인 기록으로 확인했다'는 주장은 원문에서 직접적으로 지원되지 않는다. 원문은 '지정된 CPO A가 해당 조직에 적용되는 자격 요건을 갖추지 못했음을 적용 기준 및 직접 확인 기록으로 확인했다'고 명시하지만, 이는 '적용 기준'과 '직접 확인 기록'에 대한 구체적인 내용이나 근거가 제공되지 않았다. 따라서, 이 주장은 원문에 명시된 사실과 직접 연결된 근거가 부족하다.",
+      "self_check": {
+        "verdict": "UNSUPPORTED",
+        "reason": "proposed의 '지정된 개인정보 보호책임자(CPO A)가 해당 조직에 적용되는 자격 요건을 갖추지 못했음을 적용 기준 및 직접 확인 기록으로 확인했다'는 주장은 원문에서 직접적으로 지원되지 않는다. 원문은 '지정된 CPO A가 해당 조직에 적용되는 자격 요건을 갖추지 못했음을 적용 기준 및 직접 확인 기록으로 확인했다'고 명시하지만, 이는 '적용 기준'과 '직접 확인 기록'에 대한 구체적인 내용이나 근거가 제공되지 않았다. 따라서, 이 주장은 원문에 명시된 사실과 직접 연결된 근거가 부족하다.",
+        "confidence": 0.3,
+        "unsupported_conditions": [
+          "CPO A의 자격 요건 미충족에 대한 구체적인 근거 또는 확인 기록"
+        ]
+      }
+    },
+    {
+      "case_id": "2.9.3-Q14-NOT_MET",
+      "expected": "NOT_MET",
+      "actual": "UNKNOWN",
+      "initial_result": "NOT_MET",
+      "reason": "인용문만으로 판정을 확정할 수 없어 검토가 필요합니다: proposed의 '해당 기간에 고객DB를 DR센터로 소산해야 했으나, 해당 소산을 수행하지 않았음'이라는 주장은 원문에서 직접적으로 확인되지 않는다. 원문은 '해당 기간에 고객DB를 DR센터로 소산해야 했으나 해당 소산을 수행하지 않았음을 현장 확인 기록에서 직접 확인했다'고 명시하고 있으나, 이는 '소산을 수행하지 않았음'이라는 사실을 직접적으로 증명하는 근거가 아니며, '현장 확인 기록'이라는 추상적인 표현만을 제공하고 있다. 따라서, '소산을 수행하지 않았음'이라는 사실이 원문에 명시적으로 포함되어 있지 않아 UNSUPPORTED이다.",
+      "self_check": {
+        "verdict": "UNSUPPORTED",
+        "reason": "proposed의 '해당 기간에 고객DB를 DR센터로 소산해야 했으나, 해당 소산을 수행하지 않았음'이라는 주장은 원문에서 직접적으로 확인되지 않는다. 원문은 '해당 기간에 고객DB를 DR센터로 소산해야 했으나 해당 소산을 수행하지 않았음을 현장 확인 기록에서 직접 확인했다'고 명시하고 있으나, 이는 '소산을 수행하지 않았음'이라는 사실을 직접적으로 증명하는 근거가 아니며, '현장 확인 기록'이라는 추상적인 표현만을 제공하고 있다. 따라서, '소산을 수행하지 않았음'이라는 사실이 원문에 명시적으로 포함되어 있지 않아 UNSUPPORTED이다.",
+        "confidence": 0.3,
+        "unsupported_conditions": [
+          "소산을 수행하지 않았음에 대한 직접적인 사실 확인"
+        ]
+      }
+    },
+    {
+      "case_id": "2.5.1-Q17-NOT_MET",
+      "expected": "NOT_MET",
+      "actual": "UNKNOWN",
+      "initial_result": "NOT_MET",
+      "reason": "인용문만으로 판정을 확정할 수 없어 검토가 필요합니다: proposed의 '검토 없이 부여했음을 해당 건의 조사 기록에서 확인했다'는 주장은 원문에 명시된 '해당 계정의 권한 부여 전에 적절성 검토가 필요했으나 검토 없이 부여했음'이라는 문장과 일치하지만, 이는 '적절성 검토가 수행되지 않았다'는 사실을 직접적으로 증명하는 것이 아니라 '검토가 필요했으나 수행되지 않았다'는 조건을 포함하고 있다. 이는 '적절성 검토가 수행되지 않았다'는 사실을 명시적으로 증명하지 않으므로, NOT_MET 조건에 해당하는 '선택한 한 건에서 필요한 적절성 검토를 생략한 사실이 확인됨'이라는 기준을 충족하지 못한다.",
+      "self_check": {
+        "verdict": "UNSUPPORTED",
+        "reason": "proposed의 '검토 없이 부여했음을 해당 건의 조사 기록에서 확인했다'는 주장은 원문에 명시된 '해당 계정의 권한 부여 전에 적절성 검토가 필요했으나 검토 없이 부여했음'이라는 문장과 일치하지만, 이는 '적절성 검토가 수행되지 않았다'는 사실을 직접적으로 증명하는 것이 아니라 '검토가 필요했으나 수행되지 않았다'는 조건을 포함하고 있다. 이는 '적절성 검토가 수행되지 않았다'는 사실을 명시적으로 증명하지 않으므로, NOT_MET 조건에 해당하는 '선택한 한 건에서 필요한 적절성 검토를 생략한 사실이 확인됨'이라는 기준을 충족하지 못한다.",
+        "confidence": 0.3,
+        "unsupported_conditions": [
+          "선택한 한 건에서 필요한 적절성 검토를 생략한 사실이 확인됨"
+        ]
+      }
+    },
+    {
+      "case_id": "2.2.3-Q04-MET",
+      "expected": "MET",
+      "actual": "UNKNOWN",
+      "initial_result": "MET",
+      "reason": "종이 원본의 잠금 보관은 확인되지만, 전자 사본은 등록 사실만 확인되고 전자 접근권한·조회 제한은 확인할 수 없어 전체 보관 범위의 접근 제한을 확정할 수 없습니다.",
+      "self_check": {
+        "verdict": "NOT_APPLICABLE_UNKNOWN"
+      }
+    },
+    {
+      "case_id": "2.2.3-Q04-NOT_MET",
+      "expected": "NOT_MET",
+      "actual": "UNKNOWN",
+      "initial_result": "NOT_MET",
+      "reason": "인용문만으로 판정을 확정할 수 없어 검토가 필요합니다: proposed의 '전자 서약서가 권한 없는 사용자에게 접근 가능한 상태'라는 주장은 원문에 명시된 '권한 없는 사용자도 열람할 수 있음'이라는 사실과 일치하지만, '전자 서약서'가 검토 범위에 포함되었는지에 대한 명확한 근거가 제공되지 않았다. 또한, '전자 서약서'에 대한 접근 제한 기준이 확인되었다는 주장은 원문에 명시된 '해당 사용자에게 열람을 제한해야 한다는 기준도 확인했다'라는 문장과 일치하지만, 이는 '전자 서약서'에 대한 기준인지 명확히 확인되지 않았다. 따라서, '전자 서약서'가 검토 범위에 포함되었는지, 그리고 해당 기준이 '전자 서약서'에 적용되었는지에 대한 추가 정보가 필요하다.",
+      "self_check": {
+        "verdict": "UNSUPPORTED",
+        "reason": "proposed의 '전자 서약서가 권한 없는 사용자에게 접근 가능한 상태'라는 주장은 원문에 명시된 '권한 없는 사용자도 열람할 수 있음'이라는 사실과 일치하지만, '전자 서약서'가 검토 범위에 포함되었는지에 대한 명확한 근거가 제공되지 않았다. 또한, '전자 서약서'에 대한 접근 제한 기준이 확인되었다는 주장은 원문에 명시된 '해당 사용자에게 열람을 제한해야 한다는 기준도 확인했다'라는 문장과 일치하지만, 이는 '전자 서약서'에 대한 기준인지 명확히 확인되지 않았다. 따라서, '전자 서약서'가 검토 범위에 포함되었는지, 그리고 해당 기준이 '전자 서약서'에 적용되었는지에 대한 추가 정보가 필요하다.",
+        "confidence": 0.4,
+        "unsupported_conditions": [
+          "전자 서약서가 검토 범위에 포함되었는지에 대한 명확한 근거 부족",
+          "해당 기준이 '전자 서약서'에 적용되었는지에 대한 명확한 근거 부족"
+        ]
+      }
+    }
+  ],
+  "source_sha256": {
+    "I_P\\phase2_기준\\full_checklist_draft.json": "468eca5d61045362f97b64c7115eb70d2a14ef2212390246ca15c5516d8f2405",
+    "I_P\\phase2_기준\\full_reason_codes_draft.json": "bcf068a646c55f182598aa2f387e69f137969a2d3475cb53e950bc4110522709",
+    "I_P\\phase2_판단\\src\\validated_pipeline.py": "b59d0e4978dab81ae97b0b4b2af636189a3e5f2af0054d6c6e6a7c4d0e1308ff",
+    "I_P\\phase2_판단\\src\\self_check.py": "55dcdc34331426b75e24e38cd0964b53f5ecc88469677d9b2a6492906e89a35d",
+    "I_P\\phase2_기준\\tests\\fixtures\\evidence_scope_cases.json": "d03431491ad8da08a73bdf8d005b38c1152ed8ff705e7630e6e4397fce6cba08"
+  }
+}

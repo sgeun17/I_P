@@ -113,3 +113,8 @@ Pop-Location
 남은 항목: DB 접속·스키마/LLM 설정, OCR 실제 판독, 검색/판단/Phase2/보고서 전체 연결. 준비 상태 API는 chroma_index·judgment_model_env·input_db_env 때문에 false를 반환한다. chroma_index 경로는 앞서 기록한 통합팀 수정 사항이다. critical 정책 CLI 전달도 기존 요청으로 유지한다. FastAPI TestClient의 httpx 관련 deprecation 경고는 있었지만 이번 시험 실패는 아니었다.
 
 WBS U47 테스트 환경 배포/시연 점검의 환경 설치·부분 기능 확인, X47 빈/손상/OCR 실패/LLM 오류 처리의 빈 TXT·손상 DOCX/PDF 파서 단계 검증을 진행했다. V47 전체 종단 재실행, U47 실제 배포 시연, X47 전체 오류 처리는 완료 처리하지 않는다.
+
+
+## 10/7 재확인 정정
+
+최신 run_validated_phase2.py는 전체 체크리스트·사유 코드가 기본값이며 critical_policy={"mode":"explicit"}를 이미 전달한다. 앞의 critical CLI 미연결 요청은 해소된 것으로 정정한다. phase2_통합의 결과 저장·검토 이력 모듈도 존재한다. 웹→Phase2→보고서 전체 실행 완료와는 구분한다. 상세 현황은 backlog_review_2026-10-07.md를 참고한다.

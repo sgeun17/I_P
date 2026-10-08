@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-07",
+  "critical_true": 341,
+  "critical_false": 542,
+  "aggregation_cases": [
+    {
+      "critical": true,
+      "result": "MET",
+      "overall": "충족"
+    },
+    {
+      "critical": true,
+      "result": "NOT_MET",
+      "overall": "미충족"
+    },
+    {
+      "critical": true,
+      "result": "UNKNOWN",
+      "overall": "확인 필요"
+    },
+    {
+      "critical": false,
+      "result": "MET",
+      "overall": "충족"
+    },
+    {
+      "critical": false,
+      "result": "NOT_MET",
+      "overall": "충족(보완 권고)"
+    },
+    {
+      "critical": false,
+      "result": "UNKNOWN",
+      "overall": "충족(보완 권고)"
+    }
+  ],
+  "history_preserves_original_and_recomputes": true,
+  "database_transactions_tested": false,
+  "cli_explicit_present": true
+}

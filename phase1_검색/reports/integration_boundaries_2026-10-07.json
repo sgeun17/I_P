@@ -1,0 +1,84 @@
+{
+  "checked_at": "2026-10-07",
+  "scope": "SYNTHETIC_API_BOUNDARIES",
+  "checks": [
+    {
+      "name": "anonymous_result_access",
+      "status": 200,
+      "authorization_enforced": false,
+      "synthetic_fixture_returned": true
+    },
+    {
+      "name": "empty.txt",
+      "status": 400,
+      "error_code": "EMPTY_FILE",
+      "passed": true
+    },
+    {
+      "name": "bad.exe",
+      "status": 400,
+      "error_code": "INVALID_EXTENSION",
+      "passed": true
+    },
+    {
+      "name": "bad.docx",
+      "status": 400,
+      "error_code": "CONTENT_MISMATCH",
+      "passed": true
+    },
+    {
+      "name": "INVALID_TOP_K",
+      "status": 422,
+      "error_code": "INVALID_TOP_K",
+      "passed": true
+    },
+    {
+      "name": "MODEL_NOT_CONFIGURED",
+      "status": 503,
+      "error_code": "MODEL_NOT_CONFIGURED",
+      "passed": true
+    }
+  ],
+  "phase1_nonloopback_config_accepted": true,
+  "external_request_sent": false,
+  "real_evidence_used": false,
+  "database_used": false,
+  "full_e2e_completed": false,
+  "limits": [
+    "Authorization probe covers the application alone, not an upstream gateway.",
+    "Configuration acceptance is not evidence that external traffic occurred.",
+    "API rejection tests do not verify database state changes."
+  ],
+  "service_probe": {
+    "scope": "local TCP only; no authentication or data requests",
+    "checks": [
+      {
+        "host": "127.0.0.1",
+        "port": 3306,
+        "status": "UNREACHABLE"
+      },
+      {
+        "host": "127.0.0.1",
+        "port": 8000,
+        "status": "UNREACHABLE"
+      },
+      {
+        "host": "127.0.0.1",
+        "port": 11434,
+        "status": "UNREACHABLE"
+      },
+      {
+        "host": "127.0.0.1",
+        "port": 11435,
+        "status": "UNREACHABLE"
+      }
+    ]
+  },
+  "contract_tests": {
+    "passed": 22,
+    "subtests_passed": 10,
+    "llm_transport": "mocked",
+    "command_workdir": "phase1_검색",
+    "note": "Initial invocation from repository parent failed import collection; rerun from search directory passed."
+  }
+}

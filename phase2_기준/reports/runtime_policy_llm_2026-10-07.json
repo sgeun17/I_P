@@ -1,0 +1,235 @@
+{
+  "synthetic": true,
+  "human_approved_gold": false,
+  "llm_executed": true,
+  "scope": "One selected item per control per case, not full-control coverage",
+  "model": "qwen3:14b",
+  "checklist_version": "phase2-checklist-full-draft-2026-10-06-r6",
+  "cases": [
+    {
+      "case_id": "performed_in_period",
+      "expected": "MET",
+      "actual": "MET",
+      "match": true,
+      "processing_status": "COMPLETED",
+      "seconds": 14.48,
+      "human_review": {
+        "required": false,
+        "reasons": [],
+        "error_codes": []
+      },
+      "issues": [],
+      "output_schema_valid": true,
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "evidence_format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "no_trigger_event",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "match": true,
+      "processing_status": "REVIEW_REQUIRED",
+      "seconds": 4.64,
+      "human_review": {
+        "required": true,
+        "reasons": [
+          "P2R204",
+          "P2R113"
+        ],
+        "error_codes": [],
+        "unmapped_signals": [
+          "CRITERIA_PENDING_ITEM_REVIEW"
+        ]
+      },
+      "issues": [],
+      "output_schema_valid": true,
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "evidence_format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "unresolved_conflict",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "match": true,
+      "processing_status": "REVIEW_REQUIRED",
+      "seconds": 4.5,
+      "human_review": {
+        "required": true,
+        "reasons": [
+          "P2R204",
+          "P2R113"
+        ],
+        "error_codes": [],
+        "unmapped_signals": [
+          "CRITERIA_PENDING_ITEM_REVIEW"
+        ]
+      },
+      "issues": [],
+      "output_schema_valid": true,
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "evidence_format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "not_yet_due",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "match": true,
+      "processing_status": "REVIEW_REQUIRED",
+      "seconds": 7.3,
+      "human_review": {
+        "required": true,
+        "reasons": [
+          "P2R204",
+          "P2R113"
+        ],
+        "error_codes": [],
+        "unmapped_signals": [
+          "CRITERIA_PENDING_ITEM_REVIEW"
+        ]
+      },
+      "issues": [],
+      "output_schema_valid": true,
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "evidence_format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "stale_by_explicit_test_policy",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "match": true,
+      "processing_status": "REVIEW_REQUIRED",
+      "seconds": 4.23,
+      "human_review": {
+        "required": true,
+        "reasons": [
+          "P2R113",
+          "P2R204"
+        ],
+        "unmapped_signals": [
+          "FRESHNESS_STALE"
+        ],
+        "error_codes": []
+      },
+      "issues": [],
+      "output_schema_valid": true,
+      "freshness": {
+        "status": "STALE",
+        "date": "2026-01-01",
+        "date_label": "performed_date",
+        "as_of": "2026-10-07",
+        "cutoff": "2026-04-07",
+        "max_age_months": 6
+      },
+      "evidence_format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    },
+    {
+      "case_id": "format_mismatch_by_explicit_test_policy",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "match": true,
+      "processing_status": "REVIEW_REQUIRED",
+      "seconds": 4.0,
+      "human_review": {
+        "required": true,
+        "reasons": [
+          "P2R113",
+          "P2R204"
+        ],
+        "unmapped_signals": [
+          "FORMAT_MISMATCH"
+        ],
+        "error_codes": []
+      },
+      "issues": [],
+      "output_schema_valid": true,
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "evidence_format": {
+        "status": "FORMAT_MISMATCH",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": [
+          "pdf"
+        ]
+      }
+    },
+    {
+      "case_id": "procedure_is_not_execution",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "match": true,
+      "processing_status": "REVIEW_REQUIRED",
+      "seconds": 3.81,
+      "human_review": {
+        "required": true,
+        "reasons": [
+          "P2R204"
+        ],
+        "error_codes": []
+      },
+      "issues": [],
+      "output_schema_valid": true,
+      "freshness": {
+        "status": "POLICY_MISSING"
+      },
+      "evidence_format": {
+        "status": "POLICY_MISSING",
+        "file_types": [
+          "txt"
+        ],
+        "allowed_types": null
+      }
+    }
+  ],
+  "limitations": [
+    "Test policy ages/extensions are synthetic, not adopted organizational policy.",
+    "No web, DB, real evidence or operational accuracy evaluation."
+  ],
+  "checked_at": "2026-10-07",
+  "source_sha256": {
+    "phase2_기준\\tools\\run_with_criteria_policy.py": "47745e3fe84607f75cba16a0361cc1f036e83b7c0f233fa818033f8bf6f8e9cc",
+    "phase2_기준\\docs\\runtime_common_rules.md": "b897b926912e75656c8cfe388f135a8eb6ae63e6e4c3da4117fd8d32456f82e8",
+    "phase2_기준\\tests\\fixtures\\runtime_policy_cases.json": "1676496a62c80d4c74679a5a27faf5726e5032658d2982eeb1ef393d9024225b",
+    "phase2_기준\\full_checklist_draft.json": "468eca5d61045362f97b64c7115eb70d2a14ef2212390246ca15c5516d8f2405"
+  }
+}

@@ -41,6 +41,8 @@ KB의 `source.sha256`은 검색팀 `kb_identity.py`와 동일하게 LF/CRLF 개�
 
 ## 실행
 
+평가 기준일·기간과 공통 처리 기준을 전달하는 새 진입점은 `tools/run_with_criteria_policy.py`다. [실행 방법 및 적용 한계](docs/runtime_policy_handoff.md), [공통 규칙](docs/runtime_common_rules.md)을 참고한다. 기존 판단팀 CLI/웹에는 자동 적용되지 않는다.
+
 아래 명령은 `phase2_기준`에서 실행한다.
 
 ```powershell

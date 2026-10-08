@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "human_approved_gold": false,
+  "assessment": {"as_of": "2026-10-07", "period_start": "2026-01-01", "period_end": "2026-10-07"},
+  "cases": [
+    {"id": "performed_in_period", "item_id": "2.2.5-Q07", "expected": "MET", "text": "가상 조직 A의 퇴직자 김가상은 TEAM-A 공유계정을 사용했다. 퇴직일 2026-08-01 09:00에 해당 TEAM-A 비밀번호를 즉시 변경 완료했다. 수행 2026-08-01. 변경 로그와 해당 퇴직자의 공유계정 목록이 일치한다."},
+    {"id": "no_trigger_event", "item_id": "2.2.5-Q07", "expected": "UNKNOWN", "text": "가상 조직 A의 인사 담당자가 2026-01-01부터 2026-10-07까지의 전체 인사대장을 확인하여 해당 기간에 퇴직·직무변경 인력이 전혀 발생하지 않았음을 기록했다. 공유계정 비밀번호 변경 이행 대상 사건은 없다."},
+    {"id": "unresolved_conflict", "item_id": "2.2.5-Q07", "expected": "UNKNOWN", "text": "가상 조직 A에서 김가상은 TEAM-A 공유계정을 사용하다 2026-08-01 퇴직했다. 보안팀 확인서는 2026-08-01 09:00 TEAM-A 비밀번호 변경 완료라고 기록한다. 동일 사건의 운영팀 확인서는 2026-08-01 09:00 TEAM-A 비밀번호를 변경하지 않았다고 기록한다. 두 기록 중 어느 것이 정정되거나 폐기되었는지 확인되지 않았다."},
+    {"id": "not_yet_due", "item_id": "2.2.5-Q09", "expected": "UNKNOWN", "text": "가상 조직 A는 2026-09-01 신설되어 첫 퇴직 보안 절차 준수 검토를 2026-10-31에 실시하도록 정했다. 이전 검토 의무는 없으며 검토 기준일 2026-10-07 현재 첫 검토 기한은 아직 도래하지 않았다."},
+    {"id": "stale_by_explicit_test_policy", "item_id": "2.2.5-Q07", "expected": "UNKNOWN", "policy": {"freshness": {"max_age_months": 6, "date_label": "performed_date"}}, "text": "가상 조직 A의 퇴직자 김가상은 TEAM-A 공유계정을 사용했다. 퇴직 즉시 TEAM-A 비밀번호를 변경 완료했다. 수행 2026-01-01. 변경 완료 로그와 퇴직자의 공유계정 목록이 연결되어 있다."},
+    {"id": "format_mismatch_by_explicit_test_policy", "item_id": "2.2.5-Q07", "expected": "UNKNOWN", "policy": {"allowed_types": ["pdf"]}, "text": "가상 조직 A의 퇴직자 김가상은 TEAM-A 공유계정을 사용했다. 퇴직일 2026-08-01 09:00 해당 TEAM-A 비밀번호를 즉시 변경 완료했다. 수행 2026-08-01. 변경 로그와 퇴직자의 공유계정 목록이 연결되어 있다."},
+    {"id": "procedure_is_not_execution", "item_id": "2.2.5-Q07", "expected": "UNKNOWN", "text": "가상 조직 A의 절차서: 퇴직자가 사용하는 공유계정의 비밀번호는 퇴직 즉시 변경해야 한다. 김가상은 TEAM-A 공유계정을 사용하다 2026-08-01 퇴직했다. 실제 비밀번호 변경 여부와 변경 이행 기록은 확인되지 않았다."}
+  ]
+}

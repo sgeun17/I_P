@@ -1,0 +1,416 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-07T22:44:10.726248+09:00",
+  "llm_calls": 0,
+  "scope": "Actual file parsers/chunker/local retrieval/prompt, fixed-response validator/review. No upload API, MySQL, UI or LLM server.",
+  "kb_sha256": "6421a840c5fd84d1f4ea7e3e60c8df95aab8be8d71cf1e437fb67729a9e803be",
+  "code_sha256": {
+    "phase1_검색\\controls.json": "d69396f252b9990a4ffc7a4773dd852af87a635cdfbb6539d1113dc8b80bd177",
+    "phase1_입력\\main.py": "9c51bdd75b2e16ca446ee2c8317b2188095c26a7f62384e3066b492fafbb2f34",
+    "phase1_입력\\ocr_parser.py": "a0c8c6a600c7ba9d689cc96f1fb7635e55c69bf48a6a1016ab44f38ebce2333d",
+    "phase1_입력\\parser_dispatcher.py": "c5604895750fcb40678fe434185f8165d3382381b8a99c505219215ade0517f0",
+    "phase1_입력\\pipeline.py": "3c9d016b93652f5b30493501df340991df3c57a9b7f6fc3b756b5e8d3dd8d492",
+    "phase1_입력\\chunking\\chunker.py": "19d1ce73cda0f724d9680b684d0da9667efb0099446ab4e5e7b4d0699739e0fa",
+    "phase1_입력\\chunking\\chunk_format.py": "e8592349a8bea3da9691a0efe7853a69e0df070e9eb723bdc94cdc0f8bf96cbf",
+    "phase1_입력\\chunking\\chunk_links.py": "e49d0c0539c12eeb6984bfd48c75de3d5f95279cff8723ca41579c56ab045d3b",
+    "phase1_입력\\chunking\\table_chunker.py": "f2f3e3ca85196e399e3cbfe35222b4cf71416f53328cc48782f21d616e151bf9",
+    "phase1_입력\\chunking\\__init__.py": "c4cd1ecd1a5ba3c22543559db134eb4a0184062a85c09a5bcb979e5fb2e82ec3",
+    "phase1_입력\\database\\chunk_store.py": "dad797b07fcc5152813f1ebffc07313d7a44a7616cce262a29e1f4ee09311abb",
+    "phase1_입력\\database\\config.py": "b029706eb70b68669b2af8a99e21748af71928762e42a2af2f49aa6ad427fabd",
+    "phase1_입력\\database\\db.py": "00473967e3e277161c2fea39be102823bd5e0af8061e21d546761828b36498c2",
+    "phase1_입력\\database\\evidence_store.py": "492651b70c97748a83ca2dffcbd6b837154ddb35f265c7bdde993aaf5f4f664b",
+    "phase1_입력\\docx_test\\docx_parser.py": "b56f0d5fbd3d68cdb1c9943be21a2882f003c76af22ebb9172d976883079f64b",
+    "phase1_입력\\pdf_test\\pdf_parser.py": "898537b5a672d1738957cea1f7aba48bd9c3a50290fbc9951975d072a42ebe35",
+    "phase1_입력\\pptx_test\\pptx_parser.py": "ef0b0b19fa2e457c61407bb2067f2e8c7ddc6bcb589b08035509b2bca09c8b3f",
+    "phase1_입력\\txt_csv_test\\text_parser.py": "6ee07e255c9d896cfd1f99bdc73077843a3563af2d5237e6114834728ae6a85d",
+    "phase1_입력\\xlsx_test\\xlsx_parser.py": "98b613b4813874edcfa6bd673bf55ed348afe4d3d96d97d4ee90f6da8d087254",
+    "phase1_판단\\src\\check.py": "d77b006f39286461fc14c078c241d8eacec20a266bdc93b549564e8b870faef9",
+    "phase1_판단\\src\\enums.py": "530f1f8ee7be81594c3ed9634fbd0218195f6e2f6fbac03aaed4a0934946c0ac",
+    "phase1_판단\\src\\kb.py": "66da8d6e13b6a37b581d9b55f4a22a6dd19946d9454394ab60cbc8716b8d0eb4",
+    "phase1_판단\\src\\llm_client.py": "77f45b448e909ca0d770d455cf9cf002547e393d55cafda4549e0abab7f5bed2",
+    "phase1_판단\\src\\llm_config.py": "1094305708787fff3e48322a6cd17a683bc9b912e9e04e04eb0be14e296e8c07",
+    "phase1_판단\\src\\llm_runner.py": "561d1951d6e022530e82aa69b25307d1260841fcba857fed633bd96547f980d2",
+    "phase1_판단\\src\\metrics.py": "d6aa8eac959d977ca8bb4e8a4b66f271181e0ab2f61912174b509bc94884c0b0",
+    "phase1_판단\\src\\models.py": "518e474854ffe67039da1272e5a904d16b6748c375a86a703c5b379ad69a7916",
+    "phase1_판단\\src\\output_parser.py": "657c5dd7c62bc9b054bd00c4e4176f8f677ea4e6b4a66aa2a731249164355b45",
+    "phase1_판단\\src\\prompts.py": "79602b6d93c56b9ed4f7e682ec2f3ac66d874a4ea994a54188ef8d671e4d1fee",
+    "phase1_판단\\src\\retrieval_adapter.py": "107e1abca637324d32851dd2929c16b750cb84113a5c65b76ba9900123c6ad8b",
+    "phase1_판단\\src\\retry_prompt.py": "cf0dc2f5d3d32d12a56a19bb62fd48167793a2afed230362e8ce4b337106c4e9",
+    "phase1_판단\\src\\review.py": "a8a7ec0af7f225baf61e41524514182f55d071139c55aa261556714882ffd4a4",
+    "phase1_판단\\src\\review_policy.py": "a9c4777e4c9038a7456b925154f3ecc834ebe99ad22290f076f0baa8904f38ab",
+    "phase1_판단\\src\\service.py": "44f28502f8822f82db80c41aee712cccc7811ffa0b2ea4ce9a323c08a1bb75e0",
+    "phase1_판단\\src\\span_repair.py": "0d014923e7cf330c019dfdd560ef4a7c6bfc20bf215063dbbdb2f8a77b9478a9",
+    "phase1_판단\\src\\validators.py": "ad5252c18526d22797e02d7d775ad1b45f23368db08dd947f5b29c8cea235430",
+    "phase1_판단\\src\\versions.py": "5a2a071f1f2b4b1d06c1b46fddd29ca4e2ece8391e7e71821ddf0d8b32e09d93",
+    "phase1_판단\\tests\\conftest.py": "56f89026d5aae3b3b701f998c1b14ba11623204369e6ba2f0d00017336813114",
+    "phase1_판단\\tests\\test_candidate_citations.py": "e48ea3c6ec74ce89988dbf032689c6c1ebc1bb51882511acd78bf0e4032dbf86",
+    "phase1_판단\\tests\\test_eval_goldenset.py": "fc4afde690575b80b8adfabee8365cff6cfa8a97250cbf5279952435186114dc",
+    "phase1_판단\\tests\\test_goldenset.py": "a63f9e9dbee0d697ce2fef35a5b99424aa3d559ccd7a0d3b29a01e73fd178e86",
+    "phase1_판단\\tests\\test_llm_client.py": "60bb75dd0ef8e0d4666bea748c6207dbbd81177dc58b43cfc49ff0a40047becd",
+    "phase1_판단\\tests\\test_llm_harness_contract.py": "673d8e9b1c2dead52c9a16bb304ad00f28d5b54eda83ceb5e3f7c99f09b884ec",
+    "phase1_판단\\tests\\test_llm_runner.py": "675ae43185ee7714aa5ed3e08a46736330a716812a8781f99f6dc0612b9c5c6e",
+    "phase1_판단\\tests\\test_metrics.py": "7ad95204d2a744d2767dc783358b1dc33366683c67685c223bb598d61e4b2c8f",
+    "phase1_판단\\tests\\test_output_parser.py": "4d4286a97b8e8279b6f2b9a1bffeda757fa00e3ff43c11f376a5940c256ffe01",
+    "phase1_판단\\tests\\test_review.py": "1ead977c60103f73a7df3c0df870c1d12b458d4d16b43cabae6709166b39643d",
+    "phase1_판단\\tests\\test_service.py": "4b181f265f71c82a2baab9ea7171b20c745b9e0d67f2a2aa8877839b06f640fd",
+    "phase1_판단\\tests\\test_span_cli.py": "189c09c050fc49793999339be115b45cef6d508668444439f5517c1d433401e8",
+    "phase1_판단\\tests\\test_span_repair.py": "82a0063b51b623865623a7ddc5c075690a444ebe05f855a522dcf0f65b5aa641",
+    "phase1_판단\\tests\\test_validators.py": "ca24d7f6abc0850dd33c83d4241f47d6f24b0a724a6b6ddb2dd48f9d6589cf12",
+    "phase1_판단\\tools\\build_goldenset.py": "7bb68b4475300757dc21fbb43d6eeecba91d17f7ca338c2ff4e478dcdf8541b2",
+    "phase1_판단\\tools\\eval_goldenset.py": "4f3d833be90af92694116668d48bdc7646be564a3064a432548c28f5d71bab3a",
+    "phase1_판단\\tools\\replay.py": "5788c9d56a559c9217c89230781483f3a2ca6ec6073be0767cb58f1f55409820",
+    "phase1_판단\\tools\\report_goldenset.py": "6105cdd71db176b2eeb02feb2833fca3decd31ac0e62c774ef963baddfce150e",
+    "phase1_판단\\tools\\run_ollama_goldenset.py": "3cc1804ddfe61fcc504face83883b0f0aa2b845c96e12903375cd5a560fb5b1d",
+    "phase1_판단\\tools\\run_span_judgments.py": "6af58244191abc784aa2af66d7320142c04456fdde8f83d4230a96678559b408",
+    "phase1_판단\\tools\\threshold_scenario.py": "a918545717d7a234f4ed3548fa84d1fcbe6b2b2b1c356f370edf9bfc5aba90ca",
+    "phase1_판단\\tools\\why_caught.py": "210e51ca997dd4b274173747a4bc0bb51e941f2b58812dc16e5453f67ccc6f24",
+    "phase1_검색\\chroma_index.py": "7cf26e0c83713143da78f18990e124dd504559e317a4ccbbf8f666697263e191",
+    "phase1_검색\\chroma_sample.py": "9beb000ade226a34b28c5844366c04f49766619d8347e0a6111655b1c40a7dfd",
+    "phase1_검색\\chunk_retriever.py": "d4ea21d239a53ba3ef3248ff5c8e8c4af1cf236edb7ea74174ae0e01803452ac",
+    "phase1_검색\\judgment_adapter.py": "aeff641082768fd9ba8d1a54039cfa30cd231923001b707042efee5727aa1fa9",
+    "phase1_검색\\judgment_pipeline.py": "c55fe4a78f046bbf75040d754903cbe61e8c52cab0f013a4c830bc4f95c14ed0",
+    "phase1_검색\\kb_identity.py": "df2fbb743a4679b91a48a0ee23acd9c159b4cca96e41f2ee70d9a9a7fcc75416",
+    "phase1_검색\\retriever.py": "ce4dc261dc21264422382dde7b37b4abc9e063c6baabc4649491b93480ed482e",
+    "phase1_검색\\validate_kb.py": "d8e09f18f69ddd7bc330e300843de9c49b7598e41aae783bfd599c4cdfda3eb3",
+    "phase1_검색\\worker_client.py": "4e6188679129eca3f58fbbb1d9b0556b4c469425ffb067558e75dd0c325ac1b2",
+    "phase1_검색\\tests\\build_keyword_boundary_review.py": "4ed7d1aebe9d018ef73875b1134ca4e9d0cd74688d4257fc7078693dc6b3ab36",
+    "phase1_검색\\tests\\evaluate_phase1_finish.py": "06226568ab16385af54811e34b8b0090d9f94899b3c7065aa969f10243050870",
+    "phase1_검색\\tests\\evaluate_relevance_policy.py": "7d5ceaac417f5921119adf29480b8bcde3436c1485c0d7d19e5cb6b71ccbe097",
+    "phase1_검색\\tests\\evaluate_review_cases.py": "a64d6d98459173052fa0630ca4248001bbe9074ee2e2f1c7eef32ddc0972c787",
+    "phase1_검색\\tests\\record_keyword_followup.py": "791ebf940b59d68de56b68687261c513b0b7c118e124b69b18f5106355050266",
+    "phase1_검색\\tests\\record_phase1_finish_review.py": "e678aa9779e91cd4fc05f9632cea86d4e462bcb5c51bd4cf77eb67188b481f6e",
+    "phase1_검색\\tests\\review_kb_sources.py": "30aef7e4eeaa488e1cb62f3bbd514ed95b316b9814868cd255a131ff98aea3ae",
+    "phase1_검색\\tests\\review_keyword_meanings.py": "75eed69508ec1b0492a828d844b1be7ab9e55e2c1ab9f1ad2507731c740e999b",
+    "phase1_검색\\tests\\review_retriever_labels.py": "4d7e95e6071c94a18eb3a2dd193c37825f4a9e3f5860d6a7318e17fc606de77e",
+    "phase1_검색\\tests\\test_aggregation_diagnostic.py": "1b5219d3cdecebbd14384f3bab086ce2a52990950fe9b000266ba8d071c2c212",
+    "phase1_검색\\tests\\test_chunk_retriever.py": "7ca7c6e9681bc70755128d2cb56f00b5a1181c3971e3290b966b75237511ef0e",
+    "phase1_검색\\tests\\test_image_pipeline_contract.py": "ec1ff34f8d2b93ee0da842661d6e368b59c01158e69255de31038a3f356f3d78",
+    "phase1_검색\\tests\\test_judgment_adapter.py": "2f42e9819df4fa8c2ee161f0716faa5da947d163d1e7882a01edb139ab79ed23",
+    "phase1_검색\\tests\\test_judgment_pipeline.py": "e1450eb847749e0dab8721269ae410651acbce3bea2b633f39418243207ede2b",
+    "phase1_검색\\tests\\test_kb_identity.py": "9390ad7b87825d72053f5ce954129a37f76eb259d86baa8615567a5b1381327c",
+    "phase1_검색\\tests\\test_retriever.py": "e09c272ef78e6e10d3ed08f2857c74cbbcdd98d05f3ec0e1e5e8e1a362d1bedc",
+    "phase1_검색\\tests\\test_worker_reuse.py": "14e516fbc31d0ab4d8215efdc1b995c79d970f46d8d362482af5ed645a54dcef",
+    "phase1_검색\\tests\\verify_chunk_integration.py": "7b03f7e6af7a2f13511a5225c509b92ab72b3e640ce8a0ba2095e06c64be89b5",
+    "phase1_검색\\tests\\verify_file_pipeline.py": "34ca5a0f46bce62ee004f101e1a24c971163eadb2a3350b0479f05f7b7afbfe6",
+    "phase1_검색\\tests\\verify_judgment_integration.py": "af110978f9d967ed0e127bf5e723aba68420971d52b2db28ef88db8ca91f2100",
+    "phase1_검색\\tests\\verify_model_reuse.py": "a5bea6fbf8edfaafe6722c1021c6bcd65f3c89bc793322ec62e40221dd9ce3c0",
+    "phase1_검색\\tests\\verify_pre_llm_pipeline.py": "ef325fa8fcded33bb1f41c3c9a2b629d25c18bb99d5843d0ab878fad86aa022a",
+    "phase1_검색\\tests\\verify_repository_documents.py": "2cb3f2173e4d184ab291175e35c049c2219ba406136b45e74fc694a9088cc7cb",
+    "phase1_검색\\tests\\verify_team_pipeline.py": "f22b2f185408f449ec4034d7875dc2aa5c9df9cb4ebb59b574b55551eb2558e8",
+    "phase1_검색\\tools\\check_integration_boundaries.py": "619095cbefc76d437d8b89d27188d3d790678cbf5e2b80cd55a5da3f61ae2fee",
+    "phase1_검색\\tools\\check_integration_smoke.py": "9c2e5d24b7d556933804542286df98d0bbcef337c7b71d9c1312ee3c5196c8be",
+    "phase1_검색\\tools\\check_offline_readiness.py": "56ab3fac02f4cd3f1467c26b4599ead27268f6d4958ba1d2cefdc04410252d64",
+    "phase1_검색\\tools\\diagnose_aggregation.py": "10ea1bf68a0a42e632da3fc3840da1d35003439715ecd4c1be70968eb9456b0d",
+    "phase1_검색\\tools\\record_phase1_snapshot.py": "54ac66cbbc14f109331b6428a2915e2023b062e8ae12b3dc79e933cf6a365131",
+    "phase1_검색\\tools\\rerun_saved_judgments.py": "bde1d94010a82f561d7911fc9cc67d4d4d2095bf79f66d1bb69f42d573a08309"
+  },
+  "file_cases": [
+    {
+      "case_id": "TXT",
+      "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+      "chunks": 1,
+      "pages": [],
+      "sources": [
+        "parser"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.2.1"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "CP949",
+      "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+      "chunks": 1,
+      "pages": [],
+      "sources": [
+        "parser"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.2.1"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "LONG",
+      "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+      "chunks": 3,
+      "pages": [],
+      "sources": [
+        "parser"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.2.1"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "CSV",
+      "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+      "chunks": 1,
+      "pages": [],
+      "sources": [
+        "parser"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.2.1"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "UNRELATED",
+      "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+      "chunks": 1,
+      "pages": [],
+      "sources": [
+        "parser"
+      ],
+      "top5": [
+        "3.1.7",
+        "2.1.2",
+        "2.9.3",
+        "2.9.5",
+        "1.1.5"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "DOCX",
+      "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+      "chunks": 2,
+      "pages": [],
+      "sources": [
+        "parser"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.2.1"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "XLSX",
+      "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+      "chunks": 2,
+      "pages": [
+        1,
+        2
+      ],
+      "sources": [
+        "parser"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.2.1"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "PPTX",
+      "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+      "chunks": 2,
+      "pages": [
+        1,
+        2
+      ],
+      "sources": [
+        "parser"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.2.1"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "PDF",
+      "origin": "SYNTHETIC_FILE_ACTUAL_PARSER",
+      "chunks": 1,
+      "pages": [
+        1
+      ],
+      "sources": [
+        "parser"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.5.2"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "PNG_CONTRACT",
+      "origin": "SIMULATED_OCR_BLOCKS_NO_IMAGE_RECOGNITION",
+      "chunks": 1,
+      "pages": [],
+      "sources": [
+        "ocr"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.2.1"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "JPG_CONTRACT",
+      "origin": "SIMULATED_OCR_BLOCKS_NO_IMAGE_RECOGNITION",
+      "chunks": 1,
+      "pages": [],
+      "sources": [
+        "ocr"
+      ],
+      "top5": [
+        "2.2.5",
+        "2.5.1",
+        "2.5.5",
+        "2.5.6",
+        "2.2.1"
+      ],
+      "status": "PASS"
+    }
+  ],
+  "preprocessing_rejected": [
+    "EMPTY",
+    "CORRUPTED"
+  ],
+  "response_scenarios": [
+    {
+      "scenario": "single",
+      "status": "PASS",
+      "processing_status": "COMPLETED",
+      "review_required": false,
+      "review_reasons": [],
+      "evidence_status": "COMPLETED"
+    },
+    {
+      "scenario": "multiple",
+      "status": "PASS",
+      "processing_status": "COMPLETED",
+      "review_required": true,
+      "review_reasons": [
+        "R205"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "no_match",
+      "status": "PASS",
+      "processing_status": "COMPLETED",
+      "review_required": true,
+      "review_reasons": [
+        "R202",
+        "R208"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "low_confidence",
+      "status": "PASS",
+      "processing_status": "COMPLETED",
+      "review_required": true,
+      "review_reasons": [
+        "R201"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "uncertain",
+      "status": "PASS",
+      "processing_status": "COMPLETED",
+      "review_required": true,
+      "review_reasons": [
+        "R107",
+        "R206"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "invalid_quote",
+      "status": "PASS",
+      "processing_status": "COMPLETED",
+      "review_required": true,
+      "review_reasons": [
+        "R104"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "invalid_json",
+      "status": "PASS",
+      "processing_status": "FAILED",
+      "review_required": true,
+      "review_reasons": [
+        "R108"
+      ],
+      "evidence_status": "FAILED"
+    },
+    {
+      "scenario": "call_failure",
+      "status": "PASS",
+      "processing_status": "FAILED",
+      "review_required": true,
+      "review_reasons": [
+        "R108"
+      ],
+      "evidence_status": "FAILED"
+    },
+    {
+      "scenario": "PNG_CONTRACT",
+      "status": "PASS",
+      "processing_status": "COMPLETED",
+      "review_required": true,
+      "review_reasons": [
+        "R207"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    },
+    {
+      "scenario": "JPG_CONTRACT",
+      "status": "PASS",
+      "processing_status": "COMPLETED",
+      "review_required": true,
+      "review_reasons": [
+        "R207"
+      ],
+      "evidence_status": "REVIEW_REQUIRED"
+    }
+  ],
+  "utf8_cp949_scores_equal": true,
+  "limits": [
+    "PNG/JPG use simulated OCR blocks; actual OCR inference was not executed in this test.",
+    "Synthetic selected candidates and confidence are protocol fixtures, not predicted labels or accuracy.",
+    "LLM transport, structured output enforcement, model quality, retries on a real endpoint and full upload/DB/UI remain unverified."
+  ]
+}
