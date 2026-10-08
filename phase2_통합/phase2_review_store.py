@@ -11,8 +11,14 @@ phase2_review_store.py : 승인·수정·반려와 검토 이력
 종합해서 다시 계산한다.
 
     수정  그 판정은 PENDING 그대로. 여러 군데를 고치는 동안 유지
-    승인  고친 게 있으면 REVALIDATING, 없으면 APPROVED
+          검토가 필요 없던 판정(NOT_REQUIRED)을 고치면 PENDING 으로 올라간다
+    승인  마지막 승인 뒤에 고친 게 있으면 REVALIDATING, 없으면 APPROVED
+          → 고친 뒤 승인하면 REVALIDATING, 그 값 그대로 한 번 더 승인하면 APPROVED
     반려  REJECTED
+
+사람이 고친 값이 최종이다. REVALIDATING 은 "고친 값을 한 번 더 확인하라" 는 뜻이고
+LLM 을 다시 부르지 않는다. 정말 다시 판정하려면 phase2_runner.rejudge() 를 쓴다
+(현재 줄이 superseded 되고 그 줄에 붙은 수정 이력도 같이 과거가 된다).
 
 승인할 때 판정값과 사유 코드가 맞는지 검사한다 (MET 은 코드 없음,
 NOT_MET·UNKNOWN 은 1개 이상). 어긋나면 거부한다 — 그대로 내보내면 출력 스키마
@@ -144,22 +150,47 @@ def _record(action, result_id, actor, *, role=None, target=None,
     try:
         with conn.cursor() as cur:
             # 이 판정 줄을 먼저 잠근다. 두 사람이 동시에 처리해도 seq 가 겹치지 않는다.
-            cur.execute(_q("SELECT evidence_id, control_id, review_state, payload "
+            cur.execute(_q("SELECT evidence_id, control_id, review_state, payload, "
+                           "evidence_version, superseded_at "
                            "FROM phase2_result WHERE result_id = %s" + _lock()),
                         (result_id,))
             rows = _rows(cur)
             if not rows:
                 raise ReviewError("RESULT_NOT_FOUND", f"판정 결과가 없습니다: {result_id}")
             evidence_id = rows[0]["evidence_id"]
+
+            # 지금 결과가 아니면 손대지 못하게 한다.
+            # 화면을 열어둔 채 증적이 재업로드되면, 옛 v1 결과를 승인해서
+            # v2 가 아직 판정 중인데 COMPLETED 로 넘어가 버린다.
+            if rows[0]["superseded_at"] is not None:
+                raise ReviewError(
+                    "RESULT_NOT_CURRENT",
+                    f"지난 판정입니다 (result_id {result_id}). 다시 판정된 뒤의 "
+                    f"현재 결과를 열어 처리하세요.")
+            cur.execute(_q("SELECT version FROM evidence WHERE evidence_id = %s"),
+                        (evidence_id,))
+            vrows = _rows(cur)
+            if vrows and int(rows[0]["evidence_version"]) != int(vrows[0]["version"]):
+                raise ReviewError(
+                    "RESULT_NOT_CURRENT",
+                    f"v{rows[0]['evidence_version']} 판정인데 {evidence_id} 의 지금 "
+                    f"버전은 v{vrows[0]['version']} 입니다. 재업로드된 증적이라 "
+                    f"이 결과는 더 이상 현재가 아닙니다.")
             state_before = rows[0]["review_state"]
             payload = rows[0]["payload"]
             payload = json.loads(payload) if isinstance(payload, str) else payload
 
-            if state_before not in ("PENDING", "REVALIDATING"):
+            # 검토가 필요 없다고 나온 판정(NOT_REQUIRED)도 사람이 틀렸다고 보면
+            # 고치거나 반려할 수 있어야 한다. 막아두면 자동 통과한 오판을
+            # 사람이 바로잡을 길이 없다. 단 승인할 것은 없다.
+            allowed = ("PENDING", "REVALIDATING")
+            if action in ("MODIFY", "REJECT"):
+                allowed += ("NOT_REQUIRED",)
+            if state_before not in allowed:
                 raise ReviewError(
                     "NOT_IN_REVIEW",
                     f"검토 대기 상태가 아닙니다 (지금 {state_before}). "
-                    "승인·수정·반려는 PENDING 인 판정에만 할 수 있습니다.")
+                    f"{action} 는 {', '.join(allowed)} 인 판정에만 할 수 있습니다.")
 
             cur.execute(_q("SELECT status FROM evidence WHERE evidence_id = %s"),
                         (evidence_id,))
@@ -178,7 +209,10 @@ def _record(action, result_id, actor, *, role=None, target=None,
             if action == "MODIFY":
                 # 고치기 전 값은 호출자 말을 믿지 않고 저장된 결과에서 읽는다.
                 value_before = _validate_target(effective, target, value_after)
-                state_after = state_before          # 수정은 상태를 옮기지 않는다
+                # 수정은 상태를 옮기지 않는다. 다만 검토가 필요 없던 판정을
+                # 사람이 고쳤으면 그때부터는 승인을 받아야 한다.
+                state_after = ("PENDING" if state_before == "NOT_REQUIRED"
+                               else state_before)
             elif action == "APPROVE":
                 # 승인 직전에 판정값과 사유 코드가 맞는지 본다.
                 # 어긋난 채로 승인하면 그 결과는 출력 스키마 검증에서 떨어진다.
@@ -188,7 +222,13 @@ def _record(action, result_id, actor, *, role=None, target=None,
                         "INCONSISTENT_RESULT",
                         "판정값과 사유 코드가 맞지 않아 승인할 수 없습니다. "
                         + " / ".join(e["message"] for e in con["errors"]))
-                modified = any(h["action"] == "MODIFY" for h in hist)
+                # 마지막 승인 뒤에 고친 게 있는지만 본다.
+                # 이력 전체를 보면 한 번 고친 판정은 승인해도 계속 REVALIDATING 이라
+                # APPROVED 에 영영 못 간다.
+                last_ok = max((int(h["seq"]) for h in hist
+                               if h["action"] == "APPROVE"), default=0)
+                modified = any(h["action"] == "MODIFY" and int(h["seq"]) > last_ok
+                               for h in hist)
                 state_after = "REVALIDATING" if modified else "APPROVED"
             else:
                 state_after = REJECT_STATE
@@ -233,6 +273,9 @@ def modify(result_id, actor, target, value_after, reason, role=None):
     """
     사람이 값을 고쳤다. 원본 payload 는 안 바뀌고 이력에만 쌓인다.
     조회하면 payload + 이력을 합친 effective 로 나온다.
+
+    검토가 필요 없다고 나온 판정(NOT_REQUIRED)도 고칠 수 있다. 고치면
+    PENDING 이 되어 승인을 받아야 끝난다.
 
         target  'overall_result'
                 '2.5.1-Q03'                 문항 판정
