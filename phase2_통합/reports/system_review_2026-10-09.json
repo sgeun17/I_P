@@ -1,0 +1,11 @@
+{
+  "synthetic_result_id": 1,
+  "approver_modify_denied": true,
+  "review_http_status": 200,
+  "stored_history": [
+    "REJECT",
+    "demo-reviewer",
+    "REVIEWER"
+  ],
+  "passed": true
+}

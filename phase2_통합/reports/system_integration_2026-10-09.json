@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-09",
+  "scope": "LOCAL_WINDOWS_DEMONSTRATION",
+  "offline_python_install": {
+    "no_index": true,
+    "wheel_count": 128,
+    "pip_check": "No broken requirements found.",
+    "core_imports_verified": true
+  },
+  "retention": {
+    "policy": "retain_until_explicit_approval",
+    "automatic_deletion": false,
+    "retention_days": null,
+    "scope": [
+      "stored_originals",
+      "model_results",
+      "audit_events"
+    ],
+    "note": "Upload temporary files are not retained originals. No deletion endpoint is provided."
+  },
+  "preserved_model_log_count": 2,
+  "ocr_models": [
+    {
+      "name": "craft_mlt_25k.pth",
+      "bytes": 83152330,
+      "sha256": "4a5efbfb48b4081100544e75e1e2b57f8de3d84f213004b14b85fd4b3748db17"
+    },
+    {
+      "name": "korean_g2.pth",
+      "bytes": 16081533,
+      "sha256": "ecdead53c909748aad74bc2f2beeab3e3ad751134db6335e97ea19f879ca407e"
+    }
+  ],
+  "automated_tests": {
+    "passed": 38,
+    "subtests_passed": 6
+  },
+  "e2e_reports": [
+    "system_demo_2026-10-09.json",
+    "system_demo_short_2026-10-09.json",
+    "system_demo_repeat_2026-10-09.json"
+  ],
+  "shared_server_deployed": false,
+  "fully_network_disconnected_e2e": false,
+  "linux_install_verified": false,
+  "wbs_marked_complete": false
+}

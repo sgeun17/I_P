@@ -1,0 +1,211 @@
+{
+  "date": "2026-10-10",
+  "method": "Windows Get-NetTCPConnection periodic snapshots",
+  "sample_count": 66,
+  "sampling_errors": 0,
+  "observed_endpoints": [
+    {
+      "tunnel": false,
+      "remote_address": "127.0.0.1",
+      "remote_port": 52376,
+      "loopback": true
+    },
+    {
+      "tunnel": false,
+      "remote_address": "127.0.0.1",
+      "remote_port": 52377,
+      "loopback": true
+    },
+    {
+      "tunnel": false,
+      "remote_address": "127.0.0.1",
+      "remote_port": 52105,
+      "loopback": true
+    },
+    {
+      "tunnel": false,
+      "remote_address": "127.0.0.1",
+      "remote_port": 11435,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 52120,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 55670,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 51993,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 51996,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 52000,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 52003,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 52004,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 52007,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 52011,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 54994,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 54996,
+      "loopback": true
+    },
+    {
+      "tunnel": true,
+      "remote_address": "127.0.0.1",
+      "remote_port": 54998,
+      "loopback": true
+    },
+    {
+      "tunnel": false,
+      "remote_address": "127.0.0.1",
+      "remote_port": 13306,
+      "loopback": true
+    }
+  ],
+  "e2e": {
+    "synthetic_evidence": true,
+    "real_http": true,
+    "real_db": true,
+    "real_bge": true,
+    "real_llm": true,
+    "e2e_passed": true,
+    "checks": [
+      {
+        "name": "anonymous_denied",
+        "passed": true
+      },
+      {
+        "name": "forged_role_denied",
+        "passed": true
+      },
+      {
+        "name": "empty.txt",
+        "passed": true,
+        "status": 400
+      },
+      {
+        "name": "broken.docx",
+        "passed": true,
+        "status": 400
+      },
+      {
+        "name": "invalid.exe",
+        "passed": true,
+        "status": 400
+      },
+      {
+        "name": "viewer_original_denied",
+        "passed": true
+      },
+      {
+        "name": "viewer_download_denied",
+        "passed": true
+      },
+      {
+        "name": "authorized_original_matches",
+        "passed": true
+      },
+      {
+        "name": "invalid_topk",
+        "passed": true
+      },
+      {
+        "name": "result_readable",
+        "passed": true
+      },
+      {
+        "name": "report_readable",
+        "passed": true
+      }
+    ],
+    "scenario": "short_account_procedure",
+    "evidence_id": "E0016",
+    "elapsed_seconds": 104.08,
+    "pipeline_http_status": 200,
+    "phase2": {
+      "evidence_id": "E0016",
+      "version": 1,
+      "judged": 1,
+      "excluded": 0,
+      "failed": 0,
+      "results": [
+        {
+          "control_id": "2.2.5",
+          "processing_status": "REVIEW_REQUIRED",
+          "result_id": 6,
+          "overall_result": "충족(보완 권고)"
+        }
+      ],
+      "skipped": [],
+      "mapping": {
+        "saved": true,
+        "error": null,
+        "count": 2,
+        "primary_changed": [
+          "2.2.5"
+        ],
+        "superseded": []
+      }
+    }
+  },
+  "limits": [
+    "TCP only; short-lived connections between samples and UDP can be missed.",
+    "Scope: launched application descendants and process listening on SSH tunnel port 11435.",
+    "Remote Ollama server processes not observed; not a packet capture or complete no-egress proof.",
+    "Periodic run initially scoped the SSH listener only; a separate snapshot confirmed its jump-host child connection. The observer now includes descendants."
+  ],
+  "additional_tunnel_descendant_snapshot": {
+    "time": "2026-10-09T15:27:59.2659940Z",
+    "endpoints": [
+      {
+        "remote_address": "168.188.124.193",
+        "remote_port": 22
+      }
+    ]
+  }
+}

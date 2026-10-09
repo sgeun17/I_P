@@ -216,9 +216,16 @@ def error_result(code, message):
     return {"schema_version": SCHEMA_VERSION, "success": False, "error": {"code": code, "message": message}}
 
 
+def worker_python(root=ROOT, platform=None):
+    """Use the search environment on the deployment OS; never system Python."""
+    platform = os.name if platform is None else platform
+    return root / (".venv/Scripts/python.exe" if platform == "nt" else ".venv/bin/python")
+
+
 _WORKER_CLIENT = PersistentWorker(
-    [str(ROOT / ".venv/Scripts/python.exe"), "-B", "-u", "-X", "utf8",
-     str(Path(__file__).resolve()), "--persistent-worker"], ROOT)
+    [str(worker_python()), "-B", "-u", "-X", "utf8",
+     str(ROOT / 'tools/offline_worker.py') if os.environ.get('ISMS_OFFLINE_LOOPBACK_ONLY') == '1'
+     else str(Path(__file__).resolve()), "--persistent-worker"], ROOT)
 
 
 def close_retriever():
@@ -231,9 +238,9 @@ atexit.register(close_retriever)
 
 def retrieve(payload, top_k=5, compatibility=False, timeout=600):
     """같은 호출 프로그램에서 모델을 재사용한다. 호출자 폴더와 성공/실패 JSON 규격은 보존한다."""
-    python = ROOT / ".venv/Scripts/python.exe"
+    python = worker_python()
     if not python.is_file():
-        return error_result("ENVIRONMENT_ERROR", "phase1_검색의 Python 환경이 없습니다. 01_setup.cmd를 실행하세요.")
+        return error_result("ENVIRONMENT_ERROR", f"검색 전용 Python 환경이 없습니다: {python}. 대상 OS에서 .venv를 만들고 검색 의존성을 설치하세요.")
     try:
         check(type(top_k) is int and 1 <= top_k <= 101, "top_k는 1~101의 정수여야 합니다.")
         prepare_input(payload, compatibility)  # 잘못된 입력은 프로세스를 띄우기 전에 거부한다.

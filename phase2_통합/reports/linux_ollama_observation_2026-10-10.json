@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-10",
+  "source": "User-provided Linux terminal excerpts; not independently captured",
+  "ollama_pid": 17972,
+  "systemd_service": "inactive; separate idalka process serving loopback 11434",
+  "generation": {
+    "model": "qwen3:14b",
+    "response": "OK.",
+    "done": true,
+    "total_duration_ns": 17077380873,
+    "load_duration_ns": 16956979569
+  },
+  "visible_connection_excerpt": {
+    "observed_remote_addresses": ["127.0.0.1"],
+    "external_endpoint_visible": false,
+    "full_30_second_output_received": false
+  },
+  "limits": [
+    "Periodic ss output can miss short-lived connections.",
+    "Only supplied excerpt was assessed; process-name filtering may omit other descendants.",
+    "No packet capture or enforced external-network-disconnection test performed."
+  ],
+  "wbs_W46_complete": false
+}

@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-10",
+  "real_http_db_bge": true,
+  "fault_injection": true,
+  "recovery_uses_actual_ollama": true,
+  "cases": [
+    {
+      "mode": "503",
+      "evidence_id": "E0008",
+      "http_status": 200,
+      "http_model_calls": 2,
+      "db_status": "FAILED",
+      "phase2_rows": 0,
+      "attempts": [
+        2
+      ],
+      "retry_counts": [
+        1
+      ],
+      "last_issue_codes": [
+        [
+          "E103"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "mode": "400",
+      "evidence_id": "E0009",
+      "http_status": 503,
+      "http_model_calls": 1,
+      "db_status": "PREPROCESSED",
+      "phase2_rows": 0,
+      "attempts": [],
+      "retry_counts": [],
+      "last_issue_codes": [],
+      "passed": false
+    },
+    {
+      "mode": "malformed",
+      "evidence_id": "E0010",
+      "http_status": 200,
+      "http_model_calls": 2,
+      "db_status": "FAILED",
+      "phase2_rows": 0,
+      "attempts": [
+        2
+      ],
+      "retry_counts": [
+        1
+      ],
+      "last_issue_codes": [
+        [
+          "E201"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "mode": "timeout",
+      "evidence_id": "E0011",
+      "http_status": 200,
+      "http_model_calls": 2,
+      "db_status": "FAILED",
+      "phase2_rows": 0,
+      "attempts": [
+        2
+      ],
+      "retry_counts": [
+        1
+      ],
+      "last_issue_codes": [
+        [
+          "E101"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "mode": "recover",
+      "evidence_id": "E0012",
+      "http_status": 200,
+      "http_model_calls": 13,
+      "db_status": "REVIEW_REQUIRED",
+      "phase2_rows": 1,
+      "attempts": [
+        2
+      ],
+      "retry_counts": [
+        1
+      ],
+      "last_issue_codes": [
+        []
+      ],
+      "passed": true
+    }
+  ],
+  "all_passed": false
+}

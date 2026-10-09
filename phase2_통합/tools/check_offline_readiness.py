@@ -8,7 +8,7 @@ from pathlib import Path
 import platform
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2] / 'phase1_검색'
 
 
 def inspect():

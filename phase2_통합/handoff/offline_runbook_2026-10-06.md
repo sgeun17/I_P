@@ -4,7 +4,7 @@ WBS WBS.1의 T47(10/4 오프라인 설치·실행 절차 작성), U47(10/5 테�
 
 ## 대상 환경과 반입 목록
 
-현재 확인 환경은 Windows x64, Python 3.12.14, 검색팀 로컬 가상환경이다. 검색 worker가 .venv/Scripts/python.exe를 사용하므로 이 안내를 Linux에 그대로 적용하지 않는다. Linux 실행 경로 대응은 검색팀 수정·별도 검증이 필요하다. 다른 PC의 .venv를 복사하지 말고 대상과 같은 OS·아키텍처·Python 버전에서 설치 묶음을 준비한다.
+현재 확인 환경은 Windows x64, Python 3.12.14, 검색팀 로컬 가상환경이다. 10/9 수정으로 검색 worker는 Windows의 .venv/Scripts/python.exe, Linux의 .venv/bin/python을 OS에 맞춰 선택한다. 경로 선택·기존 worker 회귀 검사를 통과했으며 Linux에서 실제 모델 로드·검색 검증은 남아 있다. 아래 PowerShell 명령을 Linux에 그대로 적용하지 않는다. 다른 PC의 .venv를 복사하지 말고 대상과 같은 OS·아키텍처·Python 버전에서 설치 묶음을 준비한다.
 
 | 반입 항목 | 확인 사항 |
 |---|---|
@@ -43,7 +43,7 @@ py -3.12 -m venv .\phase1_검색\.venv
 $env:HF_HUB_OFFLINE='1'
 $env:TRANSFORMERS_OFFLINE='1'
 $env:HF_HUB_DISABLE_TELEMETRY='1'
-.\phase1_검색\.venv\Scripts\python.exe -B -X utf8 .\phase1_검색\tools\check_offline_readiness.py --output .\offline-check-new.json
+.\phase1_검색\.venv\Scripts\python.exe -B -X utf8 .\phase2_통합\tools\check_offline_readiness.py --output .\offline-check-new.json
 ```
 
 이 환경변수는 Hugging Face 오프라인 설정이며 모든 라이브러리의 외부 통신을 차단하는 설정은 아니다. 외부 호출 점검은 W47에서 별도 수행한다. 입력팀 .env.example의 키를 참고해 database/.env를 대상 PC에 작성한다. 비밀번호는 안내서·Git·보고서에 넣지 않는다. DB 스키마 적용은 기존 DB를 보존하는 방식으로 DB 담당자가 수행한다.

@@ -1,0 +1,91 @@
+{
+  "synthetic_evidence": true,
+  "real_http": true,
+  "real_db": true,
+  "real_bge": true,
+  "real_llm": true,
+  "e2e_passed": false,
+  "checks": [
+    {
+      "name": "anonymous_denied",
+      "passed": true
+    },
+    {
+      "name": "forged_role_denied",
+      "passed": true
+    },
+    {
+      "name": "empty.txt",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "broken.docx",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "invalid.exe",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "viewer_original_denied",
+      "passed": true
+    },
+    {
+      "name": "viewer_download_denied",
+      "passed": true
+    },
+    {
+      "name": "authorized_original_matches",
+      "passed": true
+    },
+    {
+      "name": "invalid_topk",
+      "passed": true
+    },
+    {
+      "name": "result_readable",
+      "passed": true
+    },
+    {
+      "name": "report_readable",
+      "passed": true
+    }
+  ],
+  "evidence_id": "E0002",
+  "elapsed_seconds": 87.84,
+  "pipeline_http_status": 200,
+  "phase2": {
+    "evidence_id": "E0002",
+    "version": 1,
+    "judged": 0,
+    "excluded": 1,
+    "failed": 0,
+    "results": [],
+    "skipped": [
+      {
+        "control_id": null,
+        "reason_code": "HOLD_PHASE1_INVALID"
+      }
+    ],
+    "issues": [
+      {
+        "code": "P2E005",
+        "message": "Phase 1 mapping_citations 원문/위치 불일치",
+        "severity": "error",
+        "control_id": "2.5.1"
+      }
+    ],
+    "mapping": {
+      "saved": true,
+      "error": null,
+      "count": 3,
+      "primary_changed": [
+        "2.5.1"
+      ],
+      "superseded": []
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-10",
+  "real_http_db_bge": true,
+  "fault_injection": true,
+  "recovery_uses_actual_ollama": true,
+  "cases": [
+    {
+      "mode": "400",
+      "evidence_id": "E0013",
+      "http_status": 503,
+      "http_model_calls": 1,
+      "db_status": "FAILED",
+      "phase2_rows": 0,
+      "attempts": [
+        1
+      ],
+      "retry_counts": [
+        0
+      ],
+      "last_issue_codes": [
+        []
+      ],
+      "passed": true
+    },
+    {
+      "mode": "phase2_503",
+      "evidence_id": "E0014",
+      "http_status": 200,
+      "http_model_calls": 19,
+      "db_status": "REVIEW_REQUIRED",
+      "phase2_rows": 1,
+      "attempts": [
+        1
+      ],
+      "retry_counts": [
+        0
+      ],
+      "last_issue_codes": [
+        []
+      ],
+      "phase2_item_results": [
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "passed": true
+    }
+  ],
+  "all_passed": true
+}

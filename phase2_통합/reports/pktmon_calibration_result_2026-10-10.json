@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-10",
+  "application_receipt_report": "loopback_calibration_pktmon_2026-10-10.json",
+  "verified_tcp_messages": 10,
+  "verified_udp_messages": 10,
+  "pktmon_result_source": "User-provided administrator PowerShell output",
+  "pktmon_include_hidden_counters": "All counters zero",
+  "pktmon_stop_result": "All counters zero",
+  "filters_removed": true,
+  "capture_validation_passed": false,
+  "conclusion": "Current PktMon configuration did not observe known loopback TCP/UDP traffic. Zero counters are not evidence of absent traffic.",
+  "root_cause_confirmed": false,
+  "wbs_W46_complete": false
+}

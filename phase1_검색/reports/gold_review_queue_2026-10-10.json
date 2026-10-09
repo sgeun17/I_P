@@ -1,0 +1,2052 @@
+{
+  "version": "gold-review-pending-2026-10-10",
+  "approved_gold": false,
+  "source_case_count": 72,
+  "unique_synthetic_texts": 72,
+  "conflicting_text_groups": 0,
+  "rules": [
+    "Proposed expected values are development suggestions, not approved required labels.",
+    "null means not reviewed; [] means an explicit reviewed empty category.",
+    "Resolve labels from the original evidence and KB, independently of retrieval rank.",
+    "Synthetic and real-evidence metrics must be reported separately."
+  ],
+  "synthetic_cases": [
+    {
+      "review_id": "DEV-66942405064b",
+      "normalized_text_sha256": "66942405064b3ec65c4923d25f2ae0724b54d6211e201b5430fb45803acc0c3d",
+      "synthetic": true,
+      "texts": [
+        "9월 사용자 계정 신청 및 처리 대장. 입사자 김가람의 업무용 계정은 팀장의 결재 후 발급했으며, 부서 이동자는 필요한 권한만 변경했다. 퇴사자 이나래의 계정은 퇴사일에 삭제했고 담당자가 처리 결과를 확인했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S01",
+          "kind": "single",
+          "proposed_expected": [
+            "2.5.1"
+          ],
+          "rationale": "신규·변경·퇴사 계정의 승인과 회수"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-c3c62fc1674a",
+      "normalized_text_sha256": "c3c62fc1674a57846c2cc1786efafd36dfcf0ecdc069c1658b80fd71ad73f775",
+      "synthetic": true,
+      "texts": [
+        "시스템 최고관리자 계정 관리 기록. root 및 Administrator 계정은 지정된 운영자 두 명만 사용하도록 제한했다. 공용 관리자 계정의 사용은 별도로 승인하고 사용자를 식별할 수 있도록 이력을 남긴다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S02",
+          "kind": "single",
+          "proposed_expected": [
+            "2.5.5"
+          ],
+          "rationale": "특수 계정의 최소 발급과 별도 통제"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-7c24c0f17de2",
+      "normalized_text_sha256": "7c24c0f17de2a39d4d2e4c786f25d6b23a76bbddc25ced658baf16c1b11b2987",
+      "synthetic": true,
+      "texts": [
+        "3분기 접근권한 검토 결과서. 부서장은 모든 사용자의 현재 업무와 시스템 권한을 대조했다. 업무와 관계없는 과다 권한 3건을 발견해 회수했고 변경 이력과 조치 확인 서명을 첨부했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S03",
+          "kind": "single",
+          "proposed_expected": [
+            "2.5.6"
+          ],
+          "rationale": "기존 접근권한의 정기 적정성 검토"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-d3dbbaf17fd4",
+      "normalized_text_sha256": "d3dbbaf17fd4cbe4f7054c1e307bbc94bb72330e5c7814aa69625a02342b5b3b",
+      "synthetic": true,
+      "texts": [
+        "재택근무 원격접속 승인서. 외부에서 내부 업무망으로 접속할 직원의 사유와 이용 기간을 승인했다. 등록된 노트북에서만 VPN과 추가 인증을 거쳐 접속하며 통신은 암호화한다. 승인 기간이 끝나면 원격접속 권한을 회수한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S04",
+          "kind": "single",
+          "proposed_expected": [
+            "2.6.6"
+          ],
+          "rationale": "외부에서 내부 시스템으로의 원격 접속 통제"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-9c8dc02ef755",
+      "normalized_text_sha256": "9c8dc02ef755eafba096072dbe8f79870de1d2c24cbfecf5b99cac2d8fdb6eb7",
+      "synthetic": true,
+      "texts": [
+        "운영 데이터 백업 점검표. 고객 업무 데이터베이스는 매일 증분 백업하고 주말에는 전체 백업한다. 백업본은 별도 장소에 보관하며 담당자가 작업 성공 여부와 실패 시 재수행 결과를 기록한다. 복구 절차와 보유 기간을 정했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S05",
+          "kind": "single",
+          "proposed_expected": [
+            "2.9.3"
+          ],
+          "rationale": "백업 대상·주기·보관 및 복구 관리"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-c682922c855d",
+      "normalized_text_sha256": "c682922c855d4c2e718f74dbe9fa21fd73e0ed759c071e3599b573e01bc7ba6a",
+      "synthetic": true,
+      "texts": [
+        "운영 서버 접속기록 보관 설정 점검. 사용자 식별자, 접속 시각, 수행 작업, 접속 주소를 기록한다. 로그는 정해진 보유 기간 동안 중앙 저장소에 보관하며 수정과 삭제 권한을 제한하고 위변조를 방지하도록 보호한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S06",
+          "kind": "single",
+          "proposed_expected": [
+            "2.9.4"
+          ],
+          "rationale": "로그 보존·보호"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-3525fd47c44e",
+      "normalized_text_sha256": "3525fd47c44e102469a6a613516be69c65480541814f103f7b48a56505bf69b8",
+      "synthetic": true,
+      "texts": [
+        "주간 로그 검토 보고서. 보안 담당자는 비인가 접속, 비정상 시간대 로그인 및 대량 조회가 발생했는지 접속기록을 분석했다. 이상 징후 2건에 대해 사용자에게 사유를 확인하고 조치 결과를 기록했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S07",
+          "kind": "single",
+          "proposed_expected": [
+            "2.9.5"
+          ],
+          "rationale": "로그를 통한 이상행위 점검과 후속 조치"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-864d77831bf9",
+      "normalized_text_sha256": "864d77831bf92cb0774a93438ae8058c08ceac224470fe6a7e47472f32e259e3",
+      "synthetic": true,
+      "texts": [
+        "임직원 정보보호 교육 실적. 연간 교육계획에 따라 신규 입사자와 재직자를 대상으로 보안 및 개인정보보호 교육을 실시했다. 참석 명단, 미이수자 보충교육 결과와 교육 이해도 평가를 보관한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S08",
+          "kind": "single",
+          "proposed_expected": [
+            "2.2.4"
+          ],
+          "rationale": "정보보호 교육 계획·이행·평가"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-f87e3717b7cb",
+      "normalized_text_sha256": "f87e3717b7cb100e76a895877656d463443b371e5a8a7872144735980056a6af",
+      "synthetic": true,
+      "texts": [
+        "서버와 웹서비스의 정기 취약점 진단 결과. 진단 도구 및 수동 점검으로 보안 취약점을 식별하고 위험도별 개선 기한과 담당자를 지정했다. 설정 변경과 보안 업데이트를 적용한 뒤 재점검으로 해결 여부를 확인했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S09",
+          "kind": "single",
+          "proposed_expected": [
+            "2.11.2"
+          ],
+          "rationale": "기술적 취약점 진단과 조치"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-c0229e7749fc",
+      "normalized_text_sha256": "c0229e7749fc055283af2d71ff33195c2bebec353c29cf82aedbd1ac5b912094",
+      "synthetic": true,
+      "texts": [
+        "재해복구 모의훈련 결과 보고서. 주 전산센터 중단을 가정해 대체 센터로 전환하고 서비스를 복원했다. 정해진 복구 목표 시간과 복구 목표 시점 충족 여부를 측정했으며, 훈련에서 발견된 연락체계 문제를 복구계획에 반영했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S10",
+          "kind": "single",
+          "proposed_expected": [
+            "2.12.2"
+          ],
+          "rationale": "재해복구 계획의 모의훈련·시험"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-6c058250e799",
+      "normalized_text_sha256": "6c058250e799d79718b4d6757a0825edd028b3f963edfd926002f29971c795c7",
+      "synthetic": true,
+      "texts": [
+        "보유기간 만료 개인정보 파기 대장. 이용 목적을 달성하고 보유기간이 끝난 고객정보를 선별했다. 전자 파일은 복구할 수 없도록 삭제하고 종이 출력물은 분쇄했다. 파기 대상, 일시, 방법 및 책임자의 확인을 기록했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S11",
+          "kind": "single",
+          "proposed_expected": [
+            "3.4.1"
+          ],
+          "rationale": "보유 목적·기간 종료 개인정보의 파기"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-e9ba842abe35",
+      "normalized_text_sha256": "e9ba842abe355cf5c15f3d6203f97beb93120c414907f860207f2d4eac8c2bf7",
+      "synthetic": true,
+      "texts": [
+        "클라우드 서비스 보안 점검표. 이용 중인 클라우드 서비스의 보안 책임 범위와 제공자의 보안 요구사항을 확인했다. 관리 콘솔 접근을 제한하고 스토리지 공개 설정 및 가상 네트워크 보안 설정을 점검했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "S12",
+          "kind": "single",
+          "proposed_expected": [
+            "2.10.2"
+          ],
+          "rationale": "클라우드 사용에 따른 보안 설정 관리"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-b77b39235bbe",
+      "normalized_text_sha256": "b77b39235bbeb9b6d06a72282ca241644d8c14211d4967cf47a7ee48f4f754f4",
+      "synthetic": true,
+      "texts": [
+        "사용자 계정 신청서: 신규 계정은 업무 필요성과 부서장 승인을 확인한 후 발급한다. 퇴사 시 계정을 삭제하고 처리 이력을 보관한다.",
+        "접속기록 보관 점검표: 시스템 사용자의 접속 일시와 수행 내역을 기록한다. 로그는 정해진 기간 동안 보관하며 위변조와 임의 삭제를 방지하도록 보호한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "M01",
+          "kind": "multiple",
+          "proposed_expected": [
+            "2.5.1",
+            "2.9.4"
+          ],
+          "rationale": "별도 청크에 계정 승인과 로그 보관을 포함"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-0b63dba007c4",
+      "normalized_text_sha256": "0b63dba007c43f9f6ab277a8aceaa3059beae925accf87eaae6cdd2c303f0102",
+      "synthetic": true,
+      "texts": [
+        "백업 운영 대장: 중요 자료별 백업 주기와 보유 기간을 정하고 복사본을 별도 장소에 보관했다. 매일 백업 작업 성공 여부를 점검한다.",
+        "재해복구 훈련 보고: 전산센터 전원 상실을 가정해 대체 센터 전환과 서비스 복원을 시험했다. 복구 목표 달성 여부를 평가하고 비상 복구계획을 개선했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "M02",
+          "kind": "multiple",
+          "proposed_expected": [
+            "2.9.3",
+            "2.12.2"
+          ],
+          "rationale": "백업 운영과 재해복구 시험은 구분된 요구사항"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-8d98e75e0263",
+      "normalized_text_sha256": "8d98e75e02632cf93e78bed56659948b411687032ae2810abc9c603a30417d32",
+      "synthetic": true,
+      "texts": [
+        "외부 원격접속 승인 기록: 승인된 직원만 지정 단말에서 VPN과 추가 인증으로 내부망에 접속한다. 허용 기간이 지나면 접속을 차단한다.",
+        "특수 계정 통제 대장: root와 Administrator 등 최고권한 계정의 발급을 최소화하고 사용을 별도로 승인한다. 지정된 관리자만 해당 계정을 사용할 수 있다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "M03",
+          "kind": "multiple",
+          "proposed_expected": [
+            "2.6.6",
+            "2.5.5"
+          ],
+          "rationale": "원격접근과 특수계정 통제를 각각 기술"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-0a6465b81d32",
+      "normalized_text_sha256": "0a6465b81d323ad943fa435a41be4bbb5dfe42693cf703085bdba93759cf6ff9",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "U01",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": "정보보호 통제와 무관한 식단"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-45772f769737",
+      "normalized_text_sha256": "45772f769737210e531d3e3edac8d5588f6f5edc70063e404f98f2bf266cf9b6",
+      "synthetic": true,
+      "texts": [
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "U02",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": "정보보호 통제와 무관한 날씨 묘사"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-d093575c4cec",
+      "normalized_text_sha256": "d093575c4cec41dea70af84abd7051ed04c3dec4ca1b96fd62af2b313282751c",
+      "synthetic": true,
+      "texts": [
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "U03",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": "정보보호 통제와 무관한 경기 후기"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-06c775a647e5",
+      "normalized_text_sha256": "06c775a647e5748cd8424d08ff686f87552f3a218c753f8eedb0e0741cf3e07e",
+      "synthetic": true,
+      "texts": [
+        "정기 점검 완료. 이상 없음. 담당자 확인."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "A01",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": "점검 대상·방법·증빙이 없어 특정 통제의 정답을 확정하지 않음"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-30d9f3e389e2",
+      "normalized_text_sha256": "30d9f3e389e2ef632837863131e12b57ee125002229975afcdedc0ffa211e34c",
+      "synthetic": true,
+      "texts": [
+        "회사는 안전한 서비스 운영을 위해 보안을 강화하며 모든 직원은 관련 규정을 준수한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/review_cases.json",
+          "source_sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+          "case_id": "A02",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": "보안의 일반적 선언만 있어 구체적인 통제를 확정하지 않음"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-4d88204a4845",
+      "normalized_text_sha256": "4d88204a4845d8e695a6be2e98c0abec7acea63e0ff95f96860460e7381591fb",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "9월 사용자 계정 신청 및 처리 대장. 입사자 김가람의 업무용 계정은 팀장의 결재 후 발급했으며, 부서 이동자는 필요한 권한만 변경했다. 퇴사자 이나래의 계정은 퇴사일에 삭제했고 담당자가 처리 결과를 확인했다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S01",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.5.1"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-56b9e9aa9ee8",
+      "normalized_text_sha256": "56b9e9aa9ee80da1b85e954cd309fdaad38edf43732b50267018c19acaeccb0e",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "시스템 최고관리자 계정 관리 기록. root 및 Administrator 계정은 지정된 운영자 두 명만 사용하도록 제한했다. 공용 관리자 계정의 사용은 별도로 승인하고 사용자를 식별할 수 있도록 이력을 남긴다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S02",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.5.5"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-f70e669caf28",
+      "normalized_text_sha256": "f70e669caf280adac9c095ef212300684461b2ed4bcfbfdad2f9386134b4f586",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "3분기 접근권한 검토 결과서. 부서장은 모든 사용자의 현재 업무와 시스템 권한을 대조했다. 업무와 관계없는 과다 권한 3건을 발견해 회수했고 변경 이력과 조치 확인 서명을 첨부했다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S03",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.5.6"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-1fbf175c7bf1",
+      "normalized_text_sha256": "1fbf175c7bf1f92d15b8fe1edff7a79dc0efff002e5a8fc77247974ebb4d38d6",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "재택근무 원격접속 승인서. 외부에서 내부 업무망으로 접속할 직원의 사유와 이용 기간을 승인했다. 등록된 노트북에서만 VPN과 추가 인증을 거쳐 접속하며 통신은 암호화한다. 승인 기간이 끝나면 원격접속 권한을 회수한다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S04",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.6.6"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-eea754d5d1c3",
+      "normalized_text_sha256": "eea754d5d1c37cc71e064175de00ea5ebddb4b118737613b433040aab9c7d956",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "운영 데이터 백업 점검표. 고객 업무 데이터베이스는 매일 증분 백업하고 주말에는 전체 백업한다. 백업본은 별도 장소에 보관하며 담당자가 작업 성공 여부와 실패 시 재수행 결과를 기록한다. 복구 절차와 보유 기간을 정했다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S05",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.9.3"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-0ef59bc7df02",
+      "normalized_text_sha256": "0ef59bc7df02fc1704aed93ec3d7dc94b71921fc7ae358645b4df81661e68814",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "운영 서버 접속기록 보관 설정 점검. 사용자 식별자, 접속 시각, 수행 작업, 접속 주소를 기록한다. 로그는 정해진 보유 기간 동안 중앙 저장소에 보관하며 수정과 삭제 권한을 제한하고 위변조를 방지하도록 보호한다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S06",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.9.4"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-e13336205f88",
+      "normalized_text_sha256": "e13336205f887140892fd51516383ded43be0a2f8d2d2cc741b2cdfb3603d6aa",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "주간 로그 검토 보고서. 보안 담당자는 비인가 접속, 비정상 시간대 로그인 및 대량 조회가 발생했는지 접속기록을 분석했다. 이상 징후 2건에 대해 사용자에게 사유를 확인하고 조치 결과를 기록했다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S07",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.9.5"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-3cbf71155ddd",
+      "normalized_text_sha256": "3cbf71155ddd29f5c5cc6beba46d7279fa0d91c9a68ff514023536d2930a5816",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "임직원 정보보호 교육 실적. 연간 교육계획에 따라 신규 입사자와 재직자를 대상으로 보안 및 개인정보보호 교육을 실시했다. 참석 명단, 미이수자 보충교육 결과와 교육 이해도 평가를 보관한다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S08",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.2.4"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-fcb43115a801",
+      "normalized_text_sha256": "fcb43115a801203a3e571c3efea32e629c7756d9b2c5ea4a36a4f7a84c20ef03",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "서버와 웹서비스의 정기 취약점 진단 결과. 진단 도구 및 수동 점검으로 보안 취약점을 식별하고 위험도별 개선 기한과 담당자를 지정했다. 설정 변경과 보안 업데이트를 적용한 뒤 재점검으로 해결 여부를 확인했다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S09",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.11.2"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-414bce4d6d61",
+      "normalized_text_sha256": "414bce4d6d6112b9fe314726c8af162333d2d750e49d717952780eb8778f7289",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "재해복구 모의훈련 결과 보고서. 주 전산센터 중단을 가정해 대체 센터로 전환하고 서비스를 복원했다. 정해진 복구 목표 시간과 복구 목표 시점 충족 여부를 측정했으며, 훈련에서 발견된 연락체계 문제를 복구계획에 반영했다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S10",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.12.2"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-7b2aa0e44229",
+      "normalized_text_sha256": "7b2aa0e4422979d4e2d3646018d84dc96d724439221d8ef810b4cb226cc855de",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "보유기간 만료 개인정보 파기 대장. 이용 목적을 달성하고 보유기간이 끝난 고객정보를 선별했다. 전자 파일은 복구할 수 없도록 삭제하고 종이 출력물은 분쇄했다. 파기 대상, 일시, 방법 및 책임자의 확인을 기록했다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S11",
+          "kind": "dilution",
+          "proposed_expected": [
+            "3.4.1"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-e4bf0cac4d34",
+      "normalized_text_sha256": "e4bf0cac4d34cb7ee53bbd6adb6a28f98f9fb1ba93a7ac8cea859a8a404a989c",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "클라우드 서비스 보안 점검표. 이용 중인 클라우드 서비스의 보안 책임 범위와 제공자의 보안 요구사항을 확인했다. 관리 콘솔 접근을 제한하고 스토리지 공개 설정 및 가상 네트워크 보안 설정을 점검했다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_S12",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.10.2"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-50ed07056b27",
+      "normalized_text_sha256": "50ed07056b27494d1fe7d6a12e334c00aa91c3ad623494d0561253c01d3920a6",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "사용자 계정 신청서: 신규 계정은 업무 필요성과 부서장 승인을 확인한 후 발급한다. 퇴사 시 계정을 삭제하고 처리 이력을 보관한다.",
+        "접속기록 보관 점검표: 시스템 사용자의 접속 일시와 수행 내역을 기록한다. 로그는 정해진 기간 동안 보관하며 위변조와 임의 삭제를 방지하도록 보호한다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_M01",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.5.1",
+            "2.9.4"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-d14c1d30d069",
+      "normalized_text_sha256": "d14c1d30d0695326896bcc0eafb21fab5d9065d9a7bdea5d87a5278b8255da2f",
+      "synthetic": true,
+      "texts": [
+        "사용자 계정 신청서: 신규 계정은 업무 필요성과 부서장 승인을 확인한 후 발급한다. 퇴사 시 계정을 삭제하고 처리 이력을 보관한다.",
+        "사용자 계정 신청서: 신규 계정은 업무 필요성과 부서장 승인을 확인한 후 발급한다. 퇴사 시 계정을 삭제하고 처리 이력을 보관한다.",
+        "사용자 계정 신청서: 신규 계정은 업무 필요성과 부서장 승인을 확인한 후 발급한다. 퇴사 시 계정을 삭제하고 처리 이력을 보관한다.",
+        "사용자 계정 신청서: 신규 계정은 업무 필요성과 부서장 승인을 확인한 후 발급한다. 퇴사 시 계정을 삭제하고 처리 이력을 보관한다.",
+        "사용자 계정 신청서: 신규 계정은 업무 필요성과 부서장 승인을 확인한 후 발급한다. 퇴사 시 계정을 삭제하고 처리 이력을 보관한다.",
+        "사용자 계정 신청서: 신규 계정은 업무 필요성과 부서장 승인을 확인한 후 발급한다. 퇴사 시 계정을 삭제하고 처리 이력을 보관한다.",
+        "접속기록 보관 점검표: 시스템 사용자의 접속 일시와 수행 내역을 기록한다. 로그는 정해진 기간 동안 보관하며 위변조와 임의 삭제를 방지하도록 보호한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "I_M01",
+          "kind": "imbalanced",
+          "proposed_expected": [
+            "2.5.1",
+            "2.9.4"
+          ],
+          "rationale": "첫 주제 6청크와 두번째 주제 1청크; 소수 주제 누락 확인"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-ccac883d305b",
+      "normalized_text_sha256": "ccac883d305bc19cf588ba42ec814537c06bd88e9330c923066f982e64bba66f",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "백업 운영 대장: 중요 자료별 백업 주기와 보유 기간을 정하고 복사본을 별도 장소에 보관했다. 매일 백업 작업 성공 여부를 점검한다.",
+        "재해복구 훈련 보고: 전산센터 전원 상실을 가정해 대체 센터 전환과 서비스 복원을 시험했다. 복구 목표 달성 여부를 평가하고 비상 복구계획을 개선했다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_M02",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.9.3",
+            "2.12.2"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-a39ce1c49c21",
+      "normalized_text_sha256": "a39ce1c49c215391972059ca8a54e612e2068717a31369732e84906acdd1792e",
+      "synthetic": true,
+      "texts": [
+        "백업 운영 대장: 중요 자료별 백업 주기와 보유 기간을 정하고 복사본을 별도 장소에 보관했다. 매일 백업 작업 성공 여부를 점검한다.",
+        "백업 운영 대장: 중요 자료별 백업 주기와 보유 기간을 정하고 복사본을 별도 장소에 보관했다. 매일 백업 작업 성공 여부를 점검한다.",
+        "백업 운영 대장: 중요 자료별 백업 주기와 보유 기간을 정하고 복사본을 별도 장소에 보관했다. 매일 백업 작업 성공 여부를 점검한다.",
+        "백업 운영 대장: 중요 자료별 백업 주기와 보유 기간을 정하고 복사본을 별도 장소에 보관했다. 매일 백업 작업 성공 여부를 점검한다.",
+        "백업 운영 대장: 중요 자료별 백업 주기와 보유 기간을 정하고 복사본을 별도 장소에 보관했다. 매일 백업 작업 성공 여부를 점검한다.",
+        "백업 운영 대장: 중요 자료별 백업 주기와 보유 기간을 정하고 복사본을 별도 장소에 보관했다. 매일 백업 작업 성공 여부를 점검한다.",
+        "재해복구 훈련 보고: 전산센터 전원 상실을 가정해 대체 센터 전환과 서비스 복원을 시험했다. 복구 목표 달성 여부를 평가하고 비상 복구계획을 개선했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "I_M02",
+          "kind": "imbalanced",
+          "proposed_expected": [
+            "2.9.3",
+            "2.12.2"
+          ],
+          "rationale": "첫 주제 6청크와 두번째 주제 1청크; 소수 주제 누락 확인"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-01d65ab5c7dd",
+      "normalized_text_sha256": "01d65ab5c7dd58ffe250cce215283db474b0b22f1aa7aa85ecfbf78fe284de5a",
+      "synthetic": true,
+      "texts": [
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다.",
+        "외부 원격접속 승인 기록: 승인된 직원만 지정 단말에서 VPN과 추가 인증으로 내부망에 접속한다. 허용 기간이 지나면 접속을 차단한다.",
+        "특수 계정 통제 대장: root와 Administrator 등 최고권한 계정의 발급을 최소화하고 사용을 별도로 승인한다. 지정된 관리자만 해당 계정을 사용할 수 있다.",
+        "오늘 구내식당 점심 메뉴는 김치볶음밥, 달걀국, 오이무침입니다. 후식으로 귤이 제공됩니다.",
+        "주말에는 맑은 하늘과 선선한 바람이 이어졌다. 오후에 공원을 산책하며 가을꽃을 구경했다.",
+        "축구 경기 후반전에 공격수가 두 골을 넣었다. 관중들은 환호했고 경기는 홈팀의 승리로 끝났다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "D_M03",
+          "kind": "dilution",
+          "proposed_expected": [
+            "2.6.6",
+            "2.5.5"
+          ],
+          "rationale": "기존 유효 근거에 무관한 6개 청크 추가; 라벨은 기존 개발 초안 유지"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-8e6ca7f78ceb",
+      "normalized_text_sha256": "8e6ca7f78cebc429752384e294e809dbd4ee7d999bc1c3d666b337eb5873b735",
+      "synthetic": true,
+      "texts": [
+        "외부 원격접속 승인 기록: 승인된 직원만 지정 단말에서 VPN과 추가 인증으로 내부망에 접속한다. 허용 기간이 지나면 접속을 차단한다.",
+        "외부 원격접속 승인 기록: 승인된 직원만 지정 단말에서 VPN과 추가 인증으로 내부망에 접속한다. 허용 기간이 지나면 접속을 차단한다.",
+        "외부 원격접속 승인 기록: 승인된 직원만 지정 단말에서 VPN과 추가 인증으로 내부망에 접속한다. 허용 기간이 지나면 접속을 차단한다.",
+        "외부 원격접속 승인 기록: 승인된 직원만 지정 단말에서 VPN과 추가 인증으로 내부망에 접속한다. 허용 기간이 지나면 접속을 차단한다.",
+        "외부 원격접속 승인 기록: 승인된 직원만 지정 단말에서 VPN과 추가 인증으로 내부망에 접속한다. 허용 기간이 지나면 접속을 차단한다.",
+        "외부 원격접속 승인 기록: 승인된 직원만 지정 단말에서 VPN과 추가 인증으로 내부망에 접속한다. 허용 기간이 지나면 접속을 차단한다.",
+        "특수 계정 통제 대장: root와 Administrator 등 최고권한 계정의 발급을 최소화하고 사용을 별도로 승인한다. 지정된 관리자만 해당 계정을 사용할 수 있다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/aggregation_stress_cases.json",
+          "source_sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+          "case_id": "I_M03",
+          "kind": "imbalanced",
+          "proposed_expected": [
+            "2.6.6",
+            "2.5.5"
+          ],
+          "rationale": "첫 주제 6청크와 두번째 주제 1청크; 소수 주제 누락 확인"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-1ce80f9c1bf0",
+      "normalized_text_sha256": "1ce80f9c1bf082ef2ab7ab8730a6eaf04770ff2af6a79d3045d66cd986714e1f",
+      "synthetic": true,
+      "texts": [
+        "퇴사한 직원의 업무 시스템 계정을 퇴사 당일 삭제했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "R01",
+          "kind": "related",
+          "proposed_expected": [
+            "2.5.1"
+          ],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-b96ba21f8fc3",
+      "normalized_text_sha256": "b96ba21f8fc34385a411bba41091ce6692274d5d010ad7802d344e4aa50a77f2",
+      "synthetic": true,
+      "texts": [
+        "분기마다 직원의 업무와 현재 접근권한을 대조하고 불필요한 권한을 회수한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "R02",
+          "kind": "related",
+          "proposed_expected": [
+            "2.5.6"
+          ],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-514e9757cf52",
+      "normalized_text_sha256": "514e9757cf52a1a645a46b636b0154bff0f252008a67a45ae0c76ea5ef055ffe",
+      "synthetic": true,
+      "texts": [
+        "백업 담당자는 매일 백업 성공 여부를 확인하고 실패한 작업을 다시 수행한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "R03",
+          "kind": "related",
+          "proposed_expected": [
+            "2.9.3"
+          ],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-b87cd981283e",
+      "normalized_text_sha256": "b87cd981283efc169abf8818b869b6b0b4c8a9743103efdf8e1a9f0aee924bca",
+      "synthetic": true,
+      "texts": [
+        "보유 기간이 끝난 고객정보 파일을 복구할 수 없도록 삭제하고 파기 일시를 기록했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "R04",
+          "kind": "related",
+          "proposed_expected": [
+            "3.4.1"
+          ],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-05b3731a79e6",
+      "normalized_text_sha256": "05b3731a79e6af0f7202eb75e6287a724e6339b6dbcdb41e9044769816b8442d",
+      "synthetic": true,
+      "texts": [
+        "오늘 낱말 퍼즐의 정답 단어는 계정, 접근권한, 로그, 암호, 백업이다. 가로 칸과 세로 칸에 글자를 맞춰 넣으면 퍼즐이 완성된다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "N01",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-9d2bc72c82ce",
+      "normalized_text_sha256": "9d2bc72c82ce6c09daeeb9fbf8db5c7d4b5edb53d165765914aecec205b4351d",
+      "synthetic": true,
+      "texts": [
+        "소설 속 주인공은 비밀 암호를 풀고 성문에 들어갔다. 문지기는 접근을 허락했고 일기장에 모험 기록을 남겼다. 다음 장에서 용을 만난다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "N02",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-4a1dd1fe778c",
+      "normalized_text_sha256": "4a1dd1fe778c63502a834b4b2889e6a7fd99ffae8488f9732251d6af0a71c666",
+      "synthetic": true,
+      "texts": [
+        "수학 수업에서 로그 함수의 그래프를 그렸다. 밑이 2인 로그와 밑이 10인 로그를 비교하고 지수 함수와의 관계를 설명했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "N03",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-b0a6690e658c",
+      "normalized_text_sha256": "b0a6690e658c1ae13ec788cdd9b15ab135a200b8f3b9474c5589f047da5e795b",
+      "synthetic": true,
+      "texts": [
+        "동아리 보드게임에서 관리자는 게임 속 사용자 계정 카드를 나누어 주고, 참가자는 접근권한 토큰으로 문을 연다. 실제 시스템 운영과 관계없는 게임 규칙이다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "N04",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-856d8db44227",
+      "normalized_text_sha256": "856d8db44227d06e01209637f682a12c55d4532bac7585720b66a8088462cee1",
+      "synthetic": true,
+      "texts": [
+        "계정, 권한, 접속기록, 백업: 다음 회의에서 논의할 예정."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "B01",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-ab33b126c0d2",
+      "normalized_text_sha256": "ab33b126c0d2cf2a445d519784ded75448f0dcd7a152551fb36e521b5ccfee88",
+      "synthetic": true,
+      "texts": [
+        "보안 점검을 수행했다. 세부 대상과 점검 결과는 별도 자료 참조."
+      ],
+      "proposals": [
+        {
+          "source": "tests/relevance_cases.json",
+          "source_sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+          "case_id": "B02",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": null
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-80b3c1eb9e39",
+      "normalized_text_sha256": "80b3c1eb9e393e853ec8b2f523838fd0248e5e7c9d1fa6a8796f97f15aa13a43",
+      "synthetic": true,
+      "texts": [
+        "퇴직자 계정 잠금 처리 대장. 인사부서의 퇴직 통보를 받은 뒤 업무 시스템 사용자 계정을 비활성화하고 접근권한을 말소했다. 계정 관리 담당자가 퇴직일과 처리 일자, 승인자를 대조했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K01",
+          "kind": "related",
+          "proposed_expected": [
+            "2.5.1"
+          ],
+          "rationale": "계정 잠금이 퇴직 시 계정 생명주기 종료를 의미하는 경우"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-e009f775a220",
+      "normalized_text_sha256": "e009f775a220f5e5d298019a043fb1cfc4cc589fc43eedbbae3ae331c189e89d",
+      "synthetic": true,
+      "texts": [
+        "사용자 인증 설정 점검서. 비밀번호 인증이 반복해서 실패하면 로그인 횟수 제한 정책에 따라 계정을 잠그고 불법 로그인 시도 경고를 남긴다. 잠금 해제 전 사용자 본인 여부를 확인하도록 인증 절차를 설정했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K02",
+          "kind": "related",
+          "proposed_expected": [
+            "2.5.3"
+          ],
+          "rationale": "계정 잠금이 비인가 로그인 차단을 의미하는 경우"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-46cd396671e8",
+      "normalized_text_sha256": "46cd396671e8850de73528276268f4422ef2df0d51a7138dbdaf762727d35f3e",
+      "synthetic": true,
+      "texts": [
+        "소스 프로그램 보관 및 접근권한 검토. Git 소스 저장소에는 승인된 개발자만 접근하도록 계정과 브랜치 권한을 제한한다. 소스 프로그램은 운영 서버에 보관하지 않으며 소스 변경과 반출 이력을 추적한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K03",
+          "kind": "related",
+          "proposed_expected": [
+            "2.8.5"
+          ],
+          "rationale": "Git이 소스 프로그램 접근 및 보관 통제 수단인 경우"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-d9df9ce9f97f",
+      "normalized_text_sha256": "d9df9ce9f97f7ec153d7dc5c98473b5790aa106d4512fcdc3daff412c133cd9d",
+      "synthetic": true,
+      "texts": [
+        "CI/CD 운영환경 이관 승인 기록. 새 실행 파일은 시험 및 사용자 인수 결과를 확인하고 배포 책임자의 승인을 받은 후 운영환경으로 이관한다. DevOps 배포 과정에서도 통제된 이관 절차를 적용하고 실패 시 이전 버전으로 되돌린다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K04",
+          "kind": "related",
+          "proposed_expected": [
+            "2.8.6"
+          ],
+          "rationale": "CI/CD가 운영환경 이관 통제의 구현 수단인 경우"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-d71bc06936ad",
+      "normalized_text_sha256": "d71bc06936adf307e8fa0edc1caafee2abff408ddd4c3250555663c275c4e1a2",
+      "synthetic": true,
+      "texts": [
+        "백업본 복원 검증 보고서. 정해진 백업 절차에 따라 생성한 데이터 복사본을 복원하여 원본 파일과 데이터베이스의 무결성을 대조했다. 백업 성공 여부와 복구 목표에 맞는 복원 결과를 담당자가 기록했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K05",
+          "kind": "related",
+          "proposed_expected": [
+            "2.9.3"
+          ],
+          "rationale": "백업본 복원 검증과 재해복구 전략 시험의 구분"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-0fff4733b3fd",
+      "normalized_text_sha256": "0fff4733b3fd6b2e99cc922cf42231d41fc09455ae6d4d9bf8c07b32636256f7",
+      "synthetic": true,
+      "texts": [
+        "재해 복구 시험 및 개선 보고서. 주 전산센터 중단을 가정하여 대체센터로 전환하는 복구 전략을 시험했다. RTO와 RPO 달성 여부를 측정하고, 시험에서 발견한 미비점을 복구 절차와 비상연락체계에 반영했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K06",
+          "kind": "related",
+          "proposed_expected": [
+            "2.12.2"
+          ],
+          "rationale": "재해복구 전략의 실제 시험과 목표 정의의 구분"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-7e8fa1c2426d",
+      "normalized_text_sha256": "7e8fa1c2426d5d10985faebb4b9d86567967e331f4161c0fb72b0df3a68d7e24",
+      "synthetic": true,
+      "texts": [
+        "접속기록 보존 설정 확인서. 사용자 식별자, 접속 시각, 수행 작업을 로그에 기록하고 정해진 보존기간 동안 중앙 저장소에 보관한다. 로그 백업과 수정·삭제 권한 제한을 적용하여 위변조를 방지한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K07",
+          "kind": "related",
+          "proposed_expected": [
+            "2.9.4"
+          ],
+          "rationale": "로그의 수집·보존과 사후 분석의 구분"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-a196931a51e4",
+      "normalized_text_sha256": "a196931a51e45c0ce9e49f2727e3cf23a69f634e39eb2167c0a9f1170f10656a",
+      "synthetic": true,
+      "texts": [
+        "로그 및 접속기록 점검 결과. 담당자는 검토기준에 따라 업무시간 외 로그인과 대량 개인정보 조회를 분석했다. 의심스러운 접속지와 다운로드 사유를 사용자에게 확인하고 이상 징후에 대한 후속조치를 기록했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K08",
+          "kind": "related",
+          "proposed_expected": [
+            "2.9.5"
+          ],
+          "rationale": "접속기록을 분석하고 이상 징후를 조치하는 경우"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-aa409cab01bc",
+      "normalized_text_sha256": "aa409cab01bc8028a5b1c1c4ee0039756ba58431f25c65a5c40f705f975e4683",
+      "synthetic": true,
+      "texts": [
+        "모바일 앱 접근권한 고지 화면 검토. 앱이 이용자 단말기의 연락처와 위치 기능에 접근하기 전에 접근 목적을 알리고 동의를 받는다. 필수 접근권한과 선택 접근권한을 구분하며 사용자가 단말기 기능 접근에 대한 동의를 철회할 수 있도록 안내한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K09",
+          "kind": "related",
+          "proposed_expected": [
+            "3.2.3"
+          ],
+          "rationale": "단말기 정보·기능에 대한 앱 접근권한 동의"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-dbb21ef76d34",
+      "normalized_text_sha256": "dbb21ef76d3459af7c6a0d7b481a8c0cdf365f9ef5d2e5bc3546312392357c14",
+      "synthetic": true,
+      "texts": [
+        "업무 응용프로그램의 접근통제 설정표. 사용자별 업무와 정보 중요도에 따라 권한별 메뉴를 구분하고 조회와 다운로드 범위를 제한했다. 일반 사용자가 관리자 페이지에 접근하거나 업무와 무관한 중요정보를 조회하지 못하도록 설정했다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K10",
+          "kind": "related",
+          "proposed_expected": [
+            "2.6.3"
+          ],
+          "rationale": "업무 응용프로그램의 역할별 접근권한"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-87f02664c722",
+      "normalized_text_sha256": "87f02664c722299943bba5b89bc5f9bd6e86657dfe32ae9e078150d74f62a0b9",
+      "synthetic": true,
+      "texts": [
+        "개인정보 파기 결과 대장. 처리목적을 달성하고 보유기간이 끝난 고객정보를 선별하여 복구하거나 재생할 수 없는 방법으로 삭제했다. 내부 파기 정책에 따라 대상, 파기 일시, 방법과 담당자의 확인 기록을 보관한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K11",
+          "kind": "related",
+          "proposed_expected": [
+            "3.4.1"
+          ],
+          "rationale": "개인정보의 보유기간 종료 후 안전한 파기"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-c8d677cdcbf0",
+      "normalized_text_sha256": "c8d677cdcbf024f9af4745e780e7b735746031235e3d8f51d558a21751dc85de",
+      "synthetic": true,
+      "texts": [
+        "보존 근거가 있는 개인정보 분리보관 현황. 처리목적이 끝난 정보 중 별도 법령에 따른 보존이 필요한 자료만 확인하여 필요한 최소 항목으로 제한했다. 일반 고객정보와 다른 데이터베이스에 분리 저장하고 해당 보존 목적을 수행하는 담당자에게만 접근권한을 부여한다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "K12",
+          "kind": "related",
+          "proposed_expected": [
+            "3.4.2"
+          ],
+          "rationale": "보유기간 종료 후 별도 법적 근거에 따라 보존하는 개인정보"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-ec8a7d193fdf",
+      "normalized_text_sha256": "ec8a7d193fdf66cea1209a442234428b505519d86a0a36c4bacf731a1c9e7ca7",
+      "synthetic": true,
+      "texts": [
+        "보드게임 규칙에서 계정 잠금은 참가자의 계정 카드를 뒤집는 행동이다. 잠긴 카드는 다음 차례에 다시 펼칠 수 있다. 실제 사용자 계정이나 정보시스템 운영과 관련 없는 게임 설명이다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KN01",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": "계정 잠금이라는 단어가 나오는 보드게임 설명"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-70dc52b51903",
+      "normalized_text_sha256": "70dc52b51903ea4eb447539dd2f5b5fd24ab41bce635fb5cc1bb7cdb2f5473c7",
+      "synthetic": true,
+      "texts": [
+        "소설 속 등장인물의 별명은 Git이다. Git은 주말에 친구들과 산길을 걸으며 풍경을 그린다. 소스 프로그램이나 개발 도구를 설명하는 글이 아니다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KN02",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": "Git이라는 이름만 등장하는 소설"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-f3767d7cee8d",
+      "normalized_text_sha256": "f3767d7cee8d85c4345c52b6ebc6b88431f9745d29a599c1c450b1ff40e9f127",
+      "synthetic": true,
+      "texts": [
+        "게임에서는 쓰러진 캐릭터가 다시 일어나는 시간을 복구 목표시간이라고 부른다. 참가자는 RTO 토큰을 얻으면 다음 차례에 캐릭터를 복구한다. 실제 시스템의 백업·재해복구와 관계없는 놀이 규칙이다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KN03",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": "복구 목표라는 단어가 나오는 가상 게임"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-8b8840a06d30",
+      "normalized_text_sha256": "8b8840a06d30a868343fc1ef941e385b7bd408ffbd8f38beb88398387157400c",
+      "synthetic": true,
+      "texts": [
+        "수학 교재의 로그 단원 연습문제. 로그의 성질을 사용하여 방정식을 풀고 계산 과정을 공책에 기록한다. 서버 접속기록이나 시스템 운영 로그를 다루는 내용은 아니다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KN04",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": "정보시스템 접속기록과 다른 수학 용어 로그"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-644620468256",
+      "normalized_text_sha256": "64462046825615cfff777a9565d3031be427f6fc111f3070600bd55467556dc0",
+      "synthetic": true,
+      "texts": [
+        "카드 게임에서는 문을 여는 토큰을 필수 접근권한, 보물 상자를 여는 토큰을 선택 접근권한이라고 부른다. 게임 카드를 나누는 방식이며 앱이나 이용자 단말기의 정보에 접근하는 내용은 아니다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KN05",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": "단말기 기능 동의와 다른 게임의 필수·선택 권한"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-dcd0069c8666",
+      "normalized_text_sha256": "dcd0069c86665a65fe181cfa19c8bece4475be4ba998991c967551ddf4a0e338",
+      "synthetic": true,
+      "texts": [
+        "연극 소품 안내에 적힌 5일 이내 파기는 종이로 만든 가상의 주문서를 공연 종료 후 버리라는 뜻이다. 소품에는 개인정보나 중요정보가 없다. 고객정보 처리나 정보자산 폐기 절차를 설명한 문서가 아니다."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KN06",
+          "kind": "unrelated",
+          "proposed_expected": [],
+          "rationale": "파기 기한이라는 표현만 등장하는 연극 소품 처리"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-a9f02ce6a252",
+      "normalized_text_sha256": "a9f02ce6a2521abfae771af964b194087ce47ea455f90ec79c435bb811160085",
+      "synthetic": true,
+      "texts": [
+        "계정 잠금 점검 완료. 잠금 사유와 대상은 별도 자료 참조."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KA01",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": "계정 잠금의 사유·대상이 없어 계정 관리와 인증 차단을 구분할 수 없음"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-ede1d7b37505",
+      "normalized_text_sha256": "ede1d7b3750554a79f9b6c0753fec8a1a20ac965dce5c98c6eb471fdf7aab101",
+      "synthetic": true,
+      "texts": [
+        "Git, CI/CD, DevOps: 다음 회의에서 점검 항목을 논의할 예정."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KA02",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": "도구 이름만으로 소스 통제나 운영 이관 활동을 확정할 수 없음"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-4c6ccf5cd9dd",
+      "normalized_text_sha256": "4c6ccf5cd9dd4382846c5090e91c057c50bbee63068dd5ca12f7a2d40ac05957",
+      "synthetic": true,
+      "texts": [
+        "복구 목표 및 RTO·RPO 자료는 추후 전달 예정. 대상과 시험 결과는 아직 기재하지 않음."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KA03",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": "복구 대상과 수행 내용 없이 목표 관련 단어만 있음"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-4d5b478148a3",
+      "normalized_text_sha256": "4d5b478148a393be1798c1764135c21c44b74bfed8a5574214d80ce64be1f868",
+      "synthetic": true,
+      "texts": [
+        "로그 확인 완료. 기록 종류와 세부 확인 결과는 별도 자료에 있음."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KA04",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": "로그 보존 확인인지 분석·후속조치인지 구분할 내용이 없음"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-ca282471c71a",
+      "normalized_text_sha256": "ca282471c71a6e9fbf1f6de303695ae7c6ebdbabc73fc44b1b5c9674ccacfc4e",
+      "synthetic": true,
+      "texts": [
+        "필수 권한과 선택 권한을 정리할 예정. 대상과 적용 기준은 추후 확인."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KA05",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": "권한의 대상이 업무 프로그램인지 단말기 기능인지 불명확함"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    },
+    {
+      "review_id": "DEV-e7c856f3ed88",
+      "normalized_text_sha256": "e7c856f3ed8818e241452c7d8bc32ec24c7e14065f3bc36b1f125972ffedf850",
+      "synthetic": true,
+      "texts": [
+        "보유기간과 파기 일정은 별첨. 이번 메모에는 대상 자료나 적용 근거를 기재하지 않음."
+      ],
+      "proposals": [
+        {
+          "source": "tests/keyword_boundary_cases_2026-09-27.json",
+          "source_sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+          "case_id": "KA06",
+          "kind": "ambiguous",
+          "proposed_expected": [],
+          "rationale": "파기 대상·보유근거·기간 정보 없이 계획 항목만 있음"
+        }
+      ],
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reason_and_quote": null,
+      "reviewer": null,
+      "review_status": "PENDING",
+      "conflicting_proposals": false
+    }
+  ],
+  "real_evidence_candidates": [
+    {
+      "review_id": "E0004",
+      "synthetic": false,
+      "proposed_expected": [
+        "1.1.6"
+      ],
+      "review_status": "PENDING",
+      "required_control_ids": null,
+      "acceptable_related_control_ids": null,
+      "excluded_control_ids": null,
+      "reviewer": null,
+      "reason_and_quote": null,
+      "note": "Real evidence review candidate; verify original, version and hash locally before labeling. Original text is not included."
+    }
+  ]
+}

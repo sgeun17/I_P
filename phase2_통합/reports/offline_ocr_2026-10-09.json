@@ -1,0 +1,15 @@
+{
+  "fresh_offline_installed_environment": true,
+  "download_enabled": false,
+  "python_external_socket_blocked": true,
+  "real_db": true,
+  "synthetic": true,
+  "evidence_id": "E0007",
+  "status": "PREPROCESSED",
+  "chunk_count": 1,
+  "recognized_expected_phrase": true,
+  "passed": true,
+  "limits": [
+    "One synthetic English image; not a Korean OCR accuracy evaluation."
+  ]
+}

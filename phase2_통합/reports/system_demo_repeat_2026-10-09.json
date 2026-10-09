@@ -1,0 +1,86 @@
+{
+  "synthetic_evidence": true,
+  "real_http": true,
+  "real_db": true,
+  "real_bge": true,
+  "real_llm": true,
+  "e2e_passed": true,
+  "checks": [
+    {
+      "name": "anonymous_denied",
+      "passed": true
+    },
+    {
+      "name": "forged_role_denied",
+      "passed": true
+    },
+    {
+      "name": "empty.txt",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "broken.docx",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "invalid.exe",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "viewer_original_denied",
+      "passed": true
+    },
+    {
+      "name": "viewer_download_denied",
+      "passed": true
+    },
+    {
+      "name": "authorized_original_matches",
+      "passed": true
+    },
+    {
+      "name": "invalid_topk",
+      "passed": true
+    },
+    {
+      "name": "result_readable",
+      "passed": true
+    },
+    {
+      "name": "report_readable",
+      "passed": true
+    }
+  ],
+  "scenario": "short_account_procedure",
+  "evidence_id": "E0005",
+  "elapsed_seconds": 100.41,
+  "pipeline_http_status": 200,
+  "phase2": {
+    "evidence_id": "E0005",
+    "version": 1,
+    "judged": 1,
+    "excluded": 0,
+    "failed": 0,
+    "results": [
+      {
+        "control_id": "2.2.5",
+        "processing_status": "REVIEW_REQUIRED",
+        "result_id": 2,
+        "overall_result": "충족(보완 권고)"
+      }
+    ],
+    "skipped": [],
+    "mapping": {
+      "saved": true,
+      "error": null,
+      "count": 2,
+      "primary_changed": [
+        "2.2.5"
+      ],
+      "superseded": []
+    }
+  }
+}

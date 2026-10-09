@@ -32,6 +32,8 @@ def main():
     import main as upload
     # Existing module has a fixed temp path; override only this process, not its source.
     upload.TMP_DIR = Path(config['TEMP_DIR'])
+    from local_search_app import attach
+    attach(upload, args.config.resolve().parent)
     import uvicorn
     uvicorn.run(upload.app, host='127.0.0.1', port=args.port)
 

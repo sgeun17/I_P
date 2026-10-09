@@ -1,0 +1,70 @@
+{
+  "real_mysql": true,
+  "real_bge": true,
+  "llm_executed": false,
+  "job_id": "488c1344b8b946f8ba178cf55c63f496",
+  "states": [
+    "RUNNING",
+    "SUCCEEDED"
+  ],
+  "evidence_id": "E0001",
+  "version": 1,
+  "top5": [
+    {
+      "rank": 1,
+      "control_id": "2.5.1",
+      "control_name": "사용자 계정 관리",
+      "similarity_score": 0.586289,
+      "best_chunk_id": "E0001_v1_c0000",
+      "matched_chunk_ids": [
+        "E0001_v1_c0000",
+        "E0001_v1_c0001"
+      ]
+    },
+    {
+      "rank": 2,
+      "control_id": "2.9.4",
+      "control_name": "로그 및 접속기록 관리",
+      "similarity_score": 0.58057,
+      "best_chunk_id": "E0001_v1_c0000",
+      "matched_chunk_ids": [
+        "E0001_v1_c0000",
+        "E0001_v1_c0001"
+      ]
+    },
+    {
+      "rank": 3,
+      "control_id": "2.5.2",
+      "control_name": "사용자 식별",
+      "similarity_score": 0.560135,
+      "best_chunk_id": "E0001_v1_c0000",
+      "matched_chunk_ids": [
+        "E0001_v1_c0000",
+        "E0001_v1_c0001"
+      ]
+    },
+    {
+      "rank": 4,
+      "control_id": "3.4.2",
+      "control_name": "처리목적 달성 후 보유 시 조치",
+      "similarity_score": 0.548931,
+      "best_chunk_id": "E0001_v1_c0001",
+      "matched_chunk_ids": [
+        "E0001_v1_c0000",
+        "E0001_v1_c0001"
+      ]
+    },
+    {
+      "rank": 5,
+      "control_id": "2.5.5",
+      "control_name": "특수 계정 및 권한 관리",
+      "similarity_score": 0.547868,
+      "best_chunk_id": "E0001_v1_c0000",
+      "matched_chunk_ids": [
+        "E0001_v1_c0000",
+        "E0001_v1_c0001"
+      ]
+    }
+  ],
+  "invalid_k_rejected": true
+}

@@ -1,0 +1,92 @@
+{
+  "checks": [
+    {
+      "name": "reviewer_cannot_approve",
+      "passed": true
+    },
+    {
+      "name": "actual_ocr_missing_models",
+      "passed": true,
+      "http_status": 503,
+      "db_status": "FAILED"
+    },
+    {
+      "name": "actual_llm_unreachable",
+      "passed": true,
+      "code": "E101"
+    }
+  ],
+  "audit_events": [
+    [
+      "DOWNLOAD_ORIGINAL",
+      "DENIED",
+      3
+    ],
+    [
+      "DOWNLOAD_ORIGINAL",
+      "RESPONSE_READY",
+      3
+    ],
+    [
+      "DOWNLOAD_ORIGINAL",
+      "STARTED",
+      5
+    ],
+    [
+      "DOWNLOAD_ORIGINAL",
+      "SUCCEEDED",
+      2
+    ],
+    [
+      "EXECUTE",
+      "FAILED",
+      14
+    ],
+    [
+      "EXECUTE",
+      "RESPONSE_READY",
+      7
+    ],
+    [
+      "EXECUTE",
+      "STARTED",
+      22
+    ],
+    [
+      "REVIEW",
+      "FAILED",
+      2
+    ],
+    [
+      "REVIEW",
+      "STARTED",
+      2
+    ],
+    [
+      "VIEW_ORIGINAL",
+      "DENIED",
+      3
+    ],
+    [
+      "VIEW_RESULT",
+      "DENIED",
+      6
+    ],
+    [
+      "VIEW_RESULT",
+      "RESPONSE_READY",
+      4
+    ],
+    [
+      "VIEW_RESULT",
+      "STARTED",
+      4
+    ]
+  ],
+  "versioned_original_accesses": 2,
+  "all_passed": true,
+  "limits": [
+    "OCR model-missing case; recognition accuracy not measured.",
+    "LLM failure tested at transport layer; existing retry tests separate."
+  ]
+}

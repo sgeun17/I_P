@@ -14,7 +14,7 @@
 저장소 상위 `개발`에서 실행한다. DB가 실행 중이어야 한다.
 
 ```powershell
-& './tmp/integration-env/Scripts/python.exe' -B -X utf8 I_P/phase1_검색/tools/run_local_upload.py --config tmp/local_upload_2026-10-09/config.json
+& './tmp/integration-env/Scripts/python.exe' -B -X utf8 I_P/phase2_통합/tools/run_local_upload.py --config tmp/local_upload_2026-10-09/config.json
 ```
 
 WSL 재시작으로 테스트 DB가 꺼진 경우, **초기화하지 않고** 기존 데이터로 시작한다.
