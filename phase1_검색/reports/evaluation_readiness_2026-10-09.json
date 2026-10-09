@@ -1,0 +1,59 @@
+{
+  "checked_at": "2026-10-09",
+  "ready_for_official_accuracy": false,
+  "sources": [
+    {
+      "path": "tests/review_cases.json",
+      "sha256": "86beadd16024dfd5faf26ecf02e478bed845a56dc7eb2701968a687e61b18264",
+      "case_count": 20,
+      "use": "development/regression only",
+      "human_approved_gold": false
+    },
+    {
+      "path": "tests/aggregation_stress_cases.json",
+      "sha256": "8b88f3905b3a87712ee1a85963e3eeb325572a572a1730fd305ad5600b60e48d",
+      "case_count": 18,
+      "use": "development/regression only",
+      "human_approved_gold": false
+    },
+    {
+      "path": "tests/relevance_cases.json",
+      "sha256": "af4b21c82d47c65b314f3e564aeb2056bab795913e5290c138ac97af9f062f99",
+      "case_count": 10,
+      "use": "development/regression only",
+      "human_approved_gold": false
+    },
+    {
+      "path": "tests/keyword_boundary_cases_2026-09-27.json",
+      "sha256": "f9f106b064c306865996cdef8df33b4dc22a8bfe66ff99413b2d7e1eaa292a71",
+      "case_count": 24,
+      "use": "development/regression only",
+      "human_approved_gold": false
+    },
+    {
+      "case_id": "E0004",
+      "local_input_available": true,
+      "proposed_control": "1.1.6",
+      "human_approved_gold": false,
+      "use": "real-evidence review candidate; proposed mapping is not an accepted answer"
+    }
+  ],
+  "required_gold_fields": [
+    "evidence_id",
+    "evidence_version",
+    "source_sha256",
+    "required_control_ids",
+    "acceptable_related_control_ids",
+    "excluded_control_ids",
+    "reason_and_quote",
+    "reviewer",
+    "review_status"
+  ],
+  "review_rule": "Labels must be decided from original evidence and controls independently of retrieval rank; resolve disagreements before freezing.",
+  "privacy": "Real source text is not copied into this report.",
+  "next_metrics": [
+    "Recall@1/3/5/7/10 on required controls",
+    "All-required coverage per evidence",
+    "Final mapping precision/recall only with reviewed positive and negative labels"
+  ]
+}

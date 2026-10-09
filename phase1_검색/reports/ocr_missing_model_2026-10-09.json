@@ -1,0 +1,27 @@
+{
+  "network_download_enabled": false,
+  "real_db_used": false,
+  "ocr_inference_executed": false,
+  "actual_easyocr_initialization": true,
+  "result": [
+    "failed",
+    "FileNotFoundError"
+  ],
+  "status_transitions": [
+    {
+      "status": "PREPROCESSING",
+      "error_code": null
+    },
+    {
+      "status": "FAILED",
+      "error_code": "FILE_PARSE_FAILED"
+    }
+  ],
+  "stale_chunk_cleanup_called": true,
+  "passed": true,
+  "limits": [
+    "Valid synthetic PNG with deliberately empty model directory.",
+    "DB methods mocked; real database persistence not tested.",
+    "Does not validate OCR recognition accuracy or scan-PDF failure classification."
+  ]
+}

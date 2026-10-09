@@ -1,0 +1,461 @@
+{
+  "synthetic": true,
+  "llm_executed": false,
+  "cold_start_seconds": 32.31039409991354,
+  "repeats": 3,
+  "summary": [
+    {
+      "case_id": "D_S01",
+      "k": 3,
+      "median_search_seconds": 2.391,
+      "mapping_input_utf8_bytes": 4778,
+      "ranks_stable_across_repeats": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 5,
+      "median_search_seconds": 2.3841,
+      "mapping_input_utf8_bytes": 5784,
+      "ranks_stable_across_repeats": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 7,
+      "median_search_seconds": 2.4207,
+      "mapping_input_utf8_bytes": 6654,
+      "ranks_stable_across_repeats": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 10,
+      "median_search_seconds": 2.3474,
+      "mapping_input_utf8_bytes": 8002,
+      "ranks_stable_across_repeats": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 3,
+      "median_search_seconds": 2.214,
+      "mapping_input_utf8_bytes": 5342,
+      "ranks_stable_across_repeats": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 5,
+      "median_search_seconds": 2.1877,
+      "mapping_input_utf8_bytes": 6267,
+      "ranks_stable_across_repeats": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 7,
+      "median_search_seconds": 2.2272,
+      "mapping_input_utf8_bytes": 7263,
+      "ranks_stable_across_repeats": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 10,
+      "median_search_seconds": 2.2401,
+      "mapping_input_utf8_bytes": 8745,
+      "ranks_stable_across_repeats": true
+    }
+  ],
+  "runs": [
+    {
+      "case_id": "D_S01",
+      "k": 3,
+      "repeat": 1,
+      "search_seconds": 2.4277,
+      "mapping_input_utf8_bytes": 4778,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 5,
+      "repeat": 1,
+      "search_seconds": 2.3841,
+      "mapping_input_utf8_bytes": 5784,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 7,
+      "repeat": 1,
+      "search_seconds": 2.2801,
+      "mapping_input_utf8_bytes": 6654,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6",
+        "2.5.5",
+        "2.2.1"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 10,
+      "repeat": 1,
+      "search_seconds": 2.3474,
+      "mapping_input_utf8_bytes": 8002,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6",
+        "2.5.5",
+        "2.2.1",
+        "2.2.2",
+        "2.6.3",
+        "2.2.3"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 5,
+      "repeat": 2,
+      "search_seconds": 2.3978,
+      "mapping_input_utf8_bytes": 5784,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 7,
+      "repeat": 2,
+      "search_seconds": 2.6397,
+      "mapping_input_utf8_bytes": 6654,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6",
+        "2.5.5",
+        "2.2.1"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 10,
+      "repeat": 2,
+      "search_seconds": 2.3074,
+      "mapping_input_utf8_bytes": 8002,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6",
+        "2.5.5",
+        "2.2.1",
+        "2.2.2",
+        "2.6.3",
+        "2.2.3"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 3,
+      "repeat": 2,
+      "search_seconds": 2.3803,
+      "mapping_input_utf8_bytes": 4778,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 7,
+      "repeat": 3,
+      "search_seconds": 2.4207,
+      "mapping_input_utf8_bytes": 6654,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6",
+        "2.5.5",
+        "2.2.1"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 10,
+      "repeat": 3,
+      "search_seconds": 2.365,
+      "mapping_input_utf8_bytes": 8002,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6",
+        "2.5.5",
+        "2.2.1",
+        "2.2.2",
+        "2.6.3",
+        "2.2.3"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 3,
+      "repeat": 3,
+      "search_seconds": 2.391,
+      "mapping_input_utf8_bytes": 4778,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_S01",
+      "k": 5,
+      "repeat": 3,
+      "search_seconds": 2.383,
+      "mapping_input_utf8_bytes": 5784,
+      "candidate_ids": [
+        "2.5.1",
+        "2.2.5",
+        "2.3.4",
+        "2.5.2",
+        "2.5.6"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 3,
+      "repeat": 1,
+      "search_seconds": 2.3745,
+      "mapping_input_utf8_bytes": 5342,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 5,
+      "repeat": 1,
+      "search_seconds": 2.3593,
+      "mapping_input_utf8_bytes": 6267,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 7,
+      "repeat": 1,
+      "search_seconds": 2.3715,
+      "mapping_input_utf8_bytes": 7263,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5",
+        "1.3.3",
+        "2.9.6"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 10,
+      "repeat": 1,
+      "search_seconds": 2.2401,
+      "mapping_input_utf8_bytes": 8745,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5",
+        "1.3.3",
+        "2.9.6",
+        "2.9.3",
+        "2.11.2",
+        "2.5.5"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 5,
+      "repeat": 2,
+      "search_seconds": 2.1877,
+      "mapping_input_utf8_bytes": 6267,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 7,
+      "repeat": 2,
+      "search_seconds": 2.2272,
+      "mapping_input_utf8_bytes": 7263,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5",
+        "1.3.3",
+        "2.9.6"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 10,
+      "repeat": 2,
+      "search_seconds": 2.2952,
+      "mapping_input_utf8_bytes": 8745,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5",
+        "1.3.3",
+        "2.9.6",
+        "2.9.3",
+        "2.11.2",
+        "2.5.5"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 3,
+      "repeat": 2,
+      "search_seconds": 2.214,
+      "mapping_input_utf8_bytes": 5342,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 7,
+      "repeat": 3,
+      "search_seconds": 2.2267,
+      "mapping_input_utf8_bytes": 7263,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5",
+        "1.3.3",
+        "2.9.6"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 10,
+      "repeat": 3,
+      "search_seconds": 2.0043,
+      "mapping_input_utf8_bytes": 8745,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5",
+        "1.3.3",
+        "2.9.6",
+        "2.9.3",
+        "2.11.2",
+        "2.5.5"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 3,
+      "repeat": 3,
+      "search_seconds": 1.2171,
+      "mapping_input_utf8_bytes": 5342,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1"
+      ],
+      "adapter_passed": true
+    },
+    {
+      "case_id": "D_M01",
+      "k": 5,
+      "repeat": 3,
+      "search_seconds": 0.8767,
+      "mapping_input_utf8_bytes": 6267,
+      "candidate_ids": [
+        "2.9.4",
+        "2.9.5",
+        "2.5.1",
+        "2.5.6",
+        "2.2.5"
+      ],
+      "adapter_passed": true
+    }
+  ],
+  "limits": [
+    "Search-only warm timings on two synthetic inputs; not production throughput or LLM latency.",
+    "UTF-8 bytes are serialized mapping input size, not tokenizer counts.",
+    "No claim that larger K improves final judgment accuracy."
+  ]
+}
