@@ -1,0 +1,28 @@
+{
+  "real_http": true,
+  "real_mysql": true,
+  "mocked_components": [],
+  "synthetic_evidence": true,
+  "evidence_id": "E0001",
+  "analysis_id": "A20261009231022",
+  "checks": [
+    "existing_upload_and_progress_page_served",
+    "empty_file_rejected",
+    "upload_saved_in_mysql",
+    "background_preprocess_polled_to_done",
+    "independent_db_connection_verified_hash_status_and_chunks",
+    "new_http_client_reads_persisted_result"
+  ],
+  "chunk_count": 2,
+  "initial_status": "UPLOADED",
+  "final_status": "PREPROCESSED",
+  "observed_job_states": [
+    "running",
+    "done"
+  ],
+  "limits": [
+    "Preprocessing only; no search/LLM/Phase2/report execution.",
+    "Existing job progress is in process memory; evidence/chunks persist in MySQL.",
+    "Shared deployed demo site was not modified."
+  ]
+}
