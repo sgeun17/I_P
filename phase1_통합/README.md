@@ -12,7 +12,11 @@
 - `POST /api/inspect/{evidence_id}` : 기존 증적을 전처리(필요 시)부터 검색·판단까지 실행
 - `POST /api/upload-and-inspect` : 업로드부터 최종 판단까지 한 번에 실행
 - `GET /api/results/{evidence_id}` : 저장된 판단 결과 조회
-- `GET /` : 점검자 화면
+- `POST /api/auth/login` : 로컬 실행용 최소 로그인 (`PHASE1_UI_PASSWORD` 설정 시 비밀번호 확인, 미설정 시 모든 이메일을 관리자로 통과)
+- `/evidence`, `/analysis/...` : 입력팀 API를 같은 주소에서 제공
+- `GET /` : `IS_SO_UI/dist` 점검자 화면 (서버 연결 모드로 자동 설정). 이전 단순 화면은 `GET /classic`
+
+회원가입·회사·초대·관리자 API(`/api/auth/signup`, `/api/company/...`, `/api/admin/...`)는 아직 없으므로 UI의 해당 메뉴는 데모 모드에서만 동작한다.
 
 ## 실행 전제
 

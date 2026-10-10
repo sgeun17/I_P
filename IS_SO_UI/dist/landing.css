@@ -1,0 +1,20 @@
+.landing-screen{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;background:#f5f8f7}
+.landing-screen .project-header{width:100%;margin:0 auto;flex-shrink:0;background:transparent}
+.landing-hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;padding:90px 24px 112px;min-height:480px}
+.landing-center{width:100%;max-width:1020px;margin:auto}
+.landing-hero h1{font-size:clamp(2.05rem,3.55vw,3.35rem);line-height:1.65;letter-spacing:-.03em;font-weight:700;margin:0;color:#2b494c;word-break:keep-all;overflow-wrap:anywhere}
+.landing-hero h1 span{color:#3f6254}
+.landing-actions{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:42px;flex-wrap:wrap}
+.hero-upload.btn{font-size:1.125rem;padding:18px 42px;min-width:224px;min-height:64px;border-radius:5px;background:#3f657b;border-color:#3f657b;box-shadow:0 5px 14px #365c6e17}
+.hero-upload.btn:hover,.file-picker:hover{background:#305469;border-color:#305469}
+.landing-dashboard{font-size:.9375rem;color:#4a646c;background:none;border:0;border-bottom:1px solid #9db0b3;padding:9px 0}
+.landing-scroll{position:absolute;bottom:27px;text-decoration:none;color:#526f65;font-size:.875rem;display:flex;align-items:center;flex-direction:column;gap:3px;padding:8px 16px;line-height:1.7}
+.landing-scroll span{font-size:24px;line-height:1.1;color:#6d8c7e}
+.project-lead h2{font-size:1.8rem;line-height:1.7;color:#2b464b;font-weight:700;margin:0 0 23px;letter-spacing:-.02em}
+.project-overview{scroll-margin-top:110px}
+.upload{padding:32px 24px;background:#f4f8f6;border-color:#88a89c}
+.upload>strong{font-size:1.125rem;line-height:1.8;color:#29483d}
+.upload .upload-instruction{font-size:.9375rem;color:#506d60;margin:9px 0 17px}
+.upload .file-picker{display:inline-flex;align-items:center;justify-content:center;font-size:1rem;padding:13px 28px;min-height:52px;margin-top:13px;background:#3f657b;border-color:#3f657b}
+.upload:focus-within{border-color:#3f657b;outline:2px solid #9ab4c044;outline-offset:3px}
+@media(max-width:760px){.landing-screen .project-header{padding:17px 20px}.landing-hero{padding:64px 22px 100px;min-height:440px}.landing-hero h1{font-size:clamp(1.7rem,5.2vw,2.3rem);line-height:1.8}.landing-actions{flex-direction:column;gap:19px;margin-top:31px}.hero-upload.btn{width:min(100%,280px);font-size:1.0625rem;min-height:58px;padding:16px 26px}.landing-dashboard{font-size:.875rem}.landing-scroll{bottom:20px;font-size:.8125rem}.project-lead h2{font-size:1.375rem;line-height:1.8}.upload{padding:26px 18px}.upload>strong{font-size:1rem}.upload .file-picker{width:min(100%,280px)}.card-head>div{min-width:0}}

@@ -1,0 +1,4 @@
+Gmarket Sans
+Official source: https://corp.gmarket.com/fonts/
+Download: https://corp.gmarket.com/fonts/GmarketSansTTF.zip
+Original unmodified TTF files distributed with embedded license.

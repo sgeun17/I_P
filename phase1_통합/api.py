@@ -1,23 +1,40 @@
 from __future__ import annotations
 
+import hmac
+import os
+import secrets
 import sys
 from pathlib import Path
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import Body, FastAPI, File, Form, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 INPUT_DIR = ROOT / "phase1_입력"
+UI_DIR = ROOT / "IS_SO_UI" / "dist"
 for p in (INPUT_DIR, INPUT_DIR / "database", INPUT_DIR / "chunking"):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-from main import process_file  # noqa: E402
+from main import app as input_app, process_file  # noqa: E402
 from orchestrator import IntegrationError, inspect_evidence, load_result  # noqa: E402
 from self_check import check as integration_check  # noqa: E402
 
 app = FastAPI(title="ISMS-P Phase1 Integrated API", version="0.1.0")
+
+# IS_SO_UI를 start_local.py(8080)로 따로 띄울 때를 위한 CORS. 이 서버가 UI를 직접 서빙하면 필요 없다.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:8080", "http://localhost:8080"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# 입력팀 API(/evidence, /analysis)를 같은 주소에서 제공한다. 입력팀 기본 화면("/")은 제외.
+app.router.routes.extend(r for r in input_app.routes if getattr(r, "path", None) not in {"/", "/openapi.json", "/docs", "/docs/oauth2-redirect", "/redoc"})
 
 
 def fail(exc: IntegrationError):
@@ -97,6 +114,33 @@ function metric(k,v){return '<div class="metric">'+esc(k)+'<b>'+esc(v)+'</b></di
 </script></body></html>'''
 
 
-@app.get("/", response_class=HTMLResponse)
-def index():
+@app.post("/api/auth/login")
+def login(payload: dict = Body(...)):
+    """로컬 실행용 최소 로그인. 회원·회사 관리는 아직 백엔드가 없다.
+
+    PHASE1_UI_PASSWORD가 설정되어 있으면 비밀번호가 일치해야 하고,
+    없으면 127.0.0.1 로컬 실행을 전제로 어떤 이메일이든 관리자 권한으로 통과시킨다.
+    """
+    email = str(payload.get("email") or "").strip()
+    if not email:
+        raise HTTPException(status_code=400, detail="이메일을 입력하세요.")
+    expected = os.environ.get("PHASE1_UI_PASSWORD")
+    if expected and not hmac.compare_digest(str(payload.get("password") or ""), expected):
+        raise HTTPException(status_code=401, detail="이메일 또는 비밀번호가 올바르지 않습니다.")
+    return {
+        "token": secrets.token_urlsafe(24),
+        "user": {"name": email.split("@")[0], "email": email, "role": "admin", "company": os.environ.get("PHASE1_UI_COMPANY", "로컬")},
+    }
+
+
+@app.get("/classic", response_class=HTMLResponse)
+def classic():
     return PAGE
+
+
+if UI_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=UI_DIR, html=True), name="ui")
+else:
+    @app.get("/", response_class=HTMLResponse)
+    def index():
+        return PAGE
