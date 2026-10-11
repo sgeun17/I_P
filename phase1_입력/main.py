@@ -5,7 +5,7 @@ from datetime import datetime
 from pathlib import Path
 
 import filetype
-from fastapi import FastAPI, UploadFile, Form
+from fastapi import FastAPI, Request, UploadFile, Form
 from fastapi.responses import HTMLResponse, JSONResponse
 
 # database 폴더의 코드가 "from config import ..." 식으로 서로를 불러오므로 경로를 추가한다
@@ -112,7 +112,21 @@ def looks_like_text(head: bytes) -> bool:
     return False
 
 
-async def process_file(file: UploadFile, evidence_id: str | None = None) -> dict:
+# 로그인한 사람과 회사. 미들웨어가 request.state 에 심어둔다.
+# 로그인 없이 돌리면 둘 다 None 이고 그대로 돈다.
+def actor_of(request):
+    me = getattr(getattr(request, "state", None), "user", None)
+    return me["email"] if me else None
+
+
+def company_of(request):
+    me = getattr(getattr(request, "state", None), "user", None)
+    return me.get("companyId") if me else None
+
+
+async def process_file(file: UploadFile, evidence_id: str | None = None,
+                       uploaded_by: str | None = None,
+                       company_id: str | None = None) -> dict:
     name = file.filename
 
     def fail(code, message):
@@ -169,7 +183,8 @@ async def process_file(file: UploadFile, evidence_id: str | None = None) -> dict
                     return fail("EVIDENCE_NOT_FOUND", "지정한 evidence_id를 찾을 수 없습니다.")
 
             if existing is None:
-                saved = await asyncio.to_thread(save_evidence, str(tmp_path), name, ext)
+                saved = await asyncio.to_thread(save_evidence, str(tmp_path), name, ext,
+                                                uploaded_by, company_id)
                 action = "created"
             else:
                 new_hash = await asyncio.to_thread(compute_hash, str(tmp_path))
@@ -187,7 +202,8 @@ async def process_file(file: UploadFile, evidence_id: str | None = None) -> dict
                         "duplicate_of": None,
                     }
                 saved = await asyncio.to_thread(
-                    replace_evidence, existing["evidence_id"], str(tmp_path), name, ext
+                    replace_evidence, existing["evidence_id"], str(tmp_path), name, ext,
+                    uploaded_by, company_id
                 )
                 action = "replaced"
 
@@ -213,13 +229,15 @@ async def process_file(file: UploadFile, evidence_id: str | None = None) -> dict
 
 
 @app.post("/evidence/upload")
-async def upload(files: list[UploadFile], evidence_id: str | None = Form(None)):
+async def upload(request: Request, files: list[UploadFile],
+                 evidence_id: str | None = Form(None)):
     if not files:
         return error(400, "NO_FILES", "업로드된 파일이 없습니다.")
     if len(files) > MAX_FILES:
         return error(413, "TOO_MANY_FILES", f"한 번에 {MAX_FILES}개까지 업로드할 수 있습니다.")
 
-    results = [await process_file(f, evidence_id) for f in files]
+    who, comp = actor_of(request), company_of(request)
+    results = [await process_file(f, evidence_id, who, comp) for f in files]
     ok = sum(1 for r in results if r["status"] == "ok")
     return {
         "total": len(results),
@@ -240,9 +258,16 @@ def get_api(evidence_id: str):
 
 
 @app.delete("/evidence/{evidence_id}")
-def delete_api(evidence_id: str):
+def delete_api(request: Request, evidence_id: str):
+    who = actor_of(request)
     delete_evidence(evidence_id)
-    return {"deleted": evidence_id}
+    # 누가 지웠는지 남긴다. 지워진 뒤에는 evidence 표에 물어볼 수 없다.
+    try:
+        import user_store
+        user_store.log_event(who or "(로그인 없음)", "EVIDENCE_DELETE", evidence_id)
+    except Exception:
+        pass
+    return {"deleted": evidence_id, "deleted_by": who}
 
 
 async def run_pipeline(analysis_id, evidence_ids):
@@ -272,7 +297,7 @@ async def run_pipeline(analysis_id, evidence_ids):
 
 
 @app.post("/analysis/start")
-async def start_analysis():
+async def start_analysis(request: Request):
     """
     저장된 증적을 파싱·청킹합니다. (Main → Parser → Chunker 연결)
 
@@ -284,7 +309,11 @@ async def start_analysis():
     if not items:
         return error(400, "NO_EVIDENCE", "분석할 증적이 없습니다. 먼저 파일을 업로드하세요.")
 
-    running = next((k for k, v in JOBS.items() if v["status"] == "running"), None)
+    # 회사마다 하나씩 돈다. 전체를 한 번에 막으면 B사가 돌리는 동안 A사가
+    # 시작을 못 하고, 오류 메시지에 남의 analysis_id 가 새어 나간다.
+    comp = company_of(request)
+    running = next((k for k, v in JOBS.items()
+                    if v["status"] == "running" and v.get("company") == comp), None)
     if running:
         return error(409, "ANALYSIS_RUNNING", f"이미 분석이 돌고 있습니다: {running}")
 
@@ -302,16 +331,20 @@ async def start_analysis():
         "total": len(targets), "done": 0, "ok": 0, "failed": 0, "chunks": 0,
         "skipped": skipped, "current": None, "errors": [],
         "started_at": datetime.now().isoformat(timespec="seconds"), "finished_at": None,
-        "evidence_ids": targets,
+        "evidence_ids": targets, "company": comp,
     }
     asyncio.create_task(run_pipeline(analysis_id, targets))
     return JOBS[analysis_id]
 
 
 @app.get("/analysis/{analysis_id}")
-def analysis_status(analysis_id: str):
+def analysis_status(request: Request, analysis_id: str):
     """분석 진행 상황. status 가 running 이면 화면이 1초마다 다시 물어봅니다."""
     job = JOBS.get(analysis_id)
+    # 남의 회사 작업은 없는 것으로 답한다. 증적 번호와 실패한 파일 이름이 들어 있다.
+    comp = company_of(request)
+    if job is not None and comp is not None and job.get("company") != comp:
+        job = None
     if job is None:
         return error(404, "ANALYSIS_NOT_FOUND",
                      "그런 분석 기록이 없습니다. (서버를 다시 켜면 진행 기록은 사라집니다)")
