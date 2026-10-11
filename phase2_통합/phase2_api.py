@@ -16,7 +16,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, FastAPI
+from datetime import datetime
+
+from fastapi import APIRouter, Depends, FastAPI, HTTPException, Response
 from pydantic import Field
 
 _HERE = Path(__file__).resolve().parent
@@ -188,6 +190,96 @@ def approve_evidence(evidence_id: str, body: ApproveIn,
             "result_ids": done, "skipped": skipped}
 
 
+
+# ── 최종 리포트 내려받기 ──────────────────────────────────────────────────
+# 회사 격리는 저장소(owner.py)가 알아서 건다. 여기서 company_id 를 받지 않는다.
+# 받으면 다른 회사 번호를 넣어볼 수 있게 되기 때문이다.
+
+def _stamp():
+    return datetime.now().strftime("%Y%m%d_%H%M")
+
+
+@router.get("/api/report.pdf")
+def report_pdf(control_id: str | None = None, evidence_id: str | None = None,
+               _=Depends(current_user)):
+    """
+    커버리지 + 문항별 판정 + 근거 인용을 담은 최종 PDF.
+
+    control_id·evidence_id 를 주면 그 범위만. 안 주면 전체이고, 그때만
+    '미제출 통제항목' 장이 들어간다 (범위를 거르면 분모가 달라진다).
+    """
+    import phase2_report as rep
+    try:
+        data = rep.to_pdf_bytes(control_id=control_id, evidence_id=evidence_id)
+    except rep.ReportError as e:
+        raise HTTPException(status_code=503,
+                            detail={"error_code": e.code, "message": e.message})
+    except Exception as e:                                      # noqa: BLE001
+        _fail(e)
+    name = f"isms-p_report_{control_id or evidence_id or 'all'}_{_stamp()}.pdf"
+    return Response(content=data, media_type="application/pdf",
+                    headers={"Content-Disposition":
+                             f'attachment; filename="{name}"'})
+
+
+@router.get("/api/report.csv")
+def report_csv(control_id: str | None = None, evidence_id: str | None = None,
+               _=Depends(current_user)):
+    """같은 내용을 엑셀로 열 수 있게. 문항 한 줄씩."""
+    import csv
+    import io
+
+    import phase2_report as rep
+    try:
+        rows = rep.report_rows(control_id, evidence_id)
+    except Exception as e:                                      # noqa: BLE001
+        _fail(e)
+    buf = io.StringIO()
+    # report_rows 는 dict 를 돌려준다. csv.writer 에 그대로 넣으면 값이 아니라
+    # **열 이름**이 찍힌다 (머리글만 두 줄 나오고 내용이 사라진다).
+    w = csv.DictWriter(buf, fieldnames=rep.CSV_HEADER, extrasaction="ignore")
+    w.writeheader()
+    for r in rows:
+        w.writerow({k: r.get(k, "") for k in rep.CSV_HEADER})
+    # 엑셀이 한글을 깨지 않게 BOM 을 붙인다.
+    data = ("\ufeff" + buf.getvalue()).encode("utf-8")
+    name = f"isms-p_report_{control_id or evidence_id or 'all'}_{_stamp()}.csv"
+    return Response(content=data, media_type="text/csv; charset=utf-8",
+                    headers={"Content-Disposition":
+                             f'attachment; filename="{name}"'})
+
+
+@router.get("/api/report/coverage.csv")
+def coverage_download(_=Depends(current_user)):
+    """통제항목 101개의 제출·미제출 한 장."""
+    import csv
+    import io
+
+    import phase2_report as rep
+    try:
+        cov = rs.coverage()
+    except Exception as e:                                      # noqa: BLE001
+        _fail(e)
+    buf = io.StringIO()
+    w = csv.writer(buf)
+    w.writerow(["통제항목", "통제항목명", "구역", "영역", "제출상태", "증적수",
+                "증적", "종합판정", "WBS판정", "검토상태", "제외사유"])
+    label = {"submitted": "제출", "excluded_only": "제외",
+             "not_submitted": "미제출"}
+    for c in cov["controls"]:
+        w.writerow([c["control_id"], c["control_name"] or "", c["section"],
+                    rep.SECTION_KO.get(c["section"].split(".")[0], ""),
+                    label.get(c["state"], c["state"]), c["evidence_count"],
+                    " ".join(c["evidence_ids"]), c["overall_result"] or "",
+                    c["overall_result_wbs"] or "", c["review_state"] or "",
+                    " / ".join(x["reason_code"] for x in c["excluded"])])
+    data = ("\ufeff" + buf.getvalue()).encode("utf-8")
+    return Response(content=data, media_type="text/csv; charset=utf-8",
+                    headers={"Content-Disposition":
+                             f'attachment; filename="isms-p_coverage_{_stamp()}.csv"'})
+
+
 # ── 혼자 띄울 때 ──────────────────────────────────────────────────────────
 app = FastAPI(title="ISMS-P Phase2 Review API", version="0.1.0")
 app.include_router(router)
+
