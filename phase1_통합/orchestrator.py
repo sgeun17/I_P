@@ -71,6 +71,9 @@ def load_result(evidence_id: str, version: int | None = None) -> dict[str, Any] 
         except (IndexError, ValueError):
             return -1
 
+    matches = [p for p in matches if version_of(p) >= 0]
+    if not matches:
+        return None
     target = max(matches, key=version_of)
     return json.loads(target.read_text(encoding="utf-8"))
 
@@ -187,6 +190,13 @@ def inspect_evidence(
 
         result = _jsonable(judged.mapping_result)
         evidence_status = _jsonable(judged.evidence_status)
+        # Keep internal source/model diagnostics outside the public result schema.
+        review_records = list(getattr(judged.llm_run, "attempt_records", ()))
+        review_audit_path = None
+        if review_records:
+            review_audit_path = RESULT_DIR / f"{result['evidence_id']}_v{result['version']}.review-audit.json"
+            review_audit_path.write_text(
+                json.dumps(review_records, ensure_ascii=False, indent=2), encoding="utf-8")
         update_status(evidence_id, evidence_status)
         result_path = _persist(result)
         return {
@@ -204,5 +214,6 @@ def inspect_evidence(
             "judgment": result,
             "screen": _screen_view(result, payload["source_file"]),
             "result_file": str(result_path),
+            "review_audit_file": str(review_audit_path) if review_audit_path else None,
             "completed_at": datetime.now().astimezone().isoformat(),
         }

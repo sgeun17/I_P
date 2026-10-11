@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import sys
+import os
 import time
 from dataclasses import dataclass
 from typing import Any, Callable
@@ -28,6 +29,9 @@ from models import MappingInput, Phase1MappingResult  # noqa: E402
 from review_policy import DEFAULT_RETRY_POLICY, RetryPolicy  # noqa: E402
 from service import build_result, to_evidence_status  # noqa: E402
 from versions import build_version_info  # noqa: E402
+from primary_review import run_check, latest_assessment  # noqa: E402
+from output_parser import parse_llm_output  # noqa: E402
+from validators import validate  # noqa: E402
 
 
 @dataclass(frozen=True)
@@ -86,12 +90,32 @@ def run_judgment(
     if run.has_unmapped_request_error:
         raise JudgmentRequestError(run)
 
+    # Only valid multi-mapping results enter the verified second pass.
+    # Preserve E502 and every other existing blocking rule without extra calls.
+    assessment = None
+    review_enabled = os.getenv("PHASE1_PRIMARY_REVIEW", "1") == "1"
+    output, issues = parse_llm_output(run.raw_response or "")
+    if (review_enabled and run.call_error is None and output is not None
+            and not issues and len(output.mapped_controls) >= 2
+            and validate(output, mapping_input).passed):
+        run = run_check(
+            run, mapping_input, model=model_name, isolate_explanations=True,
+            topic_mapping_correction=True, client_config=client_config,
+            generation=generation, http_client=http_client,
+            context_budget=context_budget, token_counter=token_counter,
+        )
+        assessment = latest_assessment(run)
+        if assessment is None:
+            # Never silently release a required second-pass check that vanished.
+            assessment = {"status": "CHECK_FAILED", "error": "Missing second-pass audit"}
+
     mapping_result = build_result(
         run.raw_response,
         mapping_input,
         versions,
         call_error=run.call_error,
         trace_id=trace_id,
+        primary_assessment=assessment,
     )
     elapsed_ms = max(0, round((time.perf_counter() - started) * 1000))
     mapping_result = mapping_result.model_copy(update={"processing_time_ms": elapsed_ms})

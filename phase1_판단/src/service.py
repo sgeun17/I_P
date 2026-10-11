@@ -135,17 +135,25 @@ def build_result(
     trace_id: Optional[str] = None,
     llm_raw_response_ref: Optional[str] = None,
     processing_time_ms: Optional[int] = None,
+    primary_assessment: Optional[dict] = None,
 ) -> Phase1MappingResult:
     """판단 한 건의 최종 결과를 만든다.
 
-    call_error: LLM 호출 자체가 실패했을 때의 오류코드. 이 경우 raw_response는 None이다.
+    call_error: 호출 실패 또는 교정 재시도 확정 불가. 호출 실패는 raw_response=None,
+    교정 충돌은 E106과 마지막 canonical raw_response가 함께 전달된다.
     """
     parse_issues: list[ValidationIssue] = []
     output = None
 
     if call_error is not None:
+        # Guarded retry uses existing E106 when a generated correction changes
+        # relatedness/PRIMARY. It is an unresolved judgment, not an outage.
+        guarded_retry = call_error == ErrorCode.LLM_RETRY_EXHAUSTED and raw_response is not None
         parse_issues.append(
-            ValidationIssue(code=call_error, message="LLM 호출 실패 (재시도 포함)")
+            ValidationIssue(code=call_error,
+                            message=("교정 재시도 간 관련 항목 또는 대표 선택이 달라 결과를 확정하지 못했습니다. 원응답과 재시도 기록을 검토하세요."
+                                     if guarded_retry else "LLM 호출 실패 (재시도 포함)"),
+                            field="retry_consistency" if guarded_retry else None)
         )
     else:
         output, parse_issues = parse_llm_output(raw_response or "")
@@ -158,6 +166,11 @@ def build_result(
         thresholds=thresholds,
         injection_suspected=detect_injection(mapping_input),
     )
+
+    if output is not None and primary_assessment is not None:
+        from primary_review import adjust_review
+        review = adjust_review(review, validation, output, mapping_input,
+                               primary_assessment, thresholds)
 
     if output is None:
         # 판단 못 함. NO_MATCH이지만 "관련 항목 없음"이 아니다.
