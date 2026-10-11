@@ -1,3 +1,4 @@
 fastapi
 uvicorn[standard]
 python-multipart
+xhtml2pdf>=0.2.23
