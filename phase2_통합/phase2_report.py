@@ -15,8 +15,18 @@ from __future__ import annotations
 
 import csv
 import html
+import os
 import sys
 from pathlib import Path
+
+
+class ReportError(Exception):
+    """리포트를 못 만든 이유. code 는 화면이 분기할 때 쓴다."""
+
+    def __init__(self, code: str, message: str):
+        super().__init__(message)
+        self.code = code
+        self.message = message
 
 try:
     from . import phase2_result_store as store
@@ -187,6 +197,92 @@ def reconcile_text(path=None, controls_path=None):
     return text, r
 
 
+
+# ── 커버리지 장 (어디에 매핑됐고 어디에 안 됐는지) ────────────────────
+_STATE_KO = {"submitted": "제출", "excluded_only": "제외만", "not_submitted": "미제출"}
+
+# ISMS-P 인증기준 대분류. 번호만 있으면 읽는 사람이 어느 영역인지 모른다.
+SECTION_KO = {"1": "관리체계 수립 및 운영",
+              "2": "보호대책 요구사항",
+              "3": "개인정보 처리단계별 요구사항"}
+
+
+def _coverage_block(cov, e):
+    """구역별 제출 현황 표 + 미제출 통제항목 목록(이름 포함)."""
+    out = ["<div class='ctl'><h2>통제항목 커버리지</h2>"]
+    out.append(f"<div class='meta'>전체 {cov['control_total']}개 중 "
+               f"제출 <b>{cov['submitted']}</b>개 · "
+               f"제외만 {cov['excluded_only']}개 · "
+               f"미제출 <b>{cov['not_submitted']}</b>개 "
+               f"({cov['coverage_rate']}%)</div>")
+
+    out.append("<table class='cov'><thead><tr><th class='c1'>구역</th>"
+               "<th>영역</th><th>통제항목</th>"
+               "<th>제출</th><th>제외만</th><th>미제출</th><th>검토 열림</th>"
+               "<th>제출률</th></tr></thead><tbody>")
+    for s in cov["by_section"]:
+        cls = " class='zero'" if s["submitted"] == 0 else ""
+        big = SECTION_KO.get(s["section"].split(".")[0], "")
+        out.append(f"<tr{cls}><td class='c1'>{e(s['section'])}</td>"
+                   f"<td>{e(big)}</td>"
+                   f"<td class='n'>{s['control_total']}</td>"
+                   f"<td class='n'>{s['submitted']}</td>"
+                   f"<td class='n'>{s['excluded_only']}</td>"
+                   f"<td class='n'>{s['not_submitted']}</td>"
+                   f"<td class='n'>{s['review_open']}</td>"
+                   f"<td class='n'>{s['coverage_rate']}%</td></tr>")
+    out.append(f"<tr><th class='c1'>합계</th><th></th>"
+               f"<th class='n'>{cov['control_total']}</th>"
+               f"<th class='n'>{cov['submitted']}</th>"
+               f"<th class='n'>{cov['excluded_only']}</th>"
+               f"<th class='n'>{cov['not_submitted']}</th>"
+               f"<th class='n'>{cov['review_open_controls']}</th>"
+               f"<th class='n'>{cov['coverage_rate']}%</th></tr>")
+    out.append("</tbody></table>")
+    out.append("</div>")
+    return out
+
+
+def _missing_block(cov, e):
+    """미제출 통제항목을 구역별로 묶어 이름까지 적는다.
+
+    번호만 늘어놓으면 '무엇을 더 내야 하는지' 를 읽는 사람이 알 수 없다.
+    이 리포트를 받는 사람이 제일 먼저 보는 곳이라 이름을 같이 적는다.
+
+    표로 그린다. inline-block 으로 늘어놓으면 PDF 변환기가 줄바꿈을 못 해
+    오른쪽이 잘려 나간다.
+    """
+    miss = [c for c in cov["controls"] if c["state"] != "submitted"]
+    if not miss:
+        return ["<div class='ctl'><h2>미제출 통제항목</h2>"
+                "<div class='meta'>없습니다. 통제항목 전체에 증적이 연결됐습니다.</div>"
+                "</div>"]
+    out = [f"<div class='ctl'><h2>미제출 통제항목 {len(miss)}개</h2>",
+           "<div class='meta'>아래 항목에는 연결된 증적이 없습니다. "
+           "증적을 올리지 않았거나, 올린 증적이 이 항목으로 매핑되지 않았습니다.</div>",
+           "<table class='cov miss'><thead><tr>"
+           "<th class='c1'>통제항목</th><th>이름</th><th class='c3'>상태</th>"
+           "</tr></thead><tbody>"]
+    by_sec = {}
+    for c in miss:
+        by_sec.setdefault(c["section"], []).append(c)
+    for sec in sorted(by_sec, key=store._sort_key):
+        out.append(f"<tr class='sec'><td colspan='3'>{e(sec)} "
+                   f"{e(SECTION_KO.get(sec.split('.')[0], ''))} — "
+                   f"{len(by_sec[sec])}개</td></tr>")
+        for c in by_sec[sec]:
+            if c["state"] == "excluded_only":
+                codes = ", ".join(x["reason_code"] for x in c["excluded"])
+                state = f"제외 · {e(codes)}"
+            else:
+                state = "증적 없음"
+            out.append(f"<tr><td class='c1'>{e(c['control_id'])}</td>"
+                       f"<td>{e(c['control_name'] or '')}</td>"
+                       f"<td class='c3'>{state}</td></tr>")
+    out.append("</tbody></table></div>")
+    return out
+
+
 # ── 인쇄용 HTML ───────────────────────────────────────────────────────
 _CSS = """
 body{font:14px/1.7 'Malgun Gothic','Apple SD Gothic Neo',sans-serif;margin:32px;color:#1a1a1a}
@@ -211,6 +307,18 @@ blockquote{margin:6px 0 6px 12px;padding:6px 12px;border-left:3px solid #ccc;
 blockquote .src{display:block;color:#888;font-size:12px;margin-top:4px}
 .none{color:#999;font-style:italic}
 .blockers{color:#b71c1c;font-size:12px;padding:6px 14px;background:#fff5f5}
+table.cov{border-collapse:collapse;width:100%;font-size:13px}
+table.cov th,table.cov td{border:1px solid #ddd;padding:5px 8px;text-align:left}
+table.cov th{background:#f2f4f7;font-weight:600}
+table.cov td.n{text-align:right;width:62px}
+table.cov th.c1,table.cov td.c1{width:72px;white-space:nowrap}
+table.cov th.c3,table.cov td.c3{width:150px}
+table.cov tr.sec td{background:#f7f8fa;font-weight:700;color:#555}
+table.cov tr.zero td{color:#b71c1c}
+.miss{padding:10px 14px;font-size:13px;line-height:1.9}
+.miss .one{display:inline-block;margin:0 14px 2px 0}
+.miss .cid{font-weight:700;margin-right:4px}
+.secttl{margin:14px 14px 2px;font-weight:700;color:#555;font-size:13px}
 @media print{body{margin:10mm} .ctl{border-color:#999}}
 """
 
@@ -276,6 +384,12 @@ def to_html(path, controls_path=None, title="ISMS-P 증적 사전점검 — 항�
     out.append(f"<div><b>근거</b>{s['citation_total']}건</div>")
     out.append("</div>")
 
+    # 커버리지를 먼저 보여준다. 읽는 사람이 제일 먼저 묻는 것이
+    # '어디가 비었나' 이기 때문이다. 범위를 걸러 뽑을 때는 분모가 달라지므로 뺀다.
+    if whole:
+        out += _coverage_block(cov, e)
+        out += _missing_block(cov, e)
+
     for cid in sorted(by_control, key=store._sort_key):
         for d in by_control[cid]:
             cls = _VCLASS.get(d["overall_result"], "")
@@ -317,11 +431,7 @@ def to_html(path, controls_path=None, title="ISMS-P 증적 사전점검 — 항�
                 out.append("</div>")
             out.append("</div>")
 
-    miss = cov["not_submitted_controls"] if whole else []
-    if miss:
-        out.append(f"<div class='ctl'><h2>미제출 통제항목 {len(miss)}개</h2>"
-                   "<div class='meta'>" +
-                   ", ".join(e(m["control_id"]) for m in miss) + "</div></div>")
+    # 미제출 목록은 위 커버리지 장으로 옮겼다 (번호만 나열하면 읽히지 않는다).
     ex = store.excluded() if whole else [
         x for x in store.excluded()
         if (control_id and x["control_id"] == control_id)
@@ -341,6 +451,128 @@ def to_html(path, controls_path=None, title="ISMS-P 증적 사전점검 — 항�
     return p
 
 
+
+# ── PDF ───────────────────────────────────────────────────────────────
+# 폐쇄망이라 브라우저(Chromium)나 GTK 같은 시스템 의존이 있는 변환기는 못 쓴다.
+# xhtml2pdf 는 순수 파이썬(reportlab)이라 pip 하나로 끝나고 DLL 을 안 깐다.
+#     pip install xhtml2pdf
+# 인터넷이 막힌 PC 라면 미리 받아 두었다가 넣는다:
+#     (망 되는 PC) pip download xhtml2pdf -d wheels
+#     (망 막힌 PC) pip install --no-index --find-links wheels xhtml2pdf
+#
+# 한글 글꼴은 저장소에 이미 있는 것을 쓴다 (IS_SO_UI/dist/fonts). 글꼴을 안
+# 심으면 한글이 전부 네모로 나온다 — reportlab 기본 글꼴에 한글이 없다.
+
+_FONT_DIRS = ["IS_SO_UI/dist/fonts"]
+_FONT_FILES = ("GmarketSansTTFMedium.ttf", "MalgunGothic.ttf", "malgun.ttf",
+               "NanumGothic.ttf")
+
+
+def _repo_root():
+    here = Path(__file__).resolve().parent
+    for base in [here, *here.parents]:
+        if (base / "IS_SO_UI").is_dir() or (base / "phase1_입력").is_dir():
+            return base
+    return here.parent
+
+
+def find_font():
+    """한글 TTF 하나를 찾는다. 저장소 안 → 윈도우 글꼴 폴더 순."""
+    root = _repo_root()
+    for d in _FONT_DIRS:
+        for name in _FONT_FILES:
+            f = root / d / name
+            if f.is_file():
+                return f
+    win = Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts"
+    for name in ("malgun.ttf", "NanumGothic.ttf", "gulim.ttc"):
+        f = win / name
+        if f.is_file() and f.suffix.lower() == ".ttf":
+            return f
+    return None
+
+
+_PDF_CSS = """
+@page {{ size: A4 portrait; margin: 14mm 12mm; }}
+@font-face {{ font-family: ko; src: url("{font}"); }}
+body {{ font-family: ko; font-size: 9pt; margin: 0; line-height: 1.5; }}
+h1 {{ font-size: 15pt; }}
+.ctl>h2 {{ font-size: 11pt; }}
+/* xhtml2pdf 는 grid 를 모른다. 요약 칸을 한 줄로 편다. */
+.sum {{ display: block; }}
+.sum div {{ display: inline; margin-right: 16px; }}
+table.cov {{ font-size: 8.5pt; }}
+blockquote {{ font-size: 8.5pt; }}
+"""
+
+
+def to_pdf(path, controls_path=None, control_id=None, evidence_id=None,
+           title="ISMS-P 증적 사전점검 — 항목별 근거 리포트", html_text=None):
+    """
+    같은 내용의 PDF. HTML 을 먼저 만들고 그걸 변환한다 — 레이아웃이 한 벌이라
+    둘이 달라질 일이 없다.
+
+    xhtml2pdf 가 없으면 ReportError 를 낸다. 화면 쪽에서 그 메시지를 그대로
+    보여주면 된다 (조용히 빈 PDF 를 주는 것보다 낫다).
+    """
+    try:
+        from xhtml2pdf import pisa
+    except ImportError as exc:
+        raise ReportError(
+            "PDF_BACKEND_MISSING",
+            "PDF 를 만들려면 xhtml2pdf 가 필요합니다.  pip install xhtml2pdf"
+        ) from exc
+
+    font = find_font()
+    if font is None:
+        raise ReportError(
+            "PDF_FONT_MISSING",
+            "한글 글꼴을 못 찾았습니다. IS_SO_UI/dist/fonts 안에 "
+            "GmarketSansTTFMedium.ttf 가 있어야 합니다.")
+
+    if html_text is None:
+        tmp = Path(path).with_suffix(".html")
+        to_html(tmp, controls_path, title=title,
+                control_id=control_id, evidence_id=evidence_id)
+        html_text = tmp.read_text(encoding="utf-8")
+
+    css = _PDF_CSS.format(font=font.as_posix())
+    html_text = html_text.replace("</style>", "</style><style>" + css + "</style>", 1)
+
+    # 글꼴이 저장소 안 다른 폴더에 있어서 기본 정책에 막힌다. 그 폴더만 열어 준다.
+    # 바깥 망은 닫아 둔다 — 리포트가 인터넷을 볼 이유가 없다.
+    kw = {}
+    try:
+        from xhtml2pdf.files import ResourceAccessPolicy
+        kw["resource_policy"] = ResourceAccessPolicy(
+            allow_remote=False, extra_roots=(font.parent,))
+    except Exception:                                         # noqa: BLE001
+        # 낡은 xhtml2pdf. 글꼴을 결과물 옆에 복사해 두고 상대경로로 쓴다.
+        import shutil
+        side = Path(path).parent / font.name
+        side.parent.mkdir(parents=True, exist_ok=True)
+        if not side.is_file():
+            shutil.copy2(font, side)
+        html_text = html_text.replace(font.as_posix(), font.name)
+
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("wb") as f:
+        res = pisa.CreatePDF(html_text, dest=f, encoding="utf-8", **kw)
+    if res.err:
+        raise ReportError("PDF_RENDER_FAILED",
+                          f"PDF 변환 중 오류 {res.err}건이 났습니다.")
+    return p
+
+
+def to_pdf_bytes(**kw):
+    """API 가 바로 내려보낼 수 있게 바이트로 돌려준다."""
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        p = to_pdf(Path(d) / "report.pdf", **kw)
+        return p.read_bytes()
+
+
 def main(argv=None):
     import argparse
     ap = argparse.ArgumentParser(description="항목별 근거 리포트 출력")
@@ -348,6 +580,7 @@ def main(argv=None):
     ap.add_argument("--controls", help="phase1_검색/controls.json 경로")
     ap.add_argument("--control-id", help="이 통제항목만")
     ap.add_argument("--evidence-id", help="이 증적만")
+    ap.add_argument("--no-pdf", action="store_true", help="PDF 는 안 만든다")
     a = ap.parse_args(argv)
 
     out = Path(a.out)
@@ -357,6 +590,13 @@ def main(argv=None):
                             control_id=a.control_id, evidence_id=a.evidence_id))
     p, cov = coverage_csv(out / "coverage.csv", a.controls)
     print("커버리지", p, f"(제출 {cov['submitted']} / {cov['control_total']})")
+    if not a.no_pdf:
+        try:
+            print("PDF  ", to_pdf(out / "control_report.pdf", a.controls,
+                                  control_id=a.control_id,
+                                  evidence_id=a.evidence_id))
+        except ReportError as exc:
+            print(f"PDF   건너뜀 — {exc.code}: {exc.message}")
     text, r = reconcile_text(out / "reconcile.txt", a.controls)
     print(text)
     return 1 if r["실패"] else 0
