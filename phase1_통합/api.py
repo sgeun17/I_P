@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import hmac
 import os
-import secrets
 import sys
 from pathlib import Path
 
-from fastapi import Body, FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -15,11 +14,15 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 INPUT_DIR = ROOT / "phase1_입력"
 UI_DIR = ROOT / "IS_SO_UI" / "dist"
-for p in (INPUT_DIR, INPUT_DIR / "database", INPUT_DIR / "chunking"):
+for p in (INPUT_DIR, INPUT_DIR / "database", INPUT_DIR / "chunking",
+          ROOT / "auth", ROOT / "phase2_통합", ROOT / "phase2_인터페이스"):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-from main import app as input_app, process_file  # noqa: E402
+import owner  # noqa: E402
+
+from evidence_store import is_visible  # noqa: E402
+from main import actor_of, app as input_app, company_of, process_file  # noqa: E402
 from orchestrator import IntegrationError, inspect_evidence, load_result  # noqa: E402
 from self_check import check as integration_check  # noqa: E402
 
@@ -35,6 +38,106 @@ app.add_middleware(
 
 # 입력팀 API(/evidence, /analysis)를 같은 주소에서 제공한다. 입력팀 기본 화면("/")은 제외.
 app.router.routes.extend(r for r in input_app.routes if getattr(r, "path", None) not in {"/", "/openapi.json", "/docs", "/docs/oauth2-redirect", "/redoc"})
+# 입력팀 쪽 예외 처리기도 같이 옮긴다. 라우터에는 안 붙어 있다.
+for _t, _h in getattr(input_app, "exception_handlers", {}).items():
+    if _t not in app.exception_handlers:
+        app.add_exception_handler(_t, _h)
+
+# 로그인·회사·초대·운영자 엔드포인트
+import auth_api  # noqa: E402
+import phase2_api  # noqa: E402
+app.include_router(auth_api.router)
+app.include_router(phase2_api.router)
+
+# MySQL 이 꺼져 있을 때. 추적 내용이 섞인 500 대신 503 으로 답한다.
+try:
+    import pymysql as _pymysql  # noqa: E402
+    _DB_DOWN = (_pymysql.err.OperationalError, _pymysql.err.InterfaceError)
+except Exception:
+    _DB_DOWN = ()
+
+
+def _db_down(request: Request, exc: Exception | None = None) -> JSONResponse:
+    return JSONResponse(status_code=503,
+                        content={"detail": {"error_code": "DB_UNAVAILABLE",
+                                            "message": "DB에 연결할 수 없습니다."}})
+
+
+for _e in _DB_DOWN:
+    app.add_exception_handler(_e, _db_down)
+
+
+# ── 문지기 ────────────────────────────────────────────────────────────────
+# PUBLIC 에 없는 모든 주소에 로그인을 건다. 새 주소를 추가하면 자동으로
+# 잠긴다 — 깜빡해서 열려 있는 쪽보다 낫다.
+PUBLIC_EXACT = {
+    "/health", "/classic", "/docs", "/redoc", "/openapi.json",
+    "/docs/oauth2-redirect", "/favicon.ico",
+    "/api/readiness",
+    "/api/auth/login", "/api/auth/signup", "/api/auth/verify",
+    "/api/auth/resend", "/api/invites/accept",
+}
+PUBLIC_PREFIX = ("/api/invites/",)          # 초대 링크는 계정이 없는 사람이 연다
+AUTH_OFF = os.getenv("AUTH_OFF") == "1"     # 개발용. 운영에서 1 로 두지 말 것
+
+# 역할까지 봐야 하는 자리. 입력팀 라우터에는 권한 검사가 없어서 여기서 건다.
+# (method, 주소 앞부분) -> company_store.PERMS 의 할 일 이름
+ROLE_RULES = (
+    ("DELETE", "/evidence/", "delete"),
+)
+
+
+def _is_public(path: str) -> bool:
+    if path in PUBLIC_EXACT or path.startswith(PUBLIC_PREFIX):
+        return True
+    # UI 정적 파일 (StaticFiles 가 "/" 에 붙어 있다)
+    return not path.startswith(("/api/", "/evidence", "/analysis"))
+
+
+@app.middleware("http")
+async def require_login(request: Request, call_next):
+    if AUTH_OFF or request.method == "OPTIONS" or _is_public(request.url.path):
+        owner.clear()
+        return await call_next(request)
+
+    auth = request.headers.get("authorization", "")
+    parts = auth.split(None, 1)
+    token = parts[1].strip() if len(parts) == 2 and parts[0].lower() == "bearer" else None
+    me = None
+    if token:
+        import company_store, user_store
+        try:
+            sess = user_store.current_user(token)
+            me = company_store.profile(sess["user_id"]) if sess else None
+        except _DB_DOWN:
+            return _db_down(request)
+    if me is None:
+        return JSONResponse(status_code=401,
+                            content={"detail": {"error_code": "NOT_LOGGED_IN",
+                                                "message": "로그인이 필요합니다."}})
+    # 역할 검사. 화면이 버튼을 숨기는 것과 서버가 막는 것은 다르다.
+    import company_store as _cs
+    for _m, _pre, _act in ROLE_RULES:
+        if request.method == _m and request.url.path.startswith(_pre):
+            if not _cs.can(me.get("role"), _act):
+                return JSONResponse(
+                    status_code=403,
+                    content={"detail": {"error_code": "NOT_ALLOWED",
+                                        "message": "권한이 없습니다."}})
+
+    request.state.user = me
+    # 이 요청이 볼 수 있는 회사를 심는다. 조회는 전부 owner.py 를 지나간다.
+    try:
+        owner.use(company_id=me.get("companyId"), actor=me.get("email"),
+                  role=me.get("role"), is_super=(me.get("role") == "super"))
+    except ValueError:
+        return JSONResponse(status_code=403,
+                            content={"detail": {"error_code": "COMPANY_MISSING",
+                                                "message": "소속 회사가 없습니다."}})
+    try:
+        return await call_next(request)
+    finally:
+        owner.clear()
 
 
 def fail(exc: IntegrationError):
@@ -50,13 +153,20 @@ def health():
 
 
 @app.get("/api/readiness")
-def readiness():
-    return integration_check()
+def readiness(request: Request):
+    data = integration_check()
+    if getattr(request.state, "user", None) is None:
+        # 로그인 전에도 UI 가 "준비 상태 확인" 을 눌러야 한다. 다만 서버
+        # 안쪽 경로는 보내지 않는다.
+        data["checks"] = [{"name": c["name"], "ok": c["ok"]} for c in data["checks"]]
+    return data
 
 
 @app.post("/api/upload")
-async def upload(file: UploadFile = File(...), evidence_id: str | None = Form(None)):
-    result = await process_file(file, evidence_id)
+async def upload(request: Request, file: UploadFile = File(...),
+                 evidence_id: str | None = Form(None)):
+    result = await process_file(file, evidence_id,
+                                actor_of(request), company_of(request))
     if result.get("status") != "ok":
         raise HTTPException(status_code=400, detail=result)
     return result
@@ -64,6 +174,8 @@ async def upload(file: UploadFile = File(...), evidence_id: str | None = Form(No
 
 @app.post("/api/inspect/{evidence_id}")
 def inspect(evidence_id: str, top_k: int = 5, model: str | None = None):
+    if not is_visible(evidence_id):
+        raise HTTPException(status_code=404, detail={"code": "EVIDENCE_NOT_FOUND"})
     try:
         return inspect_evidence(evidence_id, top_k=top_k, model=model)
     except IntegrationError as exc:
@@ -72,12 +184,14 @@ def inspect(evidence_id: str, top_k: int = 5, model: str | None = None):
 
 @app.post("/api/upload-and-inspect")
 async def upload_and_inspect(
+    request: Request,
     file: UploadFile = File(...),
     evidence_id: str | None = Form(None),
     top_k: int = Form(5),
     model: str | None = Form(None),
 ):
-    uploaded = await process_file(file, evidence_id)
+    uploaded = await process_file(file, evidence_id,
+                                  actor_of(request), company_of(request))
     if uploaded.get("status") != "ok":
         raise HTTPException(status_code=400, detail=uploaded)
     try:
@@ -88,7 +202,13 @@ async def upload_and_inspect(
 
 @app.get("/api/results/{evidence_id}")
 def result(evidence_id: str, version: int | None = None):
-    found = load_result(evidence_id, version)
+    # 파일을 읽기 전에 DB 로 회사를 묻는다. load_result 는 디스크만 본다.
+    if not is_visible(evidence_id):
+        # 운영자(super)가 고객 증적을 건드리려 한 것은 DENIED 로 남긴다.
+        owner.audit_denied("VIEW_ORIGINAL", evidence_id, version or 1)
+        raise HTTPException(status_code=404, detail={"code": "RESULT_NOT_FOUND"})
+    found = owner.audit_super("VIEW_ORIGINAL", evidence_id, version or 1,
+                              lambda: load_result(evidence_id, version))
     if found is None:
         raise HTTPException(status_code=404, detail={"code": "RESULT_NOT_FOUND"})
     return found
@@ -114,23 +234,9 @@ function metric(k,v){return '<div class="metric">'+esc(k)+'<b>'+esc(v)+'</b></di
 </script></body></html>'''
 
 
-@app.post("/api/auth/login")
-def login(payload: dict = Body(...)):
-    """로컬 실행용 최소 로그인. 회원·회사 관리는 아직 백엔드가 없다.
-
-    PHASE1_UI_PASSWORD가 설정되어 있으면 비밀번호가 일치해야 하고,
-    없으면 127.0.0.1 로컬 실행을 전제로 어떤 이메일이든 관리자 권한으로 통과시킨다.
-    """
-    email = str(payload.get("email") or "").strip()
-    if not email:
-        raise HTTPException(status_code=400, detail="이메일을 입력하세요.")
-    expected = os.environ.get("PHASE1_UI_PASSWORD")
-    if expected and not hmac.compare_digest(str(payload.get("password") or ""), expected):
-        raise HTTPException(status_code=401, detail="이메일 또는 비밀번호가 올바르지 않습니다.")
-    return {
-        "token": secrets.token_urlsafe(24),
-        "user": {"name": email.split("@")[0], "email": email, "role": "admin", "company": os.environ.get("PHASE1_UI_COMPANY", "로컬")},
-    }
+# /api/auth/login 은 auth_api.py 로 옮겼다 (2026-10-11).
+# 전에 있던 것은 아무 메일이나 비밀번호 없이 admin 으로 통과시키고,
+# 돌려주는 토큰을 어디에도 저장하지 않아 아무도 검증할 수 없었다.
 
 
 @app.get("/classic", response_class=HTMLResponse)
