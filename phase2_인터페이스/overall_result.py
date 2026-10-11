@@ -78,19 +78,27 @@ def compute(items, policy=None):
     def ids(pool, value):
         return [i["item_id"] for i in pool if i["result"] == value]
 
-    crit_not_met = ids(crit, "NOT_MET")
-    crit_unknown = ids(crit, "UNKNOWN")
-    rest = [i for i in marked if not i["critical"]]
+    # critical 문항이 하나도 없는 통제항목이 있다 (체크리스트가 전부 false 로
+    # 확정된 경우). 그때 아래 사다리를 그대로 쓰면 전 문항이 UNKNOWN 인데도
+    # '충족(보완 권고) · 중요 문항은 모두 충족했으나…' 가 나온다. 충족한 문항이
+    # 하나도 없는데 충족이라 말하는 것이라 틀린 보고다.
+    # critical 이 없으면 전 문항을 결정 대상으로 본다.
+    judge_pool = crit if crit else marked
+
+    crit_not_met = ids(judge_pool, "NOT_MET")
+    crit_unknown = ids(judge_pool, "UNKNOWN")
+    rest = [i for i in marked if not i["critical"]] if crit else []
     rest_bad = ids(rest, "NOT_MET") + ids(rest, "UNKNOWN")
+    word = "중요 문항" if crit else "문항"
 
     if crit_not_met:
         verdict = "미충족"
         decisive = crit_not_met
-        reason = f"중요 문항 {len(crit_not_met)}건이 미충족입니다 ({', '.join(crit_not_met[:3])})."
+        reason = f"{word} {len(crit_not_met)}건이 미충족입니다 ({', '.join(crit_not_met[:3])})."
     elif crit_unknown:
         verdict = "확인 필요"
         decisive = crit_unknown
-        reason = f"중요 문항 {len(crit_unknown)}건을 증적으로 확인할 수 없습니다 ({', '.join(crit_unknown[:3])})."
+        reason = f"{word} {len(crit_unknown)}건을 증적으로 확인할 수 없습니다 ({', '.join(crit_unknown[:3])})."
     elif rest_bad:
         verdict = "충족(보완 권고)"
         decisive = rest_bad
