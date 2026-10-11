@@ -42,6 +42,38 @@ RELATIONS = ("PRIMARY", "RELATED")
 _RELATION_ORDER = {"PRIMARY": 0, "RELATED": 1}
 
 
+
+# 회사 단위 격리. 조건을 붙일지는 owner.applies() 로 묻는다.
+try:
+    import owner
+except ImportError:
+    import sys as _sys
+    from pathlib import Path as _Path
+    for _b in [_Path(__file__).resolve().parent, *_Path(__file__).resolve().parents]:
+        if (_b / "auth" / "owner.py").is_file():
+            _sys.path.insert(0, str(_b / "auth"))
+            break
+    try:
+        import owner
+    except ImportError:
+        # 이 파일만 떼어내 쓸 때. 아무것도 안 거른다.
+        # 서버에서는 owner.AVAILABLE 로 진짜가 올라왔는지 확인한다.
+        class _NoOwner:
+            AVAILABLE = False
+            current = staticmethod(lambda: None)
+            where = staticmethod(lambda alias="evidence": "1 = 1")
+            mine = staticmethod(lambda column="evidence_id", table=None: "1 = 1")
+            and_mine = staticmethod(lambda column="evidence_id", table=None: "")
+            and_where = staticmethod(lambda alias="evidence": "")
+            owns = staticmethod(lambda cur, evidence_id, q=None: True)
+            is_super = staticmethod(lambda: False)
+            blocked = staticmethod(lambda: False)
+            applies = staticmethod(lambda: False)
+            audit_denied = staticmethod(lambda a, e, v=1: None)
+            audit_super = staticmethod(lambda a, e, v, op: op())
+        owner = _NoOwner()
+
+
 def result_dir() -> Path:
     """phase1_통합/results 를 거슬러 올라가며 찾는다."""
     for base in [_HERE, *_HERE.parents]:
@@ -225,8 +257,9 @@ def _fetch(where, params):
     conn = _connect()
     try:
         with conn.cursor() as cur:
-            cur.execute(_q(f"SELECT {_COLS} FROM phase1_mapping WHERE {where} "
-                           f"ORDER BY control_id, evidence_id"), params)
+            cur.execute(_q(f"SELECT {_COLS} FROM phase1_mapping WHERE {where}"
+                           + owner.and_mine("evidence_id", "phase1_mapping")
+                           + " ORDER BY control_id, evidence_id"), params)
             rows = _rows(cur)
             for r in rows:
                 cur.execute(_q("SELECT seq, chunk_id, page, quote, source_file "
@@ -320,6 +353,9 @@ def summary(include_history: bool = False) -> dict:
     cur_only = ("" if include_history else
                 " WHERE evidence_version = (SELECT version FROM evidence e "
                 " WHERE e.evidence_id = phase1_mapping.evidence_id)")
+    _mine = owner.and_mine("evidence_id", "phase1_mapping")
+    if _mine:
+        cur_only = (cur_only + _mine) if cur_only else (" WHERE " + _mine[5:])
     conn = _connect()
     try:
         with conn.cursor() as cur:
@@ -338,7 +374,8 @@ def summary(include_history: bool = False) -> dict:
                 " WHERE m.mapping_id = c.mapping_id" +
                 ("" if include_history else
                  " AND m.evidence_version = (SELECT version FROM evidence e "
-                 " WHERE e.evidence_id = m.evidence_id)") + ")"))
+                 " WHERE e.evidence_id = m.evidence_id)") +
+                owner.and_mine("evidence_id", "m") + ")"))
             cit = int(_rows(cur)[0]["n"])
     finally:
         conn.close()
