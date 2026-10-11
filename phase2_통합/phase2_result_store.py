@@ -93,6 +93,38 @@ RETRYABLE_REASONS = ("FAILED", "ALL_TARGETS_UNRESOLVED")
 #   현재 = 과거로 안 내려갔고 + 그 증적의 지금 버전인 것
 #
 # 버전을 안 보면 재업로드한 증적에서 v1 결과가 v2 와 같이 현재로 남는다.
+
+# 회사 단위 격리. 조건을 붙일지는 owner.applies() 로 묻는다.
+try:
+    import owner
+except ImportError:
+    import sys as _sys
+    from pathlib import Path as _Path
+    for _b in [_Path(__file__).resolve().parent, *_Path(__file__).resolve().parents]:
+        if (_b / "auth" / "owner.py").is_file():
+            _sys.path.insert(0, str(_b / "auth"))
+            break
+    try:
+        import owner
+    except ImportError:
+        # 이 파일만 떼어내 쓸 때. 아무것도 안 거른다.
+        # 서버에서는 owner.AVAILABLE 로 진짜가 올라왔는지 확인한다.
+        class _NoOwner:
+            AVAILABLE = False
+            current = staticmethod(lambda: None)
+            where = staticmethod(lambda alias="evidence": "1 = 1")
+            mine = staticmethod(lambda column="evidence_id", table=None: "1 = 1")
+            and_mine = staticmethod(lambda column="evidence_id", table=None: "")
+            and_where = staticmethod(lambda alias="evidence": "")
+            owns = staticmethod(lambda cur, evidence_id, q=None: True)
+            is_super = staticmethod(lambda: False)
+            blocked = staticmethod(lambda: False)
+            applies = staticmethod(lambda: False)
+            audit_denied = staticmethod(lambda a, e, v=1: None)
+            audit_super = staticmethod(lambda a, e, v, op: op())
+        owner = _NoOwner()
+
+
 def _is_current(alias: str = "phase2_result") -> str:
     return (f"{alias}.superseded_at IS NULL AND {alias}.evidence_version = "
             f"(SELECT e_cur.version FROM evidence e_cur "
@@ -646,6 +678,9 @@ def excluded(include_history: bool = False):
     where = ("" if include_history else
              " WHERE evidence_version = (SELECT e_cur.version FROM evidence e_cur "
              " WHERE e_cur.evidence_id = phase2_excluded.evidence_id)")
+    if owner.applies():
+        m = owner.mine("evidence_id", "phase2_excluded")
+        where = (where + " AND " + m) if where else " WHERE " + m
     conn = _connect()
     try:
         with conn.cursor() as cur:
@@ -677,7 +712,8 @@ def _select(where, params, include_superseded=False, version_scoped=True):
     version_scoped=False 면 지금 버전 조건을 빼고 과거로 안 내려간 줄을 다 준다.
     옛 버전 이력을 보여줄 때만 쓴다.
     """
-    sql = f"SELECT {_COLS} FROM phase2_result WHERE " + where
+    sql = (f"SELECT {_COLS} FROM phase2_result WHERE " + where
+           + owner.and_mine("evidence_id", "phase2_result"))
     if not include_superseded:
         # current-raw: version_scoped=False 는 이력 조회용이라 일부러 뺀다
         sql += " AND " + (_is_current() if version_scoped
@@ -1055,7 +1091,9 @@ def summary(unknown_policy: str = "separate"):
     if unknown_policy not in ("separate", "exclude"):
         raise ResultStoreError("UNKNOWN_POLICY_INVALID", f"모르는 값: {unknown_policy}")
 
-    cur_where = "WHERE " + _is_current()
+    # 아래 질의 12개가 이 조각을 돌려 쓴다. 여기 한 줄이면 전부 걸린다.
+    cur_where = ("WHERE " + _is_current()
+                 + owner.and_mine("evidence_id", "phase2_result"))
     conn = _connect()
     try:
         with conn.cursor() as cur:
@@ -1086,7 +1124,7 @@ def summary(unknown_policy: str = "separate"):
                 "SELECT COUNT(*) AS n FROM phase2_result r "
                 "JOIN evidence e ON e.evidence_id = r.evidence_id "
                 "WHERE " + _is_current("r") + " AND r.phase1_review_required = 1 "
-                "AND e.status = 'COMPLETED'")
+                "AND e.status = 'COMPLETED' " + owner.and_where("e"))
             # _blockers() 와 같은 조건을 쓴다 (P2E006 이 있거나 미승인)
             warned_n = one(
                 f"SELECT COUNT(*) AS n FROM phase2_result {cur_where} "
@@ -1110,7 +1148,8 @@ def summary(unknown_policy: str = "separate"):
             cr = _rows(cur)[0]
             cit_total, cit_src = int(cr["c"]), int(cr["s"])
 
-            cur.execute(_q("SELECT status, COUNT(*) AS n FROM evidence GROUP BY status"))
+            cur.execute(_q(f"SELECT status, COUNT(*) AS n FROM evidence "
+                           f"WHERE {owner.where('evidence')} GROUP BY status"))
             statuses = {r["status"]: int(r["n"]) for r in _rows(cur)}
 
             cur.execute(_q(
