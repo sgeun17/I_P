@@ -69,7 +69,8 @@ def compute_hash(file_path):
 # 화면·API로 내보낼 칸 (SELECT * 는 나중에 칸이 늘면 원치 않는 정보가 샐 수 있어서 안 씀)
 _COLUMNS = """
     evidence_id, version, file_name, file_type, file_size,
-    file_hash, uploaded_at, status, error_code, error_message
+    file_hash, uploaded_at, uploaded_by, company_id, status,
+    error_code, error_message
 """
 
 
@@ -136,14 +137,50 @@ def _cleanup(conn, final_path, temp_file_path):
         os.remove(temp_file_path)  # 임시 파일 삭제 (쓰레기 남기지 않기)
 
 
+
+# 회사 단위 격리. 조건을 붙일지는 owner.applies() 로 묻는다.
+try:
+    import owner
+except ImportError:
+    import sys as _sys
+    from pathlib import Path as _Path
+    for _b in [_Path(__file__).resolve().parent, *_Path(__file__).resolve().parents]:
+        if (_b / "auth" / "owner.py").is_file():
+            _sys.path.insert(0, str(_b / "auth"))
+            break
+    try:
+        import owner
+    except ImportError:
+        # 이 파일만 떼어내 쓸 때. 아무것도 안 거른다.
+        # 서버에서는 owner.AVAILABLE 로 진짜가 올라왔는지 확인한다.
+        class _NoOwner:
+            AVAILABLE = False
+            current = staticmethod(lambda: None)
+            where = staticmethod(lambda alias="evidence": "1 = 1")
+            mine = staticmethod(lambda column="evidence_id", table=None: "1 = 1")
+            and_mine = staticmethod(lambda column="evidence_id", table=None: "")
+            and_where = staticmethod(lambda alias="evidence": "")
+            owns = staticmethod(lambda cur, evidence_id, q=None: True)
+            is_super = staticmethod(lambda: False)
+            blocked = staticmethod(lambda: False)
+            applies = staticmethod(lambda: False)
+            audit_denied = staticmethod(lambda a, e, v=1: None)
+            audit_super = staticmethod(lambda a, e, v, op: op())
+        owner = _NoOwner()
+
+
 def _find_same_file(cur, file_hash):
-    """같은 지문의 파일이 이미 있으면 그 증적 번호를 돌려줌 (현재 증적 → 보관함 순서로 찾음)"""
-    cur.execute("SELECT evidence_id FROM evidence WHERE file_hash = %s LIMIT 1", (file_hash,))
+    """같은 지문의 파일이 이미 있으면 그 증적 번호를 돌려줌 (현재 증적 → 보관함 순서로 찾음)
+
+    우리 회사 안에서만 찾는다. 회사를 안 가리면 다른 회사가 같은 파일을
+    올렸을 때 그쪽 증적 번호가 duplicate_of 로 넘어간다.
+    """
+    cur.execute("SELECT evidence_id FROM evidence WHERE file_hash = %s"
+                + owner.and_where("evidence") + " LIMIT 1", (file_hash,))
     row = cur.fetchone()
     if row is None:
-        cur.execute(
-            "SELECT evidence_id FROM evidence_history WHERE file_hash = %s LIMIT 1", (file_hash,)
-        )
+        cur.execute("SELECT evidence_id FROM evidence_history WHERE file_hash = %s"
+                    + owner.and_where("evidence_history") + " LIMIT 1", (file_hash,))
         row = cur.fetchone()
     return row["evidence_id"] if row else None
 
@@ -151,7 +188,8 @@ def _find_same_file(cur, file_hash):
 # ─────────────────────────────────────────────
 # 할 일 3번 : 새 증적 등록 (A 파트가 파일 검사를 끝낸 뒤 이 함수를 부릅니다)
 # ─────────────────────────────────────────────
-def save_evidence(temp_file_path, file_name, file_type):
+def save_evidence(temp_file_path, file_name, file_type,
+                  uploaded_by=None, company_id=None):
     """
     임시 폴더에 있는 파일을 새 증적으로 등록합니다. (version 1)
 
@@ -194,10 +232,11 @@ def save_evidence(temp_file_path, file_name, file_type):
                 """
                 INSERT INTO evidence
                   (evidence_id, version, file_name, file_type,
-                   file_size, file_hash, uploaded_at, status)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, 'UPLOADED')
+                   file_size, file_hash, uploaded_at, uploaded_by, company_id, status)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, 'UPLOADED')
                 """,
-                (evidence_id, version, file_name, file_type, file_size, file_hash, uploaded_at),
+                (evidence_id, version, file_name, file_type, file_size, file_hash,
+                 uploaded_at, uploaded_by, company_id),
             )
 
         # ⑥ 파일을 정식 폴더로 이동
@@ -223,6 +262,8 @@ def save_evidence(temp_file_path, file_name, file_type):
         "file_size": file_size,
         "file_hash": file_hash,
         "uploaded_at": _iso(uploaded_at),
+        "uploaded_by": uploaded_by,
+        "company_id": company_id,
         "status": "UPLOADED",
         "is_duplicate": duplicate_of is not None,
         "duplicate_of": duplicate_of,
@@ -232,7 +273,8 @@ def save_evidence(temp_file_path, file_name, file_type):
 # ─────────────────────────────────────────────
 # 할 일 3번 (버전) : 수정된 파일로 교체
 # ─────────────────────────────────────────────
-def replace_evidence(evidence_id, temp_file_path, file_name, file_type):
+def replace_evidence(evidence_id, temp_file_path, file_name, file_type,
+                     uploaded_by=None, company_id=None):
     """
     이미 있는 증적(evidence_id)을 수정된 파일로 바꿉니다.
 
@@ -274,9 +316,9 @@ def replace_evidence(evidence_id, temp_file_path, file_name, file_type):
                 """
                 INSERT INTO evidence_history
                   (evidence_id, version, file_name, file_type, file_size, file_hash,
-                   uploaded_at, status, error_code, error_message)
+                   uploaded_at, uploaded_by, company_id, status, error_code, error_message)
                 SELECT evidence_id, version, file_name, file_type, file_size, file_hash,
-                       uploaded_at, status, error_code, error_message
+                       uploaded_at, uploaded_by, company_id, status, error_code, error_message
                   FROM evidence WHERE evidence_id = %s
                 """,
                 (evidence_id,),
@@ -288,11 +330,13 @@ def replace_evidence(evidence_id, temp_file_path, file_name, file_type):
                 """
                 UPDATE evidence
                    SET version = %s, file_name = %s, file_type = %s, file_size = %s,
-                       file_hash = %s, uploaded_at = %s,
+                       file_hash = %s, uploaded_at = %s, uploaded_by = %s,
+                       company_id = COALESCE(%s, company_id),
                        status = 'UPLOADED', error_code = NULL, error_message = NULL
                  WHERE evidence_id = %s
                 """,
-                (version, file_name, file_type, file_size, file_hash, now, evidence_id),
+                (version, file_name, file_type, file_size, file_hash, now,
+                 uploaded_by, company_id, evidence_id),
             )
 
             # ④ 옛 버전 청크 지우기 (교체와 한 트랜잭션 → 교체가 취소되면 청크도 그대로)
@@ -344,6 +388,19 @@ def _delete_chunks(cur, evidence_id):
 # ─────────────────────────────────────────────
 # 할 일 4번 : 파일 위치 알려주기 (전처리 담당이 씀)
 # ─────────────────────────────────────────────
+def is_visible(evidence_id):
+    """
+    이 증적이 지금 회사에게 보이는가. DB 가 아닌 것(결과 JSON 파일 등)을
+    열기 전에 물어본다. 터미널·super 면 항상 True.
+    """
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            return owner.owns(cur, evidence_id)
+    finally:
+        conn.close()
+
+
 def get_file_path(evidence_id, version=None):
     """
     증적 번호를 주면 실제 파일 경로를 돌려줍니다.
@@ -355,7 +412,8 @@ def get_file_path(evidence_id, version=None):
     try:
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT version, file_type FROM evidence WHERE evidence_id = %s", (evidence_id,)
+                f"SELECT version, file_type FROM evidence WHERE evidence_id = %s "
+                f"AND {owner.where('evidence')}", (evidence_id,)
             )
             row = cur.fetchone()
             if row is not None and version is not None and row["version"] != version:
@@ -423,6 +481,9 @@ def list_evidence(status=None, page=1, size=20):
     where, params = "", []
     if status:
         where, params = "WHERE status = %s", [status]
+    if owner.applies():
+        where = ((where + " AND " + owner.where("evidence")) if where
+                 else "WHERE " + owner.where("evidence"))
 
     conn = get_connection()
     try:
@@ -446,10 +507,12 @@ def get_evidence(evidence_id):
     conn = get_connection()
     try:
         with conn.cursor() as cur:
-            cur.execute(f"SELECT {_COLUMNS} FROM evidence WHERE evidence_id = %s", (evidence_id,))
+            cur.execute(f"SELECT {_COLUMNS} FROM evidence WHERE evidence_id = %s "
+                        f"AND {owner.where('evidence')}", (evidence_id,))
             current = cur.fetchone()
             cur.execute(
-                """SELECT version, file_name, file_size, file_hash, uploaded_at, status
+                """SELECT version, file_name, file_size, file_hash, uploaded_at,
+                           uploaded_by, status
                      FROM evidence_history WHERE evidence_id = %s ORDER BY version""",
                 (evidence_id,),
             )
@@ -468,6 +531,7 @@ def get_evidence(evidence_id):
             "file_size": current["file_size"],
             "file_hash": current["file_hash"],
             "uploaded_at": _iso(current["uploaded_at"]),
+            "uploaded_by": current.get("uploaded_by"),
             "status": current["status"],
         }
     ]
@@ -489,7 +553,8 @@ def delete_evidence(evidence_id):
                 (evidence_id, evidence_id),
             )
             rows = cur.fetchall()
-            if not rows:
+            # 남의 회사 증적은 "없다" 와 같은 답을 준다. 파일까지 지워지면 되돌릴 수 없다.
+            if not rows or not owner.owns(cur, evidence_id):
                 raise EvidenceError("EVIDENCE_NOT_FOUND", f"{evidence_id} 증적을 찾을 수 없습니다.")
             # ② 파일을 먼저 지웁니다. (DB 를 먼저 지우면, 파일 삭제가 실패했을 때
             #    DB 에는 없는데 저장소에만 남는 파일(orphan file)이 생깁니다)
