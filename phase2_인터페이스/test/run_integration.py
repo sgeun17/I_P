@@ -27,7 +27,8 @@ except ImportError:
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))   # build_phase2_input.py 는 폴더 위(제품 코드)에 있다
-from build_phase2_input import build, judge_targets, load_checklist_scope  # noqa: E402
+from build_phase2_input import (build, judge_targets,  # noqa: E402
+                                load_checklist_scope, load_control_names)
 
 
 def find_repo(start):
@@ -63,6 +64,8 @@ def main():
         sys.exit("체크리스트 파일을 못 찾았습니다 (chapter2_full_checklist_draft.json / checklist_draft.json)")
     checklist = found[0]
     scope, cl_ver = load_checklist_scope(checklist)
+    # 실행 기록에는 control_name 이 없다 (LLM 원본 응답). 체크리스트에서 찾아 붙인다.
+    names = load_control_names(checklist)
     print(f"체크리스트: {checklist.name}  ({cl_ver})  통제항목 {len(scope)}개")
 
     # ② 판단팀 실행 기록
@@ -93,6 +96,10 @@ def main():
             # 실행 기록에는 mapped_controls 가 없어 RELATED 판정 후보로 대신한다.
             # 실제 Phase 1 결과를 쓸 때는 이 블록이 필요 없다.
             rel = [c for c in r.get("candidate_decisions", []) if c.get("decision") == "RELATED"]
+            skipped = [c for c in rel if not names.get(c.get("control_id"))]
+            if skipped:
+                stat["체크리스트에 이름이 없는 통제항목(건너뜀)"] += len(skipped)
+            rel = [c for c in rel if names.get(c.get("control_id"))]
             if not rel:
                 stat["RELATED 후보 없음"] += 1
                 continue
@@ -100,6 +107,7 @@ def main():
             for i, c in enumerate(rel):
                 q = (c.get("citations") or [{}])[0].get("quote")
                 mapped.append({**c,
+                               "control_name": names[c["control_id"]],
                                "relation": "PRIMARY" if i == 0 else "RELATED",
                                "citations": [{"chunk_id": "E9999_v1_c0000", "page": None,
                                               "quote": q}] if q else []})
