@@ -83,6 +83,38 @@ def load_reason_codes(path):
     return sorted(REASON_CODES)
 
 
+
+# 회사 단위 격리. 조건을 붙일지는 owner.applies() 로 묻는다.
+try:
+    import owner
+except ImportError:
+    import sys as _sys
+    from pathlib import Path as _Path
+    for _b in [_Path(__file__).resolve().parent, *_Path(__file__).resolve().parents]:
+        if (_b / "auth" / "owner.py").is_file():
+            _sys.path.insert(0, str(_b / "auth"))
+            break
+    try:
+        import owner
+    except ImportError:
+        # 이 파일만 떼어내 쓸 때. 아무것도 안 거른다.
+        # 서버에서는 owner.AVAILABLE 로 진짜가 올라왔는지 확인한다.
+        class _NoOwner:
+            AVAILABLE = False
+            current = staticmethod(lambda: None)
+            where = staticmethod(lambda alias="evidence": "1 = 1")
+            mine = staticmethod(lambda column="evidence_id", table=None: "1 = 1")
+            and_mine = staticmethod(lambda column="evidence_id", table=None: "")
+            and_where = staticmethod(lambda alias="evidence": "")
+            owns = staticmethod(lambda cur, evidence_id, q=None: True)
+            is_super = staticmethod(lambda: False)
+            blocked = staticmethod(lambda: False)
+            applies = staticmethod(lambda: False)
+            audit_denied = staticmethod(lambda a, e, v=1: None)
+            audit_super = staticmethod(lambda a, e, v, op: op())
+        owner = _NoOwner()
+
+
 def _check_role(action, role):
     if not ENFORCE_ROLE:
         return
@@ -158,6 +190,10 @@ def _record(action, result_id, actor, *, role=None, target=None,
             if not rows:
                 raise ReviewError("RESULT_NOT_FOUND", f"판정 결과가 없습니다: {result_id}")
             evidence_id = rows[0]["evidence_id"]
+            # 남의 회사 판정은 못 건드린다. 없는 것과 같은 답을 준다.
+            if not owner.owns(cur, evidence_id, _q):
+                raise ReviewError("RESULT_NOT_FOUND",
+                                  f"판정 결과가 없습니다: {result_id}")
 
             # 지금 결과가 아니면 손대지 못하게 한다.
             # 화면을 열어둔 채 증적이 재업로드되면, 옛 v1 결과를 승인해서
@@ -299,10 +335,21 @@ def reject(result_id, actor, reason, role=None):
 
 
 def history(result_id):
-    """그 결과에 대한 처리 이력. 순서대로."""
+    """
+    그 결과에 대한 처리 이력. 순서대로.
+
+    result_id 는 1, 2, 3 … 으로 세는 번호다. 회사를 안 보고 돌려주면
+    번호를 바꿔가며 남의 회사 검토 사유·수정 전후 값을 읽을 수 있다.
+    """
     conn = _connect()
     try:
         with conn.cursor() as cur:
+            cur.execute(_q("SELECT evidence_id FROM phase2_result "
+                           " WHERE result_id = %s"), (result_id,))
+            rows = _rows(cur)
+            if not rows or not owner.owns(cur, rows[0]["evidence_id"], _q):
+                raise ReviewError("RESULT_NOT_FOUND",
+                                  f"판정 결과가 없습니다: {result_id}")
             cur.execute(_q(
                 "SELECT history_id, seq, action, actor, actor_role, acted_at, target, "
                 "value_before, value_after, reason, state_before, state_after, "
