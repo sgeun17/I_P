@@ -71,9 +71,23 @@ def main():
             meta[it["item_id"]] = (ctl["control_id"], ctl.get("control_name", ""),
                                    it.get("check_kind"))
 
+    # 사유 코드 표. 기준팀 검토 사례에는 사유 코드 칸이 없어서(2026-10-11 기준)
+    # MET 이 아닌 사례에는 결과값이 맞는 코드 하나를 대신 붙인다. 여기서 보는
+    # 것은 조립된 출력이 규격에 맞는지이고, 코드 선택의 정확성은 아니다.
+    codes_path = (pick(repo, "phase2_*", "chapter2_reason_codes_draft.json")
+                  or pick(repo, "phase2_*", "reason_codes_draft.json"))
+    stand_in = {}
+    if codes_path:
+        for cd in json.load(open(codes_path, encoding="utf-8")).get("codes", []):
+            stand_in.setdefault(cd["result"], cd["code"])
+
     cases = examples.get("cases", [])
     print(f"체크리스트: {checklist_path.name}  ({checklist.get('draft_version')})")
-    print(f"검토 사례:  {len(cases)}건\n")
+    print(f"검토 사례:  {len(cases)}건")
+    if stand_in:
+        print(f"사유 코드:  기준팀 사례에 칸이 없어 결과값별 대표 코드로 채움 "
+              f"({codes_path.name})")
+    print()
 
     # ① 사례를 통제항목별로 모은다
     by_control = collections.defaultdict(list)
@@ -94,6 +108,8 @@ def main():
                           if c.get("evidence_text") and
                           c.get("expected_result_draft") in ("MET", "NOT_MET") else []),
             "check_kind": kind,
+            "reason_codes": ([stand_in[c.get("expected_result_draft")]]
+                             if c.get("expected_result_draft") in stand_in else []),
         })
 
     if unknown_items:
@@ -200,3 +216,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
