@@ -140,6 +140,114 @@ async def require_login(request: Request, call_next):
         owner.clear()
 
 
+# ── Phase 2 는 뒤에서 돌린다 ──────────────────────────────────────────────
+# 문항 하나에 LLM 호출 한 번이라 통제항목 하나가 몇 분씩 걸린다. 요청을 붙들고
+# 기다리면 브라우저가 먼저 끊긴다. 따로 돌리고 상태만 물어보게 한다.
+import threading  # noqa: E402
+
+PHASE2_AUTO = os.getenv("PHASE2_AUTO", "1") != "0"   # 0 이면 Phase 1 에서 멈춘다
+_JOBS: dict = {}
+_JOBS_LOCK = threading.Lock()
+
+
+def _now_text():
+    from datetime import datetime
+    return datetime.now().isoformat(timespec="seconds")
+
+
+def scope_of(request: Request) -> dict:
+    """지금 로그인한 사람의 범위. 새 스레드에는 자동으로 안 따라간다."""
+    me = getattr(getattr(request, "state", None), "user", None) or {}
+    return {"company_id": me.get("companyId"), "actor": me.get("email"),
+            "role": me.get("role"), "is_super": me.get("role") == "super"}
+
+
+def _phase2_model():
+    return ((os.getenv("LLM_MODEL") or os.getenv("PHASE1_JUDGMENT_MODEL")
+             or "").strip() or None)
+
+
+def _phase2_work(evidence_id, version, scope, job):
+    _keep = None
+    try:
+        if scope.get("company_id") or scope.get("is_super"):
+            owner.use(**scope)
+        else:
+            owner.clear()
+        import phase2_runner   # 여기서 phase2_판단/src 가 경로 앞에 붙는다
+
+        # self_check 라는 이름을 통합팀과 판단팀이 둘 다 쓴다. 서버가 먼저
+        # 올려둔 통합팀 것이 캐시에 남아 있으면 판단팀 것을 못 읽는다.
+        # 돌리는 동안만 비우고 끝나면 되돌린다.
+        _keep = sys.modules.pop("self_check", None)
+        if _keep is not None and "phase2" not in str(getattr(_keep, "__file__", "")):
+            job["note"] = "self_check 이름 겹침을 피해 판단팀 것을 읽었습니다."
+        else:
+            if _keep is not None:
+                sys.modules["self_check"] = _keep
+            _keep = None
+
+        def progress(i, total, _eid, control_id):
+            job.update(done=i - 1, total=total, now=control_id)
+
+        kw = {}
+        m = _phase2_model()
+        if m:
+            kw["model"] = m
+        job.update(state="RUNNING", model=m or "phase2_runner 기본값")
+        out = phase2_runner.run_evidence(evidence_id, version,
+                                         progress=progress, **kw)
+        job.update(state="DONE", done=job.get("total") or 0, now=None,
+                   judged=out.get("judged"), excluded=out.get("excluded"),
+                   failed=out.get("failed"),
+                   skipped=[s.get("reason_code") for s in out.get("skipped", [])])
+    except Exception as exc:                                   # noqa: BLE001
+        job.update(state="FAILED", now=None,
+                   error=f"{getattr(exc, 'code', type(exc).__name__)}: {exc}")
+    finally:
+        owner.clear()
+        if _keep is not None:
+            sys.modules["self_check"] = _keep
+        job["finished_at"] = _now_text()
+
+
+def phase2_start(evidence_id, scope, version=None) -> dict:
+    """이미 돌고 있으면 그 상태를 돌려준다. 같은 증적을 두 번 돌리지 않는다."""
+    if not PHASE2_AUTO:
+        return {"started": False, "state": "OFF",
+                "note": "PHASE2_AUTO=0 입니다. Phase 1 에서 멈춥니다."}
+    with _JOBS_LOCK:
+        job = _JOBS.get(evidence_id)
+        if job and job.get("state") in ("QUEUED", "RUNNING"):
+            return {"started": False, **job}
+        job = {"evidence_id": evidence_id, "state": "QUEUED", "done": 0,
+               "total": None, "now": None, "started_at": _now_text()}
+        _JOBS[evidence_id] = job
+    threading.Thread(target=_phase2_work, daemon=True,
+                     args=(evidence_id, version, scope, job)).start()
+    return {"started": True, **job}
+
+
+@app.post("/api/phase2/run/{evidence_id}")
+def phase2_run(request: Request, evidence_id: str, version: int | None = None):
+    """Phase 1 이 끝난 증적을 Phase 2 로 넘긴다. 바로 돌아오고 뒤에서 돈다."""
+    if not is_visible(evidence_id):
+        raise HTTPException(status_code=404, detail={"code": "EVIDENCE_NOT_FOUND"})
+    return phase2_start(evidence_id, scope_of(request), version)
+
+
+@app.get("/api/phase2/status/{evidence_id}")
+def phase2_status(evidence_id: str):
+    """진행 상태. 화면이 몇 초마다 물어보면 된다."""
+    if not is_visible(evidence_id):
+        raise HTTPException(status_code=404, detail={"code": "EVIDENCE_NOT_FOUND"})
+    job = _JOBS.get(evidence_id)
+    if not job:
+        return {"evidence_id": evidence_id, "state": "NONE",
+                "note": "아직 돌린 적이 없습니다."}
+    return job
+
+
 def fail(exc: IntegrationError):
     status = 422
     if exc.stage in {"search", "judgment"}:
@@ -173,13 +281,18 @@ async def upload(request: Request, file: UploadFile = File(...),
 
 
 @app.post("/api/inspect/{evidence_id}")
-def inspect(evidence_id: str, top_k: int = 5, model: str | None = None):
+def inspect(request: Request, evidence_id: str, top_k: int = 5,
+            model: str | None = None, phase2: bool | None = None):
     if not is_visible(evidence_id):
         raise HTTPException(status_code=404, detail={"code": "EVIDENCE_NOT_FOUND"})
     try:
-        return inspect_evidence(evidence_id, top_k=top_k, model=model)
+        out = inspect_evidence(evidence_id, top_k=top_k, model=model)
     except IntegrationError as exc:
         fail(exc)
+    # Phase 1 이 끝났으면 Phase 2 를 뒤에서 이어 돌린다.
+    if phase2 is not False:
+        out["phase2"] = phase2_start(evidence_id, scope_of(request))
+    return out
 
 
 @app.post("/api/upload-and-inspect")
@@ -189,15 +302,22 @@ async def upload_and_inspect(
     evidence_id: str | None = Form(None),
     top_k: int = Form(5),
     model: str | None = Form(None),
+    phase2: bool | None = Form(None),
 ):
     uploaded = await process_file(file, evidence_id,
                                   actor_of(request), company_of(request))
     if uploaded.get("status") != "ok":
         raise HTTPException(status_code=400, detail=uploaded)
     try:
-        return inspect_evidence(uploaded["evidence_id"], top_k=top_k, model=model)
+        out = inspect_evidence(uploaded["evidence_id"], top_k=top_k, model=model)
     except IntegrationError as exc:
         fail(exc)
+    # 업로드하면서 바로 점검한 경우에도 Phase 2 로 이어 돌린다.
+    # /api/inspect 쪽만 이어 붙이면, 화면의 '증적 업로드' 로 올린 증적은
+    # Phase 2 가 영영 안 돈다 (화면은 이 경로를 쓴다).
+    if phase2 is not False:
+        out["phase2"] = phase2_start(uploaded["evidence_id"], scope_of(request))
+    return out
 
 
 @app.get("/api/results/{evidence_id}")
