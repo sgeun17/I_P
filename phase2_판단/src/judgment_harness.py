@@ -13,6 +13,7 @@ from dataclasses import dataclass, replace
 from copy import deepcopy
 from hashlib import sha256
 import json
+import re
 import time
 from typing import Any, Callable, Mapping, Sequence
 
@@ -20,6 +21,7 @@ import httpx
 
 from structured_output_adapter import validate_model_generated_item, item_json_schema
 from grounding_prompts import PromptPackage, build_prompt_package, build_retry_user_prompt
+from evidence_contracts import question_focus
 from citation_spans import prepare as prepare_spans, materialize, adapt_prompts, SPAN_VERSION
 from phase1_runtime import (
     DEFAULT_RETRY_POLICY,
@@ -35,6 +37,106 @@ from phase1_runtime import (
 
 OutputValidator = Callable[[Any], list[str]]
 LLMCall = Callable[..., str]
+
+
+def result_code_generation_schema(schema, reason_codes):
+    """Private generation branches; public validation contract is unchanged.
+
+    if/then constraints are replaced with explicit result branches so model
+    generation cannot attach failure codes to MET or invent technical errors.
+    Citation choices are shared through refs, not triplicated in the prompt.
+    """
+    bounded = deepcopy(schema)
+    properties = bounded.get('properties', {})
+    if 'result' not in properties or 'reason_codes' not in properties:
+        return bounded
+    for key in ('error_code', 'critical', 'check_kind'):
+        properties.pop(key, None)  # Trusted pipeline computes these fields.
+    bounded['required'] = [k for k in bounded.get('required', []) if k in properties]
+    if 'reason_codes' not in bounded['required']:
+        bounded['required'].append('reason_codes')
+    catalog = {row['code']: row.get('result') for row in reason_codes or [] if row.get('code')}
+    canonical = properties['reason_codes'].get('items', {}).get('enum', [])
+    if not catalog:
+        catalog = {code: ('NOT_MET' if code.startswith('P2_NM_') else 'UNKNOWN') for code in canonical}
+    definitions = bounded.setdefault('$defs', {})
+    citation_field = 'citations' if 'citations' in properties else 'citation_span_ids'
+    if citation_field in properties:
+        array = deepcopy(properties[citation_field])
+        definitions['GenerationCitationItem'] = array.get('items', {})
+        array['items'] = {'$ref': '#/$defs/GenerationCitationItem'}
+        properties[citation_field] = array
+    branches = []
+    for result in ('MET', 'NOT_MET', 'UNKNOWN'):
+        allowed = [code for code, value in catalog.items() if value == result]
+        if result != 'MET' and not allowed:
+            continue
+        branch_properties = deepcopy(properties)
+        branch_properties['result'] = {'const': result}
+        branch_properties['reason_codes'] = ({'type': 'array', 'maxItems': 0}
+            if result == 'MET' else {'type': 'array', 'minItems': 1, 'uniqueItems': True,
+                'items': {'type': 'string', 'enum': allowed}})
+        if citation_field in branch_properties and result != 'UNKNOWN':
+            branch_properties[citation_field]['minItems'] = 1
+        branches.append({'type': 'object', 'additionalProperties': False,
+            'required': list(bounded['required']), 'properties': branch_properties})
+    bounded.pop('allOf', None)
+    bounded['anyOf'] = branches
+    return bounded
+
+
+def _generated_field_messages(payload, reason_codes):
+    """Reject internally contradictory generated fields without rewriting."""
+    messages = []
+    catalog = {row['code']: row.get('result') for row in reason_codes or [] if row.get('code')}
+    result = payload.get('result')
+    codes = payload.get('reason_codes', [])
+    if isinstance(codes, list):
+        if result == 'MET' and codes:
+            messages.append('GEN_RESULT_CODE_CONFLICT: MET requires empty reason_codes; fix the fields, not the evidence')
+        if catalog and any(c in catalog and catalog[c] != result for c in codes):
+            messages.append('GEN_RESULT_CODE_CONFLICT: reason_codes must belong to the selected result')
+    if 'error_code' in payload:
+        messages.append('GEN_RESERVED_FIELD: error_code is produced by the execution layer, not the model')
+    reason = str(payload.get('reason', '')).strip()
+    if reason in catalog or re.fullmatch(r'(?:P2_[A-Z0-9_]+|P2[RE]\d+|E\d+)', reason):
+        messages.append('GEN_REASON_CODE_ONLY: reason must explain observed facts and missing conditions in natural language, not a code')
+    return messages
+
+
+def exact_quote_schema(schema, context):
+    """Bound generation to trusted whole rows/headings without changing output.
+
+    The validator still rejects wrong chunk/page and checks semantic grounding.
+    Outside the bounded context, retain the old schema rather than truncate.
+    """
+    chunks = context.get('chunks', [])
+    if not chunks or len(chunks) > 64:
+        return schema
+    total = sum(len(str(c.get('text', ''))) + len(str(c.get('heading') or '')) for c in chunks)
+    if total > 24000:
+        return schema
+    branches = []
+    for chunk in chunks:
+        if chunk.get('role') not in {'evidence', 'context'}:
+            continue
+        text = chunk.get('text', '')
+        if not isinstance(text, str):
+            continue
+        quotes = list(dict.fromkeys([q for q in [text, *text.splitlines(), chunk.get('heading')] if isinstance(q, str) and q.strip()]))
+        if not quotes:
+            continue
+        page = chunk.get('page_start') if chunk.get('page_start') == chunk.get('page_end') else None
+        branches.append({'type': 'object', 'additionalProperties': False,
+            'required': ['chunk_id', 'page', 'quote'], 'properties': {
+                'chunk_id': {'type': 'string', 'const': chunk['chunk_id']},
+                'page': {'enum': [page]}, 'quote': {'type': 'string', 'enum': quotes}}})
+    if not branches or sum(len(b['properties']['quote']['enum']) for b in branches) > 512:
+        return schema
+    bounded = deepcopy(schema)
+    bounded.setdefault('properties', {})['citations'] = {
+        'type': 'array', 'maxItems': 32, 'items': {'anyOf': branches}}
+    return bounded
 
 
 @dataclass(frozen=True)
@@ -111,6 +213,8 @@ def run_item_judgment(
     if not isinstance(requested_item_id, str) or not requested_item_id.strip():
         raise ValueError("A non-empty checklist item_id is required")
     output_schema = deepcopy(output_schema) if output_schema is not None else item_json_schema()
+    if not citation_span_selection:
+        output_schema = exact_quote_schema(output_schema, evidence_context)
     id_schema = output_schema.setdefault("properties", {}).setdefault("item_id", {"type": "string"})
     if id_schema.get("const", requested_item_id) != requested_item_id:
         raise ValueError("Output schema item_id conflicts with requested checklist item")
@@ -118,6 +222,7 @@ def run_item_judgment(
     output_schema.setdefault("required", [])
     if "item_id" not in output_schema["required"]:
         output_schema["required"].append("item_id")
+    output_schema = result_code_generation_schema(output_schema, reason_codes)
     organization_payload = dict(organization_context or {})
     organization_context_sha256 = (
         sha256(json.dumps(
@@ -145,6 +250,10 @@ def run_item_judgment(
     package = replace(package, user=package.user + "\n[현재 요청 문항 확인]\n"
         + "item_id는 반드시 " + json.dumps(requested_item_id, ensure_ascii=False)
         + " 이다. 다른 문항 ID나 사유코드를 item_id로 쓰지 않는다. 현재 checklist_item.question과 evidence_rule만 평가한다.\n")
+    focus = question_focus(checklist_item, evidence_context)
+    if focus:
+        package = replace(package, user=package.user + '\n[질문·대상·행위 연결 보조자료: 판정값 아님]\n'
+            + json.dumps(focus, ensure_ascii=False))
     if citation_span_selection:
         system, user = adapt_prompts(package.system, package.user)
         package = replace(package, system=system, user=user)
@@ -224,7 +333,7 @@ def run_item_judgment(
             last_code = ErrorCode.JSON_PARSE_FAILED if json_failed else ErrorCode.SCHEMA_INVALID
             last_messages = parse_messages
         else:
-            validation_messages = output_validator(parsed)
+            validation_messages = list(output_validator(parsed)) + _generated_field_messages(parsed, reason_codes)
             if not validation_messages:
                 history.append({"attempt": attempts, "raw_response": raw, "validation_messages": []})
                 return JudgmentRunResult(

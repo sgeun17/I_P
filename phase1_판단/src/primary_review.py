@@ -16,7 +16,7 @@ from enums import Decision, Relation, ReviewReason, ReviewStatus
 from models import Base, HumanReview, LLMMappingOutput, MappingInput
 from output_parser import extract_json_text, parse_llm_output
 
-VERSION = "phase1_document_purpose_review_v3_5_independent_purpose_trial"
+VERSION = "phase1_document_purpose_review_v3_6_consistent_generation"
 
 
 class CandidateCheck(Base):
@@ -159,6 +159,7 @@ fact_check_scope는 SOURCE_CLAIMS_ONLY다. JSON만 출력한다."""
 
 
 def live_purpose_schema(mapping_input):
+    from copy import deepcopy
     schema = PurposeCheck.model_json_schema()
     candidate = schema['$defs']['CandidateCheck']
     required = ['relevance_basis', 'document_role', 'purpose_evidence_span_ids', 'purpose_comparison']
@@ -168,6 +169,34 @@ def live_purpose_schema(mapping_input):
     candidate['properties']['purpose_comparison']['minLength'] = 1
     candidate['properties']['control_id']['enum'] = [c.control_id for c in mapping_input.candidate_controls]
     schema['properties']['candidate_checks'].update(minItems=len(mapping_input.candidate_controls), maxItems=len(mapping_input.candidate_controls))
+    # Constrain redundant purpose labels at generation, not by rewriting a
+    # returned decision. A model may choose any candidate or remain unresolved.
+    ids = [c.control_id for c in mapping_input.candidate_controls]
+    definitions = schema['$defs']
+    for index, control_id in enumerate(ids):
+        for main in (False, True):
+            entry = deepcopy(candidate)
+            entry['properties']['control_id'] = {'type': 'string', 'const': control_id}
+            roles = ['MAIN_PURPOSE'] if main else ['SUPPORTING_SECTION', 'INCIDENT_EXAMPLE', 'TOPIC_ONLY', 'NONE', 'UNRESOLVED']
+            entry['properties']['document_role'] = {'type': 'string', 'enum': roles}
+            if main:
+                entry['properties']['decision'] = {'type': 'string', 'const': 'RELATED'}
+                entry['properties']['purpose_evidence_span_ids']['minItems'] = 1
+                entry['properties']['evidence_span_ids']['minItems'] = 1
+            definitions[f'Candidate{index}_{int(main)}'] = entry
+    branches = []
+    for selected in [*range(len(ids)), None]:
+        properties = deepcopy(schema['properties'])
+        properties['purpose_status'] = {'enum': ['CLEAR'] if selected is not None else ['AMBIGUOUS', 'INSUFFICIENT']}
+        properties['primary_control_id'] = {'const': ids[selected]} if selected is not None else {'type': 'null'}
+        if selected is not None:
+            properties['purpose_span_ids']['minItems'] = 1
+        properties['candidate_checks']['items'] = {'anyOf': [
+            {'$ref': f'#/$defs/Candidate{i}_{int(i == selected)}'} for i in range(len(ids))]}
+        branches.append({'type': 'object', 'additionalProperties': False,
+                         'required': schema['required'], 'properties': properties})
+    # Coverage/duplicates and source IDs are still checked by assess().
+    schema = {'$defs': definitions, 'anyOf': branches}
     return schema
 
 

@@ -295,6 +295,9 @@ error_code={error_code}
 E403은 quote를 해당 청크의 연속 원문에서 그대로 복사해 교정한다. 여러 행을 합치거나 ...로 생략하지 마라.
 스키마 오류는 명시된 필드와 result/사유 코드의 조합을 확인한다. 정상 응답에 error_code를 넣지 마라.
 형식 오류를 피하려고 근거 있는 판정을 UNKNOWN으로 바꾸거나 인용을 삭제하지 마라.
+GEN_RESULT_CODE_CONFLICT·GEN_RESERVED_FIELD·GEN_REASON_CODE_ONLY는 출력 필드 오류다. 오류 메시지의 UNKNOWN 조건은 원문의 근거 부족 판정이 아니다. 원문과 질문을 다시 대조하여 판정값에 맞는 사유 코드 조합과 자연어 설명을 출력한다.
+MET이면 reason_codes=[]이며 NOT_MET용 P2_NM_*를 넣지 않는다. UNKNOWN이면 해당 UNKNOWN용 코드를 고른다. reason에는 사유코드가 아니라 같은 대상의 확인 사실·미확인 조건을 설명한다. error_code는 모델이 생성하지 않는다.
+실제 완료·시작 일시가 같은 날짜라도 09:00과 10:00처럼 시각이 다르면 시각까지 비교한다. 정확한 시각이 없는 같은 날짜 기록과 혼동하지 않는다. 실제 업무 시작 전 완료를 확인한 기록이 있으면 계획만 있다는 설명으로 지우지 않는다.
 단, 직전 판정도 정답은 아니다. 원문 근거가 부족하면 UNKNOWN으로 보류하고 부족한 이유를 명시하라.
 JSON 외의 텍스트는 출력하지 않는다.
 """
@@ -309,7 +312,26 @@ def build_system_prompt(output_schema):
 
 
 _notice_completeness_original_system_prompt = build_system_prompt
-PROMPT_VERSION = PROMPT_VERSION + '+notice-completeness-v1'
+PROMPT_VERSION = PROMPT_VERSION + '+notice-completeness-v1+record-boundaries-v1+question-event-binding-v1+prework-timing-v1+result-code-generation-v1'
+
+_record_boundaries_original_system_prompt = build_system_prompt
+def build_system_prompt(*args, **kwargs):
+    return _record_boundaries_original_system_prompt(*args, **kwargs) + """
+[원문 종류와 실제 활동의 연결]
+- reason은 사유코드가 아니라 원문 사실과 근거 연결을 설명하는 자연어 문장이다. MET은 reason_codes=[]이고 NOT_MET·UNKNOWN은 각각의 전용 코드만 사용한다. error_code/critical/check_kind는 실행 계층에서 결정하므로 생성하지 않는다.
+- 신규 채용 임직원의 업무 시작 전 교육은 입사 당일 교육 계획과 이수율만으로 시점 준수를 확정하지 않는다. 같은 대상의 실제 완료가 업무 시작보다 앞선 직접 완료 기록·선후관계 표현·비교 가능한 일시를 연결한다. 실제 시행 결과에 없는 시점을 계획표에서 옮기지 않는다. 정확한 시각만 유일한 증거로 요구하지 않되 같은 날의 날짜만으로 선후관계를 만들지 않는다.
+- 질문의 대상·행위·시점을 먼저 특정하고 reason에는 그 질문의 근거 연결을 설명한다. 신규 입사자 교육을 전사 교육·다른 과정의 이수율로 대신하지 않는다. 문항에 없는 95% 같은 합격 기준을 만들지 않는다.
+- 교육 계획 수립 문항은 실제 계획 표의 대상·일정·시간·방법·내용을 인용한다. 교육 이수율이나 예정된 미이수자 조치를 계획 수립의 이유로 대신하지 않는다. 예정된 재교육을 실시 완료로 바꾸지 않는다.
+- 암호키 지침의 생성방법·배포방식은 실제 적용 사건의 기록이 아니다. 목록의 생성일·보관 위치만으로 지침을 준수했다고 추정하지 않는다. 실제 이행 문항은 가명 키ID·사건에 방법·대상·필요 통제를 연결한다. 비밀 키값은 요구하지 않는다.
+- 질문·대상·행위 연결 보조자료는 제공 원문의 일부를 추린 안내이며 정답이 아니다. 문항의 전체 evidence_rule과 같은 사건의 기준·예외를 대조한다. 보조자료 밖의 원문도 검토하되 다른 과정·사건을 옮기지 않는다.
+- citations의 quote는 제공된 행 또는 청크 본문 전체 중 하나를 그대로 선택한다. 여러 행의 일부를 합치거나 생략기호를 넣지 않는다. 떨어진 부분은 별도 인용으로 선택한다.
+- heading은 파서가 제공한 제목 원문이며 해당 청크의 heading 전체를 인용할 수 있다. 제목과 본문을 합친 새 문장을 만들지 않는다.
+- 교육 계획표에 대상·시기·시간·내용이 있으면 계획 수립의 근거다. 실제 교육 제공·이수 문항은 같은 과정의 실시·이수 결과와 연결해야 한다. 계획을 완료로 설명하지 않는다.
+- 이상징후 탐지 기준과 검토 방법은 발견 후 대응절차가 아니다. 실제 사건 조치와 일반 대응절차 수립도 구분한다.
+- 주기 정의·검토 기록 존재·주기 준수는 다른 사실이다. 대상 등급별 주기가 다르면 해당 대상의 등급과 적용 회차를 연결하고 검토 수행일·기간을 확인한다. 조치일을 검토일로 바꾸지 않는다.
+- 연간 계획은 평가 연도가 끝나야 수립 시기가 도래하는 것이 아니다. 평가일·승인일·계획표를 함께 확인하며 문항에 없는 연말 종료 조건을 추가하지 않는다.
+- 새로운 근거를 만들어 MET으로 올리지 않는다. 연결이 부족하면 부족한 부분을 특정하여 UNKNOWN으로 보류한다.
+"""
 def build_system_prompt(output_schema):
     return _notice_completeness_original_system_prompt(output_schema) + '''
 [고지사항 완전성 근거 보완]

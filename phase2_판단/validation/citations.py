@@ -159,7 +159,11 @@ def validate_citations(
                 )
             )
 
-        if normalize(quote) not in normalize(str(_value(chunk, "text", ""))):
+        # A parser-provided heading is an independently visible source field.
+        # Admit only its entire exact content, never a heading/body splice.
+        heading = _value(chunk, "heading")
+        heading_match = isinstance(heading, str) and normalize(quote) == normalize(heading) and bool(normalize(heading))
+        if not heading_match and normalize(quote) not in normalize(str(_value(chunk, "text", ""))):
             issues.append(
                 CitationIssue("E403", "인용문이 청크 원문에 없다", index, chunk_id)
             )

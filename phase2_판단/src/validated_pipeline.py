@@ -16,6 +16,7 @@ from judgment_harness import run_item_judgment
 from phase1_runtime import call_llm, DEFAULT_RETRY_POLICY, retry_policy_snapshot
 from self_check import run_self_check, SELF_CHECK_VERSION
 from grounding_prompts import PROMPT_VERSION
+from evidence_contracts import question_binding_gap, VERSION as BINDING_VERSION
 from validation.contracts import (ROOT, INTERFACE, interface_module, item_schema, issue,
                                   output_schema_version, validate_schema)
 from validation.logic import validate_input, validate_item, validate_output, rule_version
@@ -80,6 +81,48 @@ def _notice_style_only_as_complete(item, output):
     # normal review; this guard does not certify its completeness.
     return bool(clauses) and all((style.search(line) or refusal.search(line))
         and not re.search(r'[:：|]', line) for line in clauses)
+
+
+def _observed_evidence_gap(item, output, context):
+    """Narrow negative guards. No false return establishes MET.
+
+    These separate the observed record types; they neither invent a deadline
+    nor treat a single keyword or an absent file as noncompliance.
+    """
+    if output.get('result') != 'MET':
+        return None
+    question = re.sub(r'\s+', '', str(item.get('question', '')))
+    chunks = context.get('chunks', [])
+    by_id = {c['chunk_id']: c for c in chunks}
+    citations = output.get('citations', [])
+    if not citations:
+        return None
+    quoted = '\n'.join(str(c.get('quote', '')) for c in citations)
+    lines = [line for c in chunks for line in str(c.get('text', '')).splitlines()]
+    if item.get('check_kind') == 'implementation' and re.search(r'직무.*교육|전문교육', question):
+        plan_rows = [line for line in quoted.splitlines() if re.search(r'과정\s*[:：].*(?:직무|전문).*교육', line)]
+        if plan_rows and all('계획' in str(by_id.get(c.get('chunk_id'), {}).get('heading', '')) for c in citations):
+            courses = [re.search(r'과정\s*[:：]\s*([^|]+)', row).group(1).strip() for row in plan_rows]
+            completed = any(course in line and re.search(r'이수자\s*[:：]\s*[1-9]\d*|실시하였|시행완료|교육완료', line)
+                            for course in courses for line in lines)
+            if not completed:
+                return ('PLAN_AS_EXECUTION', '직무 전문교육 계획은 확인되지만 같은 과정의 실제 실시·이수 기록이 연결되지 않아 교육 이행을 확정할 수 없습니다.')
+    if item.get('check_kind') == 'procedure' and '로그' in question and '이상징후' in question and '대응절차' in question:
+        response = re.compile(r'계정\s*잠금|권한\s*(?:회수|축소)|차단|소명\s*요청|신고|보고|대응\s*[:：]')
+        procedure = re.compile(r'경우|발견\s*시|탐지\s*시|발생\s*시|절차|단계|하도록|하여야|해야')
+        # A past incident action is not itself a prescribed response procedure.
+        prescribed = any(response.search(line) and procedure.search(line) for line in lines)
+        if '이상징후 기준' in quoted and not response.search(quoted) and not prescribed:
+            return ('DETECTION_AS_RESPONSE', '이상징후 탐지 기준과 검토 방법은 확인되지만, 발견 후 조치·보고 등 대응절차의 수립 근거가 연결되지 않습니다.')
+    if item.get('check_kind') == 'implementation' and re.search(r'계정|접근권한', question) and '주기' in question and '검토' in question:
+        if '검토 주기' in quoted and '조치일' in quoted:
+            dated_review = any(re.search(r'검토(?:기간|일|일자|수행일)\s*[:：].*20\d{2}', line) for line in lines)
+            ids = set(re.findall(r'PROC-\d+(?:/\d+)?', quoted))
+            differentiated = any('1등급' in line and '분기' in line for line in lines)
+            grades_linked = all(any(target in line and re.search(r'(?:등급\s*[:：]|[123]등급)', line) for line in lines) for target in ids)
+            if not dated_review or (differentiated and (not ids or not grades_linked)):
+                return ('RECORD_AS_CADENCE', '검토 기준과 조치 기록은 있으나 대상별 적용 주기 및 실제 검토 수행 시점의 연결이 부족합니다. 조치일을 검토일로 바꾸지 않고 주기 준수 여부를 보류합니다.')
+    return None
 
 
 def _destruction_timing_missing(item, output, context):
@@ -368,6 +411,26 @@ def run_validated_item(item, context, *, evidence_id, version, model, reason_cod
     output = deepcopy(run.parsed_output)
     output["check_kind"] = item["check_kind"]
     output.pop("critical", None)  # computed from the trusted checklist later
+    binding_gap = question_binding_gap(item, output, context)
+    if binding_gap:
+        code, message = binding_gap
+        audit.setdefault('semantic_guards', []).append({
+            'version': BINDING_VERSION, 'code': code, 'decision': 'MET_TO_UNKNOWN',
+            'original_output': deepcopy(output)})
+        citations = deepcopy(output.get('citations', []))
+        output = unknown(item, message, 'P2_U_SUBJECT_OR_EVENT_UNLINKED')
+        output['citations'] = citations
+        signals.append('SELF_CHECK_UNCERTAIN')
+    gap = _observed_evidence_gap(item, output, context)
+    if gap:
+        code, message = gap
+        audit.setdefault('semantic_guards', []).append({
+            'version': 'phase2_observed_record_boundaries_v1', 'code': code,
+            'decision': 'MET_TO_UNKNOWN', 'original_output': deepcopy(output)})
+        citations = deepcopy(output.get('citations', []))
+        output = unknown(item, message)
+        output['citations'] = citations
+        signals.append('SELF_CHECK_UNCERTAIN')
     if _destruction_timing_missing(item, output, context):
         audit.setdefault('semantic_guards', []).append({
             'version':'phase2_destruction_timing_binding_v1',
