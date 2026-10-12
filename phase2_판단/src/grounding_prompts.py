@@ -306,3 +306,17 @@ _CONTENT_CRITERIA_RULES = "\n[내용 기반 기준 존재 및 조건부 문항 �
 PROMPT_VERSION = PROMPT_VERSION + "+content-criteria-v1"
 def build_system_prompt(output_schema):
     return _content_criteria_original_system_prompt(output_schema) + _CONTENT_CRITERIA_RULES
+
+
+_notice_completeness_original_system_prompt = build_system_prompt
+PROMPT_VERSION = PROMPT_VERSION + '+notice-completeness-v1'
+def build_system_prompt(output_schema):
+    return _notice_completeness_original_system_prompt(output_schema) + '''
+[고지사항 완전성 근거 보완]
+고지사항을 빠짐없이 알렸는지 묻는 문항은 표시 방식과 내용의 완전성을 구분한다.
+굵은 글씨·밑줄·강조 표시는 전체 고지사항 포함과 실제 고지 이행의 증거가 아니다.
+해당 대상·시점의 실제 화면 또는 양식 내용과 확인된 적용 기준을 항목별로 연결한다.
+표시 방식 설명만 제공되거나 인용했다면 그 사실만 설명하고 완전성은 UNKNOWN으로 남긴다.
+확인되지 않은 법적 고지항목·기준을 임의로 만들거나 자료 부재를 NOT_MET으로 바꾸지 않는다.
+이 규칙은 동의 방법·강조 표시 자체를 묻는 다른 문항의 직접 근거를 부정하지 않는다.
+'''

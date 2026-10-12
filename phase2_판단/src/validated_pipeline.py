@@ -55,6 +55,71 @@ _RESTORE_TEST_CADENCE_RE = re.compile(
 )
 
 
+def _notice_style_only_as_complete(item, output):
+    """Reject observed style/consent-refusal fragments as exhaustive notice.
+
+    This is not a legal checklist or a completeness classifier. A false return
+    only leaves normal validation in place; it never establishes compliance.
+    """
+    question = str(item.get('question', ''))
+    if output.get('result') != 'MET' or not re.search(r'(고지|안내)\s*사항', question):
+        return False
+    if not re.search(r'빠짐|모두|전체|누락', question):
+        return False
+    quotes = [str(c.get('quote', '')).strip() for c in output.get('citations', [])]
+    if not quotes or any(not quote for quote in quotes):
+        return False  # Mechanical validation owns missing citations.
+    style = re.compile(r'굵(?:은|게)|밑줄|강조|글씨|글자|색상|표시\s*방법')
+    refusal = re.compile(r'동의.{0,16}거부|동의하지\s*않|가입.{0,12}(제한|불가)')
+    # Actual field/value rows or additional content must be evaluated normally.
+    # Do not treat a style sentence as a field-by-field completeness comparison.
+    clauses = [line.strip() for quote in quotes for line in re.split(r'[。.!?\n]', quote) if line.strip()]
+    # A refusal-right/consequence sentence is one notice fragment, not proof
+    # that all required notice contents were supplied. Adding that fragment
+    # must not bypass the style-only veto. Field/value content still follows
+    # normal review; this guard does not certify its completeness.
+    return bool(clauses) and all((style.search(line) or refusal.search(line))
+        and not re.search(r'[:：|]', line) for line in clauses)
+
+
+def _destruction_timing_missing(item, output, context):
+    """Hold dated destruction records missing a linked trigger/deadline.
+
+    No fixed legal grace period is introduced. False means only that this
+    absence guard did not apply; normal semantic validation is still needed.
+    """
+    question = re.sub(r'\s+', '', str(item.get('question', '')))
+    if output.get('result') != 'MET' or '파기' not in question or not re.search(r'지체없이|기한|기간내',question):
+        return False
+    quoted = [str(c.get('quote', '')) for c in output.get('citations', [])]
+    records = [line for quote in quoted for line in quote.splitlines()
+               if re.search(r'파기일\s*[:：]\s*20\d{2}[-./]\d{1,2}[-./]\d{1,2}',line)]
+    if not records:
+        return False  # Other evidence forms remain with the normal reviewers.
+    trigger = re.compile(r'(?:탈퇴일(?:자)?|탈퇴시점|보유기간\s*(?:만료일|종료일|경과일)|'
+                         r'처리목적\s*(?:달성일|종료일)|파기대상\s*(?:발생일|확정일)|기산일|파기기한)'
+                         r'\s*[:：]?\s*20\d{2}[-./]\d{1,2}[-./]\d{1,2}')
+    all_lines = [line for chunk in context.get('chunks', []) for line in str(chunk.get('text','')).splitlines()]
+    # Direct same-event statements may establish relative timing without two
+    # literal dates. A future policy alone is not a completed-event statement.
+    relative = re.compile(r'탈퇴\s*당일|지체\s*없이|기한\s*내|즉시')
+    completed = re.compile(r'파기\s*완료|파기하였|파기했다|삭제\s*완료')
+    for record in records:
+        if trigger.search(record):
+            continue
+        target = re.search(r'대상\s*[:：]\s*([^|\n]+)', record)
+        # A companion row must name the same target; dates of unrelated assets
+        # or the document's reporting date cannot satisfy this requirement.
+        companions = [line for line in all_lines if target and target.group(1).strip() in line]
+        if any(trigger.search(line) for line in companions):
+            continue
+        if any(relative.search(line) and completed.search(line)
+               and not re.search(r'미완료|하지않|하지\s*않|예정|해야|하여야|하도록',line) for line in companions):
+            continue
+        return True
+    return False
+
+
 def _absence_only_not_met(item, output):
     """Reject NOT_MET that proves only missing evidence, not non-compliance."""
     if output.get("result") != "NOT_MET":
@@ -303,6 +368,35 @@ def run_validated_item(item, context, *, evidence_id, version, model, reason_cod
     output = deepcopy(run.parsed_output)
     output["check_kind"] = item["check_kind"]
     output.pop("critical", None)  # computed from the trusted checklist later
+    if _destruction_timing_missing(item, output, context):
+        audit.setdefault('semantic_guards', []).append({
+            'version':'phase2_destruction_timing_binding_v1',
+            'decision':'MET_TO_UNKNOWN',
+            'reason':'파기일은 확인되나 같은 대상의 파기 대상 발생일·기한 또는 직접 기한 준수 기록이 연결되지 않음',
+            'original_output':deepcopy(output),
+        })
+        citations = deepcopy(output.get('citations', []))
+        output = unknown(item,
+            '파기 실시 기록은 확인되지만, 같은 대상의 탈퇴일·보유기간 종료일 등 파기 대상 발생 시점과 '
+            '파기일의 관계가 확인되지 않아 지체 없이 파기했는지는 확정할 수 없습니다. '
+            '파기 실시 여부와 기한 준수 여부를 구분하여 검토가 필요합니다.',
+            'P2_U_TIME_OR_VERSION_UNCLEAR')
+        output['citations'] = citations
+        signals.append('SELF_CHECK_UNCERTAIN')
+    if _notice_style_only_as_complete(item, output):
+        audit.setdefault('semantic_guards', []).append({
+            'version':'phase2_notice_completeness_fragments_v1_1',
+            'decision':'MET_TO_UNKNOWN',
+            'reason':'표시 방식과 동의 거부·가입 제한 등 일부 안내만으로 고지사항 전체 충족을 입증할 수 없음',
+            'original_output':deepcopy(output),
+        })
+        citations = deepcopy(output.get('citations', []))
+        output = unknown(item,
+            '인용에서 강조 표시 또는 동의 거부·가입 제한 등 일부 안내는 확인되지만, '
+            '그 인용만으로 적용 고지사항이 빠짐없이 포함되고 고지되었는지는 확인할 수 없습니다. '
+            '해당 동의 화면·양식의 실제 고지 내용과 적용 기준의 항목별 대조가 필요합니다.')
+        output['citations'] = citations
+        signals.append('SELF_CHECK_UNCERTAIN')
     if _absence_only_not_met(item, output):
         audit["semantic_guards"] = [{
             "version": "phase2_absence_not_failure_v1",

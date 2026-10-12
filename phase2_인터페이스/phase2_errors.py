@@ -183,6 +183,19 @@ SELF_CHECK_SIGNALS = {
     "SELF_CHECK_UNCERTAIN": "P2R205",
     "SELF_CHECK_LOW_CONFIDENCE": "P2R205",   # 확신도가 임계 미만. UNCERTAIN 과 같이 본다
     "SELF_CHECK_NOT_RUN": "P2R106",          # Self-check 를 아예 못 돌렸다 = LLM 호출 실패
+    # Existing uncertainty code, not a new wire enum. These signals remain
+    # review-required; registering them must never convert UNKNOWN to MET.
+    "FRESHNESS_DATE_MISSING": "P2R205",
+    "FRESHNESS_DATE_ROLE_UNSPECIFIED": "P2R205",
+    "FRESHNESS_POLICY_MISSING": "P2R205",
+    "FRESHNESS_INVALID_DATE": "P2R205",
+    "FRESHNESS_AMBIGUOUS_DATE": "P2R205",
+    "FRESHNESS_OCR_DATE_REVIEW": "P2R205",
+    "FRESHNESS_FUTURE_DATE": "P2R205",
+    "FRESHNESS_STALE": "P2R205",
+    "FORMAT_UNKNOWN": "P2R205",
+    "FORMAT_MISMATCH": "P2R205",
+    "POLICY_MISSING": "P2R205",
 }
 
 # 표에 없는 신호가 왔을 때 붙이는 코드와, provisional_reason 에 쓰는 머리말.
