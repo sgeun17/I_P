@@ -172,6 +172,16 @@ def build_result(
         review = adjust_review(review, validation, output, mapping_input,
                                primary_assessment, thresholds)
 
+    # Also protect single-mapping results, which do not enter purpose review.
+    # Keep the original mapping/quotes and mechanical validation unchanged.
+    if output is not None:
+        from primary_review import contract_security_findings
+        if contract_security_findings(mapping_input, output):
+            review = review.model_copy(update={
+                'required': True, 'status': ReviewStatus.PENDING,
+                'reasons': list(dict.fromkeys([*review.reasons, ReviewReason.UNCERTAIN_DECISION])),
+            })
+
     if output is None:
         # 판단 못 함. NO_MATCH이지만 "관련 항목 없음"이 아니다.
         # processing_status로 구분하고, 평가 지표 계산에서 제외한다.

@@ -292,7 +292,7 @@ def test_runner_retries_bad_quote_and_page_then_accepts_repair(mapping_input, go
         citation = bad[section][0]["citations"][0]
         citation["quote"] = "원문에 존재하지 않는 변형 인용문"
         citation["page"] = 999
-    responses = [json.dumps(bad, ensure_ascii=False), _without_derived_match_status(good)]
+    responses = [json.dumps(bad, ensure_ascii=False), '{"2.5.1":["S00000"]}']
     calls = []
 
     def handler(request: httpx.Request):
@@ -308,15 +308,11 @@ def test_runner_retries_bad_quote_and_page_then_accepts_repair(mapping_input, go
     assert result.attempts == 2
     assert result.last_issue_codes == ()
     retry_prompt = calls[1]["messages"][1]["content"]
-    assert "E403" in retry_prompt
-    assert "E404" in retry_prompt
-    assert "연속해서 존재하는 문자열" in retry_prompt
-    assert "page_start~page_end" in retry_prompt
-    assert "citation_failures" in retry_prompt
-    assert "failed_quote" in retry_prompt
-    assert "원문에 존재하지 않는 변형 인용문" in retry_prompt
-    assert "failed_page" in retry_prompt
-    assert "999" in retry_prompt
+    assert "source_spans" in retry_prompt
+    assert "S00000" in retry_prompt
+    repaired = json.loads(result.raw_response)
+    assert repaired['mapped_controls'][0]['citations'][0]['page'] == 1
+    assert repaired['mapped_controls'][0]['reason'] == good['mapped_controls'][0]['reason']
     assert mapping_input.chunks[0].chunk_id in retry_prompt
 
 

@@ -22,7 +22,8 @@ from typing import Any
 from models import LLMMappingOutput, MappingInput
 
 SPAN_REPAIR = os.environ.get('PHASE1_SPAN_REPAIR') == '1'
-PROMPT_VERSION = 'phase1_mapping_v0.12-spans' if SPAN_REPAIR else 'phase1_mapping_v0.7'
+PROMPT_VERSION = ('phase1_mapping_selective_v1' if os.getenv('PHASE1_SELECTIVE_REVIEW', '1')=='1'
+                  else ('phase1_mapping_v0.12-spans' if SPAN_REPAIR else 'phase1_mapping_v0.7'))
 RULESET_VERSION = "mapping_rules_v0.7"
 
 
@@ -172,6 +173,20 @@ _BASE_SYSTEM = r"""
 - overlap 때문에 동일 quote가 여러 청크에 있더라도 같은 근거를 중복해서 부풀리지 않는다.
 
 [최종 매핑 절차]
+문서 전체 목적과 각 절의 세부 주제를 먼저 구분한다. 처리방침에서 위탁·파기 절이
+상세하더라도 문서 전체 목적이 처리방침 수립·공개라면 3.5.1을 대표로 고른다.
+파일명이나 검색 순위만 보지 말고 본문 제목·도입부·구조·공개 위치 등 직접 근거를 함께 본다.
+위험평가의 위협 예시에서 외주·클라우드가 언급된 것만으로 해당 운영 통제를 이행했다고 쓰지 않는다.
+2.3.2는 업체명·위탁업무만으로 선택하지 않는다. 계약·약정과 연결된 보안 요구사항이나
+그 요구사항의 누락·미이행 기록이 직접 있어야 한다. 일부 직접 근거도 관련성이 될 수 있다.
+계획·정책·주기·방법이 명시됐다는 사실과 실제 수행·완료됐다는 사실을 구분해 설명한다.
+설명에 여러 주장을 묶을 때 각각의 직접 근거가 있어야 한다. 계획 수립 구절만 보고
+경영진이 이행결과를 확인했다고 추가하지 않는다. 계획 승인과 이행결과 확인은 별개다.
+필수 동의 거부에 따른 가입 제한과 선택 동의 거부에도 이용 가능하다는 사실은 각각 해당 원문에 연결한다.
+필수 동의 제한 문구만 인용해 선택 동의의 서비스 비거부 근거로 삼지 않는다.
+14세 미만 가입을 받지 않는 정책은 법정대리인 동의를 받는 절차의 기록이 아니다.
+아동 가입 차단을 법정대리인 동의 절차로 설명하지 않는다.
+불확실성은 감추지 않는다. 신뢰도는 실제 확신 수준이며 검토를 피하려고 올리지 않는다.
 1. 후보 전부의 decision을 먼저 결정한다.
 2. decision=RELATED인 후보가 0개면 mapped_controls=[]로 둔다.
    UNCERTAIN만 남은 경우도 mapped_controls=[]이며, Human Review는 후속 정책이 처리한다.

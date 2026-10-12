@@ -10,6 +10,7 @@ Citation 원문 일치/page 일치와 Human Review 전환은 찬우 Validator �
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+from copy import deepcopy
 from hashlib import sha256
 import json
 import time
@@ -17,7 +18,7 @@ from typing import Any, Callable, Mapping, Sequence
 
 import httpx
 
-from structured_output_adapter import validate_model_generated_item
+from structured_output_adapter import validate_model_generated_item, item_json_schema
 from grounding_prompts import PromptPackage, build_prompt_package, build_retry_user_prompt
 from citation_spans import prepare as prepare_spans, materialize, adapt_prompts, SPAN_VERSION
 from phase1_runtime import (
@@ -106,6 +107,17 @@ def run_item_judgment(
         prompt_context, span_map, output_schema = prepare_spans(
             evidence_context, str(checklist_item.get("item_id") or ""), reason_codes
         )
+    requested_item_id = checklist_item.get("item_id")
+    if not isinstance(requested_item_id, str) or not requested_item_id.strip():
+        raise ValueError("A non-empty checklist item_id is required")
+    output_schema = deepcopy(output_schema) if output_schema is not None else item_json_schema()
+    id_schema = output_schema.setdefault("properties", {}).setdefault("item_id", {"type": "string"})
+    if id_schema.get("const", requested_item_id) != requested_item_id:
+        raise ValueError("Output schema item_id conflicts with requested checklist item")
+    id_schema["const"] = requested_item_id
+    output_schema.setdefault("required", [])
+    if "item_id" not in output_schema["required"]:
+        output_schema["required"].append("item_id")
     organization_payload = dict(organization_context or {})
     organization_context_sha256 = (
         sha256(json.dumps(
@@ -130,6 +142,9 @@ def run_item_judgment(
         organization_context=organization_payload,
         output_schema=output_schema,
     )
+    package = replace(package, user=package.user + "\n[현재 요청 문항 확인]\n"
+        + "item_id는 반드시 " + json.dumps(requested_item_id, ensure_ascii=False)
+        + " 이다. 다른 문항 ID나 사유코드를 item_id로 쓰지 않는다. 현재 checklist_item.question과 evidence_rule만 평가한다.\n")
     if citation_span_selection:
         system, user = adapt_prompts(package.system, package.user)
         package = replace(package, system=system, user=user)

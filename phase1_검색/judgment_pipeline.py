@@ -95,11 +95,18 @@ def run_judgment(
     assessment = None
     review_enabled = os.getenv("PHASE1_PRIMARY_REVIEW", "1") == "1"
     output, issues = parse_llm_output(run.raw_response or "")
+    selective = os.getenv('PHASE1_SELECTIVE_REVIEW', '1') == '1'
+    trigger_reasons = []
+    if selective and output is not None and not issues:
+        from selective_review import triggers
+        trigger_reasons = triggers(output, mapping_input)
     if (review_enabled and run.call_error is None and output is not None
             and not issues and len(output.mapped_controls) >= 2
-            and validate(output, mapping_input).passed):
+            and validate(output, mapping_input).passed
+            and (not selective or bool(trigger_reasons))):
         run = run_check(
-            run, mapping_input, model=model_name, isolate_explanations=True,
+            run, mapping_input, model=model_name, isolate_explanations=not selective,
+            source_only_batch=selective,
             topic_mapping_correction=True, client_config=client_config,
             generation=generation, http_client=http_client,
             context_budget=context_budget, token_counter=token_counter,
@@ -117,6 +124,20 @@ def run_judgment(
         trace_id=trace_id,
         primary_assessment=assessment,
     )
+    if selective:
+        skipped = (assessment is None and output is not None and not issues
+                   and run.call_error is None and review_enabled and not trigger_reasons)
+        if skipped:
+            from selective_review import adjust_without_second_pass
+            mapping_result = adjust_without_second_pass(mapping_result, output, mapping_input)
+        if output is not None and not issues:
+            from selective_review import apply_fact_vetoes
+            mapping_result = apply_fact_vetoes(mapping_result, output, mapping_input)
+        run = __import__('dataclasses').replace(run, attempt_records=tuple(run.attempt_records)+({
+            'operation':'selective_review_trial_v1','trigger_reasons':trigger_reasons,
+            'second_pass_skipped':skipped,'second_pass_attempted':assessment is not None,
+            'first_pass_based_release':skipped,
+            'semantic_accuracy_confirmed':False},))
     elapsed_ms = max(0, round((time.perf_counter() - started) * 1000))
     mapping_result = mapping_result.model_copy(update={"processing_time_ms": elapsed_ms})
     return JudgmentPipelineResult(

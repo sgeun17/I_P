@@ -191,8 +191,9 @@ def run_mapping_llm(
             # 재시도 기회를 잃는다. 전체 Validator를 여기서도 실행하되,
             # 정책이 허용한 교정 가능 오류만 골라 한 번 다시 생성한다.
             validation = validate(output, mapping_input)
-            # Opt-in citation-only repair. Preserve the latest team's general retry path below.
-            if SPAN_REPAIR and retry_count == 0 and any(
+            # Source-span citation repair uses the existing one-retry budget by default.
+            # It cannot change relevance, PRIMARY, or explanations.
+            if retry_count == 0 and any(
                 i.code.value in {'E401', 'E403', 'E404'} for i in validation.issues
             ) and retry_policy.max_retries >= 1:
                 from span_repair import prepare, apply_patch_response

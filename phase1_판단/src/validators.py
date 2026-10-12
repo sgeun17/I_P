@@ -19,9 +19,6 @@ from enums import Decision, ErrorCode, MatchStatus, Relation
 from kb import DEFAULT_INDEX, ControlIndex
 from models import Chunk, Citation, LLMMappingOutput, MappingInput, ValidationIssue, ValidationResult
 
-MAX_MAPPED_CONTROLS = 3
-
-
 # --------------------------------------------------------------------------
 # 문자열 정규화
 # --------------------------------------------------------------------------
@@ -285,12 +282,12 @@ def validate_rules(output: LLMMappingOutput, mapping_input: MappingInput) -> lis
             )
         )
 
-    if len(mapped) > MAX_MAPPED_CONTROLS:
+    if len(mapped) > len(mapping_input.candidate_controls):
         # 자르지 않는다. 잘린 것이 정답일 수 있다.
         issues.append(
             ValidationIssue(
                 code=ErrorCode.TOO_MANY_MAPPED_CONTROLS,
-                message=f"매핑이 {len(mapped)}개로 상한 {MAX_MAPPED_CONTROLS}개를 넘는다",
+                message=f"매핑이 {len(mapped)}개로 제공된 후보 {len(mapping_input.candidate_controls)}개를 넘는다",
             )
         )
 
