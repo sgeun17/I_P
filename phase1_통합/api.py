@@ -22,6 +22,7 @@ for p in (INPUT_DIR, INPUT_DIR / "database", INPUT_DIR / "chunking",
 import owner  # noqa: E402
 
 from evidence_store import is_visible  # noqa: E402
+from chunk_store import get_chunks  # noqa: E402
 from main import actor_of, app as input_app, company_of, process_file  # noqa: E402
 from orchestrator import IntegrationError, inspect_evidence, load_result  # noqa: E402
 from self_check import check as integration_check  # noqa: E402
@@ -357,6 +358,47 @@ function metric(k,v){return '<div class="metric">'+esc(k)+'<b>'+esc(v)+'</b></di
 # /api/auth/login 은 auth_api.py 로 옮겼다 (2026-10-11).
 # 전에 있던 것은 아무 메일이나 비밀번호 없이 admin 으로 통과시키고,
 # 돌려주는 토큰을 어디에도 저장하지 않아 아무도 검증할 수 없었다.
+
+
+
+@app.get("/api/evidence/{evidence_id}/chunks")
+def evidence_chunks(evidence_id: str, version: int | None = None,
+                    limit: int = 200, offset: int = 0):
+    """
+    그 증적의 원문 청크. 화면의 '원문·청크' 탭이 쓴다.
+
+    판정 결과에 담긴 인용문은 LLM 이 **고른 몇 줄**뿐이라, 사람이 "원문에 정말
+    그렇게 쓰여 있나" 를 대조할 수 없었다. 여기서 전처리된 원문을 순서대로 준다.
+
+    source 는 그 조각을 어떻게 읽었는지다 — parser(파일에서 바로) / ocr(이미지
+    글자 인식). OCR 조각은 오인식이 있을 수 있어 화면이 따로 표시한다.
+    """
+    if not is_visible(evidence_id):
+        owner.audit_denied("VIEW_ORIGINAL", evidence_id, version or 1)
+        raise HTTPException(status_code=404, detail={"code": "EVIDENCE_NOT_FOUND"})
+    if not 1 <= limit <= 1000 or offset < 0:
+        raise HTTPException(status_code=400,
+                            detail={"code": "INVALID_RANGE",
+                                    "message": "limit 은 1~1000, offset 은 0 이상"})
+    try:
+        rows = get_chunks(evidence_id, version)
+    except _DB_DOWN:
+        return _db_down(None)
+    out = []
+    for r in rows[offset:offset + limit]:
+        out.append({
+            "chunk_id": r["chunk_id"],
+            "version": r["version"],
+            "chunk_index": r["chunk_index"],
+            "chunk_type": r.get("chunk_type"),
+            "page_start": r.get("page_start"),
+            "page_end": r.get("page_end"),
+            "heading": r.get("heading"),
+            "source": r.get("source"),        # parser / ocr
+            "text": r.get("text"),
+        })
+    return {"evidence_id": evidence_id, "total": len(rows),
+            "offset": offset, "limit": limit, "chunks": out}
 
 
 @app.get("/classic", response_class=HTMLResponse)
