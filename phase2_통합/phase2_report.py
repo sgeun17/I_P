@@ -287,9 +287,14 @@ def _missing_block(cov, e):
 _CSS = """
 body{font:14px/1.7 'Malgun Gothic','Apple SD Gothic Neo',sans-serif;margin:32px;color:#1a1a1a}
 h1{font-size:22px;margin:0 0 4px} .sub{color:#666;font-size:13px;margin-bottom:24px}
-.sum{border:1px solid #ddd;padding:14px 16px;margin-bottom:28px;background:#fafafa;
- display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 18px}
-.sum div b{color:#555;font-weight:600;margin-right:8px}
+/* PDF 변환기(xhtml2pdf)가 CSS grid를 제대로 처리하지 못하므로
+   요약 카드는 표 기반으로 렌더링한다. HTML/PDF 모두 동일하게 보인다. */
+table.sum-grid{width:100%;border-collapse:separate;border-spacing:3px;margin:0 auto 4px auto}
+table.sum-grid td.sum-card{border:1px solid #ddd;background:#fafafa;padding:6px 8px;
+ text-align:center;vertical-align:middle;height:40px}
+table.sum-grid .sum-label{color:#333;font-size:15px;font-weight:700;line-height:1.1}
+table.sum-grid .sum-value{color:#555;font-size:11px;font-weight:600;line-height:1.1;margin-top:2px}
+
 .ctl{border:1px solid #ddd;margin-bottom:20px;page-break-inside:avoid}
 .ctl>h2{font-size:16px;margin:0;padding:10px 14px;background:#f2f4f7;border-bottom:1px solid #ddd}
 .meta{padding:8px 14px;font-size:13px;color:#444;border-bottom:1px solid #eee}
@@ -375,14 +380,39 @@ def to_html(path, controls_path=None, title="ISMS-P 증적 사전점검 — 항�
         out.append(f"<div class='sub'>이 범위의 판정 {len(details)}건 · "
                    f"증적 {s['judged_evidence_total']}건</div>")
 
-    out.append("<div class='sum'>")
-    for k in ("적정", "부분적정", "부적정", "판단불가"):
-        out.append(f"<div><b>{k}</b>{s['verdicts_wbs'][k]}건</div>")
-    out.append(f"<div><b>검토 대기</b>{s['review_required']}건</div>")
+    # xhtml2pdf에서 위/아래 요약 줄의 전체 폭을 정확히 맞추기 위해
+    # 각 줄을 별도의 table로 렌더링한다. 두 table은 같은 width를 사용하고,
+    # 첫 줄은 4등분, 둘째 줄은 남은 2~3개를 같은 폭으로 나눈다.
+    # 따라서 개별 카드 폭은 달라도 위/아래 줄의 '합친 폭'은 항상 동일하다.
+    summary_cards = [
+        ("적정", s["verdicts_wbs"]["적정"]),
+        ("부분적정", s["verdicts_wbs"]["부분적정"]),
+        ("부적정", s["verdicts_wbs"]["부적정"]),
+        ("판단불가", s["verdicts_wbs"]["판단불가"]),
+        ("검토 대기", s["review_required"]),
+    ]
     if whole:
-        out.append(f"<div><b>제외</b>{s['excluded_total']}건</div>")
-    out.append(f"<div><b>근거</b>{s['citation_total']}건</div>")
-    out.append("</div>")
+        summary_cards.append(("제외", s["excluded_total"]))
+    summary_cards.append(("근거", s["citation_total"]))
+
+    def add_summary_matrix(cards):
+        rows = [cards[:4], cards[4:]]
+        for row in rows:
+            if not row:
+                continue
+            out.append("<table class='sum-grid' width='100%' align='center' cellspacing='3' cellpadding='0'>")
+            out.append("<tr>")
+            cell_width = 100.0 / len(row)
+            for label, value in row:
+                out.append(
+                    f"<td class='sum-card' width='{cell_width:.4f}%'>"
+                    f"<div class='sum-label'>{e(label)}</div>"
+                    f"<div class='sum-value'>{value}건</div>"
+                    "</td>"
+                )
+            out.append("</tr></table>")
+
+    add_summary_matrix(summary_cards)
 
     # 커버리지를 먼저 보여준다. 읽는 사람이 제일 먼저 묻는 것이
     # '어디가 비었나' 이기 때문이다. 범위를 걸러 뽑을 때는 분모가 달라지므로 뺀다.
@@ -498,9 +528,11 @@ _PDF_CSS = """
 body {{ font-family: ko; font-size: 9pt; margin: 0; line-height: 1.5; }}
 h1 {{ font-size: 15pt; }}
 .ctl>h2 {{ font-size: 11pt; }}
-/* xhtml2pdf 는 grid 를 모른다. 요약 칸을 한 줄로 편다. */
-.sum {{ display: block; }}
-.sum div {{ display: inline; margin-right: 16px; }}
+/* 요약 영역은 HTML 단계부터 표 기반이라 xhtml2pdf에서도 겹치지 않는다. */
+table.sum-grid {{ width:100%; margin:0 auto 1.2mm auto; }}
+table.sum-grid td.sum-card {{ height:12mm; padding:1.0mm 1.2mm; text-align:center; vertical-align:middle; }}
+table.sum-grid .sum-label {{ font-size:10.5pt; font-weight:bold; color:#333333; line-height:1.05; }}
+table.sum-grid .sum-value {{ font-size:8pt; font-weight:normal; color:#555555; margin-top:0.6mm; line-height:1.05; }}
 table.cov {{ font-size: 8.5pt; }}
 blockquote {{ font-size: 8.5pt; }}
 """
