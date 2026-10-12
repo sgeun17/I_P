@@ -113,3 +113,4 @@ h1,h2,h3{letter-spacing:-1px}.btn{border-radius:9px;font-size:14px;padding:11px 
 .lp-footer .footer-columns .linkbtn{appearance:none;-webkit-appearance:none;background:transparent;border:0;border-radius:0;box-shadow:none;padding:0;margin:0;display:inline;vertical-align:baseline;text-align:left}
 .lp-footer .footer-columns a:hover,.lp-footer .footer-columns .linkbtn:hover{color:#22754d;text-decoration-thickness:2px}
 .lp-footer .footer-columns .linkbtn:focus-visible{outline:2px solid #6caa6d;outline-offset:4px}
+.reason-list{margin:.5rem 0 0;padding-left:1.2rem}.reason-list li{margin:.25rem 0;line-height:1.55}.reason-list .code{margin-left:.35rem;font-family:ui-monospace,Consolas,monospace;font-size:.75em;opacity:.55}
