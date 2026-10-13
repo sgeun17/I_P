@@ -1,0 +1,24 @@
+Phase 2 development checkpoint — 2026-10-14
+
+This update combines evidence-grounding and review improvements with a bounded
+explanation-repair opportunity. The compact_v2 profile and semantic repair are
+opt-in. The explanation-only editor preserves item ID, result, reason codes and
+citations, and passes the existing output validation and full-context review.
+
+Offline tests cover prompt composition, review consistency, diagnostic scope,
+repair bounds, frozen output fields, rejection handling and code contracts.
+Passing these tests does not establish semantic accuracy.
+
+Known limitations remain: some semantic MET/NOT_MET judgments overstate source
+support, and the reviewer can accept an explanation that misstates source facts.
+The short-reason live replay exposed this limitation. A code-only generation
+reason can still fail E202. Initial compact_v2 generation combined with citation
+span selection also retains a known adapter limitation.
+
+Seven previously identified evidence cases are deferred for later work. Their
+recorded labels remain unchanged. No measured accuracy improvement or completed
+full v6 evaluation is claimed by this checkpoint.
+
+This change contains Phase 2 source and generic offline tests. Evidence documents,
+saved trial outputs, personal information and model connection secrets are not
+part of the commit. Phase 1, database schemas and approval catalogs are unchanged.

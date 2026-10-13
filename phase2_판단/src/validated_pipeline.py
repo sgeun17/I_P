@@ -12,11 +12,13 @@ import re
 
 from context_builder import build_control_evidence_context, ContextBuildError
 from date_extractor import extract_dates, check_freshness, check_evidence_format
-from judgment_harness import run_item_judgment
+from judgment_harness import run_item_judgment, citation_edit_issues, explanation_edit_issues
 from phase1_runtime import call_llm, DEFAULT_RETRY_POLICY, retry_policy_snapshot
-from self_check import run_self_check, SELF_CHECK_VERSION
-from grounding_prompts import PROMPT_VERSION
+from self_check import run_self_check, SELF_CHECK_VERSION, COMPACT_SELF_CHECK_VERSION
+from grounding_prompts import PROMPT_VERSION, COMPACT_PROMPT_VERSION
 from evidence_contracts import question_binding_gap, VERSION as BINDING_VERSION
+from absence_basis import absence_basis_gap
+from reason_citation_binding import inspect_reason_citation_binding
 from validation.contracts import (ROOT, INTERFACE, interface_module, item_schema, issue,
                                   output_schema_version, validate_schema)
 from validation.logic import validate_input, validate_item, validate_output, rule_version
@@ -54,6 +56,21 @@ _RESTORE_TEST_CADENCE_RE = re.compile(
     r"(?:복구\s*테스트|복구시험).{0,50}(?:주기|매월|분기|반기|연\s*\d+\s*회|월\s*\d+\s*회)|"
     r"(?:주기|매월|분기|반기|연\s*\d+\s*회|월\s*\d+\s*회).{0,50}(?:복구\s*테스트|복구시험)"
 )
+
+
+def _reason_account_subject_gap(output, context):
+    """Veto transferring a known account ID absent from the selected evidence.
+
+    Conservative: only explicit lower-case underscore IDs occurring in the
+    supplied source are recognized, never names inferred from layout.
+    """
+    if output.get('result') not in {'MET', 'NOT_MET'}:
+        return []
+    pattern = re.compile(r'(?<![A-Za-z0-9_])[a-z][a-z0-9]*_[a-z0-9_]+(?![A-Za-z0-9_])')
+    known = set(pattern.findall(' '.join(str(c.get('text', '')) for c in context.get('chunks', []))))
+    mentioned = set(pattern.findall(str(output.get('reason', '')))) & known
+    cited = set(pattern.findall(' '.join(str(c.get('quote', '')) for c in output.get('citations', []))))
+    return sorted(mentioned - cited)
 
 
 def _notice_style_only_as_complete(item, output):
@@ -99,6 +116,26 @@ def _observed_evidence_gap(item, output, context):
         return None
     quoted = '\n'.join(str(c.get('quote', '')) for c in citations)
     lines = [line for c in chunks for line in str(c.get('text', '')).splitlines()]
+    if (item.get('check_kind') == 'implementation' and '백업' in question
+            and '주기' in question and not re.search(r'복구|복원', question)):
+        dated_rows = [line for line in quoted.splitlines()
+                      if re.search(r'(?:일자|수행일|실행일)\s*[:：]\s*20\d{2}[-./]\d', line)]
+        if dated_rows and all(re.search(r'복구|복원', row) and not re.search(r'백업', row)
+                              for row in dated_rows):
+            return ('RESTORE_RECORD_AS_BACKUP_CADENCE',
+                    '선택한 일자별 기록은 복구·복원 활동이며 백업 수행 기록이 아닙니다. 백업 주기 기준과 같은 대상·기간의 실제 백업 기록을 대조해야 합니다.')
+    # A narrowly scoped explanation veto, not a classifier of the whole source.
+    # A resource-support question cannot be justified only by a support plan.
+    # Do not infer that actual support never occurred or manufacture NOT_MET.
+    if (item.get('check_kind') == 'implementation'
+            and '예산' in question and '인력' in question
+            and re.search(r'지원되|지원하였|지원했', question)):
+        reason = str(output.get('reason', ''))
+        plan = re.search(r'(?:지원|예산|인력).{0,20}계획|예산.{0,12}편성', reason)
+        actual = re.search(r'집행|지급|배정|충원|채용|지원되었|지원됐|지원하였|지원했|지원하고\s*있', reason)
+        if plan and not actual:
+            return ('RESOURCE_PLAN_AS_SUPPORT',
+                    '현재 설명은 예산·인력 지원 계획과 현황을 제시하지만, 평가 결과에 따른 실제 지원의 연결을 설명하지 못해 보류합니다. 실제 미지원으로 판정한 것은 아닙니다.')
     if item.get('check_kind') == 'implementation' and re.search(r'직무.*교육|전문교육', question):
         plan_rows = [line for line in quoted.splitlines() if re.search(r'과정\s*[:：].*(?:직무|전문).*교육', line)]
         if plan_rows and all('계획' in str(by_id.get(c.get('chunk_id'), {}).get('heading', '')) for c in citations):
@@ -134,26 +171,76 @@ def _destruction_timing_missing(item, output, context):
     question = re.sub(r'\s+', '', str(item.get('question', '')))
     if output.get('result') != 'MET' or '파기' not in question or not re.search(r'지체없이|기한|기간내',question):
         return False
-    quoted = [str(c.get('quote', '')) for c in output.get('citations', [])]
-    records = [line for quote in quoted for line in quote.splitlines()
-               if re.search(r'파기일\s*[:：]\s*20\d{2}[-./]\d{1,2}[-./]\d{1,2}',line)]
+    chunks = context.get('chunks', [])
+    by_id = {chunk.get('chunk_id'): chunk for chunk in chunks}
+    dated = re.compile(r'파기일\s*[:：]\s*(20\d{2}[-./]\d{1,2}[-./]\d{1,2})')
+    target_field = re.compile(r'(?:^|[|])\s*대상\s*[:：]\s*([^|\n]+)')
+    source_rows = [(line, chunk) for chunk in chunks
+                   for line in str(chunk.get('text', '')).splitlines()]
+    cited_rows = [(line, by_id.get(c.get('chunk_id'), {}))
+                  for c in output.get('citations', [])
+                  for line in str(c.get('quote', '')).splitlines()]
+    records = [(line, chunk) for line, chunk in cited_rows if dated.search(line)]
+    if not records:
+        # A policy-only quote must not hide execution rows that it describes.
+        # Resolve its explicit category within the same source, rather than
+        # treating every dated event in the context as this question's scope.
+        categories = []
+        for line, chunk in cited_rows:
+            category = re.search(r'(?:^|[|])\s*(?:구분|대상)\s*[:：]\s*([^|\n]+)', line)
+            if category and re.search(r'보유기간\s*[:：]|파기\s*방법\s*[:：]', line):
+                value = category.group(1).strip()
+                if len(value) >= 2:
+                    categories.append((value, chunk.get('source_file')))
+        for line, chunk in source_rows:
+            target = target_field.search(line)
+            if not dated.search(line) or not target:
+                continue
+            for category, source_file in categories:
+                if source_file and chunk.get('source_file') != source_file:
+                    continue
+                # Delimited category matching avoids transferring a shorter
+                # subject name to a different, longer subject identifier.
+                if re.search(r'(?<![\w])' + re.escape(category) + r'(?![\w])', target.group(1)):
+                    records.append((line, chunk))
+                    break
     if not records:
         return False  # Other evidence forms remain with the normal reviewers.
     trigger = re.compile(r'(?:탈퇴일(?:자)?|탈퇴시점|보유기간\s*(?:만료일|종료일|경과일)|'
                          r'처리목적\s*(?:달성일|종료일)|파기대상\s*(?:발생일|확정일)|기산일|파기기한)'
                          r'\s*[:：]?\s*20\d{2}[-./]\d{1,2}[-./]\d{1,2}')
-    all_lines = [line for chunk in context.get('chunks', []) for line in str(chunk.get('text','')).splitlines()]
     # Direct same-event statements may establish relative timing without two
     # literal dates. A future policy alone is not a completed-event statement.
     relative = re.compile(r'탈퇴\s*당일|지체\s*없이|기한\s*내|즉시')
     completed = re.compile(r'파기\s*완료|파기하였|파기했다|삭제\s*완료')
-    for record in records:
+    for record, record_chunk in records:
         if trigger.search(record):
             continue
-        target = re.search(r'대상\s*[:：]\s*([^|\n]+)', record)
+        target = target_field.search(record)
+        target_value = target.group(1).strip() if target else None
+        event_date = dated.search(record).group(1)
         # A companion row must name the same target; dates of unrelated assets
-        # or the document's reporting date cannot satisfy this requirement.
-        companions = [line for line in all_lines if target and target.group(1).strip() in line]
+        # or another event for that target cannot satisfy this requirement.
+        same_target = []
+        for line, chunk in source_rows:
+            if (record_chunk.get('source_file') and chunk.get('source_file')
+                    and record_chunk['source_file'] != chunk['source_file']):
+                # A different file may still directly describe this event;
+                # require its explicit event date as well as the target below.
+                other_date = dated.search(line)
+                if not other_date or other_date.group(1) != event_date:
+                    continue
+            named = target_field.search(line)
+            if target_value and ((named and named.group(1).strip() == target_value)
+                                 or (not named and target_value in line)):
+                same_target.append(line)
+        event_dates = {match.group(1) for line in same_target if (match := dated.search(line))}
+        companions = [record]
+        for line in same_target:
+            companion_date = dated.search(line)
+            if ((companion_date and companion_date.group(1) == event_date)
+                    or (not companion_date and len(event_dates) <= 1)):
+                companions.append(line)
         if any(trigger.search(line) for line in companions):
             continue
         if any(relative.search(line) and completed.search(line)
@@ -385,7 +472,7 @@ def unknown(item, message, reason_code="P2_U_EVIDENCE_INSUFFICIENT", *, error_co
     return result
 
 
-def run_validated_item(item, context, *, evidence_id, version, model, reason_codes,
+def _run_validated_item_once(item, context, *, evidence_id, version, model, reason_codes,
                        self_check_call=call_llm, confidence_threshold=DEFAULT_CONFIDENCE_THRESHOLD,
                        freshness_policy=None, format_policy=None, as_of=None, **harness_kwargs):
     if not 0 <= confidence_threshold <= 1:
@@ -411,6 +498,16 @@ def run_validated_item(item, context, *, evidence_id, version, model, reason_cod
     output = deepcopy(run.parsed_output)
     output["check_kind"] = item["check_kind"]
     output.pop("critical", None)  # computed from the trusted checklist later
+    mismatched_accounts = _reason_account_subject_gap(output, context)
+    if mismatched_accounts:
+        audit.setdefault('semantic_guards', []).append({
+            'version': 'phase2_evidence_repair_v1', 'decision': 'ACCOUNT_REASON_CITATION_MISMATCH',
+            'accounts': mismatched_accounts, 'original_output': deepcopy(output)})
+        citations = deepcopy(output.get('citations', []))
+        output = unknown(item, '설명에 등장하는 계정과 선택한 인용의 계정이 일치하지 않아 사건 연결을 확인해야 합니다.',
+                         'P2_U_SUBJECT_OR_EVENT_UNLINKED')
+        output['citations'] = citations
+        signals.append('SELF_CHECK_UNCERTAIN')
     binding_gap = question_binding_gap(item, output, context)
     if binding_gap:
         code, message = binding_gap
@@ -433,7 +530,7 @@ def run_validated_item(item, context, *, evidence_id, version, model, reason_cod
         signals.append('SELF_CHECK_UNCERTAIN')
     if _destruction_timing_missing(item, output, context):
         audit.setdefault('semantic_guards', []).append({
-            'version':'phase2_destruction_timing_binding_v1',
+            'version':'phase2_destruction_timing_binding_v2_source_scope',
             'decision':'MET_TO_UNKNOWN',
             'reason':'파기일은 확인되나 같은 대상의 파기 대상 발생일·기한 또는 직접 기한 준수 기록이 연결되지 않음',
             'original_output':deepcopy(output),
@@ -470,6 +567,13 @@ def run_validated_item(item, context, *, evidence_id, version, model, reason_cod
             item,
             "근거가 기록·제출되지 않았다는 사실만으로 실제 미이행을 확정할 수 없습니다.",
         )
+    absence_argument = absence_basis_gap(item, output)
+    if absence_argument:
+        # Diagnostic, not a keyword-based verdict. Complete event histories
+        # can establish violations despite similar wording. Keep a first-pass
+        # result provisional, and do not auto-accept a repair using this basis.
+        audit["absence_basis_review"] = absence_argument
+        signals.append("SELF_CHECK_UNCERTAIN")
     if _ocr_qualification_binding_unproven(item, output, context):
         audit.setdefault("semantic_guards", []).append({
             "version": "phase2_ocr_role_qualification_binding_v1",
@@ -570,14 +674,20 @@ def run_validated_item(item, context, *, evidence_id, version, model, reason_cod
     if format_policy is not None and audit["evidence_format"]["status"] != "ALLOWED":
         signals.append(audit["evidence_format"]["status"])
         output = unknown(item, "항목별 인정 증적 형식을 확인할 수 없습니다.")
-    if output["result"] in {"MET", "NOT_MET"}:
+    review_unknown = (
+        harness_kwargs.get('prompt_profile') == 'compact_v2'
+        and output.get('result') == 'UNKNOWN'
+        and not output.get('error_code') and not issues and not signals
+        and not audit.get('semantic_guards')
+    )
+    if output["result"] in {"MET", "NOT_MET"} or review_unknown:
         if self_check_call is None:
             audit["self_check"] = {"verdict": "NOT_RUN"}
             signals.append("SELF_CHECK_NOT_RUN")
             output = unknown(item, "인용 근거의 의미상 충분성을 재검토하지 못했습니다.")
         else:
             options = {k: v for k, v in harness_kwargs.items()
-                       if k in {"client_config", "generation", "http_client", "retry_policy", "sleeper"}}
+                       if k in {"client_config", "generation", "http_client", "retry_policy", "sleeper", "prompt_profile"}}
             check = run_self_check(item, output, context=context, model=model,
                                    llm_call=self_check_call, **options)
             audit["self_check"] = check
@@ -613,7 +723,38 @@ def run_validated_item(item, context, *, evidence_id, version, model, reason_cod
             if unsupported or low_confidence:
                 signals.append("SELF_CHECK_" + check["verdict"] if unsupported else "SELF_CHECK_LOW_CONFIDENCE")
                 reason = "P2_U_EVIDENCE_CONFLICT" if check["verdict"] == "CONFLICT" else "P2_U_EVIDENCE_INSUFFICIENT"
-                output = unknown(item, "인용문만으로 판정을 확정할 수 없어 검토가 필요합니다: " + check["reason"], reason)
+                prior_output = deepcopy(output)
+                # Keep the model opinion in audit, but distinguish a failed
+                # review contract or low confidence from an evidence finding.
+                # In particular, a positive low-confidence review is not an
+                # UNKNOWN explanation saying that MET has been established.
+                if check.get("error_code") or check.get("request_error_status") is not None:
+                    hold_basis = "REVIEW_EXECUTION_OR_CONTRACT_FAILURE"
+                    public_reason = (
+                        "재검토 호출 또는 응답 검증에 실패하여 판정을 보류합니다. "
+                        "이는 증적에 해당 활동이 없거나 실제 미이행이라는 판단이 아닙니다."
+                    )
+                elif check.get("verdict") == "SUPPORTED" and check.get("unsupported_conditions"):
+                    hold_basis = "REVIEW_INTERNAL_CONTRADICTION"
+                    public_reason = (
+                        "재검토가 판정을 지지하면서 동시에 미확인 조건을 제시하여 결론이 일치하지 않습니다. "
+                        "원문과 조건의 연결을 다시 확인해야 합니다."
+                    )
+                elif low_confidence and not unsupported:
+                    hold_basis = "REVIEW_CONFIDENCE_ONLY"
+                    public_reason = (
+                        "재검토 의견은 판정을 지지하지만 검토 신뢰도가 설정된 기준보다 낮아 보류합니다. "
+                        "확인된 근거가 없다는 뜻은 아니며 추가 확인이 필요합니다."
+                    )
+                else:
+                    hold_basis = "REVIEW_EVIDENCE_DISAGREEMENT"
+                    public_reason = "인용문만으로 판정을 확정할 수 없어 검토가 필요합니다: " + check["reason"]
+                audit["review_hold"] = {
+                    "basis": hold_basis, "prior_output": prior_output,
+                    "review_reason_preserved_in_self_check": True,
+                }
+                output = unknown(item, public_reason, reason)
+                output["citations"] = deepcopy(prior_output.get("citations", []))
     else:
         audit["self_check"] = {"verdict": "NOT_APPLICABLE_UNKNOWN"}
     # Do not replace conflicts, policy failures or technical failures with a generic reason.
@@ -627,8 +768,128 @@ def run_validated_item(item, context, *, evidence_id, version, model, reason_cod
             issues.extend(final_issues)
             if any(entry.get("severity") == "error" for entry in final_issues):
                 output = unknown(item, "추가 인용 검증 실패로 검토가 필요합니다.", error_code="E202")
+    if harness_kwargs.get('prompt_profile') == 'compact_v2' and not output.get('error_code'):
+        binding = inspect_reason_citation_binding(item, output, context)
+        audit['reason_citation_binding'] = binding
+        if binding.get('findings'):
+            # A fact elsewhere in the source is not missing evidence. Retain
+            # the result while exposing the selection/quotation mismatch for
+            # one bounded correction or human review, never force UNKNOWN.
+            if 'SELF_CHECK_UNCERTAIN' not in signals:
+                signals.append('SELF_CHECK_UNCERTAIN')
     audit["confidence_threshold"] = confidence_threshold
     return output, audit
+
+
+def run_validated_item(item, context, *, semantic_repair=False, **kwargs):
+    """Opt-in bounded repair. Every candidate runs the SAME validators and guards.
+
+    Never loop until MET; never repair transport/policy/conflict failures. Audit
+    holds both attempts and an explicit total so rejected work is not hidden.
+    """
+    original, audit = _run_validated_item_once(item, context, **kwargs)
+    def calls(report):
+        return ((report.get('run') or {}).get('attempts', 0)
+                + (report.get('self_check') or {}).get('attempts', 0))
+    audit['total_model_calls'] = calls(audit)
+    if not semantic_repair:
+        return original, audit
+    audit['semantic_repair'] = {'version': 'phase2_evidence_repair_v1', 'status': 'SKIPPED'}
+    check = audit.get('self_check', {})
+    explanation_correction = (
+        kwargs.get('prompt_profile') == 'compact_v2'
+        and original.get('result') == 'UNKNOWN'
+        and check.get('verdict') == 'NOT_APPLICABLE_UNKNOWN'
+        and bool(audit.get('issues'))
+        and all(row.get('code') == 'P2E506' and row.get('severity') == 'warning'
+                for row in audit['issues'])
+        and not audit.get('review_signals')
+        and not audit.get('reason_citation_binding', {}).get('findings')
+        and not audit.get('run', {}).get('final_error_code')
+        and audit.get('run', {}).get('request_error_status') is None
+    )
+    binding_correction = (
+        kwargs.get('prompt_profile') == 'compact_v2'
+        and original.get('result') == 'MET'
+        and bool(audit.get('reason_citation_binding', {}).get('findings'))
+        and check.get('verdict') == 'SUPPORTED'
+        and not check.get('unsupported_conditions')
+        and not (set(audit.get('review_signals', [])) - {'SELF_CHECK_UNCERTAIN'})
+    )
+    regular_repair = (original.get('result') == 'UNKNOWN'
+                      and check.get('verdict') in {'NOT_APPLICABLE_UNKNOWN', 'UNSUPPORTED'})
+    blocked = (not (regular_repair or binding_correction or explanation_correction) or original.get('error_code')
+        or (audit.get('issues') and not explanation_correction) or audit.get('semantic_guards')
+        or injection_suspected(context)
+        or (kwargs.get('freshness_policy') is not None and audit.get('freshness', {}).get('status') != 'FRESH')
+        or (kwargs.get('format_policy') is not None and audit.get('evidence_format', {}).get('status') != 'ALLOWED'))
+    if blocked:
+        audit['semantic_repair']['reason'] = 'NOT_ELIGIBLE_OR_EXISTING_GUARD'
+        return original, audit
+    candidate_kwargs = dict(kwargs)
+    candidate_kwargs['semantic_feedback'] = {
+        'prior_output': deepcopy(original),
+        'review': {k: check.get(k) for k in ('verdict', 'reason', 'unsupported_conditions')},
+    }
+    repair_version = 'phase2_evidence_repair_v1'
+    correction_mode = None
+    if explanation_correction:
+        repair_version = 'phase2_short_reason_repair_v1'
+        correction_mode = 'REASON_EXPLANATION_CORRECTION'
+        audit['semantic_repair'].update(version=repair_version, mode=correction_mode)
+        candidate_kwargs['semantic_feedback'].update(
+            mode=correction_mode, quality_diagnostic=deepcopy(audit['issues']))
+    elif binding_correction:
+        repair_version = 'phase2_citation_correction_v1'
+        correction_mode = 'REASON_CITATION_CORRECTION'
+        audit['semantic_repair'].update(version=repair_version, mode='REASON_CITATION_CORRECTION')
+        candidate_kwargs['semantic_feedback'].update(
+            mode='REASON_CITATION_CORRECTION',
+            binding_diagnostic=deepcopy(audit['reason_citation_binding']))
+    candidate, candidate_audit = _run_validated_item_once(item, context, **candidate_kwargs)
+    edit_issues = []
+    if explanation_correction:
+        edit_issues = explanation_edit_issues(original, candidate)
+        candidate_audit['explanation_edit_validation'] = {
+            'preserved_fields': ['item_id', 'result', 'reason_codes', 'citations'],
+            'issues': edit_issues,
+        }
+    elif binding_correction:
+        edit_issues = citation_edit_issues(item, original, candidate, context,
+                                         audit.get('reason_citation_binding'))
+        candidate_audit['citation_edit_validation'] = {
+            'diagnostic_only': True, 'issues': edit_issues,
+        }
+    acceptable_results = {'MET', 'NOT_MET', 'UNKNOWN'} if kwargs.get('prompt_profile') == 'compact_v2' else {'MET', 'NOT_MET'}
+    accepted = (candidate.get('result') in acceptable_results
+        and (not binding_correction or candidate.get('result') == original.get('result'))
+        and not edit_issues
+        and not candidate.get('error_code') and not candidate_audit.get('issues')
+        and not candidate_audit.get('review_signals')
+        and not candidate_audit.get('semantic_guards')
+        and candidate_audit.get('self_check', {}).get('verdict') == 'SUPPORTED'
+        and not candidate_audit.get('self_check', {}).get('unsupported_conditions'))
+    total = calls(audit) + calls(candidate_audit)
+    # Retain the final attempt's familiar top-level audit shape for consumers.
+    if accepted:
+        final_audit = candidate_audit
+        initial_audit = deepcopy(audit)
+        initial_audit.pop('semantic_repair', None)
+        final_audit['semantic_repair'] = {
+            'version': repair_version, 'status': 'ACCEPTED',
+            'initial_output': original, 'initial_audit': initial_audit,
+            'result_changed': original.get('result') != candidate.get('result'),
+        }
+        if correction_mode:
+            final_audit['semantic_repair']['mode'] = correction_mode
+        if explanation_correction:
+            final_audit['semantic_repair']['explanation_changed'] = True
+        final_audit['total_model_calls'] = total
+        return candidate, final_audit
+    audit['semantic_repair'].update(status='RETAINED_ORIGINAL',
+        candidate_output=candidate, candidate_audit=candidate_audit)
+    audit['total_model_calls'] = total
+    return original, audit
 
 
 def run_control_judgment(payload, control_id, *, catalog, reason_catalog, controls, model,
@@ -642,8 +903,12 @@ def run_control_judgment(payload, control_id, *, catalog, reason_catalog, contro
              "as_of": str(as_of) if as_of else None,
              "item_policies": deepcopy(item_policies or {}),
              "source_versions": deepcopy(payload.get("source_versions", {})) if isinstance(payload, dict) else {}}
-    audit["prompt_version"] = PROMPT_VERSION
-    audit["self_check_version"] = SELF_CHECK_VERSION
+    profile = item_kwargs.get("prompt_profile", "legacy")
+    if profile not in {"legacy", "compact_v2"}:
+        raise ValueError(f"Unknown prompt_profile: {profile}")
+    audit["prompt_profile"] = profile
+    audit["prompt_version"] = COMPACT_PROMPT_VERSION if profile == "compact_v2" else PROMPT_VERSION
+    audit["self_check_version"] = COMPACT_SELF_CHECK_VERSION if profile == "compact_v2" else SELF_CHECK_VERSION
     audit["retry_policy"] = retry_policy_snapshot(item_kwargs.get("retry_policy", DEFAULT_RETRY_POLICY))
     audit["hashes"] = {"rules_sha256": sha256(RULES_PATH.read_bytes()).hexdigest(),
                        "input_schema_sha256": sha256((INTERFACE / "phase2_input.schema.json").read_bytes()).hexdigest(),
