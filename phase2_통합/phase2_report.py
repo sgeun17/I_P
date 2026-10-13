@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import csv
 import html
+import json
 import os
 import sys
 from pathlib import Path
@@ -283,10 +284,173 @@ def _missing_block(cov, e):
     return out
 
 
+# ── 보완 권고 ─────────────────────────────────────────────────────────
+# 판정 결과를 임의로 바꾸지 않고, 이미 나온 문항 판정·사유코드와
+# 체크리스트의 후보 증적을 이용해 "다음에 무엇을 보완해야 하는지"만 설명한다.
+# UNKNOWN은 미흡 확정이 아니므로 "수정"이 아니라 "추가 확인/증적 보완"으로 안내한다.
+_CHECKLIST_ITEM_INDEX = None
+
+_REC_ACTION = {
+    "P2_NM_RULE_NOT_DEFINED": (
+        "수정 필요",
+        "해당 요구사항을 충족하는 절차·기준을 수립하고, 적용 대상·책임·주기·수행 방법이 문서에서 확인되도록 보완하세요."
+    ),
+    "P2_NM_REQUIRED_ACTION_NOT_DONE": (
+        "수정 필요",
+        "필요한 실행·검토·기록을 실제로 수행하고, 수행일자·대상·결과가 확인되는 증적을 남기세요."
+    ),
+    "P2_NM_RULE_VIOLATED": (
+        "수정 필요",
+        "현재 설정 또는 처리 방식을 적용 기준에 맞게 수정하고, 변경된 상태와 적용 시점을 확인할 수 있는 증적을 남기세요."
+    ),
+    "P2_U_EVIDENCE_INSUFFICIENT": (
+        "추가 확인 필요",
+        "판단에 필요한 직접 근거가 부족합니다. 해당 요구사항의 이행 여부가 확인되는 자료를 추가 제출하세요."
+    ),
+    "P2_U_SCOPE_OR_RULE_UNCLEAR": (
+        "추가 확인 필요",
+        "증적의 적용 대상·범위와 적용 기준을 명확히 확인할 수 있는 자료를 추가하세요."
+    ),
+    "P2_U_SUBJECT_OR_EVENT_UNLINKED": (
+        "추가 확인 필요",
+        "제출한 자료가 검토 대상·사건과 동일한 것인지 연결할 수 있도록 시스템명·계정·자산·계약·사건 식별정보 등을 보완하세요."
+    ),
+    "P2_U_TIME_OR_VERSION_UNCLEAR": (
+        "추가 확인 필요",
+        "작성일·수행일·효력일·버전과 검토 대상 기간을 확인할 수 있는 정보를 추가하세요."
+    ),
+    "P2_U_EVIDENCE_UNREADABLE": (
+        "추가 확인 필요",
+        "필요한 부분을 판독할 수 있도록 원본 또는 더 선명한 자료를 제출하고, 핵심 내용이 가려지지 않았는지 확인하세요."
+    ),
+    "P2_U_EVIDENCE_CONFLICT": (
+        "추가 확인 필요",
+        "상충하는 자료의 대상·시점·효력 관계를 확인하고, 승인·시행 이력 등 어떤 자료가 해당 시점에 유효한지 판단할 근거를 추가하세요."
+    ),
+    "P2_U_NO_TRIGGER_EVENT": (
+        "추가 확인 필요",
+        "검토 기간에 해당 사건이 없었다는 공식 확인 또는 적용 제외 여부를 판단할 수 있는 근거를 추가하세요."
+    ),
+    "P2_U_EXCEPTION_UNRESOLVED": (
+        "추가 확인 필요",
+        "예외 적용 사유·승인 내역·책임추적 방법을 확인할 수 있는 자료를 추가하여 예외 적용의 적정성을 검토할 수 있게 하세요."
+    ),
+    "P2_U_NOT_YET_DUE": (
+        "추가 확인 필요",
+        "이행 기한과 현재 진행 상태를 확인할 수 있는 자료를 보완하고, 기한 도래 후 완료 증적을 다시 확인하세요."
+    ),
+    "P2_U_OBSERVATION_INCOMPLETE": (
+        "추가 확인 필요",
+        "일부 시점 자료만으로는 전체 기간을 확인할 수 없습니다. 검토 대상 기간 전체를 포괄하는 기록 또는 추가 표본을 제출하세요."
+    ),
+}
+
+
+def _load_checklist_item_index():
+    """full_checklist_draft.json 의 item_id -> 질문/권장 증적 표."""
+    global _CHECKLIST_ITEM_INDEX
+    if _CHECKLIST_ITEM_INDEX is not None:
+        return _CHECKLIST_ITEM_INDEX
+
+    root = _repo_root()
+    candidates = [
+        root / "phase2_기준" / "full_checklist_draft.json",
+        root / "phase2_기준" / "chapter2_full_checklist_draft.json",
+    ]
+    idx = {}
+    for path in candidates:
+        if not path.is_file():
+            continue
+        try:
+            raw = json.loads(path.read_text(encoding="utf-8-sig"))
+            for ctl in raw.get("controls") or []:
+                for it in ctl.get("items") or []:
+                    iid = it.get("item_id")
+                    if iid:
+                        idx[iid] = it
+            if idx:
+                break
+        except Exception:  # 리포트 생성 자체를 막지는 않는다.
+            continue
+    _CHECKLIST_ITEM_INDEX = idx
+    return idx
+
+
+def _recommendation_for_item(it: dict) -> dict | None:
+    """문항 한 건의 판정 결과에서 사용자용 보완 문구를 만든다."""
+    result = it.get("result")
+    if result not in ("NOT_MET", "UNKNOWN"):
+        return None
+
+    codes = it.get("reason_codes") or []
+    code = codes[0] if codes else ""
+    kind, action = _REC_ACTION.get(
+        code,
+        ("수정 필요", "확인된 미흡 사항을 해당 문항 기준에 맞게 수정하고 조치 후 상태를 증적으로 남기세요.")
+        if result == "NOT_MET"
+        else ("추가 확인 필요", "판단에 필요한 대상·기간·적용 기준과 직접 근거를 추가 확인하세요.")
+    )
+
+    spec = _load_checklist_item_index().get(it.get("item_id"), {})
+    question = spec.get("question") or spec.get("source_clause") or ""
+    rule = spec.get("evidence_rule") or {}
+    candidates = []
+    for x in rule.get("candidate_evidence") or []:
+        x = str(x).strip()
+        if x and x not in candidates:
+            candidates.append(x)
+        if len(candidates) >= 3:
+            break
+
+    return {
+        "item_id": it.get("item_id", ""),
+        "kind": kind,
+        "question": question,
+        "action": action,
+        "evidence": candidates,
+    }
+
+
+def _recommendation_block(detail: dict, e) -> str:
+    """통제항목별로 보완/수정/추가확인 안내 박스를 만든다."""
+    recs = []
+    for it in detail.get("items") or []:
+        rec = _recommendation_for_item(it)
+        if rec:
+            recs.append(rec)
+    if not recs:
+        return ""
+
+    wbs = detail.get("overall_result_wbs")
+    overall = detail.get("overall_result")
+    if wbs == "부분적정" or overall == "충족(보완 권고)":
+        title = "보완 권고"
+    elif wbs == "부적정" or overall == "미충족":
+        title = "수정 필요"
+    else:
+        title = "추가 확인 필요"
+
+    out = ["<div class='recbox'>", f"<div class='rec-title'>{e(title)}</div>"]
+    for r in recs:
+        out.append("<div class='rec-item'>")
+        out.append(f"<b>{e(r['item_id'])}</b> "
+                   f"<span class='rec-tag'>{e(r['kind'])}</span>")
+        if r["question"]:
+            out.append(f"<div class='rec-question'>{e(r['question'])}</div>")
+        out.append(f"<div class='rec-action'>{e(r['action'])}</div>")
+        if r["evidence"]:
+            out.append("<div class='rec-evidence'><b>권장 확인자료</b> · "
+                       + " / ".join(e(x) for x in r["evidence"])
+                       + "</div>")
+        out.append("</div>")
+    out.append("</div>")
+    return "".join(out)
+
+
 # ── 인쇄용 HTML ───────────────────────────────────────────────────────
 _CSS = """
 body{font:14px/1.7 'Malgun Gothic','Apple SD Gothic Neo',sans-serif;margin:32px;color:#1a1a1a}
-h1{font-size:22px;margin:0 0 4px} .sub{color:#666;font-size:13px;margin-bottom:24px}
+h1{font-size:22px;margin:0 0 4px} .ai-note{color:#777;font-size:11px;margin:0 0 5px 0} .sub{color:#666;font-size:13px;margin-bottom:24px}
 /* PDF 변환기(xhtml2pdf)가 CSS grid를 제대로 처리하지 못하므로
    요약 카드는 표 기반으로 렌더링한다. HTML/PDF 모두 동일하게 보인다. */
 table.sum-grid{width:100%;border-collapse:separate;border-spacing:3px;margin:0 auto 4px auto}
@@ -312,6 +476,14 @@ blockquote{margin:6px 0 6px 12px;padding:6px 12px;border-left:3px solid #ccc;
 blockquote .src{display:block;color:#888;font-size:12px;margin-top:4px}
 .none{color:#999;font-style:italic}
 .blockers{color:#b71c1c;font-size:12px;padding:6px 14px;background:#fff5f5}
+.recbox{margin:8px 14px 10px;border:1px solid #e0c46c;background:#fffdf5;padding:8px 10px}
+.rec-title{font-weight:700;font-size:13px;margin-bottom:4px;color:#6d5200}
+.rec-item{padding:6px 0;border-top:1px solid #f0e4b8}
+.rec-item:first-child{border-top:0}
+.rec-tag{font-size:11px;color:#805f00;margin-left:5px}
+.rec-question{font-size:12px;color:#555;margin-top:2px}
+.rec-action{font-size:12px;color:#222;margin-top:2px}
+.rec-evidence{font-size:11px;color:#666;margin-top:3px}
 table.cov{border-collapse:collapse;width:100%;font-size:13px}
 table.cov th,table.cov td{border:1px solid #ddd;padding:5px 8px;text-align:left}
 table.cov th{background:#f2f4f7;font-weight:600}
@@ -371,6 +543,7 @@ def to_html(path, controls_path=None, title="ISMS-P 증적 사전점검 — 항�
 
     out = [f"<!doctype html><html lang='ko'><meta charset='utf-8'>",
            f"<title>{e(title)}</title><style>{_CSS}</style>",
+           "<div class='ai-note'>본 리포트는 AI 분석 결과를 바탕으로 작성되었습니다.</div>",
            f"<h1>{e(title)}</h1>"]
     if whole:
         out.append(f"<div class='sub'>통제항목 {cov['control_total']}개 중 제출 "
@@ -437,6 +610,9 @@ def to_html(path, controls_path=None, title="ISMS-P 증적 사전점검 — 항�
                 out.append("<div class='blockers'>승인 보류 — " +
                            " / ".join(e(b["message"]) for b in d["approval_blockers"])
                            + "</div>")
+            rec_html = _recommendation_block(d, e)
+            if rec_html:
+                out.append(rec_html)
             for it in d["items"] or []:
                 out.append("<div class='item'>")
                 out.append(f"<span class='id'>{e(it.get('item_id',''))}</span> "
