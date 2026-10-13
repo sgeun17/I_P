@@ -278,7 +278,8 @@ def run_evidence(evidence_id: str, version: int | None = None, *,
             catalog=catalog, reason_catalog=reason_catalog, controls=controls,
             model=model, allow_draft=allow_draft,
             critical_policy={"mode": "explicit"},
-            as_of=as_of, controls_sha256=controls_sha256)
+            as_of=as_of, controls_sha256=controls_sha256,
+            prompt_profile="compact_v2", semantic_repair=True)
         if out["processing_status"] == "FAILED" or not out.get("output"):
             failed += 1
             # 실패도 DB 에 남긴다. 안 남기면 화면에서 그 통제항목이 그냥 사라진다.
