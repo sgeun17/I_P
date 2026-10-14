@@ -20,6 +20,7 @@ PRIMARY 가 바뀌면 그 통제항목의 Phase 2 판정을 과거로 돌리고,
 """
 from __future__ import annotations
 
+import re
 import json
 import sys
 from pathlib import Path
@@ -230,7 +231,10 @@ def backfill(directory=None, verbose: bool = True) -> dict:
     orchestrator 를 안 고치고 매핑을 DB 에 올리는 길이다. 여러 번 돌려도 된다.
     """
     d = Path(directory) if directory else result_dir()
-    files = sorted(d.glob("*_v*.json"))
+    # Phase 1 결과만 고른다. 같은 폴더의 *_v1.review-audit.json 같은
+    # 곁다리 파일을 Phase 1 결과로 읽으면 안 된다.
+    files = sorted(f for f in d.glob("*_v*.json")
+                   if re.fullmatch(r".+_v\d+", f.stem))
     done, errors, total = 0, [], 0
     for f in files:
         try:
