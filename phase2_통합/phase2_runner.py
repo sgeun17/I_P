@@ -18,6 +18,7 @@ evidence.status 는 ④ 안에서 다시 계산된다. 여기서 직접 건드�
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -116,8 +117,18 @@ def load_phase1_result(evidence_id: str, version: int | None = None):
         if not p.is_file():
             raise RunnerError("PHASE1_RESULT_NOT_FOUND", f"Phase 1 결과가 없습니다: {p}")
         return _read(p)
-    hits = sorted(RESULT_DIR.glob(f"{evidence_id}_v*.json"),
-                  key=lambda f: int(f.stem.rsplit("_v", 1)[1]))
+    # results/ 에는 Phase 1 결과 말고 다른 파일도 생긴다.
+    #   E0046_v1.json              ← Phase 1 결과
+    #   E0046_v1.review-audit.json ← 통합팀이 남기는 LLM 시도 기록
+    # 전에는 "_v" 뒤를 그냥 int() 로 읽어서 두 번째 파일에 걸리면
+    #   ValueError: invalid literal for int() with base 10: '1.review-audit'
+    # 가 나고 판정이 통째로 실패했다. 이름이 정확히 맞는 것만 고른다.
+    hits = []
+    for f in RESULT_DIR.glob(f"{evidence_id}_v*.json"):
+        m = re.fullmatch(rf"{re.escape(evidence_id)}_v(\d+)", f.stem)
+        if m:
+            hits.append((int(m.group(1)), f))
+    hits = [f for _, f in sorted(hits)]
     if not hits:
         raise RunnerError("PHASE1_RESULT_NOT_FOUND",
                           f"Phase 1 결과가 없습니다: {evidence_id}")
