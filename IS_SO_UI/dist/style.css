@@ -36,3 +36,19 @@ th{color:#455d66;font-size:.9375rem}.badge.amber{color:#705722}.badge.red{color:
 @media(max-width:760px){.project-overview{grid-template-columns:1fr;gap:25px}.project-lead h1{font-size:1.8125rem;line-height:1.65}.project-lead>p:not(.project-summary),.section-intro{font-size:1rem;line-height:2}.project-summary{font-size:1.0625rem}.project-section{display:block;padding:36px 0 44px;scroll-margin-top:60px}.section-content h2{font-size:1.25rem;line-height:1.9}.section-label{font-size:.9375rem;margin-bottom:20px}.project-main{padding:0 22px 25px}.reading-nav>div{padding:0 20px;gap:22px;overflow-x:auto;min-height:54px}.reading-nav a{font-size:.8125rem;padding:14px 0 11px}.project-scope dl{grid-template-columns:1fr}.project-scope dt{font-size:.875rem}.project-scope dd{font-size:.9375rem}.project-shortcuts button{padding:20px 15px}.project-shortcuts strong{font-size:.9375rem}.project-shortcuts span{font-size:.8125rem}.project-cta{flex-wrap:wrap;gap:15px}.process-entry{display:block}.process-tag{display:block;margin-bottom:15px}.phase-columns article{padding:23px}.project-case{padding:22px 18px}.project-header{gap:14px}.project-header nav{gap:12px;overflow-x:auto}.project-header nav button{font-size:.8125rem}.project-brand>span:last-child{font-size:.875rem}.brand strong{font-size:18px}.section-awaiting.reading-section{transform:translateY(24px)}.project-footer{font-size:.8125rem}}
 @media(prefers-reduced-motion:reduce){.reading-page{scroll-behavior:auto}.reading-section,.reading-section.section-awaiting{transition:none;transform:none;opacity:1}}
 @media print{.reading-nav{display:none}.reading-section,.reading-section.section-awaiting{opacity:1;transform:none;transition:none}}
+
+/* ── 선택 삭제 (2026-10-14) ──────────────────────────────────────── */
+th.pick,td.pick{width:34px;text-align:center}
+th.pick input,td.pick input{width:16px;height:16px;cursor:pointer}
+.toolbar.pickbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:10px 12px;border:1px solid #e3e8ec;border-radius:10px;background:#fafbfc}
+/* 주요 관련 항목을 눈에 띄게, 참고 관련은 접어서 작게 */
+.lead-match{font-size:1.05rem;margin:4px 0 10px}
+.control.primary{border-left:4px solid #648e78;background:#fbfdfc}
+.control.primary .ctl-name{margin-top:12px;font-size:1.12rem}
+.badge.big{font-size:.95rem;padding:3px 12px;font-weight:700}
+.minor-wrap{margin-top:16px}
+.minor-wrap>summary{cursor:pointer;color:#5a6f71;font-size:.9rem;padding:6px 0}
+.control.minor{padding:10px 12px;margin:8px 0;font-size:.9rem;background:#fafbfc}
+.control.minor .minor-name{color:#415349;font-size:.92rem}
+.control.minor .scores{font-size:.84rem}
