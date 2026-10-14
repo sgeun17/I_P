@@ -1,0 +1,41 @@
+Phase 1 v14 main integration (2026-10-14)
+
+Base main: acfa40007d3a514a67fb6a92c7453d3b63e24954
+Frozen source package: phase1-semantic-repair-v14.zip
+Package SHA-256: 4f3c30906d0000d19cac5f78ebf96821a03c05f286d8b700af346e631c3c2c96
+The 17 Python source files from the package payload are unchanged in content.
+Current main's Phase 2, API, UI, authentication, database and catalogs are preserved.
+The package's dependency baseline is 3c60e9213ef5910d647808b6b6e6520b76efdf01.
+Between that commit and the integration base, Phase 1 search/judgment are unchanged.
+
+Default site path: orchestrator.run_judgment -> phase1_search judgment pipeline
+-> selective source-bound review -> bounded semantic repair -> normal validation.
+Expected prompt version: phase1_mapping_selective_v2_activity.
+Expected review operation: phase1_document_purpose_review_v5_citation_anchors.
+PHASE1_PRIMARY_REVIEW=1 and PHASE1_SELECTIVE_REVIEW=1 enable this path (defaults).
+
+Verification on the integrated snapshot (offline, no DB/GPU/network inference):
+- 974 frozen v14 regression tests (private captured fixtures remain local).
+- 363 Phase 1 repository tests, including 8 synthetic integration regressions.
+- 17 search/adapter tests and 8 subtests.
+- 507 existing Phase 2 tests (2 pre-existing warning scenarios).
+- 7 website Phase 2 routing/repair option tests.
+Two legacy test contracts were updated: prompt version follows the selected
+profile; a fixed single-response transport fixture explicitly disables later
+review calls. New tests cover default v14 flags and fail-closed handling.
+Synthetic test data only is included in this commit, not private evidence/results.
+
+Limits:
+This integrates the previously tested v14 code, not a claim of universal mapping
+accuracy. Known v14 semantic limitations/new-document edge cases remain.
+No live site upload/DB or fresh 10-document model evaluation is claimed here.
+Previously saved results are not automatically recomputed.
+
+Deployment:
+Preserve local edits. Pull main with --ff-only in the actual server checkout,
+check the printed prompt/review versions above, then restart the API process.
+Keep the Argos tunnel open. Use LLM_BASE_URL=http://127.0.0.1:11435/v1 if that
+is the configured tunnel, and PHASE1_JUDGMENT_MODEL=qwen3:14b.
+Rejudge/reupload a document to generate a new result; do not infer deployment
+from a Git push alone. Phase 1 human review remains visible; valid PRIMARY
+mappings may enter Phase 2 while FAILED/NO_MATCH/invalid inputs still stop.

@@ -1,4 +1,5 @@
 import json
+import os
 from copy import deepcopy
 from pathlib import Path
 
@@ -129,9 +130,13 @@ def test_prompt_contains_current_v07_rules_and_generation_guardrails():
     package = build_prompt_package(mapping)
 
     system = package.system
-    assert package.prompt_version == "phase1_mapping_v0.7"
+    expected_prompt = ("phase1_mapping_selective_v2_activity"
+                       if os.getenv('PHASE1_SELECTIVE_REVIEW', '1') == '1'
+                       else ("phase1_mapping_v0.12-spans" if os.getenv('PHASE1_SPAN_REPAIR') == '1'
+                             else "phase1_mapping_v0.7"))
+    assert package.prompt_version == expected_prompt
     assert package.ruleset_version == "mapping_rules_v0.7"
-    assert PROMPT_VERSION == "phase1_mapping_v0.7"
+    assert PROMPT_VERSION == expected_prompt
     assert RULESET_VERSION == "mapping_rules_v0.7"
     assert "UNCERTAIN" in system
     assert "match_status는 출력하지 않는다" in system

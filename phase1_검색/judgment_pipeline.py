@@ -32,6 +32,7 @@ from versions import build_version_info  # noqa: E402
 from primary_review import run_check, latest_assessment  # noqa: E402
 from output_parser import parse_llm_output  # noqa: E402
 from validators import validate  # noqa: E402
+from primary_role_recovery import missing_primary_eligible  # noqa: E402
 
 
 @dataclass(frozen=True)
@@ -90,23 +91,37 @@ def run_judgment(
     if run.has_unmapped_request_error:
         raise JudgmentRequestError(run)
 
-    # Only valid multi-mapping results enter the verified second pass.
-    # Preserve E502 and every other existing blocking rule without extra calls.
+    # Valid mappings and the explicit zero-PRIMARY/E501-only route can enter
+    # source review. Every other blocking validation error still stops here.
     assessment = None
     review_enabled = os.getenv("PHASE1_PRIMARY_REVIEW", "1") == "1"
     output, issues = parse_llm_output(run.raw_response or "")
     selective = os.getenv('PHASE1_SELECTIVE_REVIEW', '1') == '1'
+    validation = validate(output, mapping_input, issues)
+    recovering_primary = selective and missing_primary_eligible(output, validation)
     trigger_reasons = []
     if selective and output is not None and not issues:
         from selective_review import triggers
         trigger_reasons = triggers(output, mapping_input)
     if (review_enabled and run.call_error is None and output is not None
-            and not issues and len(output.mapped_controls) >= 2
-            and validate(output, mapping_input).passed
+            and not issues and (len(output.mapped_controls) >= 2 or
+                (selective and len(output.mapped_controls) == 1 and bool(trigger_reasons)))
+            and (validation.passed or recovering_primary)
             and (not selective or bool(trigger_reasons))):
         run = run_check(
             run, mapping_input, model=model_name, isolate_explanations=not selective,
             source_only_batch=selective,
+            source_claims_v1=selective,
+            source_claim_ids=selective,
+            keyed_source_review=selective,
+            robust_contract=selective,
+            purpose_contract_v2=selective,
+            purpose_contract_v3=selective,
+            purpose_contract_v4=selective,
+            purpose_contract_v5=selective,
+            purpose_label_contract=selective,
+            recover_missing_primary=recovering_primary,
+            force_single=selective,
             topic_mapping_correction=True, client_config=client_config,
             generation=generation, http_client=http_client,
             context_budget=context_budget, token_counter=token_counter,
@@ -115,6 +130,28 @@ def run_judgment(
         if assessment is None:
             # Never silently release a required second-pass check that vanished.
             assessment = {"status": "CHECK_FAILED", "error": "Missing second-pass audit"}
+
+    recovery_resolved = (not recovering_primary or
+                        (assessment or {}).get('primary_role_recovery', {}).get('status') == 'RECOVERED')
+    if selective and assessment is not None and recovery_resolved:
+        from semantic_repair import repair_once
+        run, assessment = repair_once(run, mapping_input, assessment, model=model_name,
+            reuse_verified_purpose=True,
+            purpose_label_contract=True,
+            source_claims_v1=True,
+            source_claim_ids=True,
+            keyed_source_review=True,
+            robust_contract=True,
+            purpose_contract_v2=True,
+            purpose_contract_v3=True,
+            purpose_contract_v4=True,
+            purpose_contract_v5=True,
+            document_scope_contract=True,
+            allow_activity_proposal=True,
+            client_config=client_config, generation=generation, http_client=http_client,
+            context_budget=context_budget, token_counter=token_counter)
+        # Fact vetoes must inspect the verified final proposal, not stale maps.
+        output, issues = parse_llm_output(run.raw_response or '')
 
     mapping_result = build_result(
         run.raw_response,

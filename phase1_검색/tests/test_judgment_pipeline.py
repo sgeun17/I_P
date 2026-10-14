@@ -67,8 +67,13 @@ def _run(search_result, client, **kwargs):
     ],
 )
 def test_saved_search_result_reaches_real_judgment_service(
-    search_name, response_name, status, mapped_count
+    search_name, response_name, status, mapped_count, monkeypatch
 ):
+    # This fixed single-response fixture tests the legacy transport contract.
+    # Default v14 review/repair calls are covered separately, not fed a mapping
+    # JSON in place of a purpose-review response.
+    monkeypatch.setenv('PHASE1_PRIMARY_REVIEW', '0')
+    monkeypatch.setenv('PHASE1_SELECTIVE_REVIEW', '0')
     search_result = _search(search_name)
     original = deepcopy(search_result)
     raw = _response(response_name)

@@ -22,7 +22,7 @@ from typing import Any
 from models import LLMMappingOutput, MappingInput
 
 SPAN_REPAIR = os.environ.get('PHASE1_SPAN_REPAIR') == '1'
-PROMPT_VERSION = ('phase1_mapping_selective_v1' if os.getenv('PHASE1_SELECTIVE_REVIEW', '1')=='1'
+PROMPT_VERSION = ('phase1_mapping_selective_v2_activity' if os.getenv('PHASE1_SELECTIVE_REVIEW', '1')=='1'
                   else ('phase1_mapping_v0.12-spans' if SPAN_REPAIR else 'phase1_mapping_v0.7'))
 RULESET_VERSION = "mapping_rules_v0.7"
 
@@ -106,6 +106,14 @@ _BASE_SYSTEM = r"""
 - 후보로 검색됐다는 사실, rank, similarity_score 자체는 관련성의 근거가 아니다.
 
 [관련성 경계 판정]
+- 관련성은 요구사항 전체 충족이 아니다. 요구사항의 일부 대상 활동 또는 직접 미수행 기록이
+  원문에 있으면 관련될 수 있다. 나머지 활동의 부재만으로 그 직접 관련성을 지우지 않는다.
+- 반대로 일부 근거를 요구사항의 다른 활동까지 수행했다는 설명으로 확대하지 않는다.
+  로그 수집·저장·SIEM 연동만으로 로그 점검을 추론하지 않는다. 점검 기준·계획·방법이나
+  검토·분석·이상징후 점검의 수행/미수행 기록은 별도의 대상 활동이다.
+- 로그인 화면의 보안책임 동의는 사용자 인증 수단·본인 확인 절차와 구별한다.
+- 법규 준수 점검표에 정책 개정 완료가 기록되면 정책 유지관리의 일부 활동과 관련될 수 있다.
+  문서 전체의 주된 목적이 다르다는 이유로 부속 활동의 관련성을 없애지 않는다.
 - 후보는 서로 독립적으로 먼저 판단한다. 한 후보가 더 구체적이거나 PRIMARY에 가깝다는 이유만으로,
   증적에 직접 나타난 다른 후보의 대상 활동을 NOT_RELATED로 바꾸지 않는다. 하나의 실제 행위가 서로 다른
   관리 목적의 둘 이상의 통제 요구사항에 동시에 직접 해당할 수 있다.
