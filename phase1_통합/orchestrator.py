@@ -28,6 +28,17 @@ from pipeline import process_one  # noqa: E402
 from chunk_retriever import retrieve  # noqa: E402
 from judgment_pipeline import run_judgment  # noqa: E402
 
+# 판단팀 to_evidence_status() 는 Phase 1 만 끝나도 COMPLETED 를 준다. Phase 2 가
+# 뒤에 붙은 지금은 그 값을 그대로 쓰면 '다 끝났다' 가 돼서 Phase 2 가 돌 자리가
+# 없어진다. phase2_status.from_phase1() 이 그 자리를 VALIDATING 으로 바꿔 준다.
+_IFACE = ROOT / "phase2_인터페이스"
+if _IFACE.is_dir() and str(_IFACE) not in sys.path:
+    sys.path.insert(0, str(_IFACE))
+try:
+    from phase2_status import from_phase1 as _from_phase1  # noqa: E402
+except ImportError:                       # 인터페이스 모듈이 없는 환경
+    _from_phase1 = None
+
 
 class IntegrationError(RuntimeError):
     def __init__(self, code: str, message: str, *, stage: str):
@@ -197,7 +208,17 @@ def inspect_evidence(
             review_audit_path = RESULT_DIR / f"{result['evidence_id']}_v{result['version']}.review-audit.json"
             review_audit_path.write_text(
                 json.dumps(review_records, ensure_ascii=False, indent=2), encoding="utf-8")
-        update_status(evidence_id, evidence_status)
+        # Phase 2 를 이어 돌릴 것이면 COMPLETED 대신 VALIDATING 으로 적는다.
+        # PHASE2_AUTO=0 으로 Phase 2 를 끈 환경에서는 예전처럼 COMPLETED 로 끝난다.
+        # (api.py 가 같은 변수를 본다. 둘이 어긋나면 증적이 VALIDATING 에 갇힌다)
+        status_to_save = evidence_status
+        if _from_phase1 is not None:
+            status_to_save = _from_phase1(
+                str(_jsonable(judged.mapping_result.processing_status)),
+                bool(judged.mapping_result.human_review.required),
+                phase2_enabled=(os.getenv("PHASE2_AUTO", "1") != "0"),
+            )
+        update_status(evidence_id, status_to_save)
         result_path = _persist(result)
         return {
             "success": True,
@@ -205,7 +226,7 @@ def inspect_evidence(
             "evidence_id": evidence_id,
             "version": result["version"],
             "source_file": payload["source_file"],
-            "evidence_status": evidence_status,
+            "evidence_status": status_to_save,
             "search": {
                 "top_k": search_result["retrieval"]["top_k"],
                 "candidates": search_result["retrieval"]["candidates"],
@@ -217,3 +238,4 @@ def inspect_evidence(
             "review_audit_file": str(review_audit_path) if review_audit_path else None,
             "completed_at": datetime.now().astimezone().isoformat(),
         }
+
