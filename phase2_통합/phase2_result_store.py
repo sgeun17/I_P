@@ -506,6 +506,27 @@ STALE_ON_REMAP = ("SKIP_NO_MATCH", "HOLD_PHASE1_INVALID", "FAILED",
                   "ALL_TARGETS_UNRESOLVED")
 
 
+
+def _table_missing(exc, table="phase1_mapping") -> bool:
+    """그 표가 아직 없어서 난 오류인가. 그것만 넘어간다.
+
+    `except Exception: return True` 로 두면 칸 이름 오타·SQL 문법 오류·연결
+    끊김까지 전부 '표가 없다' 로 둔갑해서, 확인하지 못한 것을 확인된 것처럼
+    쓰게 된다. 표가 없는 경우만 골라내고 나머지는 그대로 올린다.
+
+        MySQL/MariaDB  1146 Table '...' doesn't exist
+        SQLite         no such table: ...
+    """
+    code = None
+    args = getattr(exc, "args", ())
+    if args and isinstance(args[0], int):
+        code = args[0]
+    text = str(exc).lower()
+    if code == 1146:
+        return table.lower() in text
+    return "no such table" in text and table.lower() in text
+
+
 def _is_current_primary(cur, evidence_id, version, control_id):
     """
     그 통제항목이 지금도 PRIMARY 인가.
@@ -516,7 +537,9 @@ def _is_current_primary(cur, evidence_id, version, control_id):
                        "WHERE evidence_id = %s AND evidence_version = %s"),
                     (evidence_id, version))
         rows = _rows(cur)
-    except Exception:
+    except Exception as exc:
+        if not _table_missing(exc):
+            raise                        # 진짜 DB 오류는 삼키지 않는다
         return True                      # 매핑 표가 아직 없다
     if not rows:
         # 매핑 줄이 하나도 없다. 두 가지를 구분해야 한다.
@@ -578,8 +601,10 @@ def missing_primary(cur, evidence_id, version):
                        "WHERE evidence_id = %s AND evidence_version = %s "
                        "AND relation = 'PRIMARY'"), (evidence_id, version))
         prim = [r["control_id"] for r in _rows(cur)]
-    except Exception:
-        return None
+    except Exception as exc:
+        if not _table_missing(exc):
+            raise                        # 진짜 DB 오류는 삼키지 않는다
+        return None                      # 매핑 표가 아직 없다
     if not prim:
         return None
     # current-raw: 버전을 인자로 받아 직접 지정한다
@@ -1332,3 +1357,4 @@ def _one(r):
         "history": r.get("history") or [],
         "judged_at": str(r["created_at"]),
     }
+
