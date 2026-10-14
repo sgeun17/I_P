@@ -1,0 +1,34 @@
+Source-bound review WIP checkpoint — 2026-10-14
+
+This checkpoint is a development version, not an accuracy claim or production
+approval. It changes source-bound citation handling in Phase 1 and bounded
+source reassessment in Phase 2. The Phase 2 entry gate is unchanged.
+
+Included changes:
+- Unique whitespace-equivalent source offsets, exact citation deduplication,
+  safe empty-source response schema, and attributed source-record validation.
+- Trusted assessment date in generation and self-check context.
+- Separate policy/planning text from actual implementation and event evidence.
+- Bounded reassessment for absence-only violation claims, account/event binding,
+  lifecycle triggers and conditional UNKNOWN review.
+- De-anchored explanation/citation rewrite for report-versus-deliberation claims.
+- Synthetic offline regression tests. No original evidence or result payloads.
+
+Full comparison used the same saved Phase 1 results and 260 matched questions
+and contexts for 24 eligible documents in a 25-document scope. One original
+Phase 1 validation failure remained excluded; its separate correction is not
+part of this full-run count. Baseline: 4 COMPLETED / 20 REVIEW_REQUIRED / 1 SKIPPED.
+Candidate: 3 COMPLETED / 21 REVIEW_REQUIRED / 1 SKIPPED.
+COMPLETED is a processing state, not verified semantic accuracy or all-MET.
+This trial does NOT establish improved completion rate or general accuracy.
+
+Known unresolved issues include absence of child-related notice/consent evidence
+being treated as NOT_MET, ambiguous OCR row/column binding being treated as MET,
+remaining explanation/citation discrepancies and conditional UNKNOWN review
+disagreement. These findings must not be presented as resolved by this commit.
+The separate unsuccessful retention-fact experiment is not included.
+
+No DB, approved catalog, source evidence, model results, credentials, service
+configuration, or Phase 2 entry conditions are included or changed. No service
+restart or deployment is performed by the upload script. Saved website results
+are not automatically recalculated after a code update.

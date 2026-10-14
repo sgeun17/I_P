@@ -85,6 +85,14 @@ def _citation_editor_package(package, item, context, feedback, organization, glo
     )
     payload = {'organization_context': deepcopy(organization),
                'evidence_context': compact_evidence_context(context)}
+    from event_stage_basis import actual_event_locations
+    event_locations = actual_event_locations(item, context)
+    if event_locations:
+        payload['actual_event_source_locations_not_verdict'] = event_locations
+        system += (' 현재 질문이 실제 심의·의결 이행이면 보고 안건과 실제 회의 결과를 구분한다. '
+                   '제공된 actual_event_source_locations_not_verdict는 현재 원문에서 복사한 후보 위치다. '
+                   '동일 위원회·회의·기간 연결을 대조하고 실제 결과를 설명·인용한다. '
+                   '다른 사건의 구절을 끼워 넣거나 원문에 없는 의결을 만들지 않는다.')
     if global_rules:
         payload['judgment_rules'] = global_rules
     if spans is not None:
@@ -341,6 +349,7 @@ def run_item_judgment(
     citation_span_selection: bool = False,
     semantic_feedback: Mapping[str, Any] | None = None,
     prompt_profile: str = "legacy",
+    assessment_date=None,
 ) -> JudgmentRunResult:
     """체크리스트 item 하나를 LLM에 요청한다.
 
@@ -402,6 +411,8 @@ def run_item_judgment(
     package = replace(package, user=package.user + "\n[현재 요청 문항 확인]\n"
         + "item_id는 반드시 " + json.dumps(requested_item_id, ensure_ascii=False)
         + " 이다. 다른 문항 ID나 사유코드를 item_id로 쓰지 않는다. 현재 checklist_item.question과 evidence_rule만 평가한다.\n")
+    from assessment_context import date_prompt
+    package = replace(package, user=package.user + date_prompt(assessment_date))
     focus = question_focus(checklist_item, evidence_context)
     if focus and prompt_profile == "legacy":
         package = replace(package, user=package.user + '\n[질문·대상·행위 연결 보조자료: 판정값 아님]\n'
@@ -425,6 +436,59 @@ def run_item_judgment(
             + '결과를 통과시키는 것이 목표가 아니다. 기존 출력 스키마를 그대로 따른다.\n'
             + '[이번에 답할 문항 — 다른 문항에 답하지 않는다]\n'
             + json.dumps(dict(checklist_item), ensure_ascii=False))
+        if semantic_feedback.get('mode') in {'EVENT_STAGE_SOURCE_REASSESSMENT', 'EVENT_REASON_CITATION_REWRITE'}:
+            package = replace(package, user=package.user + '\n[보고와 실제 심의 사건의 구분]\n'
+                + '보고 안건·보고 접수·심의할 권한의 정의는 실제 심의·의결 이행과 다르다. '
+                + '전체 원문의 실제 회의 결과·의결 안건을 대조하여 현재 대상·사건·시점의 근거를 선택한다. '
+                + '다른 위원회나 다른 회의 결과를 합치지 않는다. 원문에 실제 심의 기록이 있으면 '
+                + '그 내용을 설명과 인용으로 직접 연결하고, 없으면 심의했다고 만들어 쓰지 않는다. '
+                + '특정 결과를 요구하지 않으며 현재 질문의 모든 필수 조건을 그대로 적용한다.')
+            # Locations are rebuilt from this invocation's context, never from
+            # untrusted feedback. A matching phrase is a hint, not approval.
+            from event_stage_basis import actual_event_locations
+            locations = actual_event_locations(checklist_item, evidence_context)
+            if locations:
+                package = replace(package, user=package.user
+                    + '\n[전체 원문에서 찾은 실제 사건 표현 후보 — 근거 위치이며 정답 아님]\n'
+                    + json.dumps(locations, ensure_ascii=False)
+                    + '\n각 후보가 같은 위원회·회의·기간에 속하는지 확인한다. 다른 사건이면 쓰지 않는다. '
+                    + '보고와 의결의 활동을 뒤섞지 말고 선택한 원문의 실제 활동을 설명한다.')
+        if semantic_feedback.get('mode') == 'ACCOUNT_EVENT_REASSESSMENT':
+            package = replace(package, user=package.user + '\n[계정과 실제 사건의 연결]\n'
+                + '생성·변경·말소는 다른 사건이다. 원문에서 현재 질문의 행위를 실제 기록한 '
+                + '동일 계정·시스템·일시를 찾아 설명과 인용을 맞춘다. 다른 계정의 생성·변경을 '
+                + '삭제 이력이라고 서술하지 않는다. 해당 활동이 없으면 만들지 않는다. '
+                + '특정 계정이나 특정 결과를 요구하지 않으며 기존 계정 연결 검사를 그대로 적용한다.')
+        if semantic_feedback.get('mode') == 'LIFECYCLE_SOURCE_REASSESSMENT':
+            package = replace(package, user=package.user + '\n[지원 종료 적용 조건의 원문 근거]\n'
+                + '제품 버전명·패치 미적용만으로 제조사 지원 종료를 추정하지 않는다. '
+                + '지원 종료 대상·기준일·종료 상태의 근거가 제공된 원문에 있는지 먼저 대조한다. '
+                + '외부 지식으로 날짜나 상태를 추가하지 않는다. 종료 근거가 실제 있으면 지우지 않는다. '
+                + '적용 조건 미확인과 종료 대상의 실제 미대응을 구분하고, 기록된 보완대책도 부정하지 않는다. '
+                + '특정 판정으로 바꾸라는 지시가 아니며 현재 질문의 판정 조건을 따른다.')
+        if semantic_feedback.get('mode') == 'PLAN_EXECUTION_REASSESSMENT':
+            package = replace(package, user=package.user + '\n[계획과 실제 이행의 구분]\n'
+                + '일정·계획에 업무가 적혀 있다는 사실과 그 업무의 실제 시행 기록을 구분한다. '
+                + '문서 제목이 계획서여도 실제 결과가 함께 있으면 그 근거를 사용할 수 있다. '
+                + '본문의 표 제목·기간·대상·완료 기록을 연결하고 해당 문항이 요구한 실제 이행만 판단한다. '
+                + '예산 배정 자체를 묻는 질문에 지출·집행 내역을 추가로 요구하지 않는다. '
+                + '계획만으로 이행을 추정하거나, 기록 부족만으로 미이행을 단정하지 않는다. '
+                + '현재 원문 전체를 독립적으로 재검토하며 특정 결과를 요구하지 않는다.')
+        if (semantic_feedback.get('mode') == 'ABSENCE_BASIS_REASSESSMENT'
+                and semantic_feedback.get('quality_diagnostic', {}).get('code') == 'NO_DIRECT_PERFORMANCE_BASIS_ARGUMENT'):
+            package = replace(package, user=package.user + '\n[미수행과 확인 불가의 구분]\n'
+                + '실제 미수행·위반을 직접 기록한 사실과 수행을 입증할 자료가 불충분한 상태를 구분한다. '
+                + '여러 점검일이 있어도 검토 대상 구역·업무·시점의 연결을 추정하지 않는다. '
+                + '원문에 미수행 사실이 직접 있으면 지우지 않고, 일부 점검 기록이 있으면 없다고 하지 않는다. '
+                + 'OCR 표의 제목·행·열 관계가 불명확하면 사람·매체·승인·사건을 임의로 연결하지 않는다. '
+                + '기존 결과를 통과시키는 것이 목적이 아니며 특정 결과를 요구하지 않는다.')
+        elif semantic_feedback.get('mode') == 'ABSENCE_BASIS_REASSESSMENT':
+            package = replace(package, user=package.user + '\n[근거와 절차 부재의 구분]\n'
+                + '승인이라는 단어 또는 절차가 명시되지 않았다는 사실만으로 절차 미수립을 확정하지 않는다. '
+                + '반대로 요청·검토·지정이 있다는 이유만으로 권한 부여 승인까지 추정하지 않는다. '
+                + '실제 미수립 또는 무승인 허용을 직접 기록한 근거, 승인 주체·처리 절차의 근거, '
+                + '확인되지 않은 범위를 구분하고 현재 질문의 판정 조건에 따라 독립적으로 답한다. '
+                + '특정 결과를 요구하지 않는다.')
     run_metadata.update(prompt_profile=prompt_profile, prompt_version=package.prompt_version,
                         prompt_lengths=package.prompt_lengths)
     item_id = str(checklist_item.get("item_id") or "")

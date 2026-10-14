@@ -125,10 +125,47 @@ def literal_claim_provenance(mapping_input, mapped_item, candidate):
             'establishes_activity_relevance': False, 'establishes_compliance': False}
 
 
+def _source_quote_range(text, quote):
+    """Locate only a unique match under the citation validator's whitespace rule.
+
+    Returned offsets point into immutable source text, not generated quote text.
+    No punctuation, tokens, negations or page information may be repaired here.
+    """
+    import re
+    wanted = ' '.join(quote.split())
+    if not wanted:
+        return None
+    tokens = list(re.finditer(r'\S+', text))
+    normalized, starts, ends = [], [], []
+    for index, token in enumerate(tokens):
+        if index:
+            normalized.append(' ')
+            starts.append(tokens[index - 1].end())
+            ends.append(token.start())
+        for offset in range(token.start(), token.end()):
+            normalized.append(text[offset])
+            starts.append(offset)
+            ends.append(offset + 1)
+    normalized = ''.join(normalized)
+    start = normalized.find(wanted)
+    if start < 0 or normalized.find(wanted, start + 1) >= 0:
+        return None
+    return starts[start], ends[start + len(wanted) - 1]
+
+
 def _bound_records(mapping_input, spans, citations):
     """Clip span text to the public quote, never expose uncited line tails."""
     chunks = {chunk.chunk_id: chunk for chunk in mapping_input.chunks}
     records = []
+    quote_ranges = {}
+    line_offsets = {}
+    for chunk in mapping_input.chunks:
+        offset = 0
+        lines = []
+        for line in chunk.text.splitlines(keepends=True):
+            lines.append(offset)
+            offset += len(line)
+        line_offsets[chunk.chunk_id] = lines
     for span in spans:
         if span.get('field') != 'text':
             continue
@@ -140,14 +177,34 @@ def _bound_records(mapping_input, spans, citations):
         for citation in citations:
             if citation.chunk_id != chunk.chunk_id or not citation.quote.strip():
                 continue
-            if citation.quote not in chunk.text or not chunk.covers_page(citation.page):
+            if not chunk.covers_page(citation.page):
                 continue
             if chunk.page_start != chunk.page_end:
                 continue  # A page range cannot locate a quote on one page.
-            if value in citation.quote:
-                fragments.append(value)
-            elif citation.quote in value:
-                fragments.append(citation.quote)
+            # Preserve the original exact-source path, including repeated
+            # identical source lines. New alignment is only a bounded fallback.
+            if citation.quote in chunk.text:
+                if value in citation.quote:
+                    fragments.append(value)
+                    continue
+                if citation.quote in value:
+                    fragments.append(citation.quote)
+                    continue
+            key = (chunk.chunk_id, citation.quote)
+            if key not in quote_ranges:
+                quote_ranges[key] = _source_quote_range(chunk.text, citation.quote)
+            bound = quote_ranges[key]
+            line = span.get('line')
+            offsets = line_offsets[chunk.chunk_id]
+            if bound is None or not isinstance(line, int) or not 0 <= line < len(offsets):
+                continue
+            start = offsets[line]
+            if chunk.text[start:start + len(value)] != value:
+                continue
+            left, right = max(start, bound[0]), min(start + len(value), bound[1])
+            fragment = chunk.text[left:right] if left < right else ''
+            if fragment.strip():
+                fragments.append(fragment)
         if fragments:
             records.append({'span_id': span['span_id'], 'chunk_id': chunk.chunk_id,
                             'page': chunk.page_start,
@@ -245,6 +302,14 @@ SEMANTIC_PUBLIC_CLAIMS 모드는 public_claim_records의 두 실제 공개 설�
 새 공개 설명을 만들지 않는다. JSON만 출력한다.'''
 
 
+def _source_id_array(ids, *, required=False):
+    """An empty evidence domain permits only []; never emit invalid enum: []."""
+    return {'type': 'array', 'uniqueItems': True,
+            **({'minItems': 1} if required else {}),
+            **({} if ids else {'maxItems': 0}),
+            'items': {'type': 'string', **({'enum': list(ids)} if ids else {})}}
+
+
 def prepare_source_review(mapping_input, output, spans, *, control_id=None, id_only=False, keyed_controls=False, robust_contract=False):
     if robust_contract and not keyed_controls:
         raise ValueError('Robust source review requires keyed controls')
@@ -266,18 +331,17 @@ def prepare_source_review(mapping_input, output, spans, *, control_id=None, id_o
         observed_quotes = list(dict.fromkeys(text for record in target['activity_source_records']
                                             for text in record['texts']))
         for direct in (True, False):
+            if direct and not target['activity_source_span_ids']:
+                continue
             properties = {
                 'control_id': {'type': 'string', 'const': target['control_id']},
                 'source_activity_basis': {'type': 'string', 'enum': list(DIRECT_BASES) if direct else ['TOPIC_ONLY', 'NONE', 'UNRESOLVED']},
                 'activity_link_verdict': {'type': 'string', 'enum': ['SUPPORTED', 'UNSUPPORTED', 'UNVERIFIED'] if direct else ['UNSUPPORTED', 'UNVERIFIED']},
                 'activity_kind': {'type': 'string', 'enum': [kind for kind in KINDS if kind not in ('TOPIC_ONLY', 'NONE', 'UNRESOLVED')] if direct else list(KINDS)},
-                'source_span_ids': {'type': 'array', 'uniqueItems': True,
-                                    'minItems': 1 if direct else 0,
-                                    'items': {'type': 'string', 'enum': target['activity_source_span_ids']}},
+                'source_span_ids': _source_id_array(target['activity_source_span_ids'], required=direct),
                 'observed_record': {'type': 'string', 'enum': observed_quotes if direct else [*observed_quotes, 'NO_SOURCE_RECORD']},
                 'public_claim_verdict': {'type': 'string', **({'const': 'LITERAL_SOURCE_RECORD'} if literal else {'enum': list(CLAIM_VERDICTS)})},
-                'claim_source_span_ids': {'type': 'array', 'uniqueItems': True,
-                                         'items': {'type': 'string', 'enum': claim_ids}},
+                'claim_source_span_ids': _source_id_array(claim_ids),
                 'unsupported_public_claims': {'type': 'array', 'uniqueItems': True,
                                              'items': {'type': 'string', 'minLength': 1},
                                              **({'maxItems': 0} if literal else {})},
@@ -297,6 +361,8 @@ def prepare_source_review(mapping_input, output, spans, *, control_id=None, id_o
                 # validator. A negative claim cannot omit its public-text ID;
                 # a supported claim cannot carry a failed-claim ID.
                 for verdict in (('LITERAL_SOURCE_RECORD',) if literal else CLAIM_VERDICTS):
+                    if verdict == 'SUPPORTED' and not claim_ids:
+                        continue
                     bound = deepcopy(properties)
                     bound['public_claim_verdict'] = {'type': 'string', 'const': verdict}
                     failed = bound['unsupported_public_claim_ids']

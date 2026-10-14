@@ -260,7 +260,7 @@ def _original_citations_for_fallback(mapping_input, mapping):
 
 
 def apply_proposal(raw, mapping_input, output, plan, *, source_proposals=None, allow_cloud_proposal=False,
-                   allow_activity_proposal=False):
+                   allow_activity_proposal=False, citation_normalizations=None):
     ids, spans = plan[:2]
     value = json.loads(extract_json_text(raw) or raw)
     if not isinstance(value, dict) or set(value) != {'changes'} or not isinstance(value['changes'], list):
@@ -356,7 +356,14 @@ def apply_proposal(raw, mapping_input, output, plan, *, source_proposals=None, a
                 chunk = chunk_map[span['chunk_id']]
                 if chunk.text[span['start']:span['end']] != span['quote'] or not chunk.covers_page(span['page']):
                     raise ValueError('Correction source changed')
-                citations.append(Citation.model_validate({k: span[k] for k in ('chunk_id', 'page', 'quote')}))
+                citation = Citation.model_validate({k: span[k] for k in ('chunk_id', 'page', 'quote')})
+                if citation in citations:
+                    if citation_normalizations is not None:
+                        citation_normalizations.append({'control_id': cid, 'source_span_id': sid,
+                            'operation': 'DEDUPLICATE_IDENTICAL_PUBLIC_CITATION',
+                            'citation_sha256': digest(citation.model_dump(mode='json'))})
+                    continue
+                citations.append(citation)
             candidate.citations = citations
             mapping.citations = citations
             mapping.reason = candidate.reason = source_only_reason([c.quote for c in citations])
@@ -517,7 +524,9 @@ def repair_once(run, mapping_input, audit, *, model, **kwargs):
             record['proposal_normalized_response'] = raw
         record['source_proposals'] = []
         record['repair_scope'] = 'ALL_EXISTING_MAPPINGS' if source_claims_v1 else 'DIAGNOSED_MAPPINGS'
+        record['citation_normalizations'] = []
         proposed, removed = apply_proposal(raw, mapping_input, output, plan,
+            citation_normalizations=record['citation_normalizations'],
                                            source_proposals=record['source_proposals'],
                                            allow_cloud_proposal=source_claims_v1,
                                            allow_activity_proposal=allow_activity_proposal)

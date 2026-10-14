@@ -25,7 +25,13 @@ def _education_target(question):
 
 def _crypto_action(item):
     q = _compact(item.get('question', ''))
-    if item.get('check_kind') != 'implementation' or '암호키' not in q:
+    if item.get('check_kind') not in {'implementation', 'record'} or '암호키' not in q:
+        return None
+    if '폐기' in q and item.get('check_kind') == 'implementation':
+        return '키 폐기 사건의 실제 대상·삭제 방법·결과'
+    if '복구' in q and '사건' in q and item.get('check_kind') == 'record':
+        return '키 복구 사건의 실제 승인·수행 및 결과'
+    if item.get('check_kind') != 'implementation':
         return None
     if '배포' in q or '복호화권한' in q:
         return '배포·복호화 권한 부여의 실제 대상 및 보호방식'
@@ -104,7 +110,9 @@ def _crypto_source_kind(chunk):
     # Explicit event/method fields make this NOT a policy-only source, even if
     # a policy heading is attached. They still need normal semantic review.
     event = re.search(r'생성방법\s*[:：]|입회자\s*[:：]|배포일\s*[:：]|권한\s*부여일\s*[:：]|'
-                      r'배포\s*완료|권한\s*부여\s*완료|생성\s*완료|생성하였|배포하였', text)
+                      r'배포\s*완료|권한\s*부여\s*완료|생성\s*완료|생성하였|배포하였|'
+                      r'(?:폐기일|파기일|복구일|복구방법|파기방법)\s*[:：]|'
+                      r'(?:폐기|파기|복구)\s*(?:완료|하였|했)', text)
     if event:
         return 'event_or_unclassified'
     stages = re.findall(r'^(?:생성|이용.?배포|보관|변경|복구|파기)\s*[:：]', text, re.M)
@@ -220,6 +228,13 @@ def question_binding_gap(item, output, context):
         if any(c is None for c in selected):
             return None
         kinds = [_crypto_source_kind(c) for c in selected]
+        if crypto.startswith(('키 폐기 사건', '키 복구 사건')):
+            # A mixed policy/result document may have event evidence elsewhere.
+            # Abstain rather than reject an answer merely for selected citations;
+            # abstention is not verification of the event or target linkage.
+            complete_kinds = [_crypto_source_kind(c) for c in (context or {}).get('chunks', [])]
+            if any(k == 'event_or_unclassified' for k in complete_kinds):
+                return None
         if 'policy' in kinds and all(k in {'policy', 'inventory'} for k in kinds):
             return ('CRYPTO_POLICY_AS_EXECUTION',
                     f'암호키 관리 기준 또는 목록은 확인되지만, {crypto}가 같은 키 사건에 연결되지 않습니다. 기준 존재와 실제 이행을 구분하여 검토가 필요합니다.')

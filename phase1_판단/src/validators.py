@@ -371,8 +371,47 @@ _SCOPED_RE = re.compile(
     rf"{_SUBJECT}[^.。]{{0,20}}{_VERDICT}(?![^.。]{{0,30}}{_NOT_PRESENT})"
 )
 
+# "충족하거나 수행한 활동이 명시되어 있지 않다" describes the absence
+# of evidence of an activity. It does not assert that the control is unmet.
+# Keep this exception local to a positive fulfillment verb + activity noun;
+# actual noncompliance assertions and any additional verdict still block.
+_ACTIVITY_ABSENCE_SUFFIX = re.compile(
+    r"^(?:하는|한|하거나(?:\s*수행한)?)\s*"
+    r"(?:활동|내용|기록|근거|절차)(?:이|가|은|는)?\s*"
+    r"(?:(?:명확히|직접|구체적으로)\s*)?"
+    r"(?:명시|기록|기재|제시)(?:되어\s*있지|되지)\s*않"
+)
 
-def detect_adequacy_judgment(output: LLMMappingOutput) -> list[ValidationIssue]:
+
+def _activity_absence_only(match, text: str) -> bool:
+    return bool(re.search(r"(?<![미불])충족$", match.group())
+                and _ACTIVITY_ABSENCE_SUFFIX.match(text[match.end():]))
+
+
+def _is_literal_source_record(row, mapping_input: MappingInput | None) -> bool:
+    """Recognize only exact attributed records, never generated judgments.
+
+    This is a provenance exception to a lexical rule, not relevance/adequacy
+    approval. The normal citation and independent activity checks still apply.
+    """
+    if mapping_input is None or not row.citations:
+        return False
+    if row.reason != "원문 기록: " + "\n".join(c.quote for c in row.citations):
+        return False
+    chunks = mapping_input.chunk_map()
+    for citation in row.citations:
+        chunk = chunks.get(citation.chunk_id)
+        if (chunk is None or not citation.quote.strip()
+                or citation.quote not in chunk.text
+                or not chunk.covers_page(citation.page)
+                or str(getattr(chunk.source, "value", chunk.source)).lower() != "parser"):
+            return False
+    return True
+
+
+def detect_adequacy_judgment(
+    output: LLMMappingOutput, mapping_input: MappingInput | None = None
+) -> list[ValidationIssue]:
     """Phase 1 결과에 적정성 판정이 섞였는지 본다.
 
     오탐이 나도 결과를 버리지 않는다. `E505` → `R102`로 사람에게 한 번 보여줄 뿐이다.
@@ -381,7 +420,11 @@ def detect_adequacy_judgment(output: LLMMappingOutput) -> list[ValidationIssue]:
     issues: list[ValidationIssue] = []
 
     def check(text: str, control_id: str, where: str) -> None:
-        found = _ADEQUACY_RE.search(text or "") or _SCOPED_RE.search(text or "")
+        text = text or ""
+        found = _ADEQUACY_RE.search(text)
+        if found is None:
+            found = next((m for m in _SCOPED_RE.finditer(text)
+                          if not _activity_absence_only(m, text)), None)
         if found:
             issues.append(
                 ValidationIssue(
@@ -393,9 +436,11 @@ def detect_adequacy_judgment(output: LLMMappingOutput) -> list[ValidationIssue]:
             )
 
     for decision in output.candidate_decisions:
-        check(decision.reason, decision.control_id, "candidate_decisions.reason")
+        if not _is_literal_source_record(decision, mapping_input):
+            check(decision.reason, decision.control_id, "candidate_decisions.reason")
     for mapped in output.mapped_controls:
-        check(mapped.reason, mapped.control_id, "mapped_controls.reason")
+        if not _is_literal_source_record(mapped, mapping_input):
+            check(mapped.reason, mapped.control_id, "mapped_controls.reason")
 
     return issues
 
@@ -558,7 +603,7 @@ def validate(
 
     id_issues = validate_control_ids(output, mapping_input, index)
     citation_issues = validate_citations(output, mapping_input)
-    rule_issues = validate_rules(output, mapping_input) + detect_adequacy_judgment(output)
+    rule_issues = validate_rules(output, mapping_input) + detect_adequacy_judgment(output, mapping_input)
     issues += id_issues + citation_issues + rule_issues
 
     # 근거 품질/비차단 메타데이터 문제는 경고로만 남긴다.

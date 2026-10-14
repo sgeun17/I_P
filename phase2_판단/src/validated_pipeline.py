@@ -18,6 +18,9 @@ from self_check import run_self_check, SELF_CHECK_VERSION, COMPACT_SELF_CHECK_VE
 from grounding_prompts import PROMPT_VERSION, COMPACT_PROMPT_VERSION
 from evidence_contracts import question_binding_gap, VERSION as BINDING_VERSION
 from absence_basis import absence_basis_gap
+from plan_basis import plan_execution_argument
+from lifecycle_basis import lifecycle_basis_gap
+from event_stage_basis import event_stage_basis_gap
 from reason_citation_binding import inspect_reason_citation_binding
 from validation.contracts import (ROOT, INTERFACE, interface_module, item_schema, issue,
                                   output_schema_version, validate_schema)
@@ -482,12 +485,16 @@ def _run_validated_item_once(item, context, *, evidence_id, version, model, reas
         last_issues[:] = validate_item(output, item, context, reason_codes,
                                       evidence_id=evidence_id, version=version)
         return [f"{i['code']}: {i['message']}" for i in last_issues if i["severity"] == "error"]
+    from assessment_context import assessment_date_value
+    trusted_assessment_date = assessment_date_value(as_of)
     run = run_item_judgment(item, context, model=model, reason_codes=reason_codes,
+                           assessment_date=trusted_assessment_date,
                            global_rules=RULES_PATH.read_text(encoding="utf-8"),
                            output_schema=item_schema(), output_validator=validator, **harness_kwargs)
     issues = list(last_issues)
     signals = []
-    audit = {"run": asdict(run), "issues": issues, "review_signals": signals}
+    audit = {"run": asdict(run), "issues": issues, "review_signals": signals,
+             "assessment_date": trusted_assessment_date}
     if not run.succeeded:
         if run.final_error_code:
             issues.append(issue(run.final_error_code, "문항 호출/검증 실패"))
@@ -567,6 +574,18 @@ def _run_validated_item_once(item, context, *, evidence_id, version, model, reas
             item,
             "근거가 기록·제출되지 않았다는 사실만으로 실제 미이행을 확정할 수 없습니다.",
         )
+    event_stage_argument = event_stage_basis_gap(item, output, context)
+    if event_stage_argument:
+        audit['event_stage_basis_review'] = event_stage_argument
+        signals.append('SELF_CHECK_UNCERTAIN')
+    lifecycle_argument = lifecycle_basis_gap(item, output, context)
+    if lifecycle_argument:
+        audit['lifecycle_basis_review'] = lifecycle_argument
+        signals.append('SELF_CHECK_UNCERTAIN')
+    plan_argument = plan_execution_argument(item, output)
+    if plan_argument:
+        audit['plan_basis_review'] = plan_argument
+        signals.append('SELF_CHECK_UNCERTAIN')
     absence_argument = absence_basis_gap(item, output)
     if absence_argument:
         # Diagnostic, not a keyword-based verdict. Complete event histories
@@ -689,6 +708,7 @@ def _run_validated_item_once(item, context, *, evidence_id, version, model, reas
             options = {k: v for k, v in harness_kwargs.items()
                        if k in {"client_config", "generation", "http_client", "retry_policy", "sleeper", "prompt_profile"}}
             check = run_self_check(item, output, context=context, model=model,
+                                   assessment_date=trusted_assessment_date,
                                    llm_call=self_check_call, **options)
             audit["self_check"] = check
             if check.get("error_code"):
@@ -753,6 +773,14 @@ def _run_validated_item_once(item, context, *, evidence_id, version, model, reas
                     "basis": hold_basis, "prior_output": prior_output,
                     "review_reason_preserved_in_self_check": True,
                 }
+                if prior_output.get('result') == 'UNKNOWN' and hold_basis == 'REVIEW_EVIDENCE_DISAGREEMENT':
+                    # Review prose is an opinion, not new observed evidence.
+                    # Preserve the proposed uncertainty, explicitly provisional;
+                    # complete reviewer findings remain in the audit unchanged.
+                    public_reason = (
+                        prior_output['reason']
+                        + ' 재검토에서 이 설명에 대한 해석 이견이 있어 사람의 확인이 필요합니다.'
+                    )
                 output = unknown(item, public_reason, reason)
                 output["citations"] = deepcopy(prior_output.get("citations", []))
     else:
@@ -816,10 +844,59 @@ def run_validated_item(item, context, *, semantic_repair=False, **kwargs):
         and not check.get('unsupported_conditions')
         and not (set(audit.get('review_signals', [])) - {'SELF_CHECK_UNCERTAIN'})
     )
+    absence_correction = (
+        kwargs.get('prompt_profile') == 'compact_v2'
+        and original.get('result') == 'NOT_MET'
+        and audit.get('absence_basis_review', {}).get('code') in {
+            'NO_MENTION_TO_MISSING_RULE_ARGUMENT', 'NO_DIRECT_PERFORMANCE_BASIS_ARGUMENT',
+            'RECORD_ABSENCE_AS_VIOLATION_ARGUMENT'}
+        and check.get('verdict') == 'SUPPORTED'
+        and not check.get('unsupported_conditions')
+        and not (set(audit.get('review_signals', [])) - {'SELF_CHECK_UNCERTAIN'})
+    )
+    plan_correction = (
+        kwargs.get('prompt_profile') == 'compact_v2'
+        and original.get('result') == 'MET'
+        and audit.get('plan_basis_review', {}).get('code') == 'PLAN_TO_EXECUTION_ARGUMENT'
+        and check.get('verdict') == 'SUPPORTED'
+        and not check.get('unsupported_conditions')
+        and not (set(audit.get('review_signals', [])) - {'SELF_CHECK_UNCERTAIN'})
+    )
+    confidence_correction = (
+        kwargs.get('prompt_profile') == 'compact_v2'
+        and audit.get('review_hold', {}).get('basis') == 'REVIEW_CONFIDENCE_ONLY'
+        and check.get('verdict') == 'SUPPORTED'
+        and not check.get('unsupported_conditions')
+        and set(audit.get('review_signals', [])) == {'SELF_CHECK_LOW_CONFIDENCE'}
+    )
+    account_correction = (
+        kwargs.get('prompt_profile') == 'compact_v2'
+        and original.get('result') == 'UNKNOWN'
+        and len(audit.get('semantic_guards', [])) == 1
+        and audit['semantic_guards'][0].get('decision') == 'ACCOUNT_REASON_CITATION_MISMATCH'
+        and audit['semantic_guards'][0].get('original_output', {}).get('result') == 'MET'
+        and not (set(audit.get('review_signals', [])) - {'SELF_CHECK_UNCERTAIN'})
+    )
+    lifecycle_correction = (
+        kwargs.get('prompt_profile') == 'compact_v2'
+        and original.get('result') == 'NOT_MET'
+        and bool(audit.get('lifecycle_basis_review'))
+        and check.get('verdict') == 'SUPPORTED'
+        and not check.get('unsupported_conditions')
+        and not (set(audit.get('review_signals', [])) - {'SELF_CHECK_UNCERTAIN'})
+    )
+    event_stage_correction = (
+        kwargs.get('prompt_profile') == 'compact_v2'
+        and original.get('result') == 'MET'
+        and bool(audit.get('event_stage_basis_review'))
+        and check.get('verdict') == 'SUPPORTED'
+        and not check.get('unsupported_conditions')
+        and not (set(audit.get('review_signals', [])) - {'SELF_CHECK_UNCERTAIN'})
+    )
     regular_repair = (original.get('result') == 'UNKNOWN'
                       and check.get('verdict') in {'NOT_APPLICABLE_UNKNOWN', 'UNSUPPORTED'})
-    blocked = (not (regular_repair or binding_correction or explanation_correction) or original.get('error_code')
-        or (audit.get('issues') and not explanation_correction) or audit.get('semantic_guards')
+    blocked = (not (regular_repair or binding_correction or explanation_correction or absence_correction or plan_correction or confidence_correction or account_correction or lifecycle_correction or event_stage_correction) or original.get('error_code')
+        or (audit.get('issues') and not explanation_correction) or (audit.get('semantic_guards') and not account_correction)
         or injection_suspected(context)
         or (kwargs.get('freshness_policy') is not None and audit.get('freshness', {}).get('status') != 'FRESH')
         or (kwargs.get('format_policy') is not None and audit.get('evidence_format', {}).get('status') != 'ALLOWED'))
@@ -833,7 +910,38 @@ def run_validated_item(item, context, *, semantic_repair=False, **kwargs):
     }
     repair_version = 'phase2_evidence_repair_v1'
     correction_mode = None
-    if explanation_correction:
+    if event_stage_correction:
+        correction_mode = 'EVENT_STAGE_SOURCE_REASSESSMENT'
+        repair_version = 'phase2_event_stage_reassessment_v1'
+        audit['semantic_repair'].update(version=repair_version, mode=correction_mode)
+        candidate_kwargs['semantic_feedback'].update(
+            mode=correction_mode, quality_diagnostic=deepcopy(audit['event_stage_basis_review']))
+    elif account_correction or lifecycle_correction:
+        correction_mode = ('ACCOUNT_EVENT_REASSESSMENT' if account_correction
+                           else 'LIFECYCLE_SOURCE_REASSESSMENT')
+        repair_version = 'phase2_targeted_source_reassessment_v1'
+        audit['semantic_repair'].update(version=repair_version, mode=correction_mode)
+        candidate_kwargs['semantic_feedback']['mode'] = correction_mode
+    elif confidence_correction:
+        # Reassess facts once; NEVER raise a score, lower the threshold or
+        # accept a second low-confidence opinion. Normal acceptance below owns it.
+        repair_version = 'phase2_confidence_source_reassessment_v1'
+        correction_mode = 'CONFIDENCE_SOURCE_REASSESSMENT'
+        audit['semantic_repair'].update(version=repair_version, mode=correction_mode)
+        candidate_kwargs['semantic_feedback']['mode'] = correction_mode
+    elif plan_correction:
+        repair_version = 'phase2_plan_execution_reassessment_v1'
+        correction_mode = 'PLAN_EXECUTION_REASSESSMENT'
+        audit['semantic_repair'].update(version=repair_version, mode=correction_mode)
+        candidate_kwargs['semantic_feedback'].update(
+            mode=correction_mode, quality_diagnostic=deepcopy(audit['plan_basis_review']))
+    elif absence_correction:
+        repair_version = 'phase2_no_mention_reassessment_v1'
+        correction_mode = 'ABSENCE_BASIS_REASSESSMENT'
+        audit['semantic_repair'].update(version=repair_version, mode=correction_mode)
+        candidate_kwargs['semantic_feedback'].update(
+            mode=correction_mode, quality_diagnostic=deepcopy(audit['absence_basis_review']))
+    elif explanation_correction:
         repair_version = 'phase2_short_reason_repair_v1'
         correction_mode = 'REASON_EXPLANATION_CORRECTION'
         audit['semantic_repair'].update(version=repair_version, mode=correction_mode)
@@ -841,10 +949,16 @@ def run_validated_item(item, context, *, semantic_repair=False, **kwargs):
             mode=correction_mode, quality_diagnostic=deepcopy(audit['issues']))
     elif binding_correction:
         repair_version = 'phase2_citation_correction_v1'
-        correction_mode = 'REASON_CITATION_CORRECTION'
-        audit['semantic_repair'].update(version=repair_version, mode='REASON_CITATION_CORRECTION')
+        from event_stage_basis import actual_event_locations
+        # The copy-editing contract was repeatedly anchoring to the incorrect
+        # report-as-deliberation prose. Rebuild from source without that prose.
+        # The same citation-edit validation AND original-result preservation
+        # below still apply. A free rewrite is not permission to change labels.
+        correction_mode = ('EVENT_REASON_CITATION_REWRITE'
+            if actual_event_locations(item, context) else 'REASON_CITATION_CORRECTION')
+        audit['semantic_repair'].update(version=repair_version, mode=correction_mode)
         candidate_kwargs['semantic_feedback'].update(
-            mode='REASON_CITATION_CORRECTION',
+            mode=correction_mode,
             binding_diagnostic=deepcopy(audit['reason_citation_binding']))
     candidate, candidate_audit = _run_validated_item_once(item, context, **candidate_kwargs)
     edit_issues = []

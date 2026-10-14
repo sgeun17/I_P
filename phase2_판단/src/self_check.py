@@ -93,7 +93,7 @@ def _unsupported_direct_failure(output, parsed):
 
 def run_self_check(item, output, *, model, context=None, llm_call=call_llm,
                    retry_policy=DEFAULT_RETRY_POLICY, sleeper=None,
-                   prompt_profile="legacy", **call_kwargs):
+                   prompt_profile="legacy", assessment_date=None, **call_kwargs):
     import time
     if prompt_profile not in {"legacy", "compact_v2"}:
         raise ValueError(f"Unknown prompt_profile: {prompt_profile}")
@@ -213,6 +213,19 @@ confidence는 반드시 0 이상 1 이하의 JSON 숫자여야 한다. 스키마
         "미지원 조건이 남아 있으면 SUPPORTED를 선택하지 않는다. "
         "이 계약을 맞추려고 확인된 부족 조건을 삭제하지 말고 원문에 따라 일관되게 검토한다."
     )
+    from assessment_context import date_prompt
+    system += (
+        '\n[UNKNOWN와 적용 조건의 검토]\n'
+        'UNKNOWN의 부족한 조건은 MET의 충족 조건과 다르다. 적용 사건이 없거나 확인되지 않을 때 '
+        '문항의 unknown 규칙이 UNKNOWN을 허용하고 적용 제외 정책이 미합의라면, '
+        '그 사건 부재 자체만을 UNKNOWN의 오류 또는 unsupported_conditions로 제시하지 않는다. '
+        '확인된 부분과 미확인 범위를 정확히 구분한 UNKNOWN은 지지할 수 있다. '
+        '단, 원문에 실제 존재하는 사실을 없다고 했거나 다른 대상·기간을 연결했다면 '
+        '그 구체적 잘못을 지적한다. 미발생 사건을 자료 미제출로 단정하거나 '
+        '일반 승인·교육·정상 결과를 서로 다른 질문의 충족 근거로 사용하지 않는다. '
+        '어떤 UNKNOWN도 자동 지지하지 말고, 현재 문항의 예외와 전체 원문을 대조한다.'
+    )
+    base_user += date_prompt(assessment_date)
     validator = Draft202012Validator(SELF_CHECK_SCHEMA)
     raw = None
     user = base_user
