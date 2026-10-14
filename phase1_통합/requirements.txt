@@ -1,4 +1,23 @@
+# 합쳐진 서버(api.py)를 띄우는 데 필요한 것. 이것만 깔면 서버가 뜬다.
+#
+#   pip install -r requirements.txt
+#   python -m uvicorn api:app --port 8000     ← 반드시 phase1_통합 폴더 안에서
+
 fastapi
 uvicorn[standard]
 python-multipart
+httpx                 # 판단팀이 Ollama 를 부를 때 쓴다 (없으면 서버가 안 뜬다)
+pymysql               # MySQL
+python-dotenv         # phase1_입력/database/.env 읽기
+filetype              # 업로드 파일 종류 확인
+jsonschema            # Phase 2 입출력 규격 검증
+
+pdfplumber            # pdf
+openpyxl              # xlsx
+python-docx           # docx
+python-pptx           # pptx
+# easyocr             # png · jpg — torch 가 같이 깔려 2GB 가 넘는다.
+#                     #   ★ Python 3.14 에는 torch 가 아직 없다. 3.12 를 쓰거나
+#                     #     이미지 증적을 빼고 시험한다.
+
 xhtml2pdf>=0.2.23
