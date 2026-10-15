@@ -17,6 +17,7 @@ import csv
 import html
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -40,6 +41,7 @@ CSV_HEADER = [
     "통제항목", "통제항목명", "구역", "종합판정", "WBS판정", "검토상태",
     "증적", "버전", "사람수정", "문항", "문항판정", "사유", "사유코드",
     "중요문항", "검사종류", "근거수", "근거문장", "청크", "쪽", "보류사유",
+    "기술오류", "기술오류설명",
 ]
 
 
@@ -76,7 +78,10 @@ def report_rows(control_id: str | None = None, evidence_id: str | None = None):
                         사유코드=",".join(it.get("reason_codes") or []),
                         중요문항="O" if it.get("critical") else "",
                         검사종류=it.get("check_kind", ""),
-                        근거수=len(it.get("citations") or []))
+                        근거수=len(it.get("citations") or []),
+                        기술오류=(it.get("error_code") or ""),
+                        기술오류설명=(error_text(it["error_code"])
+                                 if it.get("error_code") else ""))
             cits = it.get("citations") or [{}]
             for c in cits:
                 out.append(dict(item,
@@ -258,9 +263,18 @@ def _missing_block(cov, e):
         return ["<div class='ctl'><h2>미제출 통제항목</h2>"
                 "<div class='meta'>없습니다. 통제항목 전체에 증적이 연결됐습니다.</div>"
                 "</div>"]
-    out = [f"<div class='ctl'><h2>미제출 통제항목 {len(miss)}개</h2>",
-           "<div class='meta'>아래 항목에는 연결된 증적이 없습니다. "
-           "증적을 올리지 않았거나, 올린 증적이 이 항목으로 매핑되지 않았습니다.</div>",
+    # 여기 담기는 건 두 가지다. 제목에 '미제출' 만 쓰면 제외된 항목까지
+    # 미제출로 센 것처럼 보인다. 둘을 나눠 적는다.
+    n_exc = sum(1 for c in miss if c["state"] == "excluded_only")
+    n_none = len(miss) - n_exc
+    head = ("미제출 통제항목" if not n_exc else "미제출·제외 통제항목")
+    detail = (f"증적이 연결되지 않았습니다. 증적을 올리지 않았거나, "
+              f"올린 증적이 이 항목으로 매핑되지 않았습니다."
+              if not n_exc else
+              f"증적 없음 {n_none}개 · 증적은 있으나 판정에서 제외 {n_exc}개. "
+              f"어느 쪽인지는 오른쪽 상태 칸에 있습니다.")
+    out = [f"<div class='ctl'><h2>{head} {len(miss)}개</h2>",
+           f"<div class='meta'>{detail}</div>",
            "<table class='cov miss'><thead><tr>"
            "<th class='c1'>통제항목</th><th>이름</th><th class='c3'>상태</th>"
            "</tr></thead><tbody>"]
@@ -288,6 +302,36 @@ def _missing_block(cov, e):
 # 판정 결과를 임의로 바꾸지 않고, 이미 나온 문항 판정·사유코드와
 # 체크리스트의 후보 증적을 이용해 "다음에 무엇을 보완해야 하는지"만 설명한다.
 # UNKNOWN은 미흡 확정이 아니므로 "수정"이 아니라 "추가 확인/증적 보완"으로 안내한다.
+# 문항에 붙는 기술 오류 코드. 화면(app.js)과 같은 말을 쓴다.
+#
+# 기술 실패 문항도 reason_codes 는 채워져 나온다 — 사유 코드 13종에 '기술
+# 실패' 가 없어서 phase2_errors.failed_item() 이 임시로 '근거 부족' 코드를
+# 붙이기 때문이다. 그래서 reason_codes 만 보면 서버가 꺼져 있던 것을 '자료를
+# 더 내라' 로 안내하게 된다. error_code 가 있으면 그게 먼저다.
+_ERROR_KO = {
+    "E101": "AI 응답이 제한 시간 안에 오지 않았습니다",
+    "E102": "AI 서버에 연결하지 못했습니다 (Ollama 가 꺼져 있는지 확인하세요)",
+    "E103": "AI 서버가 오류를 돌려줬습니다",
+    "E104": "AI 가 빈 응답을 돌려줬습니다",
+    "E105": "AI 응답이 중간에 잘렸습니다 (출력 한도 부족)",
+    "E106": "여러 번 다시 시도했지만 모두 실패했습니다",
+    "E201": "AI 응답이 JSON 형식이 아닙니다",
+    "E202": "AI 응답이 정해진 규격에 맞지 않습니다",
+    "E203": "AI 응답에 필수 항목이 빠졌습니다",
+    "E204": "AI 가 정해진 값 목록 밖의 값을 썼습니다",
+    "E205": "AI 가 매긴 확신도가 0~1 범위를 벗어났습니다",
+    "P2E501": "판정 결과와 사유 코드가 서로 맞지 않습니다",
+    "P2E502": "인용한 문장을 원문에서 확인하지 못했습니다",
+    "P2E505": "충족이라고 했지만 원문에서 근거를 확인하지 못했습니다",
+    "P2E901": "실패가 이어져 일괄 판정을 중단했습니다",
+}
+
+
+def error_text(code: str) -> str:
+    """코드를 사람 말로. 모르는 코드는 코드 그대로 둔다."""
+    return _ERROR_KO.get(code, f"기술 오류 {code}")
+
+
 _CHECKLIST_ITEM_INDEX = None
 
 _REC_ACTION = {
@@ -370,7 +414,11 @@ def _load_checklist_item_index():
                         idx[iid] = it
             if idx:
                 break
-        except Exception:  # 리포트 생성 자체를 막지는 않는다.
+        except Exception as exc:  # noqa: BLE001
+            # 리포트 생성 자체를 막지는 않는다. 다만 조용히 넘어가면
+            # '권장 확인자료' 가 통째로 사라진 걸 아무도 모른다.
+            print(f"[리포트] 체크리스트를 읽지 못했습니다: {path} — {exc}",
+                  file=sys.stderr)
             continue
     _CHECKLIST_ITEM_INDEX = idx
     return idx
@@ -382,14 +430,40 @@ def _recommendation_for_item(it: dict) -> dict | None:
     if result not in ("NOT_MET", "UNKNOWN"):
         return None
 
+    # 판정을 아예 못 한 문항. 증적 문제가 아니라 도구 문제라서, 자료를 더
+    # 내라고 하면 안 된다. 다시 점검을 돌리라고 해야 한다.
+    err = (it.get("error_code") or "").strip()
+    if err:
+        spec0 = _load_checklist_item_index().get(it.get("item_id"), {})
+        return {
+            "item_id": it.get("item_id", ""),
+            "kind": "재점검 필요",
+            "question": spec0.get("question") or spec0.get("source_clause") or "",
+            "action": (f"증적 문제가 아니라 점검 중 기술적인 문제로 판정하지 "
+                       f"못했습니다 — {error_text(err)}. 원인을 해결한 뒤 이 증적을 "
+                       f"다시 점검하세요. 증적을 새로 만들 필요는 없습니다."),
+            "evidence": [],
+        }
+
+    # 사유코드는 여러 개가 올 수 있다. 첫 번째만 보면 "범위가 불명확하다" 와
+    # "시점이 불명확하다" 중 하나만 안내하게 된다. 둘까지 합친다 — 셋을 넘기면
+    # 할 일이 너무 많아 보여서 아무것도 안 하게 된다.
     codes = it.get("reason_codes") or []
-    code = codes[0] if codes else ""
-    kind, action = _REC_ACTION.get(
-        code,
+    fallback = (
         ("수정 필요", "확인된 미흡 사항을 해당 문항 기준에 맞게 수정하고 조치 후 상태를 증적으로 남기세요.")
         if result == "NOT_MET"
         else ("추가 확인 필요", "판단에 필요한 대상·기간·적용 기준과 직접 근거를 추가 확인하세요.")
     )
+    hits = [_REC_ACTION[c] for c in codes if c in _REC_ACTION][:2]
+    if not hits:
+        hits = [fallback]
+    kind = hits[0][0]
+    seen, actions = set(), []
+    for _, a in hits:
+        if a not in seen:
+            seen.add(a)
+            actions.append(a)
+    action = " ".join(actions)
 
     spec = _load_checklist_item_index().get(it.get("item_id"), {})
     question = spec.get("question") or spec.get("source_clause") or ""
@@ -459,7 +533,9 @@ table.sum-grid td.sum-card{border:1px solid #ddd;background:#fafafa;padding:6px 
 table.sum-grid .sum-label{color:#333;font-size:15px;font-weight:700;line-height:1.1}
 table.sum-grid .sum-value{color:#555;font-size:11px;font-weight:600;line-height:1.1;margin-top:2px}
 
-.ctl{border:1px solid #ddd;margin-bottom:20px;page-break-inside:avoid}
+.ctl{border:1px solid #ddd;margin-bottom:20px}
+/* .ctl 에 page-break-inside:avoid 를 걸지 않는다. 한 페이지보다 긴 장이 있으면
+   PDF 변환이 LayoutError 로 죽는다. 자세한 건 ISSUES.md W. */
 .ctl>h2{font-size:16px;margin:0;padding:10px 14px;background:#f2f4f7;border-bottom:1px solid #ddd}
 .meta{padding:8px 14px;font-size:13px;color:#444;border-bottom:1px solid #eee}
 .badge{display:inline-block;padding:1px 8px;border:1px solid #bbb;border-radius:10px;
@@ -468,7 +544,7 @@ table.sum-grid .sum-value{color:#555;font-size:11px;font-weight:600;line-height:
 .v-충족보완{background:#fff8e1;border-color:#ffe082}
 .v-미충족{background:#ffebee;border-color:#ef9a9a}
 .v-확인{background:#eceff1;border-color:#b0bec5}
-.item{padding:10px 14px;border-top:1px solid #f0f0f0}
+.item{padding:10px 14px;border-top:1px solid #f0f0f0;page-break-inside:avoid}
 .item .id{font-weight:700}
 .reason{color:#444;margin:4px 0}
 blockquote{margin:6px 0 6px 12px;padding:6px 12px;border-left:3px solid #ccc;
@@ -615,11 +691,19 @@ def to_html(path, controls_path=None, title="ISMS-P 증적 사전점검 — 항�
                 out.append(rec_html)
             for it in d["items"] or []:
                 out.append("<div class='item'>")
+                err = (it.get("error_code") or "").strip()
                 out.append(f"<span class='id'>{e(it.get('item_id',''))}</span> "
                            f"<span class='badge'>{e(it.get('result',''))}</span>"
                            + ("<span class='badge'>중요</span>" if it.get("critical") else "")
+                           + (f"<span class='badge v-미충족'>기술 오류 {e(err)}</span>"
+                              if err else "")
                            + (f"<span class='badge'>{e(','.join(it.get('reason_codes') or []))}</span>"
-                              if it.get("reason_codes") else ""))
+                              if it.get("reason_codes") and not err else ""))
+                if err:
+                    # 사유 코드는 기술 실패에도 '근거 부족' 이 붙어 나온다.
+                    # 그대로 보여주면 증적 탓으로 읽히므로 오류 쪽만 적는다.
+                    out.append(f"<div class='blockers'>{e(error_text(err))} — "
+                               "증적 문제가 아니라 점검이 끝나지 못한 것입니다.</div>")
                 if it.get("reason"):
                     out.append(f"<div class='reason'>{e(it['reason'])}</div>")
                 cits = it.get("citations") or []
@@ -765,12 +849,36 @@ def to_pdf(path, controls_path=None, control_id=None, evidence_id=None,
 
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
-    with p.open("wb") as f:
-        res = pisa.CreatePDF(html_text, dest=f, encoding="utf-8", **kw)
+    try:
+        with p.open("wb") as f:
+            res = pisa.CreatePDF(html_text, dest=f, encoding="utf-8", **kw)
+    except Exception as exc:                                  # noqa: BLE001
+        res = _retry_without_page_breaks(pisa, p, html_text, kw, exc)
     if res.err:
         raise ReportError("PDF_RENDER_FAILED",
                           f"PDF 변환 중 오류 {res.err}건이 났습니다.")
     return p
+
+
+def _retry_without_page_breaks(pisa, p, html_text, kw, exc):
+    """쪽 나누기에서 터졌으면 그 규칙을 떼고 한 번만 더 해 본다.
+
+    reportlab 은 '쪼개지 마라' 가 걸린 블록이 한 페이지보다 길면 LayoutError
+    를 낸다. 쪽 나눔이 보기 좋게 떨어지는 것보다 리포트가 나오는 게 먼저다.
+    그래도 안 되면 reportlab 원문 대신 사람이 읽을 메시지를 올린다.
+    """
+    if "Splitting error" not in str(exc) and "too large on page" not in str(exc):
+        raise ReportError("PDF_RENDER_FAILED",
+                          f"PDF 를 만들지 못했습니다: {exc}") from exc
+    plain = re.sub(r"page-break-inside\s*:\s*avoid\s*;?", "", html_text)
+    try:
+        with p.open("wb") as f:
+            return pisa.CreatePDF(plain, dest=f, encoding="utf-8", **kw)
+    except Exception as exc2:                                 # noqa: BLE001
+        raise ReportError(
+            "PDF_PAGE_TOO_LONG",
+            "한 페이지에 안 들어가는 내용이 있어 PDF 를 만들지 못했습니다. "
+            "HTML·CSV 리포트는 정상으로 나옵니다.") from exc2
 
 
 def to_pdf_bytes(**kw):
