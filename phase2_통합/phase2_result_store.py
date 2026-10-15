@@ -1180,20 +1180,25 @@ def summary(unknown_policy: str = "separate"):
             cur.execute(_q(
                 "SELECT e.status AS status, COUNT(DISTINCT e.evidence_id) AS n "
                 "FROM evidence e JOIN phase2_result r ON r.evidence_id = e.evidence_id "
-                "WHERE " + _is_current("r") + " GROUP BY e.status"))
+                "WHERE " + _is_current("r") + owner.and_where("e") +
+                " GROUP BY e.status"))
             judged_statuses = {r["status"]: int(r["n"]) for r in _rows(cur)}
 
+            # 제외 집계도 회사 범위를 탄다. 안 걸면 A 회사 리포트 위에
+            # B 회사 제외 건수까지 더해져 아래 목록과 숫자가 어긋난다.
             cur.execute(_q(
                 "SELECT reason_code, COUNT(*) AS n FROM phase2_excluded "
                 "WHERE evidence_version = (SELECT e_cur.version FROM evidence e_cur "
                 " WHERE e_cur.evidence_id = phase2_excluded.evidence_id) "
-                "GROUP BY reason_code"))
+                + owner.and_mine("evidence_id", "phase2_excluded") +
+                " GROUP BY reason_code"))
             excluded_by = {r["reason_code"]: int(r["n"]) for r in _rows(cur)}
             excluded_ev = one(
                 "SELECT COUNT(DISTINCT evidence_id) AS n FROM phase2_excluded "
                 "WHERE control_id = '' AND evidence_version = "
                 "(SELECT e_cur.version FROM evidence e_cur "
-                " WHERE e_cur.evidence_id = phase2_excluded.evidence_id)")
+                " WHERE e_cur.evidence_id = phase2_excluded.evidence_id)"
+                + owner.and_mine("evidence_id", "phase2_excluded"))
 
             cur.execute(_q(f"SELECT payload, result_id FROM phase2_result {cur_where}"))
             payloads = _rows(cur)
@@ -1357,4 +1362,3 @@ def _one(r):
         "history": r.get("history") or [],
         "judged_at": str(r["created_at"]),
     }
-
